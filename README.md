@@ -1,6 +1,12 @@
 # Pokémon Platinum
 
-Pokémon Platinum for Windows, Linux and macOS, with mod support. I made this port for fun and to try things out.
+Pokémon Platinum for Windows, Linux and macOS, with mod support with LUA. I made this port for fun and to try things out. I also used AI for the development.
+
+I did not did the decompilation process, the original author I can't add a link because their repository contains the 
+full decompiled game with assets included so it's illegal, I removed every copyrighted data, and I added mod support,
+increased performance and also unlock the framerate.
+
+I was able to complete the game despite I did not fully tested the whole game so I can't garantee it's working 100%. 
 
 ## Play
 
@@ -116,20 +122,20 @@ Check the current limit on your Trainer Card or in the mod's menu. Already being
 
 Evolve Pokémon that normally require trading by leveling them up instead. Enabled by default.
 
-| Evolution | New requirement |
-| --- | --- |
-| Kadabra → Alakazam | Level 32 |
-| Graveler → Golem | Level 42 |
-| Haunter → Gengar | Level 42 |
-| Machoke → Machamp | Level 45 |
-| Onix → Steelix | Level up holding a Metal Coat |
-| Scyther → Scizor | Level up holding a Metal Coat |
-| Rhydon → Rhyperior | Level up holding a Protector |
-| Dusclops → Dusknoir | Level up holding a Reaper Cloth |
-| Porygon → Porygon2 | Level up holding an Up-Grade |
-| Porygon2 → Porygon-Z | Level up holding a Dubious Disc |
+| Evolution               | New requirement                 |
+|-------------------------|---------------------------------|
+| Kadabra → Alakazam      | Level 32                        |
+| Graveler → Golem        | Level 42                        |
+| Haunter → Gengar        | Level 42                        |
+| Machoke → Machamp       | Level 45                        |
+| Onix → Steelix          | Level up holding a Metal Coat   |
+| Scyther → Scizor        | Level up holding a Metal Coat   |
+| Rhydon → Rhyperior      | Level up holding a Protector    |
+| Dusclops → Dusknoir     | Level up holding a Reaper Cloth |
+| Porygon → Porygon2      | Level up holding an Up-Grade    |
+| Porygon2 → Porygon-Z    | Level up holding a Dubious Disc |
 | Electabuzz → Electivire | Level up holding an Electirizer |
-| Magmar → Magmortar | Level up holding a Magmarizer |
+| Magmar → Magmortar      | Level up holding a Magmarizer   |
 
 Held-item evolutions work day or night and consume the item.
 
@@ -155,3 +161,9 @@ Normally, you can battle species you've seen but can only catch species you've a
 ### Shiny Rate
 
 Increase shiny odds for newly generated wild Pokémon and Eggs. Choose from **1×** (the original odds) up to **8192×** (guaranteed shiny). Starts at **16×**. Changing the setting doesn't turn Pokémon you already own into shinies.
+
+## Compilation
+
+I forgot every dependency required
+
+`make linux|windows|osx`

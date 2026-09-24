@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=pokeplatinum
 Exec=app
-Icon=app
+Icon=pokeplatinum
+StartupWMClass=pokeplatinum
 Type=Application
 Categories=Game;

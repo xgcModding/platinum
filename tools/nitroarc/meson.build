@@ -11,9 +11,9 @@ if (build_target != 'win64')
 	    '-Wall',
 	    '-Wextra',
 	    '-Wpedantic',
+	    '-Wconversion',
 	    '-Wno-sign-conversion',
 		'-Werror',
-        '-Wconversion',
 	]
 endif
 

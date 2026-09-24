@@ -1,9 +1,6 @@
 #!/bin/bash
-BUILDDIR=build_linux/pokeplatinum
+BUILDDIR=build_linux
 
 cd $BUILDDIR
-mkdir release_linux
-cp firmware.bin release_linux/firmware.bin
-cp header.bin release_linux/header.bin
-cp main release_linux/main
+mkdir -p release_linux
 cp pokeplatinum.AppImage release_linux/pokeplatinum.AppImage
