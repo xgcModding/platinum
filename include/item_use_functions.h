@@ -1,0 +1,86 @@
+#ifndef POKEPLATINUM_ITEM_USE_FUNCTIONS_H
+#define POKEPLATINUM_ITEM_USE_FUNCTIONS_H
+
+#include "field/field_system_decl.h"
+
+#include "bg_window.h"
+#include "field_task.h"
+#include "player_avatar.h"
+#include "string_gf.h"
+
+#define ITEM_FUNC_USE_FROM_MENU 0
+#define ITEM_FUNC_USE_IN_FIELD  1
+#define ITEM_FUNC_CHECK_CAN_USE 2
+
+enum ItemUseCheckResult {
+    ITEM_USE_CANNOT_USE_GENERIC = -1,
+    ITEM_USE_CAN_USE,
+    ITEM_USE_CANNOT_DISMOUNT,
+    ITEM_USE_CANNOT_USE_WITH_PARTNER,
+    ITEM_USE_CANNOT_FISH_HERE,
+};
+
+typedef void *(*FieldApplicationWorkCtor)(void *fieldSystem);
+
+typedef struct ItemUseContext {
+    int mapHeaderID;
+    BOOL hasPartner;
+    int playerState;
+    u16 facingTileBehavior; // behavior of the tile the player is facing
+    u16 currTileBehavior;
+    u16 berryPatchFlags;
+    u8 padding_12[2];
+    PlayerAvatar *playerAvatar;
+    FieldSystem *fieldSystem;
+} ItemUseContext;
+
+typedef struct ItemFieldUseContext {
+    FieldSystem *fieldSystem;
+    ItemUseContext unk_04;
+    FieldApplicationWorkCtor unk_20;
+    void *unk_24;
+    u16 unk_28;
+    u8 unk_2A;
+} ItemFieldUseContext;
+
+typedef struct ItemMenuUseContext {
+    FieldTask *fieldTask;
+    u16 item;
+    u8 selectedMonSlot;
+    u8 padding_07;
+} ItemMenuUseContext;
+
+typedef BOOL (*ItemFieldUseFunc)(ItemFieldUseContext *);
+typedef void (*ItemMenuUseFunc)(ItemMenuUseContext *, const ItemUseContext *);
+typedef enum ItemUseCheckResult (*ItemCheckUseFunc)(const ItemUseContext *);
+
+typedef struct UnkStruct_0206851C {
+    u32 unk_00;
+    u16 unk_04;
+    u16 unk_06;
+    u16 unk_08;
+    u16 unk_0A;
+} UnkStruct_0206851C;
+
+typedef struct UnkStruct_02068EFC {
+    Window unk_00;
+    String *unk_10;
+    u16 unk_14;
+    u16 unk_16;
+} UnkStruct_02068EFC;
+
+#ifdef SDK_BUILD_ARM
+u32 ItemUseFunction_Get(u16 funcType, u16 functionIdx);
+#else
+u64 ItemUseFunction_Get(u16 funcType, u16 functionIdx);
+#endif
+void ItemUseContext_Init(FieldSystem *fieldSystem, ItemUseContext *param1);
+BOOL BerryPatch_IsEmpty(const ItemUseContext *usageContext);
+BOOL sub_02069238(FieldSystem *fieldSystem);
+#ifdef SDK_PORT
+BOOL FieldSystem_UseItemShortcut(FieldSystem *fieldSystem, u16 item);
+BOOL FieldSystem_UseFishingShortcut(FieldSystem *fieldSystem);
+BOOL FieldSystem_UseTownMapShortcut(FieldSystem *fieldSystem);
+#endif
+
+#endif // POKEPLATINUM_ITEM_USE_FUNCTIONS_H

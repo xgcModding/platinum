@@ -1,0 +1,2777 @@
+#include "overlay065/ov65_0223648C.h"
+
+#include <nitro.h>
+#include <string.h>
+
+#include "generated/journal_online_events.h"
+
+#include "struct_defs/struct_0207DE04.h"
+#include "struct_defs/struct_0207DFAC.h"
+#include "struct_defs/struct_0207E060.h"
+
+#include "nintendo_wfc/main.h"
+#include "overlay063/ov63_0222BE18.h"
+#include "overlay063/ov63_0222CCE4.h"
+#include "overlay063/struct_ov63_0222BE18_decl.h"
+#include "overlay063/struct_ov63_0222BEC0_decl.h"
+#include "overlay063/struct_ov63_0222CD2C.h"
+#include "overlay063/struct_ov63_0222CE44.h"
+#include "overlay065/struct_ov65_022366E4.h"
+#include "overlay065/struct_ov65_02236744_decl.h"
+#include "overlay065/struct_ov65_02236760.h"
+#include "overlay065/struct_ov65_022376D0.h"
+
+#include "bg_window.h"
+#include "char_transfer.h"
+#include "comm_manager.h"
+#include "communication_information.h"
+#include "communication_system.h"
+#include "enums.h"
+#include "font.h"
+#include "game_options.h"
+#include "game_overlay.h"
+#include "graphics.h"
+#include "gx_layers.h"
+#include "heap.h"
+#include "journal.h"
+#include "menu.h"
+#include "message.h"
+#include "narc.h"
+#include "network_icon.h"
+#include "overlay_manager.h"
+#include "pltt_transfer.h"
+#include "render_oam.h"
+#include "render_window.h"
+#include "save_player.h"
+#include "screen_fade.h"
+#include "sound.h"
+#include "sound_playback.h"
+#include "sprite.h"
+#include "sprite_resource.h"
+#include "sprite_util.h"
+#include "string_gf.h"
+#include "string_template.h"
+#include "system.h"
+#include "text.h"
+#include "trainer_info.h"
+#include "unk_020363E8.h"
+#include "unk_0209C390.h"
+#include "vram_transfer.h"
+
+FS_EXTERN_OVERLAY(overlay63);
+
+typedef struct {
+    UnkStruct_0207DFAC *unk_00;
+    u8 unk_04;
+    u8 unk_05;
+    u8 unk_06;
+    u8 unk_07;
+    s32 unk_08;
+    s32 unk_0C;
+    u8 unk_10;
+    u8 unk_11;
+    u8 unk_12;
+    u8 unk_13;
+    u8 unk_14[4];
+    u8 unk_18[4];
+    u8 unk_1C[4];
+    u8 unk_20[4];
+    u8 unk_24;
+    u8 unk_25;
+    u8 unk_26;
+    u8 unk_27;
+    u8 unk_28[4];
+    u8 unk_2C;
+    u8 unk_2D;
+} UnkStruct_ov65_02236794;
+
+typedef struct {
+    UnkStruct_ov63_0222BEC0 *unk_00;
+    UnkStruct_ov63_0222CE44 *unk_04;
+    u16 unk_08;
+    s16 unk_0A;
+} UnkStruct_ov65_02237908;
+
+typedef struct {
+    BgConfig *unk_00;
+    StringTemplate *unk_04;
+    MessageLoader *unk_08;
+    String *unk_0C;
+    String *unk_10;
+    u8 unk_14;
+    u8 unk_15;
+    u16 unk_16;
+    SpriteList *unk_18;
+    G2dRenderer unk_1C;
+    SpriteResourceCollection *unk_1A8[4];
+    UnkStruct_ov63_0222BE18 *unk_1B8;
+    UnkStruct_ov63_0222CD2C *unk_1BC;
+    UnkStruct_ov65_02237908 unk_1C0[4];
+    Window unk_1F0;
+    Window unk_200;
+    Window unk_210;
+    Window unk_220;
+    Window unk_230;
+    Menu *unk_240;
+    void *unk_244;
+    NNSG2dScreenData *unk_248;
+    void *unk_24C;
+    void *unk_250;
+    NNSG2dPaletteData *unk_254;
+    s16 unk_258;
+    s16 unk_25A;
+} UnkStruct_ov65_02236840;
+
+typedef struct UnkStruct_ov65_02236744_t {
+    UnkStruct_ov65_02236794 unk_00;
+    UnkStruct_ov65_02236840 unk_30;
+} UnkStruct_ov65_022367A8;
+
+static void ov65_02236780(void *param0);
+static BOOL ov65_02236794(const UnkStruct_ov65_02236794 *param0);
+static void ov65_022367A8(UnkStruct_ov65_022367A8 *param0, const UnkStruct_0207DE04 *param1, u32 heapID);
+static void ov65_022367F8(UnkStruct_ov65_022367A8 *param0, u32 heapID);
+static void ov65_02236820(void);
+static void ov65_02236840(UnkStruct_ov65_02236840 *param0, u32 heapID);
+static void ov65_022369F0(UnkStruct_ov65_02236840 *param0);
+static void ov65_02236A28(UnkStruct_ov65_02236840 *param0, const UnkStruct_0207DE04 *param1, u32 heapID);
+static void ov65_02236B90(UnkStruct_ov65_02236840 *param0, u32 heapID);
+static void ov65_02236C10(UnkStruct_ov65_02236840 *param0, const UnkStruct_0207DE04 *param1, u32 heapID);
+static void ov65_02236C5C(UnkStruct_ov65_02236840 *param0);
+static void ov65_02236C7C(UnkStruct_ov65_02236840 *param0, const UnkStruct_0207DE04 *param1, u32 heapID);
+static void ov65_02236D50(UnkStruct_ov65_02236840 *param0, u32 heapID);
+static void ov65_02236E04(UnkStruct_ov65_02236840 *param0);
+static void ov65_02236E50(UnkStruct_ov65_02236840 *param0, const UnkStruct_0207DE04 *param1, u32 param2, u8 param3, u32 heapID);
+static BOOL ov65_02236EF8(UnkStruct_ov65_02236840 *param0);
+static void ov65_02236F38(UnkStruct_ov65_02236840 *param0);
+static void ov65_02236F70(UnkStruct_ov65_02236840 *param0, const UnkStruct_0207DE04 *param1, int param2, u32 heapID);
+static void ov65_02237018(UnkStruct_ov65_02236840 *param0);
+static void ov65_02237034(UnkStruct_ov65_022367A8 *param0, const UnkStruct_0207DE04 *param1, u32 heapID);
+static void ov65_0223709C(UnkStruct_ov65_022367A8 *param0, UnkStruct_ov65_02236840 *param1, const UnkStruct_0207DE04 *param2, int param3, u32 heapID);
+static void ov65_022371FC(UnkStruct_ov65_02236840 *param0, const UnkStruct_0207DE04 *param1, int param2, u32 heapID);
+static void ov65_0223726C(UnkStruct_ov65_02236840 *param0, const UnkStruct_0207DE04 *param1, int param2, int param3, u32 heapID);
+static void ov65_02237284(UnkStruct_ov65_02236840 *param0, const UnkStruct_0207DE04 *param1, int param2, int param3, u32 heapID);
+static void ov65_022372B0(UnkStruct_ov65_02236840 *param0);
+static void ov65_022372EC(UnkStruct_ov65_02236840 *param0, u32 param1);
+static void ov65_02237370(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 param2);
+static void ov65_0223742C(UnkStruct_ov65_022367A8 *param0);
+static BOOL ov65_02237450(const UnkStruct_ov65_022367A8 *param0);
+static BOOL ov65_02237464(u32 param0, u32 param1);
+static void ov65_02237498(UnkStruct_ov65_022367A8 *param0, const UnkStruct_0207DE04 *param1);
+static BOOL ov65_022374DC(UnkStruct_ov65_022367A8 *param0);
+static BOOL ov65_02237504(UnkStruct_ov65_022367A8 *param0);
+static void ov65_02237520(UnkStruct_ov65_022367A8 *param0);
+static void ov65_02237534(UnkStruct_ov65_022367A8 *param0);
+static int ov65_02237548(UnkStruct_ov65_022367A8 *param0);
+static void ov65_0223758C(UnkStruct_ov65_022367A8 *param0);
+static void ov65_022375CC(UnkStruct_ov65_022367A8 *param0);
+static void ov65_0223760C(UnkStruct_ov65_022367A8 *param0);
+static void ov65_0223761C(UnkStruct_ov65_022367A8 *param0);
+static BOOL ov65_02237628(UnkStruct_ov65_022367A8 *param0);
+static void ov65_02237654(u16 param0, void *param1);
+static BOOL ov65_02237660(UnkStruct_ov65_022367A8 *param0);
+static void ov65_02237698(UnkStruct_ov65_022367A8 *param0);
+static void ov65_022376A0(UnkStruct_ov65_022367A8 *param0, u32 param1, u32 heapID);
+static void ov65_022376D0(UnkStruct_ov65_022367A8 *param0, u32 param1, u32 heapID);
+static void ov65_022377A4(UnkStruct_ov65_022367A8 *param0);
+static void ov65_022377E8(UnkStruct_ov65_022367A8 *param0);
+static void ov65_02237808(UnkStruct_ov65_022367A8 *param0, u32 param1);
+static void ov65_0223782C(UnkStruct_ov65_022367A8 *param0);
+static void ov65_02237860(UnkStruct_ov65_022367A8 *param0, u32 heapID);
+static void ov65_0223789C(UnkStruct_ov65_022367A8 *param0);
+static void ov65_02237908(UnkStruct_ov65_022367A8 *param0, UnkStruct_ov65_02237908 *param1);
+static void ov65_0223790C(UnkStruct_ov65_022367A8 *param0, UnkStruct_ov65_02237908 *param1);
+static void ov65_02237940(UnkStruct_ov65_022367A8 *param0, UnkStruct_ov65_02237908 *param1);
+static void ov65_0223796C(UnkStruct_ov65_022367A8 *param0, UnkStruct_ov65_02237908 *param1);
+static void ov65_02237970(UnkStruct_ov65_022367A8 *param0);
+static BOOL ov65_02237A10(UnkStruct_ov65_022367A8 *param0);
+static void ov65_02237A24(UnkStruct_0207DE04 *param0, u32 heapID);
+static void ov65_02237A44(UnkStruct_ov65_022367A8 *param0);
+static BOOL ov65_02237A54(UnkStruct_ov65_022367A8 *param0);
+static BOOL ov65_02237A70(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_02237AA8(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_02237AC0(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_02237B9C(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_02237BC4(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_02237BF8(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_02237C98(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_02237CB0(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_02237CCC(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_02237CE4(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_02237D18(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_02237D60(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_02237D98(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_02237DD0(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_02237DF8(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_02237E24(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_02237E54(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_02237EA4(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_02237EC0(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_02237EF0(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_02237F08(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_02237F48(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_02237FA0(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_02237FB8(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_02237FF8(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_02238050(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_0223806C(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_022380AC(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_022380E8(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_02238104(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_02238134(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_0223815C(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_02238190(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_022381CC(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_022381E4(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_02238210(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_02238250(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_022382B0(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_022382F0(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_02238314(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_02238350(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_02238370(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_022383AC(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_022383D0(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_0223846C(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_022384BC(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_0223850C(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_02238528(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_02238558(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_02238594(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_022385AC(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_022385D4(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_02238608(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_02238660(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_022386D0(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_02238728(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_0223875C(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_0223878C(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_022387AC(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_022387E8(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_02238838(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_022388FC(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+static BOOL ov65_02238910(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID);
+
+static const u8 Unk_ov65_02239A20[4] = {
+    0x8,
+    0x0,
+    0x4,
+    0xC
+};
+
+static const u8 Unk_ov65_02239C04[18] = {
+    0x5,
+    0x4,
+    0x3,
+    0x2,
+    0x1,
+    0x0,
+    0x0,
+    0x0,
+    0x0,
+    0x0,
+    0x1,
+    0x2,
+    0x3,
+    0x4,
+    0x5,
+    0x5,
+    0x5,
+    0x5
+};
+
+static const WindowTemplate Unk_ov65_02239A24 = {
+    0x2,
+    0x19,
+    0xD,
+    0x5,
+    0x4,
+    0x1,
+    0x39
+};
+
+static u8 Unk_ov65_02239E5C[4] = {
+    0x7E,
+    0x7F,
+    0x7F,
+    0x7F
+};
+
+static const UnkStruct_ov65_022376D0 Unk_ov65_02239AD8[4] = {
+    { 0xD0, 0x30, 0x0, 0x0, 0x1, 0x0 },
+    { 0xE8, 0x48, 0x1, 0x0, 0x2, 0x0 },
+    { 0xD0, 0x60, 0x2, 0x0, 0x0, 0x0 },
+    { 0xB8, 0x48, 0x3, 0x0, 0x3, 0x0 }
+};
+
+static BOOL (*const Unk_ov65_02239B80[33])(UnkStruct_ov65_022367A8 *, UnkStruct_0207DE04 *, u32) = {
+    ov65_02237A70,
+    ov65_02237AA8,
+    ov65_02237AC0,
+    ov65_02237B9C,
+    ov65_02237BC4,
+    ov65_02237BF8,
+    ov65_02237C98,
+    ov65_02237CB0,
+    ov65_02237CCC,
+    ov65_02237CE4,
+    ov65_02237D18,
+    ov65_02237D60,
+    ov65_02237D98,
+    ov65_02237DD0,
+    ov65_02237DF8,
+    ov65_02237E24,
+    ov65_02237E54,
+    ov65_02237EA4,
+    ov65_02237EC0,
+    ov65_02237EF0,
+    ov65_02237F08,
+    ov65_02237F48,
+    ov65_02237FA0,
+    ov65_02237FB8,
+    ov65_02237FF8,
+    ov65_02238050,
+    ov65_0223806C,
+    ov65_022380AC,
+    ov65_022380E8,
+    ov65_02238104,
+    ov65_02238134,
+    ov65_0223815C,
+    ov65_02238190
+};
+
+static BOOL (*const Unk_ov65_02239B08[30])(UnkStruct_ov65_022367A8 *, UnkStruct_0207DE04 *, u32) = {
+    ov65_022381CC,
+    ov65_022381E4,
+    ov65_02238210,
+    ov65_02238250,
+    ov65_022382B0,
+    ov65_022382F0,
+    ov65_02238314,
+    ov65_02238350,
+    ov65_02238370,
+    ov65_022383AC,
+    ov65_022383D0,
+    ov65_0223846C,
+    ov65_022384BC,
+    ov65_0223850C,
+    ov65_02238528,
+    ov65_02238558,
+    ov65_02238594,
+    ov65_022385AC,
+    ov65_022385D4,
+    ov65_02238608,
+    ov65_02238660,
+    ov65_022386D0,
+    ov65_02238728,
+    ov65_0223875C,
+    ov65_0223878C,
+    ov65_022387AC,
+    ov65_022387E8,
+    ov65_02238838,
+    ov65_022388FC,
+    ov65_02238910
+};
+
+static void (*const Unk_ov65_02239A2C[4])(UnkStruct_ov65_022367A8 *, UnkStruct_ov65_02237908 *) = {
+    ov65_02237908,
+    ov65_0223790C,
+    ov65_02237940,
+    ov65_0223796C,
+};
+
+int ov65_0223648C(ApplicationManager *appMan, int *param1)
+{
+    UnkStruct_ov65_022367A8 *v0;
+    UnkStruct_0207DE04 *v1 = ApplicationManager_Args(appMan);
+    BOOL v2;
+
+    Overlay_LoadByID(FS_OVERLAY_ID(overlay63), 2);
+
+    v2 = CommManager_IsConnectedToWifi();
+    GF_ASSERT(v2 == 1);
+
+    Heap_Create(HEAP_ID_APPLICATION, HEAP_ID_96, 0x18000);
+    Heap_Create(HEAP_ID_APPLICATION, HEAP_ID_97, 0xa000);
+
+    v0 = ApplicationManager_NewData(appMan, sizeof(UnkStruct_ov65_022367A8), HEAP_ID_96);
+
+    MI_CpuFill8(v0, 0, sizeof(UnkStruct_ov65_022367A8));
+    MI_CpuFill8(v0->unk_00.unk_1C, 1, sizeof(u8) * 4);
+    MI_CpuFill8(v0->unk_00.unk_20, 1, sizeof(u8) * 4);
+
+    VramTransfer_New(16, HEAP_ID_96);
+
+    v0->unk_00.unk_00 = CommManager_GetUnk00();
+    v0->unk_00.unk_00->unk_00.unk_21 = v0->unk_00.unk_00->unk_00.unk_22;
+    v0->unk_00.unk_04 = ov65_02236794(&v0->unk_00);
+    v0->unk_00.unk_06 = 0xff;
+
+    sub_0209C390(v0);
+
+    ov65_0223760C(v0);
+    ov65_022367A8(v0, v1, HEAP_ID_96);
+
+    SetVBlankCallback(ov65_02236780, v0);
+    NetworkIcon_Init();
+
+    v0->unk_00.unk_27 = 1;
+
+    return 1;
+}
+
+int ov65_02236548(ApplicationManager *appMan, int *param1)
+{
+    UnkStruct_ov65_022367A8 *v0 = ApplicationManager_Data(appMan);
+    UnkStruct_0207DE04 *v1 = ApplicationManager_Args(appMan);
+    BOOL v2;
+
+    switch (*param1) {
+    case 0:
+        StartScreenFade(FADE_MAIN_ONLY, FADE_TYPE_BRIGHTNESS_IN, FADE_TYPE_BRIGHTNESS_IN, COLOR_BLACK, 6, 1, HEAP_ID_96);
+        (*param1)++;
+        break;
+    case 1:
+        if (IsScreenFadeDone()) {
+            (*param1)++;
+        }
+        break;
+    case 2:
+        if (v0->unk_00.unk_27) {
+            ov65_02237370(v0, v1, 96);
+        }
+
+        if (v0->unk_00.unk_04) {
+            if (CommInfo_IsInitialized() == 1) {
+                ov65_02237970(v0);
+                CommInfo_ServerSendArray();
+                ov65_0223782C(v0);
+            }
+
+            v2 = Unk_ov65_02239B80[v0->unk_00.unk_05](v0, v1, HEAP_ID_96);
+        } else {
+            v2 = Unk_ov65_02239B08[v0->unk_00.unk_05](v0, v1, HEAP_ID_96);
+
+            if (CommInfo_IsInitialized() == 1) {
+                ov65_02237860(v0, HEAP_ID_96);
+            }
+        }
+
+        if (ov65_02237660(v0)) {
+            ov65_02237034(v0, v1, HEAP_ID_96);
+        }
+
+        ov65_022377A4(v0);
+
+        if (v2 == 1) {
+            v1->unk_03 = v0->unk_00.unk_07;
+            v1->unk_04 = v0->unk_00.unk_11;
+            (*param1)++;
+        }
+        break;
+    case 3:
+        StartScreenFade(FADE_MAIN_ONLY, FADE_TYPE_BRIGHTNESS_OUT, FADE_TYPE_BRIGHTNESS_OUT, COLOR_BLACK, 6, 1, HEAP_ID_96);
+        (*param1)++;
+        break;
+    case 4:
+        if (IsScreenFadeDone()) {
+            return 1;
+        }
+
+        break;
+    }
+
+    ov65_022372B0(&v0->unk_30);
+    SpriteList_Update(v0->unk_30.unk_18);
+
+    return 0;
+}
+
+int ov65_0223668C(ApplicationManager *appMan, int *param1)
+{
+    UnkStruct_ov65_022367A8 *v0 = ApplicationManager_Data(appMan);
+    UnkStruct_0207DE04 *v1 = ApplicationManager_Args(appMan);
+
+    SetVBlankCallback(NULL, NULL);
+
+    ov65_0223761C(v0);
+    ov65_022377E8(v0);
+    ov65_02237504(v0);
+    ov65_022367F8(v0, HEAP_ID_96);
+
+    VramTransfer_Free();
+    ApplicationManager_FreeData(appMan);
+    Heap_Destroy(HEAP_ID_97);
+    Heap_Destroy(HEAP_ID_96);
+    Overlay_UnloadByID(FS_OVERLAY_ID(overlay63));
+
+    return 1;
+}
+
+void ov65_022366E4(UnkStruct_ov65_02236744 *param0, const UnkStruct_ov65_022366E4 *param1)
+{
+    if (param0->unk_00.unk_04 == 0) {
+        if (param1->unk_00 == CommSys_CurNetId()) {
+            switch (param1->unk_04) {
+            case 1:
+                param0->unk_00.unk_13 = 1;
+                break;
+            case 0:
+                param0->unk_00.unk_13 = 2;
+                break;
+            case 2:
+                param0->unk_00.unk_13 = 3;
+                break;
+            }
+        } else {
+            switch (param1->unk_04) {
+            case 1:
+                param0->unk_00.unk_28[param1->unk_00] = 1;
+                break;
+
+            case 0:
+            case 2:
+                if (CommInfo_IsInitialized() == 1) {
+                    CommInfo_InitPlayer(param1->unk_00);
+                }
+                break;
+            }
+        }
+    }
+}
+
+void ov65_02236744(UnkStruct_ov65_02236744 *param0)
+{
+    if (param0->unk_00.unk_2C == 0) {
+        param0->unk_00.unk_2C = 1;
+
+        CommTiming_StartSync(13);
+    }
+}
+
+void ov65_02236760(UnkStruct_ov65_02236744 *param0, const UnkStruct_ov65_02236760 *param1)
+{
+    if (param0->unk_00.unk_04 != 1) {
+        memcpy(param0->unk_00.unk_20, param1->unk_00, sizeof(u8) * 4);
+    }
+}
+
+static void ov65_02236780(void *param0)
+{
+    UnkStruct_ov65_022367A8 *v0 = param0;
+
+    Bg_RunScheduledUpdates(v0->unk_30.unk_00);
+    VramTransfer_Process();
+    RenderOam_Transfer();
+}
+
+static BOOL ov65_02236794(const UnkStruct_ov65_02236794 *param0)
+{
+    if (CommSys_CurNetId() == 0) {
+        return 1;
+    }
+
+    return 0;
+}
+
+static void ov65_022367A8(UnkStruct_ov65_022367A8 *param0, const UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    ov65_02236820();
+    ov65_02236840(&param0->unk_30, heapID);
+    ov65_02236A28(&param0->unk_30, param1, heapID);
+    ov65_02236C10(&param0->unk_30, param1, heapID);
+    ov65_02236C7C(&param0->unk_30, param1, heapID);
+    ov65_02237034(param0, param1, heapID);
+    ov65_02236D50(&param0->unk_30, heapID);
+}
+
+static void ov65_022367F8(UnkStruct_ov65_022367A8 *param0, u32 heapID)
+{
+    ov65_02236E04(&param0->unk_30);
+    ov65_02236C5C(&param0->unk_30);
+    ov65_02236B90(&param0->unk_30, heapID);
+    ov65_022369F0(&param0->unk_30);
+}
+
+static void ov65_02236820(void)
+{
+    GXBanks v0 = {
+        GX_VRAM_BG_128_A,
+        GX_VRAM_BGEXTPLTT_NONE,
+        GX_VRAM_SUB_BG_128_C,
+        GX_VRAM_SUB_BGEXTPLTT_NONE,
+        GX_VRAM_OBJ_128_B,
+        GX_VRAM_OBJEXTPLTT_NONE,
+        GX_VRAM_SUB_OBJ_16_I,
+        GX_VRAM_SUB_OBJEXTPLTT_NONE,
+        GX_VRAM_TEX_NONE,
+        GX_VRAM_TEXPLTT_NONE
+    };
+
+    GXLayers_SetBanks(&v0);
+}
+
+static void ov65_02236840(UnkStruct_ov65_02236840 *param0, u32 heapID)
+{
+    NARC *v0;
+
+    param0->unk_00 = BgConfig_New(heapID);
+
+    {
+        GraphicsModes v1 = {
+            GX_DISPMODE_GRAPHICS,
+            GX_BGMODE_0,
+            GX_BGMODE_0,
+            GX_BG0_AS_2D,
+        };
+
+        SetAllGraphicsModes(&v1);
+    }
+
+    {
+        BgTemplate v2 = {
+            .x = 0,
+            .y = 0,
+            .bufferSize = 0x800,
+            .baseTile = 0,
+            .screenSize = BG_SCREEN_SIZE_256x256,
+            .colorMode = GX_BG_COLORMODE_16,
+            .screenBase = GX_BG_SCRBASE_0xe000,
+            .charBase = GX_BG_CHARBASE_0x00000,
+            .bgExtPltt = GX_BG_EXTPLTT_01,
+            .priority = 2,
+            .areaOver = 0,
+            .mosaic = FALSE,
+        };
+
+        Bg_InitFromTemplate(param0->unk_00, BG_LAYER_MAIN_0, &v2, 0);
+        Bg_ClearTilesRange(BG_LAYER_MAIN_0, 32, 0, heapID);
+        Bg_ClearTilemap(param0->unk_00, BG_LAYER_MAIN_0);
+    }
+
+    {
+        BgTemplate v3 = {
+            .x = 0,
+            .y = 0,
+            .bufferSize = 0x800,
+            .baseTile = 0,
+            .screenSize = BG_SCREEN_SIZE_256x256,
+            .colorMode = GX_BG_COLORMODE_16,
+            .screenBase = GX_BG_SCRBASE_0xd000,
+            .charBase = GX_BG_CHARBASE_0x10000,
+            .bgExtPltt = GX_BG_EXTPLTT_01,
+            .priority = 1,
+            .areaOver = 0,
+            .mosaic = FALSE,
+        };
+
+        Bg_InitFromTemplate(param0->unk_00, BG_LAYER_MAIN_1, &v3, 0);
+        Bg_ClearTilesRange(BG_LAYER_MAIN_1, 32, 0, heapID);
+        Bg_ClearTilemap(param0->unk_00, BG_LAYER_MAIN_1);
+    }
+
+    {
+        BgTemplate v4 = {
+            .x = 0,
+            .y = 0,
+            .bufferSize = 0x800,
+            .baseTile = 0,
+            .screenSize = BG_SCREEN_SIZE_256x256,
+            .colorMode = GX_BG_COLORMODE_16,
+            .screenBase = GX_BG_SCRBASE_0xd800,
+            .charBase = GX_BG_CHARBASE_0x08000,
+            .bgExtPltt = GX_BG_EXTPLTT_23,
+            .priority = 0,
+            .areaOver = 0,
+            .mosaic = FALSE,
+        };
+
+        Bg_InitFromTemplate(param0->unk_00, BG_LAYER_MAIN_2, &v4, 0);
+        Bg_ClearTilesRange(BG_LAYER_MAIN_2, 32, 0, heapID);
+        Bg_ClearTilemap(param0->unk_00, BG_LAYER_MAIN_2);
+    }
+
+    GXLayers_EngineAToggleLayers(GX_PLANEMASK_BG3, 0);
+    GXLayers_EngineAToggleLayers(GX_PLANEMASK_OBJ, 1);
+    GXLayers_EngineBToggleLayers(GX_PLANEMASK_BG0, 0);
+    GXLayers_EngineBToggleLayers(GX_PLANEMASK_BG1, 0);
+    GXLayers_EngineBToggleLayers(GX_PLANEMASK_BG2, 0);
+    GXLayers_EngineBToggleLayers(GX_PLANEMASK_BG3, 0);
+    GXLayers_EngineBToggleLayers(GX_PLANEMASK_OBJ, 0);
+
+    v0 = NARC_ctor(NARC_INDEX_DATA__WIFIP2PMATCH, heapID);
+
+    Graphics_LoadPaletteFromOpenNARC(v0, 13, 0, 5 * 32, 1 * 32, heapID);
+    Graphics_LoadTilesToBgLayerFromOpenNARC(v0, 12, param0->unk_00, 2, 0 * 32, (24 * 2) * 32, 0, heapID);
+
+    param0->unk_244 = Graphics_GetScrnDataFromOpenNARC(v0, 14, 0, &param0->unk_248, heapID);
+
+    {
+        param0->unk_250 = Graphics_GetPlttDataFromOpenNARC(v0, 44, &param0->unk_254, heapID);
+
+        Graphics_LoadTilesToBgLayerFromOpenNARC(v0, 45, param0->unk_00, 0, 0, 0, 0, heapID);
+        Graphics_LoadTilemapToBgLayerFromOpenNARC(v0, 46, param0->unk_00, 0, 0, 0, 0, heapID);
+        ov65_022372EC(param0, 0);
+
+        param0->unk_258 = 3;
+        param0->unk_25A = 1;
+    }
+
+    NARC_dtor(v0);
+}
+
+static void ov65_022369F0(UnkStruct_ov65_02236840 *param0)
+{
+    Heap_Free(param0->unk_244);
+    Heap_Free(param0->unk_250);
+    Bg_FreeTilemapBuffer(param0->unk_00, BG_LAYER_MAIN_2);
+    Bg_FreeTilemapBuffer(param0->unk_00, BG_LAYER_MAIN_1);
+    Bg_FreeTilemapBuffer(param0->unk_00, BG_LAYER_MAIN_0);
+    Heap_Free(param0->unk_00);
+}
+
+static void ov65_02236A28(UnkStruct_ov65_02236840 *param0, const UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    int v0;
+
+    Font_LoadScreenIndicatorsPalette(PAL_LOAD_MAIN_BG, PLTT_OFFSET(1), heapID);
+
+    v0 = Options_Frame(SaveData_GetOptions(param1->saveData));
+
+    LoadMessageBoxGraphics(param0->unk_00, BG_LAYER_MAIN_1, 1, 2, v0, heapID);
+    LoadStandardWindowGraphics(param0->unk_00, BG_LAYER_MAIN_1, 1 + (18 + 12), 3, 0, heapID);
+    LoadStandardWindowGraphics(param0->unk_00, BG_LAYER_MAIN_2, 0 + (24 * 2), 4, 0, heapID);
+    Window_Add(param0->unk_00, &param0->unk_1F0, 1, 2, 19, 27, 4, 1, (1 + (18 + 12)) + 9);
+    Window_FillTilemap(&param0->unk_1F0, 15);
+    Window_DrawMessageBoxWithScrollCursor(&param0->unk_1F0, 1, 1, 2);
+    Window_Add(param0->unk_00, &param0->unk_200, 1, 1, 1, 27, 2, 1, ((1 + (18 + 12)) + 9) + (27 * 4));
+    Window_FillTilemap(&param0->unk_200, 15);
+    Window_DrawStandardFrame(&param0->unk_200, 1, 1 + (18 + 12), 3);
+    Window_Add(param0->unk_00, &param0->unk_210, 1, 2, 16, 28, 2, 1, (((1 + (18 + 12)) + 9) + (27 * 4)) + (27 * 2));
+    Window_FillTilemap(&param0->unk_210, 0);
+    Window_Add(param0->unk_00, &param0->unk_220, 1, 1, 5, 20, 8, 1, ((((1 + (18 + 12)) + 9) + (27 * 4)) + (27 * 2)) + (28 * 2));
+    Window_FillTilemap(&param0->unk_220, 15);
+    Window_DrawStandardFrame(&param0->unk_220, 1, 1 + (18 + 12), 3);
+    Window_Add(param0->unk_00, &param0->unk_230, 1, 23, 5, 7, 5, 1, (((((1 + (18 + 12)) + 9) + (27 * 4)) + (27 * 2)) + (28 * 2)) + (20 * 8));
+    Window_FillTilemap(&param0->unk_230, 15);
+}
+
+static void ov65_02236B90(UnkStruct_ov65_02236840 *param0, u32 heapID)
+{
+    ov65_02236F38(param0);
+
+    Window_EraseMessageBox(&param0->unk_1F0, 0);
+    Window_Remove(&param0->unk_1F0);
+    Window_EraseStandardFrame(&param0->unk_200, 0);
+    Window_Remove(&param0->unk_200);
+    Window_Remove(&param0->unk_210);
+    Window_EraseStandardFrame(&param0->unk_220, 0);
+    Window_Remove(&param0->unk_220);
+    Window_EraseStandardFrame(&param0->unk_230, 0);
+    Window_Remove(&param0->unk_230);
+
+    if (param0->unk_240 != NULL) {
+        Menu_DestroyForExit(param0->unk_240, heapID);
+    }
+}
+
+static void ov65_02236C10(UnkStruct_ov65_02236840 *param0, const UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    param0->unk_04 = StringTemplate_Default(heapID);
+    param0->unk_08 = MessageLoader_Init(MSG_LOADER_PRELOAD_ENTIRE_BANK, NARC_INDEX_MSGDATA__PL_MSG, TEXT_BANK_UNK_0674, heapID);
+    param0->unk_0C = String_Init(256, heapID);
+    param0->unk_10 = String_Init(256, heapID);
+    param0->unk_14 = 0xff;
+    param0->unk_16 = Options_TextFrameDelay(SaveData_GetOptions(param1->saveData));
+}
+
+static void ov65_02236C5C(UnkStruct_ov65_02236840 *param0)
+{
+    String_Free(param0->unk_10);
+    String_Free(param0->unk_0C);
+    MessageLoader_Free(param0->unk_08);
+    StringTemplate_Free(param0->unk_04);
+}
+
+static void ov65_02236C7C(UnkStruct_ov65_02236840 *param0, const UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    switch (param1->unk_00) {
+    case 0:
+        break;
+    case 1:
+        StringTemplate_SetPlazaMinigameName(param0->unk_04, 0, UnkEnum_ov66_022324D0_00);
+        break;
+    case 2:
+        StringTemplate_SetPlazaMinigameName(param0->unk_04, 0, UnkEnum_ov66_022324D0_01);
+        break;
+    case 3:
+        StringTemplate_SetPlazaMinigameName(param0->unk_04, 0, UnkEnum_ov66_022324D0_02);
+        break;
+    }
+
+    MessageLoader_GetString(param0->unk_08, Unk_ov65_02239E5C[param1->unk_00], param0->unk_10);
+    StringTemplate_Format(param0->unk_04, param0->unk_0C, param0->unk_10);
+    Text_AddPrinterWithParamsAndColor(&param0->unk_200, FONT_SYSTEM, param0->unk_0C, 0, 0, TEXT_SPEED_NO_TRANSFER, TEXT_COLOR(1, 2, 15), NULL);
+    Window_ScheduleCopyToVRAM(&param0->unk_200);
+    Window_ScheduleCopyToVRAM(&param0->unk_220);
+    MessageLoader_GetString(param0->unk_08, 128, param0->unk_0C);
+    Text_AddPrinterWithParamsAndColor(&param0->unk_210, FONT_SYSTEM, param0->unk_0C, 0, 0, TEXT_SPEED_NO_TRANSFER, TEXT_COLOR(1, 2, 0), NULL);
+    Window_ScheduleCopyToVRAM(&param0->unk_210);
+    Window_ScheduleCopyToVRAM(&param0->unk_1F0);
+}
+
+static void ov65_02236D50(UnkStruct_ov65_02236840 *param0, u32 heapID)
+{
+    int v0;
+
+    NNS_G2dInitOamManagerModule();
+    RenderOam_Init(0, 126, 0, 31, 0, 126, 0, 31, heapID);
+
+    {
+        CharTransferTemplate v1 = {
+            4, 128 * 1024, 16 * 1024, 0
+        };
+
+        v1.heapID = heapID;
+        CharTransfer_InitWithVramModes(&v1, GX_OBJVRAMMODE_CHAR_1D_128K, GX_OBJVRAMMODE_CHAR_1D_32K);
+    }
+
+    PlttTransfer_Init(4, heapID);
+    CharTransfer_ClearBuffers();
+    PlttTransfer_Clear();
+    ReserveVramForWirelessIconChars(NNS_G2D_VRAM_TYPE_2DMAIN, GX_OBJVRAMMODE_CHAR_1D_128K);
+    ReserveSlotsForWirelessIconPalette(NNS_G2D_VRAM_TYPE_2DMAIN);
+
+    param0->unk_18 = SpriteList_InitRendering(4, &param0->unk_1C, heapID);
+
+    for (v0 = 0; v0 < 4; v0++) {
+        param0->unk_1A8[v0] = SpriteResourceCollection_New(4, v0, heapID);
+    }
+
+    param0->unk_1B8 = ov63_0222BE18(4, heapID);
+    param0->unk_1BC = ov63_0222CCE4(param0->unk_18, NULL, 4, NNS_G2D_VRAM_TYPE_2DMAIN, heapID);
+}
+
+static void ov65_02236E04(UnkStruct_ov65_02236840 *param0)
+{
+    int v0;
+
+    ov63_0222CD9C(param0->unk_1BC);
+    ov63_0222BE58(param0->unk_1B8);
+
+    SpriteList_Delete(param0->unk_18);
+
+    for (v0 = 0; v0 < 4; v0++) {
+        SpriteResourceCollection_Delete(param0->unk_1A8[v0]);
+    }
+
+    CharTransfer_Free();
+    PlttTransfer_Free();
+    RenderOam_Free();
+}
+
+static void ov65_02236E44(UnkStruct_ov65_02236840 *param0, const UnkStruct_0207DE04 *param1, u32 param2, u32 heapID)
+{
+    ov65_02236E50(param0, param1, param2, 0, heapID);
+}
+
+static void ov65_02236E50(UnkStruct_ov65_02236840 *param0, const UnkStruct_0207DE04 *param1, u32 param2, u8 param3, u32 heapID)
+{
+    String *v0;
+    int v1;
+
+    if (param0->unk_14 != 0xff) {
+        if (Text_IsPrinterActive(param0->unk_14) != 0) {
+            Text_RemovePrinter(param0->unk_14);
+            param0->unk_14 = 0xff;
+        }
+    }
+
+    Window_FillTilemap(&param0->unk_1F0, 15);
+    v0 = String_Init(256, heapID);
+
+    MessageLoader_GetString(param0->unk_08, param2, v0);
+    StringTemplate_Format(param0->unk_04, param0->unk_0C, v0);
+
+    param0->unk_14 = Text_AddPrinterWithParamsAndColor(&param0->unk_1F0, FONT_MESSAGE, param0->unk_0C, 0, 0, param0->unk_16, TEXT_COLOR(1, 2, 15), NULL);
+
+    Window_ScheduleCopyToVRAM(&param0->unk_1F0);
+    String_Free(v0);
+
+    v1 = Options_Frame(SaveData_GetOptions(param1->saveData));
+
+    LoadMessageBoxGraphics(param0->unk_00, BG_LAYER_MAIN_1, 1, 2, v1, heapID);
+
+    param0->unk_15 = param3;
+}
+
+static BOOL ov65_02236EF8(UnkStruct_ov65_02236840 *param0)
+{
+    if (param0->unk_14 == 0xff) {
+        if (param0->unk_15 > 0) {
+            param0->unk_15--;
+            return 0;
+        }
+    } else {
+        if (Text_IsPrinterActive(param0->unk_14) == 0) {
+            if (param0->unk_14 != 0xff) {
+                param0->unk_14 = 0xff;
+            }
+        }
+    }
+
+    if ((param0->unk_14 == 0xff) && (param0->unk_15 == 0)) {
+        return 1;
+    }
+
+    return 0;
+}
+
+static void ov65_02236F38(UnkStruct_ov65_02236840 *param0)
+{
+    if (param0->unk_14 != 0xff) {
+        if (Text_IsPrinterActive(param0->unk_14) != 0) {
+            Text_RemovePrinter(param0->unk_14);
+        }
+
+        param0->unk_14 = 0xff;
+    }
+
+    Window_FillTilemap(&param0->unk_1F0, 15);
+    Window_ScheduleCopyToVRAM(&param0->unk_1F0);
+
+    param0->unk_15 = 0;
+}
+
+static void ov65_02236F70(UnkStruct_ov65_02236840 *param0, const UnkStruct_0207DE04 *param1, int param2, u32 heapID)
+{
+    String *v0 = String_Init(256, heapID);
+    String *v1 = String_Init(256, heapID);
+
+    ov65_0223726C(param0, param1, param2, 0, heapID);
+    ov65_02237284(param0, param1, param2, 1, heapID);
+
+    MessageLoader_GetString(param0->unk_08, 131, v0);
+    StringTemplate_Format(param0->unk_04, v1, v0);
+
+    Window_FillTilemap(&param0->unk_230, 15);
+    Text_AddPrinterWithParamsAndColor(&param0->unk_230, FONT_SYSTEM, v1, 0, 0, TEXT_SPEED_NO_TRANSFER, TEXT_COLOR(1, 2, 15), NULL);
+    Window_DrawStandardFrame(&param0->unk_230, 1, 1 + (18 + 12), 3);
+    Window_ScheduleCopyToVRAM(&param0->unk_230);
+
+    String_Free(v0);
+    String_Free(v1);
+}
+
+static void ov65_02237018(UnkStruct_ov65_02236840 *param0)
+{
+    Window_EraseStandardFrame(&param0->unk_230, 1);
+    Window_ClearAndScheduleCopyToVRAM(&param0->unk_230);
+}
+
+static void ov65_02237034(UnkStruct_ov65_022367A8 *param0, const UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    int v0;
+    int v1 = 4;
+
+    if (CommInfo_IsInitialized() == 0) {
+        return;
+    }
+
+    for (v0 = 0; v0 < v1; v0++) {
+        if ((v0 == 0) && (sub_02032DE0(v0) == 1)) {
+            ov65_0223709C(param0, &param0->unk_30, param1, v0, heapID);
+        } else {
+            if (sub_02032E00(v0) == 1) {
+                ov65_0223709C(param0, &param0->unk_30, param1, v0, heapID);
+            } else {
+                ov65_022371FC(&param0->unk_30, param1, v0, heapID);
+            }
+        }
+    }
+}
+
+static void ov65_0223709C(UnkStruct_ov65_022367A8 *param0, UnkStruct_ov65_02236840 *param1, const UnkStruct_0207DE04 *param2, int param3, u32 heapID)
+{
+    String *v0;
+    String *v1;
+    u8 v2;
+    u8 v3;
+
+    v0 = String_Init(256, heapID);
+    v1 = String_Init(256, heapID);
+
+    ov65_0223726C(param1, param2, param3, 0, heapID);
+
+    MessageLoader_GetString(param1->unk_08, 129, v0);
+    StringTemplate_Format(param1->unk_04, v1, v0);
+    Window_FillRectWithColor(&param1->unk_220, 15, 0, param3 * (2 * 8), 20 * 8, 2 * 8);
+    Text_AddPrinterWithParamsAndColor(&param1->unk_220, FONT_SYSTEM, v1, 0, param3 * (2 * 8), TEXT_SPEED_NO_TRANSFER, TEXT_COLOR(1, 2, 15), NULL);
+
+    ov65_02237284(param1, param2, param3, 0, heapID);
+
+    MessageLoader_GetString(param1->unk_08, 130, v0);
+    StringTemplate_Format(param1->unk_04, v1, v0);
+    Text_AddPrinterWithParamsAndColor(&param1->unk_220, FONT_SYSTEM, v1, 72, param3 * (2 * 8), TEXT_SPEED_NO_TRANSFER, TEXT_COLOR(1, 2, 15), NULL);
+    Window_ScheduleCopyToVRAM(&param1->unk_220);
+
+    if (param3 == CommSys_CurNetId()) {
+        if (param0->unk_00.unk_00->unk_00.unk_21) {
+            v2 = 2;
+        } else {
+            v2 = 1;
+        }
+
+        v3 = 0;
+    } else {
+        if (param0->unk_00.unk_20[param3]) {
+            v2 = 2;
+        } else {
+            v2 = 1;
+        }
+    }
+
+    Bg_CopyToTilemapRect(param1->unk_00, 2, 18, 5 + (param3 * 2), 2, 2, param1->unk_248->rawData, v2 * 2, 0, param1->unk_248->screenWidth / 8, param1->unk_248->screenHeight / 8);
+    Bg_ChangeTilemapRectPalette(param1->unk_00, 2, 18, 5 + (param3 * 2), 2, 2, 5);
+    Bg_ScheduleTilemapTransfer(param1->unk_00, 2);
+    String_Free(v0);
+    String_Free(v1);
+}
+
+static void ov65_022371FC(UnkStruct_ov65_02236840 *param0, const UnkStruct_0207DE04 *param1, int param2, u32 heapID)
+{
+    Window_FillRectWithColor(&param0->unk_220, 15, 0, param2 * (2 * 8), 20 * 8, 2 * 8);
+    Bg_CopyToTilemapRect(param0->unk_00, 2, 18, 5 + param2 * 2, 2, 2, param0->unk_248->rawData, 0 * 2, 0, param0->unk_248->screenWidth / 8, param0->unk_248->screenHeight / 8);
+    Bg_ScheduleTilemapTransfer(param0->unk_00, 2);
+    Window_ScheduleCopyToVRAM(&param0->unk_220);
+}
+
+static void ov65_0223726C(UnkStruct_ov65_02236840 *param0, const UnkStruct_0207DE04 *param1, int param2, int param3, u32 heapID)
+{
+    TrainerInfo *v0 = CommInfo_TrainerInfo(param2);
+    StringTemplate_SetPlayerName(param0->unk_04, param3, v0);
+}
+
+static void ov65_02237284(UnkStruct_ov65_02236840 *param0, const UnkStruct_0207DE04 *param1, int param2, int param3, u32 heapID)
+{
+    TrainerInfo *v0;
+    u16 v1;
+
+    v0 = CommInfo_TrainerInfo(param2);
+    v1 = TrainerInfo_ID_LowHalf(v0);
+
+    StringTemplate_SetNumber(param0->unk_04, param3, v1, 5, 2, 1);
+}
+
+static void ov65_022372B0(UnkStruct_ov65_02236840 *param0)
+{
+    if (param0->unk_258 <= 0) {
+        ov65_022372EC(param0, param0->unk_25A);
+        param0->unk_258 = 3;
+        param0->unk_25A = (param0->unk_25A + 1) % 18;
+    } else {
+        param0->unk_258--;
+    }
+}
+
+static void ov65_022372EC(UnkStruct_ov65_02236840 *param0, u32 param1)
+{
+    BOOL v0;
+    u16 *v1;
+    u32 v2 = Unk_ov65_02239C04[param1];
+    v1 = param0->unk_254->pRawData;
+    v0 = VramTransfer_Request(NNS_GFD_DST_2D_BG_PLTT_MAIN, 0 * 32, &v1[v2 * 16], 32);
+
+    GF_ASSERT(v0);
+}
+
+static BOOL ov65_0223731C(UnkStruct_ov65_022367A8 *param0, u32 heapID)
+{
+    param0->unk_00.unk_00->unk_00.unk_22 = 1 - param0->unk_00.unk_00->unk_00.unk_22;
+    param0->unk_00.unk_00->unk_00.unk_21 = param0->unk_00.unk_00->unk_00.unk_22;
+
+    NintendoWFC_SetVoiceChatEnabled(param0->unk_00.unk_00->unk_00.unk_21);
+    NintendoWFC_SetStatusData(&(param0->unk_00.unk_00->unk_00), sizeof(UnkStruct_0207E060));
+
+    if (param0->unk_00.unk_00->unk_00.unk_21 == 1) {
+        ov65_02237520(param0);
+    } else {
+        ov65_02237534(param0);
+    }
+
+    return param0->unk_00.unk_00->unk_00.unk_22;
+}
+
+static void ov65_02237370(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 param2)
+{
+    BOOL v0;
+    BOOL v1;
+    BOOL v2;
+
+    if (param0->unk_00.unk_04) {
+        if ((param0->unk_00.unk_05 == 27) || (param0->unk_00.unk_05 == 28) || (param0->unk_00.unk_05 == 29)) {
+            return;
+        }
+
+        if (CommManager_GetMatchmakingState() <= 2) {
+            if ((ov65_02237548(param0) <= 1) && (ov65_02237450(param0) == 0)) {
+                return;
+            }
+        }
+    } else {
+        if ((param0->unk_00.unk_05 == 15) || (param0->unk_00.unk_05 == 16) || (param0->unk_00.unk_05 == 17) || (param0->unk_00.unk_05 == 7) || (param0->unk_00.unk_05 == 6)) {
+            return;
+        }
+    }
+
+    v2 = ov65_02237A54(param0);
+    v0 = ov65_02237628(param0);
+
+    if (ov65_02237548(param0) > CommSys_ConnectedCount()) {
+        v1 = 1;
+    } else {
+        v1 = 0;
+    }
+
+    if ((CommManager_GetMatchmakingState() >= 3) || (CommManager_CheckWifiError()) || CommManager_GetDisconnectedWifi() || (CommSys_IsPlayerConnected(0) == 0) || (ov65_02237450(param0) == 0) || (v1 == 1) || (v2 == 1) || (v0 == 1)) {
+        if (param0->unk_00.unk_04) {
+            param0->unk_00.unk_05 = 27;
+        } else {
+            param0->unk_00.unk_05 = 15;
+        }
+    }
+}
+
+static void ov65_0223742C(UnkStruct_ov65_022367A8 *param0)
+{
+    if ((CommManager_GetMatchmakingState() > 3) || CommManager_GetDisconnectedWifi() || (CommManager_CheckWifiError())) {
+        param0->unk_00.unk_05 = 15;
+    }
+}
+
+static BOOL ov65_02237450(const UnkStruct_ov65_022367A8 *param0)
+{
+    if (CommSys_ConnectedCount() > 0) {
+        return 1;
+    }
+
+    return 0;
+}
+
+static BOOL ov65_02237464(u32 param0, u32 param1)
+{
+    BOOL v0 = CommManager_StartWifiBattle(param0);
+
+    if (v0 == 1) {
+        switch (param1) {
+        case 0:
+            CommManager_SetState_WifiPoffin();
+            break;
+        case 1:
+        case 2:
+        case 3:
+            CommManager_SetState_WifiClub();
+            break;
+        }
+    }
+
+    return v0;
+}
+
+static void ov65_02237498(UnkStruct_ov65_022367A8 *param0, const UnkStruct_0207DE04 *param1)
+{
+    switch (param1->unk_00) {
+    case 0:
+        param0->unk_00.unk_00->unk_00.unk_1B = 18;
+        break;
+    case 1:
+        param0->unk_00.unk_00->unk_00.unk_1B = 22;
+        break;
+    case 2:
+        param0->unk_00.unk_00->unk_00.unk_1B = 24;
+        break;
+    case 3:
+        param0->unk_00.unk_00->unk_00.unk_1B = 26;
+        break;
+    }
+
+    NintendoWFC_SetStatusData(&(param0->unk_00.unk_00->unk_00), sizeof(UnkStruct_0207E060));
+}
+
+static BOOL ov65_022374DC(UnkStruct_ov65_022367A8 *param0)
+{
+    if (param0->unk_00.unk_11 == 1) {
+        return 0;
+    }
+
+    if (ov65_02237450(param0) == 1) {
+        NintendoWFC_StartVoiceChat(HEAP_ID_97);
+        param0->unk_00.unk_11 = 1;
+        return 1;
+    }
+
+    return 0;
+}
+
+static BOOL ov65_02237504(UnkStruct_ov65_022367A8 *param0)
+{
+    if (param0->unk_00.unk_11 == 0) {
+        return 0;
+    }
+
+    NintendoWFC_TerminateVoiceChat();
+    param0->unk_00.unk_11 = 0;
+
+    return 1;
+}
+
+static void ov65_02237520(UnkStruct_ov65_022367A8 *param0)
+{
+    if (ov65_022374DC(param0)) {
+        Sound_AdjustVolumeForVoiceChat(Sound_GetCurrentBGM());
+    }
+}
+
+static void ov65_02237534(UnkStruct_ov65_022367A8 *param0)
+{
+    if (ov65_02237504(param0)) {
+        Sound_SetInitialVolumeForHandle(SOUND_HANDLE_TYPE_FIELD_BGM, 120);
+    }
+}
+
+static int ov65_02237548(UnkStruct_ov65_022367A8 *param0)
+{
+    if (param0->unk_00.unk_04) {
+        return CommInfo_CountReceived();
+    } else {
+        return CommInfo_CountReceived();
+    }
+}
+
+static BOOL ov65_02237550(UnkStruct_ov65_022367A8 *param0, u32 heapID)
+{
+    int v0;
+    int v1;
+    BOOL v2 = 1;
+
+    v1 = CommSys_CurNetId();
+    v1--;
+
+    for (v0 = v1; v0 >= 0; v0--) {
+        if (sub_02032DC4(v0) == 1) {
+            ov65_022376A0(param0, v0, heapID);
+        } else if (sub_02032E00(v0) == 0) {
+            v2 = 0;
+        }
+    }
+
+    return v2;
+}
+
+static void ov65_0223758C(UnkStruct_ov65_022367A8 *param0)
+{
+    int v0;
+    UnkStruct_ov65_022366E4 v1;
+    BOOL v2;
+
+    v1.unk_04 = 0;
+
+    for (v0 = 1; v0 < 4; v0++) {
+        if (sub_02032DC4(v0) == 1) {
+            v1.unk_00 = v0;
+            v2 = CommSys_SendData(22, &v1, sizeof(UnkStruct_ov65_022366E4));
+            GF_ASSERT(v2 == 1);
+            CommInfo_InitPlayer(v0);
+        }
+    }
+}
+
+static void ov65_022375CC(UnkStruct_ov65_022367A8 *param0)
+{
+    int v0;
+    UnkStruct_ov65_022366E4 v1;
+    BOOL v2;
+
+    v1.unk_04 = 0;
+
+    for (v0 = 1; v0 < 4; v0++) {
+        if (sub_02032DE0(v0) == 1) {
+            v1.unk_00 = v0;
+            v2 = CommSys_SendData(22, &v1, sizeof(UnkStruct_ov65_022366E4));
+            GF_ASSERT(v2 == 1);
+            CommInfo_InitPlayer(v0);
+        }
+    }
+}
+
+static void ov65_0223760C(UnkStruct_ov65_022367A8 *param0)
+{
+    NintendoWFC_SetConnectionClosedCB(ov65_02237654, param0);
+}
+
+static void ov65_0223761C(UnkStruct_ov65_022367A8 *param0)
+{
+    NintendoWFC_SetConnectionClosedCB(NULL, NULL);
+}
+
+static BOOL ov65_02237628(UnkStruct_ov65_022367A8 *param0)
+{
+    int v0;
+    BOOL v1 = 0;
+
+    for (v0 = 0; v0 < 4; v0++) {
+        if (param0->unk_00.unk_14[v0] == 1) {
+            if (sub_02032E00(param0->unk_00.unk_18[v0]) == 1) {
+                v1 = 1;
+            }
+
+            param0->unk_00.unk_14[v0] = 0;
+            param0->unk_00.unk_18[v0] = 0;
+        }
+    }
+
+    return v1;
+}
+
+static void ov65_02237654(u16 param0, void *param1)
+{
+    UnkStruct_ov65_022367A8 *v0 = param1;
+
+    v0->unk_00.unk_14[param0] = 1;
+    v0->unk_00.unk_18[param0] = param0;
+}
+
+static BOOL ov65_02237660(UnkStruct_ov65_022367A8 *param0)
+{
+    int v0;
+    BOOL v1 = 0;
+
+    for (v0 = 0; v0 < 4; v0++) {
+        if (param0->unk_00.unk_1C[v0] != param0->unk_00.unk_20[v0]) {
+            v1 = 1;
+        }
+
+        param0->unk_00.unk_1C[v0] = param0->unk_00.unk_20[v0];
+    }
+
+    if (param0->unk_00.unk_24) {
+        param0->unk_00.unk_24 = 0;
+        v1 = 1;
+    }
+
+    return v1;
+}
+
+static void ov65_02237698(UnkStruct_ov65_022367A8 *param0)
+{
+    param0->unk_00.unk_24 = 1;
+}
+
+static void ov65_022376A0(UnkStruct_ov65_022367A8 *param0, u32 param1, u32 heapID)
+{
+    if (sub_02032E00(param1) == 0) {
+        sub_02032E1C(param1);
+
+        param0->unk_00.unk_25 = param1;
+
+        ov65_022376D0(param0, param1, heapID);
+        ov65_02237698(param0);
+    }
+}
+
+static void ov65_022376D0(UnkStruct_ov65_022367A8 *param0, u32 param1, u32 heapID)
+{
+    UnkStruct_ov65_022376D0 v0;
+    TrainerInfo *v1;
+
+    if (param0->unk_30.unk_1C0[param1].unk_00 != NULL) {
+        return;
+    }
+
+    v0 = Unk_ov65_02239AD8[param1];
+
+    if (param1 != CommSys_CurNetId()) {
+        v1 = CommInfo_TrainerInfo(param1);
+        GF_ASSERT(v1 != NULL);
+        v0.unk_0A = TrainerInfo_Appearance(v1);
+    } else {
+        if (param0->unk_00.unk_00->unk_00.unk_1E == 0) {
+            v0.unk_0A = 0x0;
+        } else {
+            v0.unk_0A = 0x61;
+        }
+    }
+
+    param0->unk_30.unk_1C0[param1].unk_00 = ov63_0222BEC0(param0->unk_30.unk_1B8, &v0);
+
+    if (ov63_0222CE18(param0->unk_30.unk_1BC, v0.unk_0A) == 0) {
+        ov63_0222CDE8(param0->unk_30.unk_1BC, v0.unk_0A, 2, heapID);
+    }
+
+    param0->unk_30.unk_1C0[param1].unk_04 = ov63_0222CE44(param0->unk_30.unk_1BC, param0->unk_30.unk_1C0[param1].unk_00, 0, heapID);
+    ov63_0222D008(param0->unk_30.unk_1C0[param1].unk_04, 0);
+    param0->unk_30.unk_1C0[param1].unk_08++;
+}
+
+static void ov65_022377A4(UnkStruct_ov65_022367A8 *param0)
+{
+    int v0;
+
+    for (v0 = 0; v0 < 4; v0++) {
+        Unk_ov65_02239A2C[param0->unk_30.unk_1C0[v0].unk_08](param0, &param0->unk_30.unk_1C0[v0]);
+    }
+
+    ov63_0222BE84(param0->unk_30.unk_1B8);
+    ov63_0222CEE4(param0->unk_30.unk_1BC);
+}
+
+static void ov65_022377E8(UnkStruct_ov65_022367A8 *param0)
+{
+    ov63_0222CE24(param0->unk_30.unk_1BC);
+    memset(param0->unk_30.unk_1C0, 0, sizeof(UnkStruct_ov65_02237908) * 4);
+}
+
+static void ov65_02237808(UnkStruct_ov65_022367A8 *param0, u32 param1)
+{
+    UnkStruct_ov65_022366E4 v0;
+    BOOL v1;
+
+    v0.unk_00 = param1;
+    v0.unk_04 = 2;
+    v1 = CommSys_SendData(22, &v0, sizeof(UnkStruct_ov65_022366E4));
+
+    GF_ASSERT(v1 == 1);
+}
+
+static void ov65_0223782C(UnkStruct_ov65_022367A8 *param0)
+{
+    int v0;
+
+    for (v0 = 0; v0 < 4; v0++) {
+        if (param0->unk_00.unk_25 + 1 < v0) {
+            if (sub_02032DC4(v0) == 1) {
+                ov65_02237808(param0, v0);
+                CommInfo_InitPlayer(v0);
+            }
+        }
+    }
+}
+
+static void ov65_02237860(UnkStruct_ov65_022367A8 *param0, u32 heapID)
+{
+    int v0;
+
+    for (v0 = 0; v0 < 4; v0++) {
+        if (param0->unk_00.unk_28[v0] == 1) {
+            if (sub_02032DE0(v0) == 1) {
+                ov65_022376A0(param0, v0, heapID);
+                param0->unk_00.unk_28[v0] = 0;
+                param0->unk_00.unk_12 = 1;
+            }
+        }
+    }
+}
+
+static void ov65_0223789C(UnkStruct_ov65_022367A8 *param0)
+{
+    GF_ASSERT(param0->unk_30.unk_24C == NULL);
+    param0->unk_30.unk_24C = Window_AddWaitDial(&param0->unk_30.unk_1F0, 1);
+}
+
+static void ov65_022378C4(UnkStruct_ov65_022367A8 *param0, const UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    int v0;
+
+    if (param0->unk_30.unk_24C == NULL) {
+        return;
+    }
+
+    DestroyWaitDial(param0->unk_30.unk_24C);
+
+    param0->unk_30.unk_24C = NULL;
+    v0 = Options_Frame(SaveData_GetOptions(param1->saveData));
+
+    LoadMessageBoxGraphics(param0->unk_30.unk_00, 1, 1, 2, v0, heapID);
+}
+
+static void ov65_02237908(UnkStruct_ov65_022367A8 *param0, UnkStruct_ov65_02237908 *param1)
+{
+    return;
+}
+
+static void ov65_0223790C(UnkStruct_ov65_022367A8 *param0, UnkStruct_ov65_02237908 *param1)
+{
+    u32 v0;
+
+    ov63_0222CFA4(param1->unk_04, 0);
+    ov63_0222CFA8(param1->unk_04);
+    ov63_0222D008(param1->unk_04, 1);
+
+    param1->unk_08 = 2;
+    v0 = ov63_0222BF90(param1->unk_00, 6);
+    param1->unk_0A = 16 + Unk_ov65_02239A20[v0];
+}
+
+static void ov65_02237940(UnkStruct_ov65_022367A8 *param0, UnkStruct_ov65_02237908 *param1)
+{
+    ov63_0222CFB4(param1->unk_04);
+
+    param1->unk_0A--;
+
+    if (param1->unk_0A <= 0) {
+        ov63_0222CFC0(param1->unk_04);
+        ov63_0222CFA4(param1->unk_04, 1);
+        param1->unk_08 = 3;
+    }
+}
+
+static void ov65_0223796C(UnkStruct_ov65_022367A8 *param0, UnkStruct_ov65_02237908 *param1)
+{
+    return;
+}
+
+static void ov65_02237970(UnkStruct_ov65_022367A8 *param0)
+{
+    int v0;
+    int v1;
+    BOOL v2 = 0;
+    int v3;
+    int v4;
+    UnkStruct_ov65_02236760 v5;
+
+    if (CommInfo_IsInitialized() == 0) {
+        return;
+    }
+
+    v1 = CommInfo_CountReceived();
+
+    if (CommInfo_IsReceivingData()) {
+        if (!CommSys_IsCmdQueuedServer(5)) {
+            v2 = 1;
+        }
+    }
+
+    for (v0 = 0; v0 < v1; v0++) {
+        if (v0 == 0) {
+            v4 = param0->unk_00.unk_00->unk_00.unk_21;
+        } else {
+            v3 = sub_02032F40(v0);
+            GF_ASSERT(v3 != 32);
+            v4 = param0->unk_00.unk_00->unk_24[v3].unk_21;
+        }
+
+        if (param0->unk_00.unk_20[v0] != v4) {
+            v2 = 1;
+        }
+
+        param0->unk_00.unk_20[v0] = v4;
+    }
+
+    if (v2 == 1) {
+        BOOL v6;
+
+        memcpy(v5.unk_00, param0->unk_00.unk_20, sizeof(u8) * 4);
+        CommSys_SendData(24, &v5, sizeof(UnkStruct_ov65_02236760));
+    }
+}
+
+static BOOL ov65_02237A10(UnkStruct_ov65_022367A8 *param0)
+{
+    if (CommTiming_IsSyncState(13)) {
+        return 1;
+    }
+
+    return 0;
+}
+
+static void ov65_02237A24(UnkStruct_0207DE04 *param0, u32 heapID)
+{
+    void *journalEntryOnlineEvent;
+    JournalEntry *journalEntry;
+    UnkStruct_0207E060 *v2;
+
+    journalEntry = SaveData_GetJournal(param0->saveData);
+    journalEntryOnlineEvent = JournalEntry_CreateEventMisc(heapID, ONLINE_EVENT_WIFI_CLUB);
+
+    JournalEntry_SaveData(journalEntry, journalEntryOnlineEvent, JOURNAL_ONLINE_EVENT);
+}
+
+static void ov65_02237A44(UnkStruct_ov65_022367A8 *param0)
+{
+    param0->unk_00.unk_10 = 1;
+    param0->unk_00.unk_0C = (60 * 30);
+}
+
+static BOOL ov65_02237A54(UnkStruct_ov65_022367A8 *param0)
+{
+    if (param0->unk_00.unk_10 == 0) {
+        return 0;
+    }
+
+    if (param0->unk_00.unk_0C > 0) {
+        param0->unk_00.unk_0C--;
+        return 0;
+    }
+
+    return 1;
+}
+
+static BOOL ov65_02237A70(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    if (param0->unk_00.unk_00->unk_00.unk_21 == 1) {
+        ov65_02237520(param0);
+    }
+
+    NintendoWFC_SetDisconnectIfAlone(0);
+    CommManager_SetErrorHandling(0, 1);
+    ov65_022376D0(param0, CommSys_CurNetId(), heapID);
+
+    param0->unk_00.unk_05 = 1;
+
+    return 0;
+}
+
+static BOOL ov65_02237AA8(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    ov65_02236E44(&param0->unk_30, param1, 107, heapID);
+
+    param0->unk_00.unk_05 = 2;
+    return 0;
+}
+
+static BOOL ov65_02237AC0(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    BOOL v0 = ov65_02236EF8(&param0->unk_30);
+
+    if (v0 == 0) {
+        return 0;
+    }
+
+    if (ov65_02237450(param0) == 1) {
+        int v1;
+        UnkStruct_ov65_022366E4 v2;
+        BOOL v3;
+
+        v1 = CommInfo_NewNetworkId();
+
+        if (v1 != 0xff) {
+            if (param0->unk_00.unk_06 != 0) {
+                if (sub_02032F40(v1) == 32) {
+                    v2.unk_00 = v1;
+                    v2.unk_04 = 0;
+
+                    CommInfo_InitPlayer(v1);
+
+                    v3 = CommSys_SendData(22, &v2, sizeof(UnkStruct_ov65_022366E4));
+                    GF_ASSERT(v3 == 1);
+                } else {
+                    param0->unk_00.unk_06 = v1;
+                }
+            }
+        }
+    }
+
+    do {
+        if (gSystem.pressedKeys & PAD_BUTTON_A) {
+            Sound_PlayEffect(SEQ_SE_DP_DECIDE_sseq);
+
+            if (ov65_02237450(param0) == 0) {
+                param0->unk_00.unk_05 = 6;
+                break;
+            } else {
+                if (param1->unk_01 <= ov65_02237548(param0)) {
+                    param0->unk_00.unk_05 = 8;
+                    break;
+                } else {
+                    param0->unk_00.unk_05 = 6;
+                    break;
+                }
+            }
+        }
+
+        if (gSystem.pressedKeys & PAD_BUTTON_B) {
+            Sound_PlayEffect(SEQ_SE_DP_DECIDE_sseq);
+            param0->unk_00.unk_05 = 22;
+            break;
+        }
+
+        if (param0->unk_00.unk_06 != 0xff) {
+            Sound_PlayEffect(SEQ_SE_DP_DECIDE_sseq);
+            param0->unk_00.unk_05 = 3;
+            break;
+        }
+
+        if (gSystem.pressedKeys & PAD_BUTTON_X) {
+            param0->unk_00.unk_05 = 30;
+            Sound_PlayEffect(SEQ_SE_DP_DECIDE_sseq);
+            break;
+        }
+    } while (0);
+
+    return 0;
+}
+
+static BOOL ov65_02237B9C(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    ov65_02236F70(&param0->unk_30, param1, param0->unk_00.unk_06, heapID);
+    ov65_02236E44(&param0->unk_30, param1, 108, heapID);
+
+    param0->unk_00.unk_05 = 4;
+
+    return 0;
+}
+
+static BOOL ov65_02237BC4(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    BOOL v0 = ov65_02236EF8(&param0->unk_30);
+
+    if (v0 == 0) {
+        return 0;
+    }
+
+    param0->unk_30.unk_240 = Menu_MakeYesNoChoice(param0->unk_30.unk_00, &Unk_ov65_02239A24, 0 + (24 * 2), 4, heapID);
+    param0->unk_00.unk_05 = 5;
+
+    return 0;
+}
+
+static BOOL ov65_02237BF8(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    #ifdef SDK_BUILD_ARM
+    int v0;
+    #else
+    u64 v0;
+    #endif
+    UnkStruct_ov65_022366E4 v1;
+    BOOL v2;
+
+    v0 = Menu_ProcessInputAndHandleExit(param0->unk_30.unk_240, heapID);
+
+    if (v0 != MENU_NOTHING_CHOSEN) {
+        v1.unk_00 = param0->unk_00.unk_06;
+
+        if (v0 == 0) {
+            v1.unk_04 = 1;
+
+            ov65_022376A0(param0, param0->unk_00.unk_06, heapID);
+
+            if (param0->unk_00.unk_00->unk_00.unk_21 == 1) {
+                ov65_02237504(param0);
+                ov65_02237520(param0);
+            }
+
+            if (param1->unk_02 <= ov65_02237548(param0)) {
+                param0->unk_00.unk_05 = 8;
+            } else {
+                param0->unk_00.unk_05 = 1;
+            }
+        } else {
+            v1.unk_04 = 0;
+
+            CommInfo_InitPlayer(param0->unk_00.unk_06);
+
+            param0->unk_00.unk_05 = 1;
+        }
+
+        v2 = CommSys_SendData(22, &v1, sizeof(UnkStruct_ov65_022366E4));
+        GF_ASSERT(v2 == 1);
+
+        param0->unk_00.unk_06 = 0xff;
+        ov65_02237018(&param0->unk_30);
+        param0->unk_30.unk_240 = NULL;
+    }
+
+    return 0;
+}
+
+static BOOL ov65_02237C98(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    ov65_02236E44(&param0->unk_30, param1, 119, heapID);
+
+    param0->unk_00.unk_05 = 7;
+    return 0;
+}
+
+static BOOL ov65_02237CB0(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    BOOL v0 = ov65_02236EF8(&param0->unk_30);
+
+    if (v0 == 0) {
+        return 0;
+    }
+
+    param0->unk_00.unk_05 = 19;
+    return 0;
+}
+
+static BOOL ov65_02237CCC(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    ov65_02236E44(&param0->unk_30, param1, 111, heapID);
+
+    param0->unk_00.unk_05 = 9;
+    return 0;
+}
+
+static BOOL ov65_02237CE4(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    BOOL v0 = ov65_02236EF8(&param0->unk_30);
+
+    if (v0 == 0) {
+        return 0;
+    }
+
+    param0->unk_30.unk_240 = Menu_MakeYesNoChoice(param0->unk_30.unk_00, &Unk_ov65_02239A24, 0 + (24 * 2), 4, heapID);
+    param0->unk_00.unk_05 = 10;
+
+    return 0;
+}
+
+static BOOL ov65_02237D18(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    #ifdef SDK_BUILD_ARM
+    int v0 = Menu_ProcessInputAndHandleExit(param0->unk_30.unk_240, heapID);
+    #else
+    u64 v0 = Menu_ProcessInputAndHandleExit(param0->unk_30.unk_240, heapID);
+    #endif
+
+    if (v0 != MENU_NOTHING_CHOSEN) {
+        if (v0 == 0) {
+            param0->unk_00.unk_05 = 11;
+        } else {
+            if (param1->unk_02 <= ov65_02237548(param0)) {
+                param0->unk_00.unk_05 = 19;
+            } else {
+                param0->unk_00.unk_05 = 1;
+            }
+        }
+
+        param0->unk_30.unk_240 = NULL;
+    }
+
+    return 0;
+}
+
+static BOOL ov65_02237D60(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    param0->unk_00.unk_08 = 30;
+
+    ov65_0223758C(param0);
+    ov65_02236E44(&param0->unk_30, param1, 102, heapID);
+    ov65_0223789C(param0);
+    ov65_02237A44(param0);
+
+    param0->unk_00.unk_05 = 12;
+    NintendoWFC_ResetMatchmakingCancelState();
+
+    return 0;
+}
+
+static BOOL ov65_02237D98(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    int v0;
+
+    if (CommSys_ConnectedCount() != CommInfo_CountReceived()) {
+        ov65_0223758C(param0);
+        return 0;
+    }
+
+    v0 = NintendoWFC_CancelMatchmaking();
+
+    if (v0 == 0) {
+        return 0;
+    }
+
+    NintendoWFC_SetDisconnectIfAlone(1);
+    param0->unk_00.unk_05 = 13;
+
+    return 0;
+}
+
+static BOOL ov65_02237DD0(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    BOOL v0;
+
+    if (param0->unk_00.unk_08 == 0) {
+        v0 = CommSys_SendData(23, NULL, 0);
+
+        if (v0) {
+            param0->unk_00.unk_05 = 14;
+        }
+    } else {
+        param0->unk_00.unk_08--;
+    }
+
+    return 0;
+}
+
+static BOOL ov65_02237DF8(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    if (CommTiming_IsSyncState(13)) {
+        ov65_02237498(param0, param1);
+        CommTool_ClearReceivedTempDataAllPlayers();
+        CommTiming_StartSync(14);
+
+        param0->unk_00.unk_05 = 15;
+    }
+
+    return 0;
+}
+
+static BOOL ov65_02237E24(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    if (CommTiming_IsSyncState(14)) {
+        u16 v0 = param0->unk_00.unk_00->unk_00.unk_1B;
+        BOOL v1;
+
+        v1 = sub_02036614(CommSys_CurNetId(), &v0);
+
+        if (v1 == 1) {
+            param0->unk_00.unk_05 = 16;
+        }
+    }
+
+    return 0;
+}
+
+static BOOL ov65_02237E54(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    int v0;
+    int v1;
+    int v2;
+    const u16 *v3;
+    int v4;
+
+    v1 = ov65_02237548(param0);
+    v2 = CommSys_CurNetId();
+    v4 = 0;
+
+    for (v0 = 0; v0 < v1; v0++) {
+        if (v2 != v0) {
+            v3 = sub_0203664C(v0);
+
+            if (v3 != NULL) {
+                if (v3[0] == param0->unk_00.unk_00->unk_00.unk_1B) {
+                    v4++;
+                } else {
+                    param0->unk_00.unk_05 = 27;
+                }
+            }
+        } else {
+            v4++;
+        }
+    }
+
+    if (v4 == v1) {
+        param0->unk_00.unk_05 = 17;
+    }
+
+    return 0;
+}
+
+static BOOL ov65_02237EA4(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    CommManager_SetErrorHandling(1, 1);
+    CommTiming_StartSync(18);
+
+    param0->unk_00.unk_05 = 18;
+
+    return 0;
+}
+
+static BOOL ov65_02237EC0(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    if (CommTiming_IsSyncState(18)) {
+        param0->unk_00.unk_07 = 1;
+
+        ov65_02237A24(param1, heapID);
+        ov65_022378C4(param0, param1, heapID);
+
+        return 1;
+    }
+
+    return 0;
+}
+
+static BOOL ov65_02237EF0(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    ov65_02236E44(&param0->unk_30, param1, 120, heapID);
+    param0->unk_00.unk_05 = 20;
+
+    return 0;
+}
+
+static BOOL ov65_02237F08(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    BOOL v0 = ov65_02236EF8(&param0->unk_30);
+
+    if (v0 == 0) {
+        return 0;
+    }
+
+    param0->unk_30.unk_240 = Menu_MakeYesNoChoiceWithCursorAt(param0->unk_30.unk_00, &Unk_ov65_02239A24, 0 + (24 * 2), 4, 1, heapID);
+    param0->unk_00.unk_05 = 21;
+
+    return 0;
+}
+
+static BOOL ov65_02237F48(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    #ifdef SDK_BUILD_ARM
+    int v0 = Menu_ProcessInputAndHandleExit(param0->unk_30.unk_240, heapID);
+    #else
+    u64 v0 = Menu_ProcessInputAndHandleExit(param0->unk_30.unk_240, heapID);
+    #endif
+
+    if (v0 != MENU_NOTHING_CHOSEN) {
+        if (v0 == 0) {
+            param0->unk_00.unk_05 = 22;
+        } else {
+            if (ov65_02237450(param0)) {
+                if (param1->unk_02 <= ov65_02237548(param0)) {
+                    param0->unk_00.unk_05 = 8;
+                } else {
+                    param0->unk_00.unk_05 = 1;
+                }
+            } else {
+                param0->unk_00.unk_05 = 1;
+            }
+        }
+
+        param0->unk_30.unk_240 = NULL;
+    }
+
+    return 0;
+}
+
+static BOOL ov65_02237FA0(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    ov65_02236E44(&param0->unk_30, param1, 121, heapID);
+
+    param0->unk_00.unk_05 = 23;
+    return 0;
+}
+
+static BOOL ov65_02237FB8(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    BOOL v0 = ov65_02236EF8(&param0->unk_30);
+
+    if (v0 == 0) {
+        return 0;
+    }
+
+    param0->unk_30.unk_240 = Menu_MakeYesNoChoiceWithCursorAt(param0->unk_30.unk_00, &Unk_ov65_02239A24, 0 + (24 * 2), 4, 1, heapID);
+    param0->unk_00.unk_05 = 24;
+
+    return 0;
+}
+
+static BOOL ov65_02237FF8(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    #ifdef SDK_BUILD_ARM
+    int v0 = Menu_ProcessInputAndHandleExit(param0->unk_30.unk_240, heapID);
+    #else
+    u64 v0 = Menu_ProcessInputAndHandleExit(param0->unk_30.unk_240, heapID);
+    #endif
+
+    if (v0 != MENU_NOTHING_CHOSEN) {
+        if (v0 == 0) {
+            param0->unk_00.unk_05 = 25;
+        } else {
+            if (ov65_02237450(param0)) {
+                if (param1->unk_02 <= ov65_02237548(param0)) {
+                    param0->unk_00.unk_05 = 8;
+                } else {
+                    param0->unk_00.unk_05 = 1;
+                }
+            } else {
+                param0->unk_00.unk_05 = 1;
+            }
+        }
+
+        param0->unk_30.unk_240 = NULL;
+    }
+
+    return 0;
+}
+
+static BOOL ov65_02238050(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    ov65_02236E44(&param0->unk_30, param1, 122, heapID);
+
+    param0->unk_00.unk_08 = 30;
+    param0->unk_00.unk_05 = 26;
+
+    return 0;
+}
+
+static BOOL ov65_0223806C(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    BOOL v0 = ov65_02236EF8(&param0->unk_30);
+
+    if (v0 == 0) {
+        return 0;
+    }
+
+    param0->unk_00.unk_08--;
+
+    if (param0->unk_00.unk_08 > 0) {
+        return 0;
+    }
+
+    param0->unk_00.unk_07 = 0;
+
+    CommManager_EndWifiMatch();
+    ov65_022375CC(param0);
+    CommManager_SetState_LoginWifi();
+    CommManager_SetErrorHandling(0, 1);
+
+    return 1;
+}
+
+static BOOL ov65_022380AC(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    if (param0->unk_30.unk_240 != NULL) {
+        Menu_DestroyForExit(param0->unk_30.unk_240, heapID);
+        param0->unk_30.unk_240 = NULL;
+    }
+
+    ov65_02237018(&param0->unk_30);
+    ov65_022378C4(param0, param1, heapID);
+
+    param0->unk_00.unk_05 = 28;
+    return 0;
+}
+
+static BOOL ov65_022380E8(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    ov65_02236E44(&param0->unk_30, param1, 118, heapID);
+    param0->unk_00.unk_05 = 29;
+    ov65_022375CC(param0);
+
+    return 0;
+}
+
+static BOOL ov65_02238104(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    BOOL v0 = ov65_02236EF8(&param0->unk_30);
+
+    if (v0 == 0) {
+        return 0;
+    }
+
+    CommManager_EndWifiMatch();
+    CommManager_SetState_LoginWifi();
+    ov65_022375CC(param0);
+    param0->unk_00.unk_07 = 0;
+    CommManager_SetErrorHandling(0, 1);
+
+    return 1;
+}
+
+static BOOL ov65_02238134(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    u32 v0;
+
+    if (param0->unk_00.unk_00->unk_00.unk_21 == 1) {
+        v0 = 125;
+    } else {
+        v0 = 124;
+    }
+
+    ov65_02236E44(&param0->unk_30, param1, v0, heapID);
+
+    param0->unk_00.unk_05 = 31;
+    return 0;
+}
+
+static BOOL ov65_0223815C(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    BOOL v0 = ov65_02236EF8(&param0->unk_30);
+
+    if (v0 == 0) {
+        return 0;
+    }
+
+    param0->unk_30.unk_240 = Menu_MakeYesNoChoice(param0->unk_30.unk_00, &Unk_ov65_02239A24, 0 + (24 * 2), 4, heapID);
+    param0->unk_00.unk_05 = 32;
+
+    return 0;
+}
+
+static BOOL ov65_02238190(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    #ifdef SDK_BUILD_ARM
+    int v0 = Menu_ProcessInputAndHandleExit(param0->unk_30.unk_240, heapID);
+    #else
+    u64 v0 = Menu_ProcessInputAndHandleExit(param0->unk_30.unk_240, heapID);
+    #endif
+
+    if (v0 != MENU_NOTHING_CHOSEN) {
+        if (v0 == 0) {
+            ov65_0223731C(param0, heapID);
+
+            ov65_02237698(param0);
+        }
+
+        param0->unk_00.unk_05 = 1;
+        param0->unk_30.unk_240 = NULL;
+    }
+
+    return 0;
+}
+
+static BOOL ov65_022381CC(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    CommInfo_SendPlayerInfo();
+    CommManager_SetErrorHandling(0, 1);
+    param0->unk_00.unk_05 = 1;
+    return 0;
+}
+
+static BOOL ov65_022381E4(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    ov65_02237550(param0, heapID);
+
+    if (CommSys_IsPlayerConnected(0) == 0) {
+        param0->unk_00.unk_05 = 15;
+    } else {
+        if (sub_02032E00(0)) {
+            param0->unk_00.unk_05 = 2;
+        }
+    }
+
+    return 0;
+}
+
+static BOOL ov65_02238210(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    ov65_02237550(param0, heapID);
+    ov65_0223726C(&param0->unk_30, param1, 0, 0, heapID);
+    ov65_02236E44(&param0->unk_30, param1, 114, heapID);
+    ov65_0223789C(param0);
+
+    param0->unk_00.unk_05 = 3;
+
+    return 0;
+}
+
+static BOOL ov65_02238250(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    BOOL v0;
+
+    ov65_02237550(param0, heapID);
+
+    v0 = ov65_02236EF8(&param0->unk_30);
+
+    if (v0 == 0) {
+        return 0;
+    }
+
+    if (param0->unk_00.unk_13 != 0) {
+        ov65_022378C4(param0, param1, heapID);
+
+        switch (param0->unk_00.unk_13) {
+        case 1:
+            param0->unk_00.unk_05 = 4;
+            break;
+        case 2:
+            param0->unk_00.unk_05 = 6;
+            param0->unk_00.unk_2D = 116;
+            break;
+        case 3:
+            param0->unk_00.unk_05 = 6;
+            param0->unk_00.unk_2D = 132;
+
+            break;
+        }
+    }
+
+    return 0;
+}
+
+static BOOL ov65_022382B0(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    ov65_0223726C(&param0->unk_30, param1, 0, 0, heapID);
+    ov65_02236E50(&param0->unk_30, param1, 115, 30, heapID);
+    param0->unk_00.unk_05 = 5;
+    ov65_022376A0(param0, CommSys_CurNetId(), HEAP_ID_96);
+
+    return 0;
+}
+
+static BOOL ov65_022382F0(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    BOOL v0;
+
+    ov65_02237550(param0, heapID);
+
+    v0 = ov65_02236EF8(&param0->unk_30);
+
+    if (v0 == 0) {
+        return 0;
+    }
+
+    param0->unk_00.unk_05 = 8;
+
+    return 0;
+}
+
+static BOOL ov65_02238314(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    ov65_0223726C(&param0->unk_30, param1, 0, 0, heapID);
+    ov65_02236E44(&param0->unk_30, param1, param0->unk_00.unk_2D, heapID);
+
+    param0->unk_00.unk_05 = 7;
+
+    CommManager_EndWifiMatch();
+    CommManager_SetState_LoginWifi();
+
+    return 0;
+}
+
+static BOOL ov65_02238350(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    BOOL v0 = ov65_02236EF8(&param0->unk_30);
+
+    if (v0 == 0) {
+        return 0;
+    }
+
+    param0->unk_00.unk_07 = 0;
+    CommManager_SetErrorHandling(0, 1);
+
+    return 1;
+}
+
+static BOOL ov65_02238370(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    ov65_02237550(param0, heapID);
+    ov65_02236E44(&param0->unk_30, param1, 123, heapID);
+    ov65_0223789C(param0);
+
+    param0->unk_00.unk_05 = 9;
+
+    if (param0->unk_00.unk_00->unk_00.unk_21 == 1) {
+        ov65_02237520(param0);
+    }
+
+    return 0;
+}
+
+static BOOL ov65_022383AC(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    BOOL v0;
+
+    ov65_02237550(param0, heapID);
+    v0 = ov65_02236EF8(&param0->unk_30);
+
+    if (v0 == 0) {
+        return 0;
+    }
+
+    param0->unk_00.unk_05 = 10;
+
+    return 0;
+}
+
+static BOOL ov65_022383D0(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    ov65_02237550(param0, heapID);
+
+    if (param0->unk_00.unk_12) {
+        param0->unk_00.unk_12 = 0;
+
+        if (param0->unk_00.unk_00->unk_00.unk_21 == 1) {
+            ov65_02237504(param0);
+            ov65_02237520(param0);
+        }
+
+        ov65_02237698(param0);
+    }
+
+    if (ov65_02237A10(param0) == 1) {
+        CommTool_ClearReceivedTempDataAllPlayers();
+        CommTiming_StartSync(14);
+
+        ov65_022378C4(param0, param1, heapID);
+        ov65_02236E44(&param0->unk_30, param1, 102, heapID);
+        ov65_02237A44(param0);
+
+        param0->unk_00.unk_08 = (10 * 30);
+        ov65_0223789C(param0);
+        param0->unk_00.unk_05 = 11;
+    } else {
+        if (gSystem.pressedKeys & PAD_BUTTON_X) {
+            ov65_022378C4(param0, param1, heapID);
+            param0->unk_00.unk_05 = 18;
+        }
+    }
+
+    return 0;
+}
+
+static BOOL ov65_0223846C(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    int v0;
+
+    if (CommTiming_IsSyncState(14)) {
+        u16 v1 = param0->unk_00.unk_00->unk_00.unk_1B;
+        BOOL v2;
+
+        v0 = ov65_02237548(param0);
+
+        if (CommSys_ConnectedCount() != v0) {
+            param0->unk_00.unk_08--;
+
+            if (param0->unk_00.unk_08 <= 0) {
+                param0->unk_00.unk_05 = 15;
+            }
+
+            return 0;
+        }
+
+        v2 = sub_02036614(CommSys_CurNetId(), &v1);
+
+        if (v2 == 1) {
+            param0->unk_00.unk_05 = 12;
+        }
+    }
+
+    return 0;
+}
+
+static BOOL ov65_022384BC(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    int v0;
+    int v1;
+    int v2;
+    const u16 *v3;
+    int v4;
+
+    v1 = ov65_02237548(param0);
+    v2 = CommSys_CurNetId();
+    v4 = 0;
+
+    for (v0 = 0; v0 < v1; v0++) {
+        if (v2 != v0) {
+            v3 = sub_0203664C(v0);
+
+            if (v3 != NULL) {
+                if (v3[0] == param0->unk_00.unk_00->unk_00.unk_1B) {
+                    v4++;
+                } else {
+                    param0->unk_00.unk_05 = 15;
+                }
+            }
+        } else {
+            v4++;
+        }
+    }
+
+    if (v4 == v1) {
+        param0->unk_00.unk_05 = 13;
+    }
+
+    return 0;
+}
+
+static BOOL ov65_0223850C(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    CommManager_SetErrorHandling(1, 1);
+    CommTiming_StartSync(18);
+
+    param0->unk_00.unk_05 = 14;
+
+    return 0;
+}
+
+static BOOL ov65_02238528(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    if (CommTiming_IsSyncState(18)) {
+        ov65_022378C4(param0, param1, heapID);
+        param0->unk_00.unk_07 = 1;
+        ov65_02237A24(param1, heapID);
+
+        return 1;
+    }
+
+    return 0;
+}
+
+static BOOL ov65_02238558(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    if (param0->unk_30.unk_240 != NULL) {
+        Menu_DestroyForExit(param0->unk_30.unk_240, heapID);
+        param0->unk_30.unk_240 = NULL;
+    }
+
+    ov65_02237018(&param0->unk_30);
+    ov65_022378C4(param0, param1, heapID);
+
+    param0->unk_00.unk_05 = 16;
+
+    return 0;
+}
+
+static BOOL ov65_02238594(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    ov65_02236E44(&param0->unk_30, param1, 118, heapID);
+
+    param0->unk_00.unk_05 = 17;
+
+    return 0;
+}
+
+static BOOL ov65_022385AC(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    BOOL v0 = ov65_02236EF8(&param0->unk_30);
+
+    if (v0 == 0) {
+        return 0;
+    }
+
+    CommManager_EndWifiMatch();
+    CommManager_SetState_LoginWifi();
+
+    param0->unk_00.unk_07 = 0;
+
+    CommManager_SetErrorHandling(0, 1);
+
+    return 1;
+}
+
+static BOOL ov65_022385D4(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    u32 v0;
+
+    ov65_02237550(param0, heapID);
+
+    if (param0->unk_00.unk_00->unk_00.unk_21 == 1) {
+        v0 = 125;
+    } else {
+        v0 = 124;
+    }
+
+    ov65_02236E44(&param0->unk_30, param1, v0, heapID);
+
+    param0->unk_00.unk_05 = 19;
+    return 0;
+}
+
+static BOOL ov65_02238608(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    BOOL v0;
+
+    ov65_02237550(param0, heapID);
+
+    if (ov65_02237A10(param0) == 1) {
+        param0->unk_00.unk_05 = 10;
+        ov65_02236F38(&param0->unk_30);
+        return 0;
+    }
+
+    v0 = ov65_02236EF8(&param0->unk_30);
+
+    if (v0 == 0) {
+        return 0;
+    }
+
+    param0->unk_30.unk_240 = Menu_MakeYesNoChoice(param0->unk_30.unk_00, &Unk_ov65_02239A24, 0 + (24 * 2), 4, heapID);
+    param0->unk_00.unk_05 = 20;
+
+    return 0;
+}
+
+static BOOL ov65_02238660(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    #ifdef SDK_BUILD_ARM
+    int v0;
+    #else
+    u64 v0;
+    #endif
+
+    ov65_02237550(param0, heapID);
+
+    if (ov65_02237A10(param0) == 1) {
+        param0->unk_00.unk_05 = 10;
+        ov65_02236F38(&param0->unk_30);
+        Menu_DestroyForExit(param0->unk_30.unk_240, heapID);
+        param0->unk_30.unk_240 = NULL;
+        return 0;
+    }
+
+    v0 = Menu_ProcessInputAndHandleExit(param0->unk_30.unk_240, heapID);
+
+    if (v0 != MENU_NOTHING_CHOSEN) {
+        if (v0 == 0) {
+            ov65_0223731C(param0, heapID);
+
+            ov65_02237698(param0);
+        }
+
+        param0->unk_00.unk_05 = 8;
+        param0->unk_30.unk_240 = NULL;
+    }
+
+    return 0;
+}
+
+static BOOL ov65_022386D0(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    param0->unk_00.unk_26 = sub_02032F40(0);
+
+    GF_ASSERT(param0->unk_00.unk_26 != 32);
+    ov65_0223726C(&param0->unk_30, param1, 0, 0, heapID);
+
+    CommManager_EndWifiMatch();
+    param0->unk_00.unk_27 = 0;
+
+    ov65_02236E44(&param0->unk_30, param1, 132, heapID);
+    param0->unk_00.unk_05 = 22;
+
+    return 0;
+}
+
+static BOOL ov65_02238728(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    BOOL v0 = ov65_02236EF8(&param0->unk_30);
+
+    if (v0 == 0) {
+        return 0;
+    }
+
+    param0->unk_30.unk_240 = Menu_MakeYesNoChoice(param0->unk_30.unk_00, &Unk_ov65_02239A24, 0 + (24 * 2), 4, heapID);
+    param0->unk_00.unk_05 = 23;
+
+    return 0;
+}
+
+static BOOL ov65_0223875C(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    #ifdef SDK_BUILD_ARM
+    int v0 = Menu_ProcessInputAndHandleExit(param0->unk_30.unk_240, heapID);
+    #else
+    u64 v0 = Menu_ProcessInputAndHandleExit(param0->unk_30.unk_240, heapID);
+    #endif
+
+    if (v0 != MENU_NOTHING_CHOSEN) {
+        if (v0 == 0) {
+            param0->unk_00.unk_05 = 24;
+        } else {
+            param0->unk_00.unk_05 = 29;
+        }
+
+        param0->unk_30.unk_240 = NULL;
+    }
+
+    return 0;
+}
+
+static BOOL ov65_0223878C(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    ov65_02236E44(&param0->unk_30, param1, 17, heapID);
+    ov65_0223789C(param0);
+
+    param0->unk_00.unk_08 = 90;
+    param0->unk_00.unk_05 = 25;
+
+    return 0;
+}
+
+static BOOL ov65_022387AC(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    BOOL v0;
+
+    if (param0->unk_00.unk_08 > 0) {
+        param0->unk_00.unk_08--;
+        return 0;
+    }
+
+    v0 = ov65_02236EF8(&param0->unk_30);
+
+    if (v0 == 0) {
+        return 0;
+    }
+
+    if (ov65_02237464(param0->unk_00.unk_26, param1->unk_00)) {
+        param0->unk_00.unk_05 = 26;
+    }
+
+    return 0;
+}
+
+static BOOL ov65_022387E8(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    ov65_0223742C(param0);
+
+    if ((CommManager_GetMatchmakingState() == 1) && (CommSys_IsPlayerConnected(0) == 1)) {
+        sub_0203632C(0);
+        ov65_022378C4(param0, param1, heapID);
+        StartScreenFade(FADE_MAIN_ONLY, FADE_TYPE_BRIGHTNESS_OUT, FADE_TYPE_BRIGHTNESS_OUT, COLOR_BLACK, 6, 1, heapID);
+        param0->unk_00.unk_05 = 27;
+    }
+
+    return 0;
+}
+
+static BOOL ov65_02238838(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    if (IsScreenFadeDone()) {
+        CommInfo_Init(param1->saveData, NULL);
+
+        param0->unk_00.unk_27 = 1;
+
+        {
+            ov65_022377E8(param0);
+            ov65_022367F8(param0, heapID);
+
+            memset(&param0->unk_30, 0, sizeof(UnkStruct_ov65_02236840));
+
+            ov65_0223760C(param0);
+            ov65_022367A8(param0, param1, heapID);
+            NetworkIcon_Init();
+        }
+
+        {
+            param0->unk_00.unk_12 = 0;
+            param0->unk_00.unk_13 = 0;
+
+            memset(param0->unk_00.unk_14, 0, sizeof(u8) * 4);
+            memset(param0->unk_00.unk_18, 0, sizeof(u8) * 4);
+
+            MI_CpuFill8(param0->unk_00.unk_1C, 1, sizeof(u8) * 4);
+            MI_CpuFill8(param0->unk_00.unk_20, 1, sizeof(u8) * 4);
+
+            param0->unk_00.unk_24 = 0;
+            param0->unk_00.unk_26 = 0;
+
+            memset(param0->unk_00.unk_28, 0, sizeof(u8) * 4);
+        }
+
+        StartScreenFade(FADE_MAIN_ONLY, FADE_TYPE_BRIGHTNESS_IN, FADE_TYPE_BRIGHTNESS_IN, COLOR_BLACK, 6, 1, heapID);
+
+        param0->unk_00.unk_05 = 28;
+    }
+
+    return 0;
+}
+
+static BOOL ov65_022388FC(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    if (IsScreenFadeDone()) {
+        param0->unk_00.unk_05 = 0;
+    }
+
+    return 0;
+}
+
+static BOOL ov65_02238910(UnkStruct_ov65_022367A8 *param0, UnkStruct_0207DE04 *param1, u32 heapID)
+{
+    CommManager_EndWifiMatch();
+    CommManager_SetState_LoginWifi();
+
+    param0->unk_00.unk_07 = 0;
+    CommManager_SetErrorHandling(0, 1);
+
+    return 1;
+}

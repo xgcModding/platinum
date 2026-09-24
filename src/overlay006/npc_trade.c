@@ -1,0 +1,151 @@
+#include "overlay006/npc_trade.h"
+
+#include <nitro.h>
+#include <string.h>
+
+#include "constants/npc_trades.h"
+
+#include "field/field_system.h"
+#include "overlay006/struct_npc_trade_animation_template.h"
+
+#include "graphics.h"
+#include "heap.h"
+#include "map_header.h"
+#include "message.h"
+#include "party.h"
+#include "pokemon.h"
+#include "save_catchrecords.h"
+#include "save_player.h"
+#include "string_gf.h"
+#include "trainer_info.h"
+#include "unk_020559DC.h"
+#include "unk_02092494.h"
+
+static inline String *NPCTrade_GetOTName(enum HeapID heapID, u32 npcTradeID);
+static String *NPCTrade_GetNickname(enum HeapID heapID, u32 npcTradeID);
+static void NPCTrade_CreateMon(Pokemon *mon, NPCTradeMon *npcTrade, u32 level, u32 npcTradeID, enum HeapID heapID, u32 mapID);
+
+NPCTradeData *NPCTrade_Init(enum HeapID heapID, u32 npcTradeID)
+{
+    GF_ASSERT(npcTradeID < MAX_NPC_TRADES);
+
+    NPCTradeData *data = Heap_Alloc(heapID, sizeof(NPCTradeData));
+    memset(data, 0, sizeof(NPCTradeData));
+
+    data->npcTradeMon = LoadMemberFromNARC(NARC_INDEX_FIELDDATA__POKEMON_TRADE__FLD_TRADE, npcTradeID, FALSE, heapID, FALSE);
+    data->heapID = heapID;
+    data->npcTradeID = npcTradeID;
+    data->mon = Pokemon_New(heapID);
+    data->trainerInfo = TrainerInfo_New(heapID);
+
+    TrainerInfo_Init(data->trainerInfo);
+    String *string = NPCTrade_GetOTName(heapID, npcTradeID);
+
+    charcode_t otName[128];
+    String_ToChars(string, otName, NELEMS(otName));
+    String_Free(string);
+    TrainerInfo_SetName(data->trainerInfo, otName);
+    TrainerInfo_SetGender(data->trainerInfo, data->npcTradeMon->otGender);
+
+    return data;
+}
+
+void NPCTrade_Free(NPCTradeData *data)
+{
+    Heap_Free(data->npcTradeMon);
+    Heap_Free(data->mon);
+    Heap_Free(data->trainerInfo);
+    Heap_Free(data);
+}
+
+u32 NPCTrade_GetSpecies(const NPCTradeData *data)
+{
+    return data->npcTradeMon->species;
+}
+
+u32 NPCTrade_GetRequestedSpecies(const NPCTradeData *data)
+{
+    return data->npcTradeMon->requestedSpecies;
+}
+
+void NPCTrade_ReceiveMon(FieldSystem *fieldSystem, NPCTradeData *data, int slot)
+{
+    Party_AddPokemonBySlotIndex(SaveData_GetParty(fieldSystem->saveData), slot, data->mon);
+    SaveData_UpdateCatchRecords(fieldSystem->saveData, data->mon);
+}
+
+void NPCTrade_FillAnimationTemplate(FieldSystem *fieldSystem, NPCTradeData *data, int slot, TradeAnimationTemplate *animationConfig, Pokemon *givingMon, Pokemon *receivingMon)
+{
+    Party *party = SaveData_GetParty(fieldSystem->saveData);
+    Pokemon *partyMon = Party_GetPokemonBySlotIndex(party, slot);
+    u32 level = Pokemon_GetValue(partyMon, MON_DATA_LEVEL, NULL);
+
+    NPCTrade_CreateMon(data->mon, data->npcTradeMon, level, data->npcTradeID, data->heapID, fieldSystem->location->mapHeaderID);
+
+    Pokemon_Copy(partyMon, givingMon);
+    Pokemon_Copy(data->mon, receivingMon);
+
+    animationConfig->sendingPokemon = Pokemon_GetBoxPokemon(givingMon);
+    animationConfig->receivingPokemon = Pokemon_GetBoxPokemon(receivingMon);
+    animationConfig->otherTrainer = data->trainerInfo;
+    animationConfig->tradeType = TRADE_TYPE_NORMAL;
+    animationConfig->options = SaveData_GetOptions(fieldSystem->saveData);
+
+    int timeOfDay = FieldSystem_GetTimeOfDay(fieldSystem);
+    if (timeOfDay == TIMEOFDAY_MORNING || timeOfDay == TIMEOFDAY_DAY) {
+        animationConfig->background = TRADE_BACKGROUND_DAY;
+    } else if (timeOfDay == TIMEOFDAY_TWILIGHT) {
+        animationConfig->background = TRADE_BACKGROUND_EVENING;
+    } else {
+        animationConfig->background = TRADE_BACKGROUND_NIGHT;
+    }
+}
+
+static inline String *NPCTrade_GetOTName(enum HeapID heapID, u32 npcTradeID)
+{
+    return NPCTrade_GetNickname(heapID, MAX_NPC_TRADES + npcTradeID);
+}
+
+static String *NPCTrade_GetNickname(enum HeapID heapID, u32 npcTradeID)
+{
+    MessageLoader *loader = MessageLoader_Init(MSG_LOADER_PRELOAD_ENTIRE_BANK, NARC_INDEX_MSGDATA__PL_MSG, TEXT_BANK_NPC_TRADE_NAMES, heapID);
+    String *string = MessageLoader_GetNewString(loader, npcTradeID);
+    MessageLoader_Free(loader);
+    return string;
+}
+
+static void NPCTrade_CreateMon(Pokemon *mon, NPCTradeMon *npcTradeMon, u32 level, u32 npcTradeID, enum HeapID heapID, u32 mapID)
+{
+    Pokemon_InitWith(mon, npcTradeMon->species, level, INIT_IVS_RANDOM, TRUE, npcTradeMon->personality, OTID_SET, npcTradeMon->otID);
+
+    String *string = NPCTrade_GetNickname(heapID, npcTradeID);
+    Pokemon_SetValue(mon, MON_DATA_NICKNAME_STRING, string);
+    String_Free(string);
+
+    u8 hasNickname = TRUE;
+    Pokemon_SetValue(mon, MON_DATA_HAS_NICKNAME, &hasNickname);
+    Pokemon_SetValue(mon, MON_DATA_HP_IV, &npcTradeMon->hpIV);
+    Pokemon_SetValue(mon, MON_DATA_ATK_IV, &npcTradeMon->atkIV);
+    Pokemon_SetValue(mon, MON_DATA_DEF_IV, &npcTradeMon->defIV);
+    Pokemon_SetValue(mon, MON_DATA_SPEED_IV, &npcTradeMon->speedIV);
+    Pokemon_SetValue(mon, MON_DATA_SPATK_IV, &npcTradeMon->spAtkIV);
+    Pokemon_SetValue(mon, MON_DATA_SPDEF_IV, &npcTradeMon->spDefIV);
+    Pokemon_SetValue(mon, MON_DATA_COOL, &npcTradeMon->cool);
+    Pokemon_SetValue(mon, MON_DATA_BEAUTY, &npcTradeMon->beauty);
+    Pokemon_SetValue(mon, MON_DATA_CUTE, &npcTradeMon->cute);
+    Pokemon_SetValue(mon, MON_DATA_SMART, &npcTradeMon->smart);
+    Pokemon_SetValue(mon, MON_DATA_TOUGH, &npcTradeMon->tough);
+    Pokemon_SetValue(mon, MON_DATA_HELD_ITEM, &npcTradeMon->heldItem);
+
+    string = NPCTrade_GetOTName(heapID, npcTradeID);
+    Pokemon_SetValue(mon, MON_DATA_OT_NAME_STRING, string);
+    String_Free(string);
+
+    Pokemon_SetValue(mon, MON_DATA_OT_GENDER, &npcTradeMon->otGender);
+    Pokemon_SetValue(mon, MON_DATA_LANGUAGE, &npcTradeMon->language);
+
+    UpdateMonStatusAndTrainerInfo(mon, NULL, 1, MapHeader_GetMapLabelTextID(mapID), heapID);
+    Pokemon_CalcLevelAndStats(mon);
+
+    GF_ASSERT(!Pokemon_IsShiny(mon));
+}

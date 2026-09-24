@@ -1,0 +1,398 @@
+#ifndef POKEPLATINUM_PARTY_MENU_DEFS_H
+#define POKEPLATINUM_PARTY_MENU_DEFS_H
+
+#include "constants/graphics.h"
+#include "constants/pokemon.h"
+
+#include "struct_defs/tv.h"
+
+#include "field/field_system_decl.h"
+
+#include "bag.h"
+#include "battle_regulation.h"
+#include "bg_window.h"
+#include "field_move_tasks.h"
+#include "font_special_chars.h"
+#include "g3d_pipeline.h"
+#include "game_options.h"
+#include "grid_menu_cursor_position.h"
+#include "mail.h"
+#include "menu.h"
+#include "message.h"
+#include "particle_system.h"
+#include "party.h"
+#include "pokedex_heightweight.h"
+#include "sprite.h"
+#include "sprite_system.h"
+#include "string_gf.h"
+#include "string_list.h"
+#include "string_template.h"
+
+#define NUM_MENU_PALETTES 8
+#define NUM_MENU_COLORS   (PALETTE_SIZE * NUM_MENU_PALETTES)
+
+#define PARTY_MENU_SHOW_CONFIRM (1 << 0)
+#define PARTY_MENU_SHOW_CANCEL  (1 << 1)
+#define PARTY_MENU_SHOW_ALL     (PARTY_MENU_SHOW_CONFIRM | PARTY_MENU_SHOW_CANCEL)
+
+#define PARTY_MENU_SLOT_CANCEL (MAX_PARTY_SIZE + 1)
+
+#define MEMBER_PANEL_WIDTH  16
+#define MEMBER_PANEL_HEIGHT 6
+
+#define MEMBER_HEALTHBAR_XPOS  6
+#define MEMBER_HEALTHBAR_YPOS  3
+#define MEMBER_HEALTHBAR_WIDTH 9
+#define MEMBER_HEALTHBAR_EMPTY 0x17
+
+enum PartyMenuMode {
+    PARTY_MENU_MODE_FIELD = 0,
+    PARTY_MENU_MODE_BATTLE,
+    PARTY_MENU_MODE_SELECT_CONFIRM,
+    PARTY_MENU_MODE_SELECT_NO_PROMPT,
+    PARTY_MENU_MODE_UNK_04,
+    PARTY_MENU_MODE_USE_ITEM,
+    PARTY_MENU_MODE_TEACH_MOVE,
+    PARTY_MENU_MODE_TEACH_MOVE_DONE,
+    PARTY_MENU_MODE_LEVEL_MOVE_DONE,
+    PARTY_MENU_MODE_GIVE_ITEM,
+    PARTY_MENU_MODE_GIVE_ITEM_DONE,
+    PARTY_MENU_MODE_GIVE_MAIL,
+    PARTY_MENU_MODE_GIVE_MAIL_DONE,
+    PARTY_MENU_MODE_CONTEST,
+    PARTY_MENU_MODE_MAILBOX,
+    PARTY_MENU_MODE_BALL_SEAL,
+    PARTY_MENU_MODE_USE_EVO_ITEM,
+    PARTY_MENU_MODE_BATTLE_TOWER,
+    PARTY_MENU_MODE_DAYCARE,
+    PARTY_MENU_MODE_NPC_TRADE,
+    PARTY_MENU_MODE_FEED_POFFIN,
+    PARTY_MENU_MODE_SELECT_EGG,
+    PARTY_MENU_MODE_BATTLE_HALL,
+    PARTY_MENU_MODE_BATTLE_CASTLE,
+};
+
+enum PartyMenuType {
+    PARTY_MENU_TYPE_BASIC = 0,
+    PARTY_MENU_TYPE_DOUBLE_BATTLE,
+    PARTY_MENU_TYPE_MULTI_BATTLE,
+};
+
+enum PartyMenuExitCodes {
+    PARTY_MENU_EXIT_CODE_DONE = 0,
+    PARTY_MENU_EXIT_CODE_SUMMARY,
+    PARTY_MENU_EXIT_CODE_2,
+    PARTY_MENU_EXIT_CODE_GIVE_ITEM,
+    PARTY_MENU_EXIT_CODE_OVERWRITE_MOVE_TM_HM,
+    PARTY_MENU_EXIT_CODE_OVERWRITE_MOVE_LEVEL_UP,
+    PARTY_MENU_EXIT_CODE_WRITE_MAIL,
+    PARTY_MENU_EXIT_CODE_READ_MAIL,
+    PARTY_MENU_EXIT_CODE_EVOLVE_BY_ITEM,
+    PARTY_MENU_EXIT_CODE_EVOLVE_BY_LEVEL,
+    PARTY_MENU_EXIT_CODE_RETURN_TO_BAG,
+    PARTY_MENU_EXIT_CODE_CUT,
+    PARTY_MENU_EXIT_CODE_FLY,
+    PARTY_MENU_EXIT_CODE_SURF,
+    PARTY_MENU_EXIT_CODE_STRENGTH,
+    PARTY_MENU_EXIT_CODE_DEFOG,
+    PARTY_MENU_EXIT_CODE_ROCK_SMASH,
+    PARTY_MENU_EXIT_CODE_WATERFALL,
+    PARTY_MENU_EXIT_CODE_ROCK_CLIMB,
+    PARTY_MENU_EXIT_CODE_FLASH,
+    PARTY_MENU_EXIT_CODE_TELEPORT,
+    PARTY_MENU_EXIT_CODE_DIG,
+    PARTY_MENU_EXIT_CODE_SWEET_SCENT,
+    PARTY_MENU_EXIT_CODE_CHATTER
+};
+
+#define PARTY_MENU_MODE_HIDE_CANCEL_FLAG (1 << 7)
+
+enum PartyMenuWindow {
+    PARTY_MENU_WIN_NAME_MEMB0 = 0,
+    PARTY_MENU_WIN_LEVEL_MEMB0,
+    PARTY_MENU_WIN_HP_MEMB0,
+    PARTY_MENU_WIN_HEALTHBAR_MEMB0,
+    PARTY_MENU_WIN_COMMENT_MEMB0,
+    PARTY_MENU_WIN_NAME_MEMB1,
+    PARTY_MENU_WIN_LEVEL_MEMB1,
+    PARTY_MENU_WIN_HP_MEMB1,
+    PARTY_MENU_WIN_HEALTHBAR_MEMB1,
+    PARTY_MENU_WIN_COMMENT_MEMB1,
+    PARTY_MENU_WIN_NAME_MEMB2,
+    PARTY_MENU_WIN_LEVEL_MEMB2,
+    PARTY_MENU_WIN_HP_MEMB2,
+    PARTY_MENU_WIN_HEALTHBAR_MEMB2,
+    PARTY_MENU_WIN_COMMENT_MEMB2,
+    PARTY_MENU_WIN_NAME_MEMB3,
+    PARTY_MENU_WIN_LEVEL_MEMB3,
+    PARTY_MENU_WIN_HP_MEMB3,
+    PARTY_MENU_WIN_HEALTHBAR_MEMB3,
+    PARTY_MENU_WIN_COMMENT_MEMB3,
+    PARTY_MENU_WIN_NAME_MEMB4,
+    PARTY_MENU_WIN_LEVEL_MEMB4,
+    PARTY_MENU_WIN_HP_MEMB4,
+    PARTY_MENU_WIN_HEALTHBAR_MEMB4,
+    PARTY_MENU_WIN_COMMENT_MEMB4,
+    PARTY_MENU_WIN_NAME_MEMB5,
+    PARTY_MENU_WIN_LEVEL_MEMB5,
+    PARTY_MENU_WIN_HP_MEMB5,
+    PARTY_MENU_WIN_HEALTHBAR_MEMB5,
+    PARTY_MENU_WIN_COMMENT_MEMB5,
+    PARTY_MENU_WIN_CONFIRM_BUTTON,
+    PARTY_MENU_WIN_CANCEL_BUTTON,
+    PARTY_MENU_WIN_SHORT_MESSAGE,
+    PARTY_MENU_WIN_MEDIUM_MESSAGE,
+    PARTY_MENU_WIN_LONG_MESSAGE,
+    PARTY_MENU_WIN_GIVE_ITEM_OR_MAIL,
+    PARTY_MENU_WIN_MOVE_LIST,
+
+    NUM_PARTY_MENU_WINS,
+};
+
+#define PARTY_MENU_WIN_NUM_PER_MEMBER (PARTY_MENU_WIN_NAME_MEMB1)
+
+enum PartyMenuString {
+    PARTY_MENU_STR_SWITCH = 0,
+    PARTY_MENU_STR_SUMMARY,
+    PARTY_MENU_STR_ITEM,
+    PARTY_MENU_STR_ITEM_GIVE,
+    PARTY_MENU_STR_ITEM_TAKE,
+    PARTY_MENU_STR_MAIL,
+    PARTY_MENU_STR_MAIL_READ,
+    PARTY_MENU_STR_MAIL_TAKE,
+    PARTY_MENU_STR_MAIL_STORE,
+    PARTY_MENU_STR_CANCEL,
+    PARTY_MENU_STR_SEPARATOR,
+    PARTY_MENU_STR_ENTER,
+    PARTY_MENU_STR_NO_ENTRY,
+    PARTY_MENU_STR_ENTER_2,
+    PARTY_MENU_STR_SET,
+    PARTY_MENU_STR_CONFIRM,
+    PARTY_MENU_STR_MOVE0,
+    PARTY_MENU_STR_MOVE1,
+    PARTY_MENU_STR_MOVE2,
+    PARTY_MENU_STR_MOVE3,
+
+    NUM_PARTY_MENU_STRS,
+};
+
+enum PartyMenuSprite {
+    PARTY_MENU_SPRITE_POKE_BALL_MEMB0 = 0,
+    PARTY_MENU_SPRITE_POKE_BALL_MEMB1,
+    PARTY_MENU_SPRITE_POKE_BALL_MEMB2,
+    PARTY_MENU_SPRITE_POKE_BALL_MEMB3,
+    PARTY_MENU_SPRITE_POKE_BALL_MEMB4,
+    PARTY_MENU_SPRITE_POKE_BALL_MEMB5,
+    PARTY_MENU_SPRITE_CURSOR_NORMAL,
+    PARTY_MENU_SPRITE_CURSOR_SWITCH,
+    PARTY_MENU_SPRITE_CONFIRM_BUTTON,
+    PARTY_MENU_SPRITE_CANCEL_BUTTON,
+    PARTY_MENU_SPRITE_STATUS_ICON_MEMB0,
+    PARTY_MENU_SPRITE_STATUS_ICON_MEMB1,
+    PARTY_MENU_SPRITE_STATUS_ICON_MEMB2,
+    PARTY_MENU_SPRITE_STATUS_ICON_MEMB3,
+    PARTY_MENU_SPRITE_STATUS_ICON_MEMB4,
+    PARTY_MENU_SPRITE_STATUS_ICON_MEMB5,
+    PARTY_MENU_SPRITE_HELD_ITEM_MEMB0,
+    PARTY_MENU_SPRITE_HELD_ITEM_MEMB1,
+    PARTY_MENU_SPRITE_HELD_ITEM_MEMB2,
+    PARTY_MENU_SPRITE_HELD_ITEM_MEMB3,
+    PARTY_MENU_SPRITE_HELD_ITEM_MEMB4,
+    PARTY_MENU_SPRITE_HELD_ITEM_MEMB5,
+    PARTY_MENU_SPRITE_BALL_SEAL_MEMB0,
+    PARTY_MENU_SPRITE_BALL_SEAL_MEMB1,
+    PARTY_MENU_SPRITE_BALL_SEAL_MEMB2,
+    PARTY_MENU_SPRITE_BALL_SEAL_MEMB3,
+    PARTY_MENU_SPRITE_BALL_SEAL_MEMB4,
+    PARTY_MENU_SPRITE_BALL_SEAL_MEMB5,
+    PARTY_MENU_SPRITE_TOUCH_BUTTON_EFFECT,
+
+    NUM_PARTY_MENU_SPRITES,
+};
+
+typedef struct PartyMenu {
+    Party *party;
+    Bag *bag;
+    Mailbox *mailbox;
+    Options *options;
+    TVBroadcast *broadcast;
+    BattleRegulation *battleRegulation;
+    FieldMoveContext *fieldMoveContext;
+    FieldSystem *fieldSystem;
+    u8 mode;
+    u8 type;
+    u8 selectedMonSlot;
+    u8 menuSelectionResult;
+    u16 usedItemID;
+    u16 learnedMove;
+    u8 selectedMoveSlot;
+    u8 unk_29;
+    u8 contestType;
+    u8 contestRank;
+    u8 selectionOrder[MAX_PARTY_SIZE]; // 0 is unselected, 1-6 are 1 + the selection order for the party slot
+    u8 minSelectionSlots : 4;
+    u8 maxSelectionSlots : 4;
+    u8 reqLevel;
+    int levelUpMoveIndex;
+    u16 evoTargetSpecies;
+    u8 padding_3A[2];
+    int evoType;
+} PartyMenu;
+
+typedef struct PartyMenuMember {
+    String *name;
+    u16 species;
+    u16 curHP;
+    u16 maxHP;
+    u16 level;
+    u16 heldItem;
+    u16 statusIcon : 12;
+    u16 hideGenderMarker : 1;
+    u16 gender : 2;
+    u16 isContestEligible : 1;
+    u8 isEgg;
+    u8 form;
+    u16 ballSeal;
+    s8 panelXPos;
+    s8 panelYPos;
+    s16 spriteXDelta;
+    s16 spriteYDelta;
+    s16 statusXPos;
+    s16 statusYPos;
+    s16 itemXPos;
+    s16 itemYPos;
+    Sprite *sprite;
+    u8 unk_28;
+    u8 isPresent;
+} PartyMenuMember;
+
+typedef struct PartyMenuFormChange {
+    int state;
+    int elapsedFrames;
+    int framesBeforeFormChange;
+    int species;
+    u32 narcIdx;
+    int partySlot;
+    ParticleSystem *ps;
+} PartyMenuFormChange;
+
+#define PARTY_MENU_MEMBER_PANEL_SIZE_TILES 96
+
+typedef struct PartyOrderSwitchData {
+    u16 bufPanels[2][PARTY_MENU_MEMBER_PANEL_SIZE_TILES];
+    u16 bufWindows[2][PARTY_MENU_MEMBER_PANEL_SIZE_TILES];
+    u8 slots[2];
+    u8 sides[2];
+    u8 inProgress;
+    u8 state;
+    u8 scrollTicker;
+} PartyOrderSwitchData;
+
+enum MonHPTransferIndex {
+    HP_TRANSFER_HP_BUFFER,
+    HP_TRANSFER_STATE,
+    HP_TRANSFER_COUNTER,
+    HP_TRANSFER_JOURNAL_MOVE_IDX,
+    HP_TRANSFER_INDEX_MAX
+};
+
+enum HpTransferState {
+    HP_TRANSFER_STATE_HANDLE_INPUT,
+    HP_TRANSFER_STATE_SELECT_TARGET,
+    HP_TRANSFER_STATE_DONATE_HP,
+    HP_TRANSFER_STATE_RECEIVE_HP,
+    HP_TRANSFER_STATE_CONFIRM_DONE
+};
+
+enum PartyMenuState {
+    PARTY_MENU_STATE_START,
+    PARTY_MENU_STATE_DEFAULT,
+    PARTY_MENU_STATE_HANDLE_PARTY_MENU_ACTION,
+    PARTY_MENU_STATE_WAIT_AB_PRESS,
+    PARTY_MENU_STATE_USE_ITEM,
+    PARTY_MENU_STATE_EXEC_CALLBACK,
+    PARTY_MENU_STATE_WAIT_MOVE_LIST_SELECTION,
+    PARTY_MENU_STATE_USE_SACRED_ASH,
+    PARTY_MENU_STATE_GIVE_ITEM,
+    PARTY_MENU_STATE_SHOW_ITEM_SWAP_CONFIRMATION,
+    PARTY_MENU_STATE_HELD_ITEM_SWAP,
+    PARTY_MENU_STATE_CONFIRM_ITEM_UPDATE,
+    PARTY_MENU_STATE_12,
+    PARTY_MENU_STATE_13,
+    PARTY_MENU_STATE_14,
+    PARTY_MENU_STATE_HANDLE_CONTEXT_MENU_INPUT,
+    PARTY_MENU_STATE_16,
+    PARTY_MENU_STATE_PRINTING,
+    PARTY_MENU_STATE_PRINTING_FORM_CHANGE,
+    PARTY_MENU_STATE_FORM_CHANGE,
+    PARTY_MENU_STATE_WAIT_AB_PRESS_2,
+    PARTY_MENU_STATE_TEACH_MOVE,
+    PARTY_MENU_STATE_TEACH_MOVE_HANDLE_INPUT,
+    PARTY_MENU_STATE_WAIT_AB_PRESS_CHOOSE_MONS,
+    PARTY_MENU_STATE_SHOW_MESSAGE_THEN_NEXT_STATE,
+    PARTY_MENU_STATE_WAIT_AB_PRESS_BEFORE_FADE,
+    PARTY_MENU_STATE_DRAW_YES_NO_CHOICE,
+    PARTY_MENU_STATE_27,
+    PARTY_MENU_STATE_SELECT_SWITCH_SLOT,
+    PARTY_MENU_STATE_DO_SWITCH,
+    PARTY_MENU_STATE_HP_TRANSFER_FIELD_MOVE,
+    PARTY_MENU_STATE_WAIT_FORM_CHANGE,
+    PARTY_MENU_STATE_FADE_OUT,
+    PARTY_MENU_STATE_WAIT_FADE_OUT,
+};
+
+typedef struct PartyMenuApplication PartyMenuApplication;
+typedef enum PartyMenuState (*PartyMenuCallback)(PartyMenuApplication *);
+
+struct PartyMenuApplication {
+    BgConfig *bgConfig;
+    Window windows[NUM_PARTY_MENU_WINS];
+    Window menuWindows[1]; // There is only ever 1 here, but it is never unrolled by the compiler
+    u16 leadMemberPanel[PARTY_MENU_MEMBER_PANEL_SIZE_TILES];
+    u16 backMemberPanel[PARTY_MENU_MEMBER_PANEL_SIZE_TILES];
+    u16 noneMemberPanel[PARTY_MENU_MEMBER_PANEL_SIZE_TILES];
+    u16 colors[NUM_MENU_COLORS];
+    PartyMenu *partyMenu;
+    SpriteSystem *spriteSystem;
+    SpriteManager *spriteMan;
+    Sprite *sprites[NUM_PARTY_MENU_SPRITES];
+    ManagedSprite *sprites_unused[NUM_PARTY_MENU_SPRITES];
+    FontSpecialCharsContext *specialChars;
+    MessageLoader *messageLoader;
+    StringTemplate *template;
+    String *tmpString;
+    String *tmpFormat;
+    String *menuStrings[NUM_PARTY_MENU_STRS];
+    StringList *contextMenuChoices;
+    Menu *contextMenu;
+    PartyMenuMember partyMembers[MAX_PARTY_SIZE];
+    const GridMenuCursorPosition *cursorPosTable;
+    PartyOrderSwitchData orderSwitch;
+    PartyMenuCallback callback;
+    struct {
+        PartyMenuCallback onYes;
+        PartyMenuCallback onNo;
+    } yesnoCallbacks;
+    u8 unk_B0C;
+    u8 unk_B0D;
+    union {
+        u8 stateAfterMessage;
+        u8 sacredAshState;
+    };
+    u8 selectTargetSlot : 6;
+    u8 inTargetSlotMode : 1;
+    u8 hideCancel : 1;
+    u8 textPrinterID;
+    u8 currPartySlot;
+    u8 prevPartySlot;
+    u8 callbackState;
+    union {
+        u16 monStats[STAT_MAX];
+        u16 monHpTransfer[HP_TRANSFER_INDEX_MAX];
+    };
+    HeightWeightData *heightWeight;
+    PartyMenuFormChange *formChanger;
+    G3DPipelineBuffers *formChange3DPipeline;
+};
+
+#endif // POKEPLATINUM_PARTY_MENU_DEFS_H

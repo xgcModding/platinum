@@ -1,0 +1,8 @@
+#ifndef res_words_word_bank_naix
+#define res_words_word_bank_naix
+
+#define word_bank_o 0
+
+#define res_words_word_bank_COUNT 1
+
+#endif 

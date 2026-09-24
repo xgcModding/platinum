@@ -1,0 +1,14 @@
+#ifndef MSGENC_RES_TEXT_BANK_ROWAN_INTRO_TV_APP_H
+#define MSGENC_RES_TEXT_BANK_ROWAN_INTRO_TV_APP_H
+
+
+
+
+
+
+
+
+#define RowanIntroTv_TextId 0
+#define TEXT_BANK_ROWAN_INTRO_TV_APP_ENTRY_COUNT 1
+
+#endif 

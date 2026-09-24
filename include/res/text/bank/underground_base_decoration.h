@@ -1,0 +1,67 @@
+#ifndef MSGENC_RES_TEXT_BANK_UNDERGROUND_BASE_DECORATION_H
+#define MSGENC_RES_TEXT_BANK_UNDERGROUND_BASE_DECORATION_H
+
+
+#define UndergroundBaseDecoration_Text_Decor 0
+
+#define UndergroundBaseDecoration_Text_Decorate 1
+
+#define UndergroundBaseDecoration_Text_PutAway 2
+
+#define UndergroundBaseDecoration_Text_MoveGoods 3
+
+#define UndergroundBaseDecoration_Text_Cancel 4
+
+
+#define UndergroundBaseDecoration_Text_DecorateDescription 5
+
+
+#define UndergroundBaseDecoration_Text_PutAwayDescription 6
+
+
+#define UndergroundBaseDecoration_Text_MoveGoodsDescription 7
+
+#define UndergroundBaseDecoration_Text_CancelDescription 8
+
+#define UndergroundBaseDecoration_Text_GoodsSet 9
+
+#define UndergroundBaseDecoration_Text_GoodsSetTemplate 10
+
+#define UndergroundBaseDecoration_Text_GoodWasPlaced 11
+
+#define UndergroundBaseDecoration_Text_CantPlaceHere 12
+
+
+#define UndergroundBaseDecoration_Text_GoodReturnedToPC 13
+
+#define UndergroundBaseDecoration_Text_BigBoulderRemoved 14
+
+#define UndergroundBaseDecoration_Text_CantRemoveBigBoulder 15
+
+#define UndergroundBaseDecoration_Text_CantMoveBigBoulder 16
+
+
+#define UndergroundBaseDecoration_Text_CanRemove1MoreBoulder 17
+
+#define UndergroundBaseDecoration_Text_CantRemoveMoreBoulders 18
+
+
+#define UndergroundBaseDecoration_Text_NoGoodsInPC 19
+
+
+#define UndergroundBaseDecoration_Text_DisplayLimitReached 20
+
+
+#define UndergroundBaseDecoration_Text_GoodAlreadyDisplayed 21
+
+#define UndergroundBaseDecoration_Text_CantPutAwayPC 22
+
+#define UndergroundBaseDecoration_Text_CantMovePC 23
+
+#define UndergroundBaseDecoration_Text_QuitDecorating_Unused 24
+
+
+#define UndergroundBaseDecoration_Text_CanRemoveXMoreBoulders 25
+#define TEXT_BANK_UNDERGROUND_BASE_DECORATION_ENTRY_COUNT 26
+
+#endif 

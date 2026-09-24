@@ -1,0 +1,14 @@
+#ifndef res_graphics_underground_top_screen_underground_top_screen_naix
+#define res_graphics_underground_top_screen_underground_top_screen_naix
+
+#define background_tiles_NCLR 0
+#define background_tiles_NCGR 1
+#define background_NSCR 2
+#define map_markers_NCLR 3
+#define map_markers_NCGR 4
+#define map_markers_cell_NCER 5
+#define map_markers_anim_NANR 6
+
+#define res_graphics_underground_top_screen_underground_top_screen_COUNT 7
+
+#endif 

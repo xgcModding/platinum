@@ -1,0 +1,352 @@
+#include <nitro.h>
+#include <string.h>
+
+#include "bg_window.h"
+#include "font.h"
+#include "gx_layers.h"
+#include "heap.h"
+#include "main.h"
+#include "menu.h"
+#include "message.h"
+#include "overlay_manager.h"
+#include "render_window.h"
+#include "savedata.h"
+#include "screen_fade.h"
+#include "sound.h"
+#include "sound_playback.h"
+#include "string_gf.h"
+#include "system.h"
+#include "text.h"
+
+FS_EXTERN_OVERLAY(game_opening);
+
+typedef struct {
+    enum HeapID heapID;
+    int unk_04;
+    int unk_08;
+    int unk_0C;
+    String *unk_10;
+    BgConfig *unk_14;
+    MessageLoader *unk_18;
+    Window unk_1C;
+    Menu *unk_2C;
+    SaveData *saveData;
+    void *unk_34;
+} UnkStruct_02099DFC;
+
+void EnqueueApplication(FSOverlayID param0, const ApplicationManagerTemplate *param1);
+int sub_02099DFC(ApplicationManager *appMan, int *param1);
+int sub_02099E38(ApplicationManager *appMan, int *param1);
+int sub_02099F54(ApplicationManager *appMan, int *param1);
+static void sub_02099F74(void *param0);
+static void sub_02099F80(UnkStruct_02099DFC *param0);
+static void sub_0209A044(UnkStruct_02099DFC *param0);
+static void sub_0209A098(UnkStruct_02099DFC *param0);
+static void sub_0209A0E0(UnkStruct_02099DFC *param0);
+static BOOL sub_0209A0F4(UnkStruct_02099DFC *param0);
+static BOOL sub_0209A200(UnkStruct_02099DFC *param0, u32 param1, int param2, int param3);
+
+extern const ApplicationManagerTemplate gTitleScreenAppTemplate;
+
+const ApplicationManagerTemplate Unk_020F8A48 = {
+    sub_02099DFC,
+    sub_02099E38,
+    sub_02099F54,
+    0xFFFFFFFF
+};
+
+static const WindowTemplate Unk_020F89E4 = {
+    0x0,
+    0x2,
+    0x13,
+    0x1B,
+    0x4,
+    0x1,
+    0x16D
+};
+
+static const WindowTemplate Unk_020F89EC = {
+    0x0,
+    0x19,
+    0xD,
+    0x6,
+    0x4,
+    0x1,
+    0x155
+};
+
+int sub_02099DFC(ApplicationManager *appMan, int *param1)
+{
+    UnkStruct_02099DFC *v0;
+
+    Heap_Create(HEAP_ID_APPLICATION, HEAP_ID_88, 0x20000);
+
+    v0 = ApplicationManager_NewData(appMan, sizeof(UnkStruct_02099DFC), HEAP_ID_88);
+    memset(v0, 0, sizeof(UnkStruct_02099DFC));
+
+    v0->heapID = HEAP_ID_88;
+    v0->unk_04 = 0;
+    v0->saveData = ((ApplicationArgs *)ApplicationManager_Args(appMan))->saveData;
+
+    return 1;
+}
+
+int sub_02099E38(ApplicationManager *appMan, int *param1)
+{
+    UnkStruct_02099DFC *v0 = ApplicationManager_Data(appMan);
+    int v1 = 0;
+
+    switch (*param1) {
+    case 0:
+        Sound_StopBGM(SEQ_TITLE01_sseq, 0);
+        Sound_ConfigureBGMChannelsAndReverb(SOUND_CHANNEL_CONFIG_DEFAULT);
+        Sound_SetScene(SOUND_SCENE_NONE);
+        SetScreenColorBrightness(DS_SCREEN_MAIN, COLOR_BLACK);
+        SetScreenColorBrightness(DS_SCREEN_SUB, COLOR_BLACK);
+        SetVBlankCallback(NULL, NULL);
+        SetHBlankCallback(NULL, NULL);
+        GXLayers_DisableEngineALayers();
+        GXLayers_DisableEngineBLayers();
+
+        GX_SetVisiblePlane(0);
+        GXS_SetVisiblePlane(0);
+
+        SetAutorepeat(4, 8);
+        sub_02099F80(v0);
+        sub_0209A098(v0);
+        SetVBlankCallback(sub_02099F74, (void *)v0);
+        GXLayers_TurnBothDispOn();
+        StartScreenFade(FADE_BOTH_SCREENS, FADE_TYPE_BRIGHTNESS_IN, FADE_TYPE_BRIGHTNESS_IN, COLOR_BLACK, 6, 1, v0->heapID);
+        *param1 = 1;
+        break;
+    case 1:
+        if (IsScreenFadeDone() == TRUE) {
+            *param1 = 2;
+        }
+        break;
+    case 2:
+        if (sub_0209A0F4(v0) == TRUE) {
+            StartScreenFade(FADE_BOTH_SCREENS, FADE_TYPE_BRIGHTNESS_OUT, FADE_TYPE_BRIGHTNESS_OUT, COLOR_BLACK, 6, 1, v0->heapID);
+            *param1 = 3;
+        }
+        break;
+    case 3:
+        if (IsScreenFadeDone() == TRUE) {
+            sub_0209A0E0(v0);
+            sub_0209A044(v0);
+            SetVBlankCallback(NULL, NULL);
+            v1 = 1;
+        }
+        break;
+    }
+
+    return v1;
+}
+
+int sub_02099F54(ApplicationManager *appMan, int *param1)
+{
+    UnkStruct_02099DFC *v0 = ApplicationManager_Data(appMan);
+    int heapID = v0->heapID;
+
+    ApplicationManager_FreeData(appMan);
+    Heap_Destroy(heapID);
+    OS_ResetSystem(0);
+
+    return 1;
+}
+
+static void sub_02099F74(void *param0)
+{
+    UnkStruct_02099DFC *v0 = param0;
+    Bg_RunScheduledUpdates(v0->unk_14);
+}
+
+static void sub_02099F80(UnkStruct_02099DFC *param0)
+{
+    {
+        GXBanks v0 = {
+            GX_VRAM_BG_256_AB,
+            GX_VRAM_BGEXTPLTT_NONE,
+            GX_VRAM_SUB_BG_NONE,
+            GX_VRAM_SUB_BGEXTPLTT_NONE,
+            GX_VRAM_OBJ_NONE,
+            GX_VRAM_OBJEXTPLTT_NONE,
+            GX_VRAM_SUB_OBJ_NONE,
+            GX_VRAM_SUB_OBJEXTPLTT_NONE,
+            GX_VRAM_TEX_NONE,
+            GX_VRAM_TEXPLTT_NONE
+        };
+        GXLayers_SetBanks(&v0);
+    }
+    {
+        param0->unk_14 = BgConfig_New(param0->heapID);
+    }
+    {
+        GraphicsModes v1 = {
+            GX_DISPMODE_GRAPHICS,
+            GX_BGMODE_0,
+            GX_BGMODE_0,
+            GX_BG0_AS_2D
+        };
+        SetAllGraphicsModes(&v1);
+    }
+    {
+        BgTemplate v2 = {
+            .x = 0x0,
+            .y = 0x0,
+            .bufferSize = 0x800,
+            .baseTile = 0x0,
+            .screenSize = BG_SCREEN_SIZE_256x256,
+            .colorMode = GX_BG_COLORMODE_16,
+            .screenBase = GX_BG_SCRBASE_0x0000,
+            .charBase = GX_BG_CHARBASE_0x18000,
+            .bgExtPltt = GX_BG_EXTPLTT_01,
+            .priority = 0x1,
+            .areaOver = 0x0,
+            .mosaic = FALSE,
+        };
+        Bg_InitFromTemplate(param0->unk_14, BG_LAYER_MAIN_0, &v2, 0);
+        Bg_ClearTilemap(param0->unk_14, BG_LAYER_MAIN_0);
+    }
+
+    LoadMessageBoxGraphics(param0->unk_14, BG_LAYER_MAIN_0, 512 - (18 + 12), 2, 0, param0->heapID);
+    LoadStandardWindowGraphics(param0->unk_14, BG_LAYER_MAIN_0, 512 - (18 + 12) - 9, 3, 0, param0->heapID);
+    Font_LoadTextPalette(PAL_LOAD_MAIN_BG, PLTT_OFFSET(1), param0->heapID);
+    Bg_ClearTilesRange(BG_LAYER_MAIN_0, 32, 0, param0->heapID);
+    Bg_MaskPalette(BG_LAYER_MAIN_0, 0x6c21);
+    Bg_MaskPalette(BG_LAYER_SUB_0, 0x6c21);
+}
+
+static void sub_0209A044(UnkStruct_02099DFC *param0)
+{
+    Bg_ToggleLayer(BG_LAYER_MAIN_0, 0);
+    Bg_ToggleLayer(BG_LAYER_MAIN_1, 0);
+    Bg_ToggleLayer(BG_LAYER_MAIN_2, 0);
+    Bg_ToggleLayer(BG_LAYER_MAIN_3, 0);
+    Bg_ToggleLayer(BG_LAYER_SUB_0, 0);
+    Bg_ToggleLayer(BG_LAYER_SUB_1, 0);
+    Bg_ToggleLayer(BG_LAYER_SUB_2, 0);
+    Bg_ToggleLayer(BG_LAYER_SUB_3, 0);
+    Bg_FreeTilemapBuffer(param0->unk_14, BG_LAYER_MAIN_0);
+    Heap_Free(param0->unk_14);
+}
+
+static void sub_0209A098(UnkStruct_02099DFC *param0)
+{
+    param0->unk_18 = MessageLoader_Init(MSG_LOADER_LOAD_ON_DEMAND, NARC_INDEX_MSGDATA__PL_MSG, TEXT_BANK_UNK_0004, param0->heapID);
+    Text_ResetAllPrinters();
+    param0->unk_08 = 0;
+    Window_AddFromTemplate(param0->unk_14, &param0->unk_1C, &Unk_020F89E4);
+    Window_FillRectWithColor(&param0->unk_1C, 15, 0, 0, 27 * 8, 4 * 8);
+}
+
+static void sub_0209A0E0(UnkStruct_02099DFC *param0)
+{
+    Window_Remove(&param0->unk_1C);
+    MessageLoader_Free(param0->unk_18);
+}
+
+static BOOL sub_0209A0F4(UnkStruct_02099DFC *param0)
+{
+    BOOL v0 = 0;
+
+    switch (param0->unk_04) {
+    case 0:
+        if (sub_0209A200(param0, 0, 1, 4) == TRUE) {
+            param0->unk_2C = Menu_MakeYesNoChoiceWithCursorAt(param0->unk_14, &Unk_020F89EC, 512 - (18 + 12) - 9, 3, 1, param0->heapID);
+            param0->unk_04 = 1;
+        }
+        break;
+    case 1: {
+        #ifdef SDK_BUILD_ARM
+        u32 v1 = Menu_ProcessInputAndHandleExit(param0->unk_2C, param0->heapID);
+        #else
+        u64 v1 = Menu_ProcessInputAndHandleExit(param0->unk_2C, param0->heapID);
+        #endif
+
+        switch (v1) {
+        case 0:
+            param0->unk_04 = 2;
+            break;
+        case MENU_CANCEL:
+            param0->unk_04 = 6;
+            break;
+        }
+    } break;
+    case 2:
+        if (sub_0209A200(param0, 1, 1, 4) == TRUE) {
+            param0->unk_2C = Menu_MakeYesNoChoiceWithCursorAt(param0->unk_14, &Unk_020F89EC, (512 - (18 + 12)) - 9, 3, 1, param0->heapID);
+            param0->unk_04 = 3;
+        }
+        break;
+    case 3: {
+        #ifdef SDK_BUILD_ARM
+        u32 v2 = Menu_ProcessInputAndHandleExit(param0->unk_2C, param0->heapID);
+        #else
+        u64 v2 = Menu_ProcessInputAndHandleExit(param0->unk_2C, param0->heapID);
+        #endif
+
+        switch (v2) {
+        case 0:
+            param0->unk_04 = 4;
+            break;
+        case MENU_CANCEL:
+            param0->unk_04 = 6;
+            break;
+        }
+    } break;
+    case 4:
+        if (sub_0209A200(param0, 2, 1, 0) == TRUE) {
+            param0->unk_34 = Window_AddWaitDial(&param0->unk_1C, 512 - (18 + 12));
+            param0->unk_04 = 5;
+        }
+        break;
+    case 5:
+        SaveData_Erase(param0->saveData);
+        DestroyWaitDial(param0->unk_34);
+        param0->unk_04 = 6;
+        break;
+    case 6:
+        Bg_ClearTilemap(param0->unk_14, BG_LAYER_MAIN_0);
+        v0 = 1;
+        break;
+    }
+
+    return v0;
+}
+
+static BOOL sub_0209A200(UnkStruct_02099DFC *param0, u32 param1, int param2, int param3)
+{
+    BOOL v0 = 0;
+
+    switch (param0->unk_08) {
+    case 0:
+        Window_FillRectWithColor(&param0->unk_1C, 15, 0, 0, 27 * 8, 4 * 8);
+        Window_DrawMessageBoxWithScrollCursor(&param0->unk_1C, 0, 512 - (18 + 12), 2);
+
+        param0->unk_10 = String_Init(0x400, param0->heapID);
+        MessageLoader_GetString(param0->unk_18, param1, param0->unk_10);
+        param0->unk_0C = Text_AddPrinterWithParams(&param0->unk_1C, FONT_MESSAGE, param0->unk_10, 0, 0, param3, NULL);
+
+        if (param3 == 0) {
+            String_Free(param0->unk_10);
+            param0->unk_08++;
+        }
+
+        param0->unk_08++;
+        break;
+    case 1:
+        if (!(Text_IsPrinterActive(param0->unk_0C))) {
+            String_Free(param0->unk_10);
+            param0->unk_08++;
+        }
+        break;
+    case 2:
+        if ((param2 != 0) || (gSystem.pressedKeys & 1)) {
+            param0->unk_08 = 0;
+            v0 = 1;
+        }
+    }
+
+    return v0;
+}

@@ -1,0 +1,333 @@
+diff --git a/meson.build b/meson.build
+--- a/meson.build
++++ b/meson.build
+@@ -1,4 +1,4 @@
+-project('libntr', 'c', 'cpp', 'nasm',
++project('libntr', 'c', 'cpp',
+     default_options: {
+         'default_library': 'static',
+         'prefer_static':    false
+@@ -13,6 +13,10 @@ buildtype = get_option('buildtype')
+ cc = meson.get_compiler('c')
+ build_target = get_option('build_target')
+ 
++if build_target == 'arm'
++    add_languages('nasm', native: false)
++endif
++
+ ############################################################
+ ###                    COMPILER FLAGS                    ###
+ ############################################################
+@@ -103,6 +107,17 @@ if (build_target == 'linux')
+     ]
+ endif
+ 
++if (build_target == 'osx')
++    nitrosdk_args += [
++        '-DSDK_PORT',
++        '-DSDK_AARCH64',
++        '-DSDK_BUILD_LINUX',
++        '-DSDK_BUILD_OSX',
++        '-D_NITRO',
++        '-w',
++    ]
++endif
++
+ if (build_target == 'nx')
+     nitrosdk_args += [
+         '-DSDK_PORT',
+diff --git a/meson.options b/meson.options
+--- a/meson.options
++++ b/meson.options
+@@ -2,7 +2,7 @@ option('standalone', type: 'boolean', value: false, description: 'Build a stand
+ option('mwrap_ver', type: 'string', value: 'default', description: 'Version of Metrowerks toolchain to use')
+ option('mwrap_sdk', type: 'string', value: 'default', description: 'Version of Metrowerks libraries to use')
+ option('sp1p3_conditionals', type: 'boolean', value: false)
+-option('build_target', type: 'combo', choices: ['arm', 'win64', 'linux', 'nx'], value: 'arm', description: 'Target build platform', yield: true)
++option('build_target', type: 'combo', choices: ['arm', 'win64', 'linux', 'osx', 'nx'], value: 'arm', description: 'Target build platform', yield: true)
+ option('tracy_enable' , type : 'boolean' , value : false, description : 'Enable profiling', yield: true)
+ option('card_game_code', type: 'string', value: '', description: 'Game Code. Must be exactly four letters.')
+ option('card_maker_code', type: 'string', value: '', description: 'Maker Code. Must be exactly two characters. Typically 01.')
+diff --git a/libraries/sim/meson.build b/libraries/sim/meson.build
+--- a/libraries/sim/meson.build
++++ b/libraries/sim/meson.build
+@@ -3,17 +3,18 @@ subdir('src')
+ 
+ libsim_includes = include_directories('include')
+ 
+-sdl2_lib = library('SDL2')
+-enet_lib = library('enet')
+-
+-if(build_target == 'linux' or build_target == 'win64')
++if(build_target == 'osx')
++sdl2_lib = dependency('sdl2')
++elif(build_target == 'linux' or build_target == 'win64')
+ sdl2_lib = meson.get_compiler('c').find_library('SDL2')
+ elif(build_target == 'nx')
+ sdl2_lib = meson.get_compiler('c').find_library('SDL2', dirs: '/opt/devkitpro/portlibs/switch/lib/')
+ endif
+ sdl2_dep = declare_dependency(dependencies: [sdl2_lib])
+ 
+-if(build_target == 'linux' or build_target == 'win64')
++if(build_target == 'osx')
++enet_lib = dependency('libenet')
++elif(build_target == 'linux' or build_target == 'win64')
+ enet_lib = meson.get_compiler('c').find_library('enet')
+ elif(build_target == 'nx')
+ enet_lib = meson.get_compiler('c').find_library('enet', dirs: '/opt/devkitpro/portlibs/switch/lib/')
+@@ -41,7 +42,7 @@ if(get_option('card_maker_code') != '')
+ endif
+ 
+ if(get_option('tracy_enable') == true)
+-    if(build_target =='linux' or build_target == 'win64')
++    if(build_target =='linux' or build_target == 'osx' or build_target == 'win64')
+         tracy_native = dependency(
+             'tracy_native', 
+             default_options: {
+diff --git a/libraries/sim/src/meson.build b/libraries/sim/src/meson.build
+--- a/libraries/sim/src/meson.build
++++ b/libraries/sim/src/meson.build
+@@ -21,6 +21,6 @@ libsim_srcs = files(
+     'sim_shaders.cpp'
+ )
+ 
+-if(build_target == 'linux' or build_target == 'win64')
++if(build_target == 'linux' or build_target == 'osx' or build_target == 'win64')
+ libsim_srcs += files('glad.c')
+ endif
+diff --git a/libraries/sim/src/sim_main.cpp b/libraries/sim/src/sim_main.cpp
+--- a/libraries/sim/src/sim_main.cpp
++++ b/libraries/sim/src/sim_main.cpp
+@@ -1,7 +1,9 @@
+ extern "C" void NitroMain();
+ extern "C" int NitroSpMain(void *arg);
+ #define SDL_MAIN_HANDLED
++#ifndef __APPLE__
+ #define _POSIX_C_SOURCE 199309L
++#endif
+ 
+ #include <string>
+ #include <pthread.h>
+@@ -17,6 +19,12 @@ extern "C" int NitroSpMain(void *arg);
+ #include <stdio.h>
+ #include <stdlib.h>
+ 
++#ifdef SDK_BUILD_OSX
++#include <limits.h>
++#include <mach-o/dyld.h>
++#include <unistd.h>
++#endif
++
+ #include <nitro/gx/g3.h>
+ #include <nitro/gx/gx_load.h>
+ #include <nitro/gx/gx_vramcnt.h>
+@@ -91,6 +99,8 @@ u8 s_SIM_useWBuffer = 0;
+ 
+ static struct timespec s_SIM_lastFrameEnd;
+ u64 s_SIM_frameTime;
++u64 s_SIM_renderTime;
++u64 s_SIM_gameTime;
+ 
+ u8 bgtex[4 * SIM_NDS_SCREEN_WIDTH * SIM_NDS_SCREEN_HEIGHT * 2];
+ u8 bg0tex[4 * SIM_NDS_SCREEN_WIDTH * SIM_NDS_SCREEN_HEIGHT * 2];
+@@ -1028,11 +1036,16 @@ void *SIM_RenderInit(void *arg) {
+   SIM_Audio_Init(44100);
+ 
+   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
++#ifdef SDK_BUILD_OSX
++  SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
++  SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS,
++                      SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG);
++#else
+   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
++#endif
+   SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+   SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+   SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+-  SDL_GL_SetSwapInterval(s_SIM_config.vsyncInterval);
+ 
+   u32 windowHeight;
+   u32 windowWidth;
+@@ -1078,17 +1091,33 @@ void *SIM_RenderInit(void *arg) {
+   window = SDL_CreateWindow(
+       windowTitle.c_str(), 100, 100, windowWidth, windowHeight,
+       SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
++  if (window == NULL) {
++    fprintf(stderr, "SDL_CreateWindow failed: %s\n", SDL_GetError());
++    exit(EXIT_FAILURE);
++  }
++
+   context = SDL_GL_CreateContext(window);
++  if (context == NULL) {
++    fprintf(stderr, "SDL_GL_CreateContext failed: %s\n", SDL_GetError());
++    exit(EXIT_FAILURE);
++  }
+ 
+-  gladLoadGLLoader(SDL_GL_GetProcAddress);
++  SDL_GL_SetSwapInterval(s_SIM_config.vsyncInterval);
++
++  if (!gladLoadGLLoader(SDL_GL_GetProcAddress)) {
++    fprintf(stderr, "Failed to load OpenGL functions\n");
++    exit(EXIT_FAILURE);
++  }
+ 
+   glViewport(0, 0, windowWidth, windowHeight);
+ 
+   glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+   glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
+ 
++#ifndef SDK_BUILD_OSX
+   glEnable(GL_DEBUG_OUTPUT);
+   glDebugMessageCallback(MessageCallback, 0);
++#endif
+ 
+   GLenum glErrCode;
+   GLint status;
+@@ -1660,6 +1697,9 @@ static void HandleJoystickKeyUp(int aKey) {
+ 
+ void *SIM_Render(void *arg) {
+ 
++  struct timespec renderStart;
++  clock_gettime(CLOCK_MONOTONIC, &renderStart);
++
+   SDL_Event Event;
+   char c;
+   int x;
+@@ -2004,6 +2044,12 @@ void *SIM_Render(void *arg) {
+     frameNs = ((curTime.tv_sec - s_SIM_lastFrameEnd.tv_sec) * 1000000000) +
+               (curTime.tv_nsec - s_SIM_lastFrameEnd.tv_nsec);
+     s_SIM_frameTime = frameNs;
++    s_SIM_renderTime =
++        ((curTime.tv_sec - renderStart.tv_sec) * 1000000000) +
++        (curTime.tv_nsec - renderStart.tv_nsec);
++    s_SIM_gameTime = frameNs > s_SIM_renderTime
++                         ? frameNs - s_SIM_renderTime
++                         : 0;
+ 
+ #ifdef SDK_TRACY_ENABLE
+     TracyCZoneEnd(SimRenderZone);
+@@ -2117,6 +2139,27 @@ int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hInstPrev, PSTR cmdline,
+ #endif
+ 
+ int main(int argc, char *argv[]) {
++#ifdef SDK_BUILD_OSX
++  char executablePath[PATH_MAX];
++  uint32_t executablePathSize = sizeof(executablePath);
++
++  if (_NSGetExecutablePath(executablePath, &executablePathSize) == 0) {
++    char resolvedPath[PATH_MAX];
++
++    if (realpath(executablePath, resolvedPath) != NULL) {
++      char *lastSlash = strrchr(resolvedPath, '/');
++      if (lastSlash != NULL) {
++        *lastSlash = '\0';
++        if (chdir(resolvedPath) != 0) {
++          fprintf(stderr, "Failed to use executable directory: %s\n",
++                  resolvedPath);
++          return EXIT_FAILURE;
++        }
++      }
++    }
++  }
++#endif
++
+ #ifdef SDK_BUILD_NX
+   // Start up libnx sockets
+   socketInitializeDefault();
+diff --git a/libraries/sim/src/config/sim_config.c b/libraries/sim/src/config/sim_config.c
+--- a/libraries/sim/src/config/sim_config.c
++++ b/libraries/sim/src/config/sim_config.c
+@@ -327,6 +327,10 @@ void SIM_Config_LoadDefaults(SIM_config_type * aConfig)
+     aConfig->internalResolutionScale = 2;
+     aConfig->windowHeight = 1080;
+     aConfig->windowWidth = 1920;
++#elif defined(SDK_BUILD_OSX)
++    aConfig->internalResolutionScale = 2;
++    aConfig->windowHeight = 0;
++    aConfig->windowWidth = 0;
+ #else
+     aConfig->internalResolutionScale = 10;
+     aConfig->windowHeight = 0;
+diff --git a/libraries/sim/src/g3_handler.cpp b/libraries/sim/src/g3_handler.cpp
+--- a/libraries/sim/src/g3_handler.cpp
++++ b/libraries/sim/src/g3_handler.cpp
+@@ -414,7 +414,9 @@ void G3_Begin(GXBegin type) {
+     }
+     snprintf(debugMessage, 50, "GX_Begin %s", typeString);
+ 
++#ifndef SDK_BUILD_OSX
+     glDebugMessageInsert(GL_DEBUG_SOURCE_APPLICATION, GL_DEBUG_TYPE_OTHER, 1337, GL_DEBUG_SEVERITY_NOTIFICATION, 50, debugMessage);
++#endif
+     s_primType = type;
+     s_G3numInPoly = 0;
+     s_G3drawPoly = 0;
+diff --git a/libraries/sim/src/gui/gui.c b/libraries/sim/src/gui/gui.c
+--- a/libraries/sim/src/gui/gui.c
++++ b/libraries/sim/src/gui/gui.c
+@@ -6,6 +6,8 @@
+ #include "simulator/gui.h"
+ 
+ extern u64 s_SIM_frameTime;
++extern u64 s_SIM_renderTime;
++extern u64 s_SIM_gameTime;
+ 
+ static SDL_Window * SIM_GUI_SDLwindow;
+ static SDL_GLContext SIM_GUI_GLcontext;
+@@ -41,7 +43,7 @@ void SIM_GUI_Init(SDL_Window * aWindow, SDL_GLContext aContext)
+ 	ioptr->DisplaySize.y = (float)(SIM_NDS_SCREEN_HEIGHT*2*SIM_NDS_WINDOW_SCALE_FACTOR);
+ 
+ 	ImGui_ImplSDL2_InitForOpenGL(SIM_GUI_SDLwindow, SIM_GUI_GLcontext);
+-	const char * glsl_version = "#version 420";
++	const char * glsl_version = "#version 410";
+   	ImGui_ImplOpenGL3_Init(glsl_version);
+ 
+ 	igStyleColorsDark(NULL);
+@@ -56,6 +58,8 @@ void SIM_GUI_Main(void)
+         frameTimeMs = (float)s_SIM_frameTime / 1000000.0f;
+         igText("FrameTime %.3fms", frameTimeMs);
+         igText("%.0ffps", 1000.0f / frameTimeMs);
++        igText("Render %.3fms", (float)s_SIM_renderTime / 1000000.0f);
++        igText("Game %.3fms", (float)s_SIM_gameTime / 1000000.0f);
+ 
+         SIM_GUI_AppButton("Config", &s_showWindowConfig, NULL, GUI_AppConfigMain);
+         SIM_GUI_AppButton("Input", &s_showWindowPad, NULL, GUI_AppPadMain);
+diff --git a/libraries/sim/src/shaders/g2_fragment.glsl b/libraries/sim/src/shaders/g2_fragment.glsl
+--- a/libraries/sim/src/shaders/g2_fragment.glsl
++++ b/libraries/sim/src/shaders/g2_fragment.glsl
+@@ -1,5 +1,5 @@
+ R""(
+-#version 420 core
++#version 410 core
+ 
+ uniform sampler2D myTexture;
+ uniform sampler2D bgTexture[4];
+diff --git a/libraries/sim/src/shaders/g2_vertex.glsl b/libraries/sim/src/shaders/g2_vertex.glsl
+--- a/libraries/sim/src/shaders/g2_vertex.glsl
++++ b/libraries/sim/src/shaders/g2_vertex.glsl
+@@ -1,5 +1,5 @@
+ R""(
+-#version 420 core
++#version 410 core
+ 
+ layout (location = 0) in vec3 position;
+ layout (location = 1) in vec2 texCoord;
+diff --git a/libraries/sim/src/shaders/g3_fragment.glsl b/libraries/sim/src/shaders/g3_fragment.glsl
+--- a/libraries/sim/src/shaders/g3_fragment.glsl
++++ b/libraries/sim/src/shaders/g3_fragment.glsl
+@@ -1,5 +1,5 @@
+ R""(
+-#version 420 core
++#version 410 core
+ 
+ uniform sampler2D myTexture;
+ uniform int useTexture;
+diff --git a/libraries/sim/src/shaders/g3_vertex.glsl b/libraries/sim/src/shaders/g3_vertex.glsl
+--- a/libraries/sim/src/shaders/g3_vertex.glsl
++++ b/libraries/sim/src/shaders/g3_vertex.glsl
+@@ -1,5 +1,5 @@
+ R""(
+-#version 420 core
++#version 410 core
+ 
+ layout (location = 0) in vec3 position;
+ layout (location = 1) in vec2 texCoord;

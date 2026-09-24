@@ -1,0 +1,189 @@
+#ifndef MSGENC_RES_TEXT_BANK_BATTLE_CASTLE_OPPONENT_APP_H
+#define MSGENC_RES_TEXT_BANK_BATTLE_CASTLE_OPPONENT_APP_H
+
+
+#define BattleCastleOpponentApp_Text_Dummy1 0
+
+#define BattleCastleOpponentApp_Text_PartnerName 1
+
+#define BattleCastleOpponentApp_Text_CastlePoints 2
+
+#define BattleCastleOpponentApp_Text_Dummy2 3
+
+
+#define BattleCastleOpponentApp_Text_CheckWhichPokemon 4
+
+#define BattleCastleOpponentApp_Text_Exit 5
+
+#define BattleCastleOpponentApp_Text_Dummy3 6
+
+#define BattleCastleOpponentApp_Text_PartnerChoseToExit 7
+
+#define BattleCastleOpponentApp_Text_Check 8
+
+#define BattleCastleOpponentApp_Text_Level 9
+
+#define BattleCastleOpponentApp_Text_Summary 10
+
+#define BattleCastleOpponentApp_Text_Cancel 11
+
+
+#define BattleCastleOpponentApp_Text_CheckIdentity 12
+
+
+#define BattleCastleOpponentApp_Text_ChangeLevel 13
+
+
+#define BattleCastleOpponentApp_Text_ExamineStats 14
+
+
+#define BattleCastleOpponentApp_Text_GoBackToMonSelection 15
+
+
+#define BattleCastleOpponentApp_Text_IdentifyForCP 16
+
+#define BattleCastleOpponentApp_Text_Dummy4 17
+
+#define BattleCastleOpponentApp_Text_Dummy5 18
+
+#define BattleCastleOpponentApp_Text_Dummy6 19
+
+
+#define BattleCastleOpponentApp_Text_IdentityRevealed 20
+
+
+#define BattleCastleOpponentApp_Text_MayChangeLevel 21
+
+#define BattleCastleOpponentApp_Text_LevelUp5 22
+
+#define BattleCastleOpponentApp_Text_LevelDown5 23
+
+#define BattleCastleOpponentApp_Text_Cancel2 24
+
+
+#define BattleCastleOpponentApp_Text_WillCostCP 25
+
+#define BattleCastleOpponentApp_Text_Yes 26
+
+#define BattleCastleOpponentApp_Text_No 27
+
+#define BattleCastleOpponentApp_Text_NotEnoughCP3 28
+
+
+#define BattleCastleOpponentApp_Text_LevelCantGoHigher 29
+
+
+#define BattleCastleOpponentApp_Text_LevelCantGoLower 30
+
+
+#define BattleCastleOpponentApp_Text_LevelBoostedBy5 31
+
+
+#define BattleCastleOpponentApp_Text_LevelLoweredBy5 32
+
+#define BattleCastleOpponentApp_Text_Summary2 33
+
+#define BattleCastleOpponentApp_Text_Moves 34
+
+#define BattleCastleOpponentApp_Text_RankUp 35
+
+#define BattleCastleOpponentApp_Text_Cancel3 36
+
+#define BattleCastleOpponentApp_Text_CheckStats 37
+
+#define BattleCastleOpponentApp_Text_CheckMoveList 38
+
+
+#define BattleCastleOpponentApp_Text_RankUpToCheckMoves 39
+
+#define BattleCastleOpponentApp_Text_CantRankUp 40
+
+#define BattleCastleOpponentApp_Text_ReturnToPreviousMenu 41
+
+
+#define BattleCastleOpponentApp_Text_TooLowForMoveList 42
+
+
+#define BattleCastleOpponentApp_Text_CanCheckStats 43
+
+#define BattleCastleOpponentApp_Text_Dummy7 44
+
+#define BattleCastleOpponentApp_Text_Dummy8 45
+
+#define BattleCastleOpponentApp_Text_NotEnoughCP 46
+
+
+#define BattleCastleOpponentApp_Text_SummaryBought 47
+
+#define BattleCastleOpponentApp_Text_Item 48
+
+#define BattleCastleOpponentApp_Text_ItemValue 49
+
+#define BattleCastleOpponentApp_Text_Nature 50
+
+#define BattleCastleOpponentApp_Text_NatureValue 51
+
+#define BattleCastleOpponentApp_Text_Ability 52
+
+#define BattleCastleOpponentApp_Text_AbilityValue 53
+
+#define BattleCastleOpponentApp_Text_Attack 54
+
+#define BattleCastleOpponentApp_Text_AttackValue 55
+
+#define BattleCastleOpponentApp_Text_Defense 56
+
+#define BattleCastleOpponentApp_Text_DefenseValue 57
+
+#define BattleCastleOpponentApp_Text_SpAttack 58
+
+#define BattleCastleOpponentApp_Text_SpAttackValue 59
+
+#define BattleCastleOpponentApp_Text_SpDefense 60
+
+#define BattleCastleOpponentApp_Text_SpDefenseValue 61
+
+#define BattleCastleOpponentApp_Text_Speed 62
+
+#define BattleCastleOpponentApp_Text_SpeedValue 63
+
+#define BattleCastleOpponentApp_Text_MaleSymbol 64
+
+#define BattleCastleOpponentApp_Text_FemaleSymbol 65
+
+
+#define BattleCastleOpponentApp_Text_MayCheckMoveList 66
+
+#define BattleCastleOpponentApp_Text_Dummy9 67
+
+#define BattleCastleOpponentApp_Text_Dummy10 68
+
+#define BattleCastleOpponentApp_Text_NotEnoughCP2 69
+
+
+#define BattleCastleOpponentApp_Text_MoveListBought 70
+
+#define BattleCastleOpponentApp_Text_MoveName1 71
+
+#define BattleCastleOpponentApp_Text_MoveName2 72
+
+#define BattleCastleOpponentApp_Text_MoveName3 73
+
+#define BattleCastleOpponentApp_Text_MoveName4 74
+
+#define BattleCastleOpponentApp_Text_MovePP 75
+
+
+#define BattleCastleOpponentApp_Text_RankUpForCP 76
+
+#define BattleCastleOpponentApp_Text_Dummy11 77
+
+#define BattleCastleOpponentApp_Text_Dummy12 78
+
+#define BattleCastleOpponentApp_Text_Dummy13 79
+
+
+#define BattleCastleOpponentApp_Text_GainedMoveListPurchasePower 80
+#define TEXT_BANK_BATTLE_CASTLE_OPPONENT_APP_ENTRY_COUNT 81
+
+#endif 

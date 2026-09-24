@@ -1,0 +1,113 @@
+#ifndef POKEPLATINUM_MAP_HEADER_DATA_H
+#define POKEPLATINUM_MAP_HEADER_DATA_H
+
+#include "constants/heap.h"
+#include "generated/map_headers.h"
+
+#include "field/field_system_decl.h"
+#include "overlay006/wild_encounters.h"
+
+#ifdef SDK_PORT
+#define MAP_OBJECT_VIEW_ACTIVE_LIMIT 56
+#endif
+
+typedef struct BgEvent {
+    u16 script;
+    u16 type;
+    int x;
+    int z;
+    int y;
+    u16 playerFacingDir;
+    u8 padding[2];
+} BgEvent;
+
+typedef struct ObjectEvent {
+    u16 localID;
+    u16 graphicsID;
+    u16 movementType;
+    u16 trainerType;
+    u16 hiddenFlag;
+    u16 script;
+    s16 dir;
+    u16 data[3];
+    s16 movementRangeX;
+    s16 movementRangeZ;
+    u16 x;
+    u16 z;
+    fx32 y;
+} ObjectEvent;
+
+typedef struct WarpEvent {
+    u16 x;
+    u16 z;
+    u16 destHeaderID;
+    u16 destWarpID;
+    u8 unused[4];
+} WarpEvent;
+
+typedef struct CoordEvent {
+    u16 script;
+    u16 x;
+    u16 z;
+    u16 width;
+    u16 length;
+    u16 y;
+    u16 value;
+    u16 var;
+} CoordEvent;
+
+typedef struct MapHeaderData {
+    u32 numBgEvents;
+    u32 numObjectEvents;
+    u32 numWarpEvents;
+    u32 numCoordEvents;
+    const BgEvent *bgEvents;
+    const ObjectEvent *objectEvents;
+    const WarpEvent *warpEvents;
+    const CoordEvent *coordEvents;
+    u32 tmpEventsBuf[512];
+    u32 initScripts[64];
+    WildEncounters wildEncounters;
+#ifdef SDK_PORT
+    // Keep hidden local events for scripts without charging them to the active
+    // object budget. The manager still reserves eight slots for player/scripts.
+    ObjectEvent visibleObjectEvents[64 + MAP_OBJECT_VIEW_ACTIVE_LIMIT];
+    ObjectEvent *localObjectEvents;
+    u32 numLocalObjectEvents;
+    int objectViewX;
+    int objectViewZ;
+    int objectViewRadius;
+#endif
+} MapHeaderData;
+
+#ifdef SDK_PORT
+void MapHeaderData_SetObjectViewRadius(int radius);
+BOOL MapHeaderData_UpdateObjectView(FieldSystem *fieldSystem);
+void MapHeaderData_RefreshObjectView(FieldSystem *fieldSystem);
+#endif
+
+void MapHeaderData_Init(FieldSystem *fieldSystem, enum HeapID heapID);
+void MapHeaderData_Free(FieldSystem *fieldSystem);
+void MapHeaderData_Load(FieldSystem *fieldSystem, enum MapHeaderID mapHeaderID);
+void sub_0203A418(FieldSystem *fieldSystem);
+const BgEvent *MapHeaderData_GetBgEvents(const FieldSystem *fieldSystem);
+int MapHeaderData_GetNumBgEvents(const FieldSystem *fieldSystem);
+const WarpEvent *MapHeaderData_GetWarpEventByIndex(const FieldSystem *fieldSystem, int index);
+int MapHeaderData_GetIndexOfWarpEventAtPos(const FieldSystem *fieldSystem, int x, int z);
+int MapHeaderData_GetNumCoordEvents(const FieldSystem *fieldSystem);
+const CoordEvent *MapHeaderData_GetCoordEvents(const FieldSystem *fieldSystem);
+u32 MapHeaderData_GetNumObjectEvents(const FieldSystem *fieldSystem);
+const ObjectEvent *MapHeaderData_GetObjectEvents(const FieldSystem *fieldSystem);
+BOOL MapHeaderData_SetObjectEventPos(FieldSystem *fieldSystem, int index, u16 x, u16 z);
+BOOL MapHeaderData_SetObjectEventDir(FieldSystem *fieldSystem, int localID, int dir);
+BOOL MapHeaderData_SetObjectEventMovementType(FieldSystem *fieldSystem, int localID, int movementType);
+BOOL MapHeaderData_SetWarpEventPos(FieldSystem *fieldSystem, u16 index, u16 x, u16 z);
+BOOL MapHeaderData_SetWarpEventDestHeaderID(FieldSystem *fieldSystem, u16 index, u16 destHeaderID);
+BOOL MapHeaderData_SetWarpEventDestWarpID(FieldSystem *fieldSystem, u16 index, u16 destWarpID);
+BOOL MapHeaderData_SetBgEventPos(FieldSystem *fieldSystem, u16 index, u16 x, u16 z);
+void MapHeaderData_LoadWildEncounters(WildEncounters *data, enum MapHeaderID mapHeaderID);
+const WildEncounters *MapHeaderData_GetWildEncounters(const FieldSystem *fieldSystem);
+const u8 *MapHeaderData_GetInitScriptBytes(const FieldSystem *fieldSystem);
+BOOL MapHeaderData_IsPosFreeOfObjectEvents(const FieldSystem *fieldSystem, u16 x, u16 z);
+
+#endif // POKEPLATINUM_MAP_HEADER_DATA_H

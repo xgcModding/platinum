@@ -1,0 +1,9 @@
+[wrap-git]
+url = https://github.com/cybervisi0n/libntrsystem.git
+revision = main
+depth = 1
+directory = libntrsystem
+
+[provide]
+dependency_names = NitroSystem
+

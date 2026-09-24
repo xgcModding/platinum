@@ -1,0 +1,1862 @@
+#ifndef MSGENC_RES_TEXT_BANK_NPC_TRAINER_NAMES_H
+#define MSGENC_RES_TEXT_BANK_NPC_TRAINER_NAMES_H
+
+
+#define NPCTrainerNames_Text_none 0
+
+#define NPCTrainerNames_Text_youngster_tristan 1
+
+#define NPCTrainerNames_Text_youngster_logan 2
+
+#define NPCTrainerNames_Text_lass_natalie 3
+
+#define NPCTrainerNames_Text_youngster_michael 4
+
+#define NPCTrainerNames_Text_dummy_005 5
+
+#define NPCTrainerNames_Text_dummy_006 6
+
+#define NPCTrainerNames_Text_dummy_007 7
+
+#define NPCTrainerNames_Text_dummy_008 8
+
+#define NPCTrainerNames_Text_dummy_009 9
+
+#define NPCTrainerNames_Text_youngster_tyler 10
+
+#define NPCTrainerNames_Text_lass_samantha 11
+
+#define NPCTrainerNames_Text_lass_sarah 12
+
+#define NPCTrainerNames_Text_bug_catcher_brandon 13
+
+#define NPCTrainerNames_Text_aroma_lady_taylor 14
+
+#define NPCTrainerNames_Text_twins_liv_and_liz 15
+
+#define NPCTrainerNames_Text_camper_jacob 16
+
+#define NPCTrainerNames_Text_picnicker_siena 17
+
+#define NPCTrainerNames_Text_hiker_daniel 18
+
+#define NPCTrainerNames_Text_hiker_nicholas 19
+
+#define NPCTrainerNames_Text_battle_girl_kelsey 20
+
+#define NPCTrainerNames_Text_aroma_lady_elizabeth 21
+
+#define NPCTrainerNames_Text_fisherman_andrew 22
+
+#define NPCTrainerNames_Text_fisherman_joseph 23
+
+#define NPCTrainerNames_Text_fisherman_zachary 24
+
+#define NPCTrainerNames_Text_cyclist_axel 25
+
+#define NPCTrainerNames_Text_cyclist_james 26
+
+#define NPCTrainerNames_Text_cyclist_john 27
+
+#define NPCTrainerNames_Text_cyclist_ryan 28
+
+#define NPCTrainerNames_Text_cyclist_megan 29
+
+#define NPCTrainerNames_Text_cyclist_nicole 30
+
+#define NPCTrainerNames_Text_cyclist_kayla 31
+
+#define NPCTrainerNames_Text_cyclist_rachel 32
+
+#define NPCTrainerNames_Text_youngster_austin 33
+
+#define NPCTrainerNames_Text_camper_anthony 34
+
+#define NPCTrainerNames_Text_picnicker_lauren 35
+
+#define NPCTrainerNames_Text_hiker_kevin 36
+
+#define NPCTrainerNames_Text_hiker_justin 37
+
+#define NPCTrainerNames_Text_battle_girl_helen 38
+
+#define NPCTrainerNames_Text_hiker_robert 39
+
+#define NPCTrainerNames_Text_hiker_alexander 40
+
+#define NPCTrainerNames_Text_hiker_jonathan 41
+
+#define NPCTrainerNames_Text_black_belt_kyle 42
+
+#define NPCTrainerNames_Text_fisherman_cody 43
+
+#define NPCTrainerNames_Text_aroma_lady_hannah 44
+
+#define NPCTrainerNames_Text_artist_william 45
+
+#define NPCTrainerNames_Text_breeder_albert 46
+
+#define NPCTrainerNames_Text_breeder_jennifer 47
+
+#define NPCTrainerNames_Text_cowgirl_shelley 48
+
+#define NPCTrainerNames_Text_jogger_richard 49
+
+#define NPCTrainerNames_Text_dummy_050 50
+
+#define NPCTrainerNames_Text_dummy_051 51
+
+#define NPCTrainerNames_Text_dummy_052 52
+
+#define NPCTrainerNames_Text_poke_kid_danielle 53
+
+#define NPCTrainerNames_Text_dummy_054 54
+
+#define NPCTrainerNames_Text_young_couple_ty_and_sue 55
+
+#define NPCTrainerNames_Text_breeder_kahlil 56
+
+#define NPCTrainerNames_Text_breeder_amber 57
+
+#define NPCTrainerNames_Text_dummy_058 58
+
+#define NPCTrainerNames_Text_dummy_059 59
+
+#define NPCTrainerNames_Text_dummy_060 60
+
+#define NPCTrainerNames_Text_dummy_061 61
+
+#define NPCTrainerNames_Text_dummy_062 62
+
+#define NPCTrainerNames_Text_dummy_063 63
+
+#define NPCTrainerNames_Text_dummy_064 64
+
+#define NPCTrainerNames_Text_twins_teri_and_tia 65
+
+#define NPCTrainerNames_Text_ace_trainer_ernest 66
+
+#define NPCTrainerNames_Text_ace_trainer_alyssa 67
+
+#define NPCTrainerNames_Text_veteran_brian 68
+
+#define NPCTrainerNames_Text_black_belt_adam 69
+
+#define NPCTrainerNames_Text_ninja_boy_joel 70
+
+#define NPCTrainerNames_Text_ninja_boy_nathan 71
+
+#define NPCTrainerNames_Text_ninja_boy_davido 72
+
+#define NPCTrainerNames_Text_dragon_tamer_patrick 73
+
+#define NPCTrainerNames_Text_bird_keeper_brianna 74
+
+#define NPCTrainerNames_Text_double_team_zac_and_jen 75
+
+#define NPCTrainerNames_Text_bird_keeper_alexandra 76
+
+#define NPCTrainerNames_Text_dummy_077 77
+
+#define NPCTrainerNames_Text_ninja_boy_zach 78
+
+#define NPCTrainerNames_Text_black_belt_sean 79
+
+#define NPCTrainerNames_Text_ninja_boy_nick 80
+
+#define NPCTrainerNames_Text_bird_keeper_katherine 81
+
+#define NPCTrainerNames_Text_rich_boy_jason 82
+
+#define NPCTrainerNames_Text_lady_melissa 83
+
+#define NPCTrainerNames_Text_gentleman_jeremy 84
+
+#define NPCTrainerNames_Text_socialite_reina 85
+
+#define NPCTrainerNames_Text_dummy_086 86
+
+#define NPCTrainerNames_Text_dummy_087 87
+
+#define NPCTrainerNames_Text_policeman_bobby 88
+
+#define NPCTrainerNames_Text_policeman_alex 89
+
+#define NPCTrainerNames_Text_policeman_dylan 90
+
+#define NPCTrainerNames_Text_fisherman_juan 91
+
+#define NPCTrainerNames_Text_fisherman_josh 92
+
+#define NPCTrainerNames_Text_fisherman_travis 93
+
+#define NPCTrainerNames_Text_ranger_taylor 94
+
+#define NPCTrainerNames_Text_ranger_jeffrey 95
+
+#define NPCTrainerNames_Text_ranger_allison 96
+
+#define NPCTrainerNames_Text_dummy_097 97
+
+#define NPCTrainerNames_Text_dummy_098 98
+
+#define NPCTrainerNames_Text_scientist_stefano 99
+
+#define NPCTrainerNames_Text_dummy_100 100
+
+#define NPCTrainerNames_Text_dummy_101 101
+
+#define NPCTrainerNames_Text_policeman_caleb 102
+
+#define NPCTrainerNames_Text_swimmer_sheltin 103
+
+#define NPCTrainerNames_Text_swimmer_evan 104
+
+#define NPCTrainerNames_Text_swimmer_haley 105
+
+#define NPCTrainerNames_Text_swimmer_mary 106
+
+#define NPCTrainerNames_Text_tuber_jared 107
+
+#define NPCTrainerNames_Text_tuber_chelsea 108
+
+#define NPCTrainerNames_Text_dummy_109 109
+
+#define NPCTrainerNames_Text_sailor_paul 110
+
+#define NPCTrainerNames_Text_fisherman_kenneth 111
+
+#define NPCTrainerNames_Text_dummy_112 112
+
+#define NPCTrainerNames_Text_ruin_maniac_bryan 113
+
+#define NPCTrainerNames_Text_ruin_maniac_ronald 114
+
+#define NPCTrainerNames_Text_dummy_115 115
+
+#define NPCTrainerNames_Text_dummy_116 116
+
+#define NPCTrainerNames_Text_dummy_117 117
+
+#define NPCTrainerNames_Text_dummy_118 118
+
+#define NPCTrainerNames_Text_psychic_mitchell 119
+
+#define NPCTrainerNames_Text_psychic_abigail 120
+
+#define NPCTrainerNames_Text_pi_carlos 121
+
+#define NPCTrainerNames_Text_dummy_122 122
+
+#define NPCTrainerNames_Text_dummy_123 123
+
+#define NPCTrainerNames_Text_dummy_124 124
+
+#define NPCTrainerNames_Text_dummy_125 125
+
+#define NPCTrainerNames_Text_dummy_126 126
+
+#define NPCTrainerNames_Text_black_belt_gregory 127
+
+#define NPCTrainerNames_Text_black_belt_derek 128
+
+#define NPCTrainerNames_Text_black_belt_nathaniel 129
+
+#define NPCTrainerNames_Text_jogger_scott 130
+
+#define NPCTrainerNames_Text_dummy_131 131
+
+#define NPCTrainerNames_Text_ace_trainer_blake 132
+
+#define NPCTrainerNames_Text_ace_trainer_garrett 133
+
+#define NPCTrainerNames_Text_ace_trainer_laura 134
+
+#define NPCTrainerNames_Text_ace_trainer_maria 135
+
+#define NPCTrainerNames_Text_skier_bradley 136
+
+#define NPCTrainerNames_Text_skier_edward 137
+
+#define NPCTrainerNames_Text_skier_kaitlyn 138
+
+#define NPCTrainerNames_Text_skier_andrea 139
+
+#define NPCTrainerNames_Text_ace_trainer_dalton 140
+
+#define NPCTrainerNames_Text_ace_trainer_olivia 141
+
+#define NPCTrainerNames_Text_skier_shawn 142
+
+#define NPCTrainerNames_Text_skier_bjorn 143
+
+#define NPCTrainerNames_Text_skier_lexie 144
+
+#define NPCTrainerNames_Text_skier_madison 145
+
+#define NPCTrainerNames_Text_ninja_boy_matthew 146
+
+#define NPCTrainerNames_Text_ninja_boy_ethan 147
+
+#define NPCTrainerNames_Text_black_belt_luke 148
+
+#define NPCTrainerNames_Text_dummy_149 149
+
+#define NPCTrainerNames_Text_dummy_150 150
+
+#define NPCTrainerNames_Text_dummy_151 151
+
+#define NPCTrainerNames_Text_dummy_152 152
+
+#define NPCTrainerNames_Text_fisherman_miguel 153
+
+#define NPCTrainerNames_Text_fisherman_luc 154
+
+#define NPCTrainerNames_Text_dummy_155 155
+
+#define NPCTrainerNames_Text_dummy_156 156
+
+#define NPCTrainerNames_Text_dummy_157 157
+
+#define NPCTrainerNames_Text_dummy_158 158
+
+#define NPCTrainerNames_Text_swimmer_adrian 159
+
+#define NPCTrainerNames_Text_swimmer_erik 160
+
+#define NPCTrainerNames_Text_swimmer_vincent 161
+
+#define NPCTrainerNames_Text_swimmer_jessica 162
+
+#define NPCTrainerNames_Text_swimmer_erica 163
+
+#define NPCTrainerNames_Text_swimmer_katelyn 164
+
+#define NPCTrainerNames_Text_dummy_165 165
+
+#define NPCTrainerNames_Text_swimmer_dillon 166
+
+#define NPCTrainerNames_Text_swimmer_vanessa 167
+
+#define NPCTrainerNames_Text_fisherman_cory 168
+
+#define NPCTrainerNames_Text_dummy_169 169
+
+#define NPCTrainerNames_Text_ace_trainer_jake 170
+
+#define NPCTrainerNames_Text_ace_trainer_shannon 171
+
+#define NPCTrainerNames_Text_fisherman_brett 172
+
+#define NPCTrainerNames_Text_fisherman_alec 173
+
+#define NPCTrainerNames_Text_fisherman_george 174
+
+#define NPCTrainerNames_Text_fisherman_cole 175
+
+#define NPCTrainerNames_Text_dummy_176 176
+
+#define NPCTrainerNames_Text_dummy_177 177
+
+#define NPCTrainerNames_Text_dummy_178 178
+
+#define NPCTrainerNames_Text_dummy_179 179
+
+#define NPCTrainerNames_Text_sailor_luther 180
+
+#define NPCTrainerNames_Text_dummy_181 181
+
+#define NPCTrainerNames_Text_dummy_182 182
+
+#define NPCTrainerNames_Text_swimmer_wesley 183
+
+#define NPCTrainerNames_Text_swimmer_ricardo 184
+
+#define NPCTrainerNames_Text_swimmer_francisco 185
+
+#define NPCTrainerNames_Text_swimmer_colton 186
+
+#define NPCTrainerNames_Text_swimmer_troy 187
+
+#define NPCTrainerNames_Text_swimmer_oscar 188
+
+#define NPCTrainerNames_Text_swimmer_miranda 189
+
+#define NPCTrainerNames_Text_swimmer_aubree 190
+
+#define NPCTrainerNames_Text_swimmer_paige 191
+
+#define NPCTrainerNames_Text_swimmer_crystal 192
+
+#define NPCTrainerNames_Text_swimmer_cassandra 193
+
+#define NPCTrainerNames_Text_swimmer_gabrielle 194
+
+#define NPCTrainerNames_Text_worker_colin 195
+
+#define NPCTrainerNames_Text_worker_mason 196
+
+#define NPCTrainerNames_Text_dummy_197 197
+
+#define NPCTrainerNames_Text_dummy_198 198
+
+#define NPCTrainerNames_Text_dummy_199 199
+
+#define NPCTrainerNames_Text_dummy_200 200
+
+#define NPCTrainerNames_Text_bug_catcher_jack 201
+
+#define NPCTrainerNames_Text_bug_catcher_phillip 202
+
+#define NPCTrainerNames_Text_bug_catcher_donald 203
+
+#define NPCTrainerNames_Text_lass_briana 204
+
+#define NPCTrainerNames_Text_psychic_elijah 205
+
+#define NPCTrainerNames_Text_psychic_lindsey 206
+
+#define NPCTrainerNames_Text_dummy_207 207
+
+#define NPCTrainerNames_Text_dummy_208 208
+
+#define NPCTrainerNames_Text_dummy_209 209
+
+#define NPCTrainerNames_Text_dummy_210 210
+
+#define NPCTrainerNames_Text_dummy_211 211
+
+#define NPCTrainerNames_Text_dummy_212 212
+
+#define NPCTrainerNames_Text_dummy_213 213
+
+#define NPCTrainerNames_Text_dummy_214 214
+
+#define NPCTrainerNames_Text_dummy_215 215
+
+#define NPCTrainerNames_Text_dummy_216 216
+
+#define NPCTrainerNames_Text_dummy_217 217
+
+#define NPCTrainerNames_Text_dummy_218 218
+
+#define NPCTrainerNames_Text_dummy_219 219
+
+#define NPCTrainerNames_Text_dummy_220 220
+
+#define NPCTrainerNames_Text_dummy_221 221
+
+#define NPCTrainerNames_Text_dummy_222 222
+
+#define NPCTrainerNames_Text_dummy_223 223
+
+#define NPCTrainerNames_Text_ace_trainer_omar 224
+
+#define NPCTrainerNames_Text_ace_trainer_henry 225
+
+#define NPCTrainerNames_Text_ace_trainer_mariah 226
+
+#define NPCTrainerNames_Text_ace_trainer_sydney 227
+
+#define NPCTrainerNames_Text_veteran_edgar 228
+
+#define NPCTrainerNames_Text_veteran_clayton 229
+
+#define NPCTrainerNames_Text_dragon_tamer_ondrej 230
+
+#define NPCTrainerNames_Text_dragon_tamer_clinton 231
+
+#define NPCTrainerNames_Text_black_belt_david 232
+
+#define NPCTrainerNames_Text_bird_keeper_hana 233
+
+#define NPCTrainerNames_Text_psychic_bryce 234
+
+#define NPCTrainerNames_Text_psychic_valencia 235
+
+#define NPCTrainerNames_Text_double_team_jo_and_pat 236
+
+#define NPCTrainerNames_Text_double_team_al_and_kay 237
+
+#define NPCTrainerNames_Text_dummy_238 238
+
+#define NPCTrainerNames_Text_dummy_239 239
+
+#define NPCTrainerNames_Text_veteran_grant 240
+
+#define NPCTrainerNames_Text_dummy_241 241
+
+#define NPCTrainerNames_Text_dummy_242 242
+
+#define NPCTrainerNames_Text_dummy_243 243
+
+#define NPCTrainerNames_Text_youngster_jonathon 244
+
+#define NPCTrainerNames_Text_youngster_darius 245
+
+#define NPCTrainerNames_Text_leader_roark 246
+
+#define NPCTrainerNames_Text_rival_route_203_piplup 247
+
+#define NPCTrainerNames_Text_rival_route_203_turtwig 248
+
+#define NPCTrainerNames_Text_rival_route_203_chimchar 249
+
+#define NPCTrainerNames_Text_leader_byron 250
+
+#define NPCTrainerNames_Text_dummy_251 251
+
+#define NPCTrainerNames_Text_dummy_252 252
+
+#define NPCTrainerNames_Text_dummy_253 253
+
+#define NPCTrainerNames_Text_dummy_254 254
+
+#define NPCTrainerNames_Text_dummy_255 255
+
+#define NPCTrainerNames_Text_worker_jackson 256
+
+#define NPCTrainerNames_Text_worker_gary 257
+
+#define NPCTrainerNames_Text_black_belt_philip 258
+
+#define NPCTrainerNames_Text_aroma_lady_jenna 259
+
+#define NPCTrainerNames_Text_aroma_lady_angela 260
+
+#define NPCTrainerNames_Text_elite_four_aaron 261
+
+#define NPCTrainerNames_Text_elite_four_bertha 262
+
+#define NPCTrainerNames_Text_elite_four_flint 263
+
+#define NPCTrainerNames_Text_elite_four_lucian 264
+
+#define NPCTrainerNames_Text_camper_curtis 265
+
+#define NPCTrainerNames_Text_camper_drew 266
+
+#define NPCTrainerNames_Text_champion_cynthia 267
+
+#define NPCTrainerNames_Text_ace_trainer_sergio 268
+
+#define NPCTrainerNames_Text_ace_trainer_isaiah 269
+
+#define NPCTrainerNames_Text_ace_trainer_savannah 270
+
+#define NPCTrainerNames_Text_ace_trainer_alicia 271
+
+#define NPCTrainerNames_Text_collector_douglas 272
+
+#define NPCTrainerNames_Text_collector_brady 273
+
+#define NPCTrainerNames_Text_collector_ivan 274
+
+#define NPCTrainerNames_Text_collector_fernando 275
+
+#define NPCTrainerNames_Text_collector_edwin 276
+
+#define NPCTrainerNames_Text_dragon_tamer_hayden 277
+
+#define NPCTrainerNames_Text_ace_trainer_dennis 278
+
+#define NPCTrainerNames_Text_ace_trainer_cesar 279
+
+#define NPCTrainerNames_Text_ace_trainer_allen 280
+
+#define NPCTrainerNames_Text_ace_trainer_zachery 281
+
+#define NPCTrainerNames_Text_ace_trainer_ruben 282
+
+#define NPCTrainerNames_Text_ace_trainer_breanna 283
+
+#define NPCTrainerNames_Text_ace_trainer_catherine 284
+
+#define NPCTrainerNames_Text_ace_trainer_destiny 285
+
+#define NPCTrainerNames_Text_ace_trainer_jamie 286
+
+#define NPCTrainerNames_Text_ace_trainer_maya 287
+
+#define NPCTrainerNames_Text_psychic_maxwell 288
+
+#define NPCTrainerNames_Text_psychic_brittney 289
+
+#define NPCTrainerNames_Text_belle_and_pa_ava_and_matt 290
+
+#define NPCTrainerNames_Text_dummy_291 291
+
+#define NPCTrainerNames_Text_rancher_marco 292
+
+#define NPCTrainerNames_Text_fisherman_erick 293
+
+#define NPCTrainerNames_Text_twins_emma_and_lil 294
+
+#define NPCTrainerNames_Text_commander_mars_valley_windworks 295
+
+#define NPCTrainerNames_Text_galactic_grunt_floaroma_meadow_1 296
+
+#define NPCTrainerNames_Text_galactic_grunt_floaroma_meadow_2 297
+
+#define NPCTrainerNames_Text_galactic_grunt_valley_windworks_2 298
+
+#define NPCTrainerNames_Text_galactic_grunt_valley_windworks_3 299
+
+#define NPCTrainerNames_Text_guitarist_tony 300
+
+#define NPCTrainerNames_Text_guitarist_jerry 301
+
+#define NPCTrainerNames_Text_guitarist_preston 302
+
+#define NPCTrainerNames_Text_guitarist_lonnie 303
+
+#define NPCTrainerNames_Text_ruin_maniac_calvin 304
+
+#define NPCTrainerNames_Text_ruin_maniac_larry 305
+
+#define NPCTrainerNames_Text_jogger_wyatt 306
+
+#define NPCTrainerNames_Text_jogger_craig 307
+
+#define NPCTrainerNames_Text_jogger_raul 308
+
+#define NPCTrainerNames_Text_black_belt_colby 309
+
+#define NPCTrainerNames_Text_black_belt_darren 310
+
+#define NPCTrainerNames_Text_black_belt_rafael 311
+
+#define NPCTrainerNames_Text_black_belt_jeffery 312
+
+#define NPCTrainerNames_Text_black_belt_carl 313
+
+#define NPCTrainerNames_Text_black_belt_ricky 314
+
+#define NPCTrainerNames_Text_leader_gardenia 315
+
+#define NPCTrainerNames_Text_leader_wake 316
+
+#define NPCTrainerNames_Text_leader_maylene 317
+
+#define NPCTrainerNames_Text_leader_fantina 318
+
+#define NPCTrainerNames_Text_leader_candice 319
+
+#define NPCTrainerNames_Text_leader_volkner 320
+
+#define NPCTrainerNames_Text_dummy_321 321
+
+#define NPCTrainerNames_Text_lass_madeline 322
+
+#define NPCTrainerNames_Text_lass_kaitlin 323
+
+#define NPCTrainerNames_Text_lass_caroline 324
+
+#define NPCTrainerNames_Text_lass_molly 325
+
+#define NPCTrainerNames_Text_hiker_louis 326
+
+#define NPCTrainerNames_Text_parasol_lady_alexa 327
+
+#define NPCTrainerNames_Text_parasol_lady_sabrina 328
+
+#define NPCTrainerNames_Text_picnicker_diana 329
+
+#define NPCTrainerNames_Text_picnicker_cheyenne 330
+
+#define NPCTrainerNames_Text_poke_kid_meghan 331
+
+#define NPCTrainerNames_Text_policeman_danny 332
+
+#define NPCTrainerNames_Text_policeman_thomas 333
+
+#define NPCTrainerNames_Text_dummy_334 334
+
+#define NPCTrainerNames_Text_rich_boy_trey 335
+
+#define NPCTrainerNames_Text_dummy_336 336
+
+#define NPCTrainerNames_Text_sailor_marc 337
+
+#define NPCTrainerNames_Text_sailor_skyler 338
+
+#define NPCTrainerNames_Text_sailor_damian 339
+
+#define NPCTrainerNames_Text_school_kid_chance 340
+
+#define NPCTrainerNames_Text_school_kid_forrest 341
+
+#define NPCTrainerNames_Text_school_kid_harrison 342
+
+#define NPCTrainerNames_Text_school_kid_mackenzie 343
+
+#define NPCTrainerNames_Text_school_kid_tiera 344
+
+#define NPCTrainerNames_Text_school_kid_christine 345
+
+#define NPCTrainerNames_Text_beauty_cyndy 346
+
+#define NPCTrainerNames_Text_dummy_347 347
+
+#define NPCTrainerNames_Text_beauty_lindsay 348
+
+#define NPCTrainerNames_Text_dummy_349 349
+
+#define NPCTrainerNames_Text_dummy_350 350
+
+#define NPCTrainerNames_Text_dummy_351 351
+
+#define NPCTrainerNames_Text_dummy_352 352
+
+#define NPCTrainerNames_Text_dummy_353 353
+
+#define NPCTrainerNames_Text_dummy_354 354
+
+#define NPCTrainerNames_Text_youngster_dallas 355
+
+#define NPCTrainerNames_Text_youngster_sebastian 356
+
+#define NPCTrainerNames_Text_youngster_donny 357
+
+#define NPCTrainerNames_Text_tuber_trenton 358
+
+#define NPCTrainerNames_Text_tuber_conner 359
+
+#define NPCTrainerNames_Text_tuber_mariel 360
+
+#define NPCTrainerNames_Text_tuber_holly 361
+
+#define NPCTrainerNames_Text_veteran_armando 362
+
+#define NPCTrainerNames_Text_dummy_363 363
+
+#define NPCTrainerNames_Text_dummy_364 364
+
+#define NPCTrainerNames_Text_dummy_365 365
+
+#define NPCTrainerNames_Text_waitress_kati 366
+
+#define NPCTrainerNames_Text_worker_gerardo 367
+
+#define NPCTrainerNames_Text_interviewers_roxy_and_oli_unused 368
+
+#define NPCTrainerNames_Text_cameraman_tevin_unused 369
+
+#define NPCTrainerNames_Text_reporter_kinsey_unused 370
+
+#define NPCTrainerNames_Text_idol_grace_unused 371
+
+#define NPCTrainerNames_Text_battle_girl_tyler 372
+
+#define NPCTrainerNames_Text_bird_keeper_autumn 373
+
+#define NPCTrainerNames_Text_dummy_374 374
+
+#define NPCTrainerNames_Text_dummy_375 375
+
+#define NPCTrainerNames_Text_dummy_376 376
+
+#define NPCTrainerNames_Text_camper_zackary 377
+
+#define NPCTrainerNames_Text_camper_lawrence 378
+
+#define NPCTrainerNames_Text_camper_diego 379
+
+#define NPCTrainerNames_Text_camper_parker 380
+
+#define NPCTrainerNames_Text_collector_dean 381
+
+#define NPCTrainerNames_Text_collector_jamal 382
+
+#define NPCTrainerNames_Text_collector_terry 383
+
+#define NPCTrainerNames_Text_dummy_384 384
+
+#define NPCTrainerNames_Text_dummy_385 385
+
+#define NPCTrainerNames_Text_dragon_tamer_joe 386
+
+#define NPCTrainerNames_Text_dummy_387 387
+
+#define NPCTrainerNames_Text_ace_trainer_jonah 388
+
+#define NPCTrainerNames_Text_ace_trainer_micah 389
+
+#define NPCTrainerNames_Text_ace_trainer_arthur 390
+
+#define NPCTrainerNames_Text_dummy_391 391
+
+#define NPCTrainerNames_Text_ace_trainer_brenda 392
+
+#define NPCTrainerNames_Text_ace_trainer_brandi 393
+
+#define NPCTrainerNames_Text_ace_trainer_clarice 394
+
+#define NPCTrainerNames_Text_psychic_kody 395
+
+#define NPCTrainerNames_Text_psychic_landon 396
+
+#define NPCTrainerNames_Text_psychic_deandre 397
+
+#define NPCTrainerNames_Text_psychic_rachael 398
+
+#define NPCTrainerNames_Text_psychic_desiree 399
+
+#define NPCTrainerNames_Text_psychic_kendra 400
+
+#define NPCTrainerNames_Text_fisherman_walter 401
+
+#define NPCTrainerNames_Text_dummy_402 402
+
+#define NPCTrainerNames_Text_galactic_boss_cyrus_galactic_hq 403
+
+#define NPCTrainerNames_Text_galactic_boss_cyrus_distortion_world 404
+
+#define NPCTrainerNames_Text_commander_mars_lake_verity 405
+
+#define NPCTrainerNames_Text_commander_jupiter_team_galactic_eterna_building 406
+
+#define NPCTrainerNames_Text_commander_jupiter_spear_pillar 407
+
+#define NPCTrainerNames_Text_commander_saturn_valor_cavern 408
+
+#define NPCTrainerNames_Text_commander_saturn_galactic_hq 409
+
+#define NPCTrainerNames_Text_galactic_grunt_team_galactic_eterna_building_1f_1 410
+
+#define NPCTrainerNames_Text_dummy_411 411
+
+#define NPCTrainerNames_Text_galactic_grunt_team_galactic_eterna_building_2f_1 412
+
+#define NPCTrainerNames_Text_dummy_413 413
+
+#define NPCTrainerNames_Text_galactic_grunt_jubilife_city_1 414
+
+#define NPCTrainerNames_Text_galactic_grunt_jubilife_city_2 415
+
+#define NPCTrainerNames_Text_galactic_grunt_celestic_town 416
+
+#define NPCTrainerNames_Text_galactic_grunt_lake_valor_1 417
+
+#define NPCTrainerNames_Text_galactic_grunt_lake_valor_2 418
+
+#define NPCTrainerNames_Text_galactic_grunt_lake_verity_1 419
+
+#define NPCTrainerNames_Text_galactic_grunt_lake_verity_3 420
+
+#define NPCTrainerNames_Text_galactic_grunt_team_galactic_eterna_building_1f_2 421
+
+#define NPCTrainerNames_Text_galactic_grunt_team_galactic_eterna_building_2f_2 422
+
+#define NPCTrainerNames_Text_galactic_grunt_team_galactic_eterna_building_3f 423
+
+#define NPCTrainerNames_Text_dummy_424 424
+
+#define NPCTrainerNames_Text_galactic_grunt_lake_valor_3 425
+
+#define NPCTrainerNames_Text_galactic_grunt_lake_verity_2 426
+
+#define NPCTrainerNames_Text_galactic_grunt_lake_verity_4 427
+
+#define NPCTrainerNames_Text_galactic_grunt_galactic_hq_1f 428
+
+#define NPCTrainerNames_Text_dummy_429 429
+
+#define NPCTrainerNames_Text_galactic_grunt_galactic_hq_2f_3 430
+
+#define NPCTrainerNames_Text_guitarist_arturo_unused 431
+
+#define NPCTrainerNames_Text_dummy_432 432
+
+#define NPCTrainerNames_Text_dummy_433 433
+
+#define NPCTrainerNames_Text_dummy_434 434
+
+#define NPCTrainerNames_Text_dummy_435 435
+
+#define NPCTrainerNames_Text_dummy_436 436
+
+#define NPCTrainerNames_Text_dummy_437 437
+
+#define NPCTrainerNames_Text_dummy_438 438
+
+#define NPCTrainerNames_Text_dummy_439 439
+
+#define NPCTrainerNames_Text_dummy_440 440
+
+#define NPCTrainerNames_Text_dummy_441 441
+
+#define NPCTrainerNames_Text_ruin_maniac_harry 442
+
+#define NPCTrainerNames_Text_ruin_maniac_gerald 443
+
+#define NPCTrainerNames_Text_black_belt_miles 444
+
+#define NPCTrainerNames_Text_black_belt_kendal 445
+
+#define NPCTrainerNames_Text_black_belt_eddie 446
+
+#define NPCTrainerNames_Text_black_belt_willie 447
+
+#define NPCTrainerNames_Text_dummy_448 448
+
+#define NPCTrainerNames_Text_dummy_449 449
+
+#define NPCTrainerNames_Text_lass_cassidy 450
+
+#define NPCTrainerNames_Text_hiker_theodore 451
+
+#define NPCTrainerNames_Text_hiker_damon 452
+
+#define NPCTrainerNames_Text_hiker_maurice 453
+
+#define NPCTrainerNames_Text_hiker_reginald 454
+
+#define NPCTrainerNames_Text_hiker_lorenzo 455
+
+#define NPCTrainerNames_Text_picnicker_karina 456
+
+#define NPCTrainerNames_Text_picnicker_summer 457
+
+#define NPCTrainerNames_Text_picnicker_tori 458
+
+#define NPCTrainerNames_Text_picnicker_ana 459
+
+#define NPCTrainerNames_Text_clown_lee_unused 460
+
+#define NPCTrainerNames_Text_dummy_461 461
+
+#define NPCTrainerNames_Text_dummy_462 462
+
+#define NPCTrainerNames_Text_dummy_463 463
+
+#define NPCTrainerNames_Text_dummy_464 464
+
+#define NPCTrainerNames_Text_poke_kid_ariel_unused 465
+
+#define NPCTrainerNames_Text_dummy_466 466
+
+#define NPCTrainerNames_Text_dummy_467 467
+
+#define NPCTrainerNames_Text_dummy_468 468
+
+#define NPCTrainerNames_Text_dummy_469 469
+
+#define NPCTrainerNames_Text_rival_route_209_piplup 470
+
+#define NPCTrainerNames_Text_rival_route_209_turtwig 471
+
+#define NPCTrainerNames_Text_rival_route_209_chimchar 472
+
+#define NPCTrainerNames_Text_rival_pastoria_city_piplup 473
+
+#define NPCTrainerNames_Text_rival_pastoria_city_turtwig 474
+
+#define NPCTrainerNames_Text_rival_pastoria_city_chimchar 475
+
+#define NPCTrainerNames_Text_rival_canalave_city_piplup 476
+
+#define NPCTrainerNames_Text_rival_canalave_city_turtwig 477
+
+#define NPCTrainerNames_Text_rival_canalave_city_chimchar 478
+
+#define NPCTrainerNames_Text_rival_pokemon_league_piplup 479
+
+#define NPCTrainerNames_Text_rival_pokemon_league_turtwig 480
+
+#define NPCTrainerNames_Text_rival_pokemon_league_chimchar 481
+
+#define NPCTrainerNames_Text_sailor_zachariah 482
+
+#define NPCTrainerNames_Text_sailor_samson 483
+
+#define NPCTrainerNames_Text_dummy_484 484
+
+#define NPCTrainerNames_Text_dummy_485 485
+
+#define NPCTrainerNames_Text_scientist_shaun 486
+
+#define NPCTrainerNames_Text_dummy_487 487
+
+#define NPCTrainerNames_Text_ninja_boy_fabian 488
+
+#define NPCTrainerNames_Text_ninja_boy_brennan 489
+
+#define NPCTrainerNames_Text_ninja_boy_bruce 490
+
+#define NPCTrainerNames_Text_beauty_devon 491
+
+#define NPCTrainerNames_Text_beauty_nicola 492
+
+#define NPCTrainerNames_Text_dummy_493 493
+
+#define NPCTrainerNames_Text_swimmer_claire 494
+
+#define NPCTrainerNames_Text_dummy_495 495
+
+#define NPCTrainerNames_Text_youngster_wayne 496
+
+#define NPCTrainerNames_Text_tuber_jacky 497
+
+#define NPCTrainerNames_Text_tuber_caitlyn 498
+
+#define NPCTrainerNames_Text_veteran_terrell 499
+
+#define NPCTrainerNames_Text_veteran_brenden 500
+
+#define NPCTrainerNames_Text_dummy_501 501
+
+#define NPCTrainerNames_Text_dummy_502 502
+
+#define NPCTrainerNames_Text_worker_noel 503
+
+#define NPCTrainerNames_Text_worker_braden 504
+
+#define NPCTrainerNames_Text_worker_brendon 505
+
+#define NPCTrainerNames_Text_worker_quentin 506
+
+#define NPCTrainerNames_Text_galactic_grunt_galactic_hq_b2f_1 507
+
+#define NPCTrainerNames_Text_galactic_grunt_galactic_hq_b2f_2 508
+
+#define NPCTrainerNames_Text_galactic_grunt_galactic_hq_3f_1 509
+
+#define NPCTrainerNames_Text_galactic_grunt_galactic_hq_2f_1 510
+
+#define NPCTrainerNames_Text_dummy_511 511
+
+#define NPCTrainerNames_Text_galactic_grunt_galactic_hq_3f_2 512
+
+#define NPCTrainerNames_Text_galactic_grunt_galactic_hq_2f_2 513
+
+#define NPCTrainerNames_Text_galactic_grunt_galactic_hq_3f_3 514
+
+#define NPCTrainerNames_Text_galactic_grunt_mt_coronet_3f_1 515
+
+#define NPCTrainerNames_Text_galactic_grunt_mt_coronet_4f_1 516
+
+#define NPCTrainerNames_Text_galactic_grunt_mt_coronet_4f_2 517
+
+#define NPCTrainerNames_Text_galactic_grunt_mt_coronet_tunnel_room_1 518
+
+#define NPCTrainerNames_Text_galactic_grunt_mt_coronet_tunnel_room_2 519
+
+#define NPCTrainerNames_Text_galactic_grunt_mt_coronet_5f_1 520
+
+#define NPCTrainerNames_Text_galactic_grunt_spear_pillar_1 521
+
+#define NPCTrainerNames_Text_galactic_grunt_galactic_hq_3f_4 522
+
+#define NPCTrainerNames_Text_galactic_grunt_mt_coronet_3f_2 523
+
+#define NPCTrainerNames_Text_galactic_grunt_mt_coronet_tunnel_room_3 524
+
+#define NPCTrainerNames_Text_galactic_grunt_mt_coronet_5f_2 525
+
+#define NPCTrainerNames_Text_galactic_grunt_mt_coronet_6f 526
+
+#define NPCTrainerNames_Text_galactic_grunt_spear_pillar_2 527
+
+#define NPCTrainerNames_Text_commander_mars_spear_pillar 528
+
+#define NPCTrainerNames_Text_roughneck_kirby 529
+
+#define NPCTrainerNames_Text_pokefan_leonard 530
+
+#define NPCTrainerNames_Text_pokefan_rebekah 531
+
+#define NPCTrainerNames_Text_youngster_oliver 532
+
+#define NPCTrainerNames_Text_belle_and_pa_beth_and_bob 533
+
+#define NPCTrainerNames_Text_young_couple_mike_and_nat 534
+
+#define NPCTrainerNames_Text_aroma_lady_alison 535
+
+#define NPCTrainerNames_Text_artist_ismael 536
+
+#define NPCTrainerNames_Text_breeder_kaylee 537
+
+#define NPCTrainerNames_Text_cameraman_darryl 538
+
+#define NPCTrainerNames_Text_collector_eugene 539
+
+#define NPCTrainerNames_Text_pokefan_meredith 540
+
+#define NPCTrainerNames_Text_pi_kendrick 541
+
+#define NPCTrainerNames_Text_gentleman_leonardo 542
+
+#define NPCTrainerNames_Text_socialite_rebecca 543
+
+#define NPCTrainerNames_Text_lass_blythe 544
+
+#define NPCTrainerNames_Text_rich_boy_roman 545
+
+#define NPCTrainerNames_Text_lady_kylie 546
+
+#define NPCTrainerNames_Text_reporter_valerie 547
+
+#define NPCTrainerNames_Text_school_kid_esteban 548
+
+#define NPCTrainerNames_Text_scientist_emilio 549
+
+#define NPCTrainerNames_Text_beauty_gabriella 550
+
+#define NPCTrainerNames_Text_beauty_harley 551
+
+#define NPCTrainerNames_Text_veteran_emanuel 552
+
+#define NPCTrainerNames_Text_ruin_maniac_karl 553
+
+#define NPCTrainerNames_Text_bird_keeper_audrey 554
+
+#define NPCTrainerNames_Text_bird_keeper_geneva 555
+
+#define NPCTrainerNames_Text_bird_keeper_krystal 556
+
+#define NPCTrainerNames_Text_dragon_tamer_geoffrey 557
+
+#define NPCTrainerNames_Text_dragon_tamer_darien 558
+
+#define NPCTrainerNames_Text_dragon_tamer_keegan 559
+
+#define NPCTrainerNames_Text_dragon_tamer_stanley 560
+
+#define NPCTrainerNames_Text_dragon_tamer_drake 561
+
+#define NPCTrainerNames_Text_dragon_tamer_kenny 562
+
+#define NPCTrainerNames_Text_ace_trainer_rodolfo 563
+
+#define NPCTrainerNames_Text_ace_trainer_saul 564
+
+#define NPCTrainerNames_Text_ace_trainer_jose 565
+
+#define NPCTrainerNames_Text_ace_trainer_felix 566
+
+#define NPCTrainerNames_Text_ace_trainer_quinn 567
+
+#define NPCTrainerNames_Text_ace_trainer_graham 568
+
+#define NPCTrainerNames_Text_ace_trainer_keenan 569
+
+#define NPCTrainerNames_Text_ace_trainer_stefan 570
+
+#define NPCTrainerNames_Text_ace_trainer_skylar 571
+
+#define NPCTrainerNames_Text_ace_trainer_abel 572
+
+#define NPCTrainerNames_Text_ace_trainer_deanna 573
+
+#define NPCTrainerNames_Text_ace_trainer_moira 574
+
+#define NPCTrainerNames_Text_ace_trainer_dana 575
+
+#define NPCTrainerNames_Text_ace_trainer_mikayla 576
+
+#define NPCTrainerNames_Text_ace_trainer_meagan 577
+
+#define NPCTrainerNames_Text_ace_trainer_sandra 578
+
+#define NPCTrainerNames_Text_ace_trainer_kassandra 579
+
+#define NPCTrainerNames_Text_ace_trainer_jasmin 580
+
+#define NPCTrainerNames_Text_ace_trainer_natasha 581
+
+#define NPCTrainerNames_Text_ace_trainer_monique 582
+
+#define NPCTrainerNames_Text_psychic_corbin 583
+
+#define NPCTrainerNames_Text_psychic_sterling 584
+
+#define NPCTrainerNames_Text_psychic_daisy 585
+
+#define NPCTrainerNames_Text_psychic_chelsey 586
+
+#define NPCTrainerNames_Text_black_belt_davon 587
+
+#define NPCTrainerNames_Text_black_belt_griffin 588
+
+#define NPCTrainerNames_Text_black_belt_ray 589
+
+#define NPCTrainerNames_Text_black_belt_jarrett 590
+
+#define NPCTrainerNames_Text_ranger_kyler 591
+
+#define NPCTrainerNames_Text_ranger_deshawn 592
+
+#define NPCTrainerNames_Text_ranger_dwayne 593
+
+#define NPCTrainerNames_Text_ranger_ashlee 594
+
+#define NPCTrainerNames_Text_ranger_felicia 595
+
+#define NPCTrainerNames_Text_ranger_krista 596
+
+#define NPCTrainerNames_Text_swimmer_glenn 597
+
+#define NPCTrainerNames_Text_swimmer_kurt 598
+
+#define NPCTrainerNames_Text_swimmer_sam 599
+
+#define NPCTrainerNames_Text_swimmer_wade 600
+
+#define NPCTrainerNames_Text_swimmer_joanna 601
+
+#define NPCTrainerNames_Text_swimmer_sophia 602
+
+#define NPCTrainerNames_Text_swimmer_mallory 603
+
+#define NPCTrainerNames_Text_swimmer_lydia 604
+
+#define NPCTrainerNames_Text_dummy_605 605
+
+#define NPCTrainerNames_Text_veteran_harlan 606
+
+#define NPCTrainerNames_Text_rival_spear_pillar_piplup 607
+
+#define NPCTrainerNames_Text_cheryl_eterna_forest 608
+
+#define NPCTrainerNames_Text_riley_iron_island 609
+
+#define NPCTrainerNames_Text_marley_victory_road 610
+
+#define NPCTrainerNames_Text_buck_stark_mountain 611
+
+#define NPCTrainerNames_Text_mira_wayward_cave 612
+
+#define NPCTrainerNames_Text_lucas_jubilife_city_chimchar 613
+
+#define NPCTrainerNames_Text_lucas_jubilife_city_piplup 614
+
+#define NPCTrainerNames_Text_lucas_jubilife_city_turtwig 615
+
+#define NPCTrainerNames_Text_dawn_jubilife_city_chimchar 616
+
+#define NPCTrainerNames_Text_dawn_jubilife_city_piplup 617
+
+#define NPCTrainerNames_Text_dawn_jubilife_city_turtwig 618
+
+#define NPCTrainerNames_Text_rival_spear_pillar_turtwig 619
+
+#define NPCTrainerNames_Text_rival_spear_pillar_chimchar 620
+
+#define NPCTrainerNames_Text_lucas_veilstone_city_turtwig 621
+
+#define NPCTrainerNames_Text_lucas_veilstone_city_chimchar 622
+
+#define NPCTrainerNames_Text_lucas_veilstone_city_piplup 623
+
+#define NPCTrainerNames_Text_dawn_veilstone_city_turtwig 624
+
+#define NPCTrainerNames_Text_dawn_veilstone_city_chimchar 625
+
+#define NPCTrainerNames_Text_dawn_veilstone_city_piplup 626
+
+#define NPCTrainerNames_Text_aroma_lady_elizabeth_rematch_1 627
+
+#define NPCTrainerNames_Text_aroma_lady_elizabeth_rematch_2 628
+
+#define NPCTrainerNames_Text_aroma_lady_elizabeth_rematch_3 629
+
+#define NPCTrainerNames_Text_artist_william_rematch_1 630
+
+#define NPCTrainerNames_Text_artist_william_rematch_2 631
+
+#define NPCTrainerNames_Text_artist_william_rematch_3 632
+
+#define NPCTrainerNames_Text_battle_girl_helen_rematch_1 633
+
+#define NPCTrainerNames_Text_battle_girl_helen_rematch_2 634
+
+#define NPCTrainerNames_Text_battle_girl_helen_rematch_3 635
+
+#define NPCTrainerNames_Text_bird_keeper_brianna_rematch_1 636
+
+#define NPCTrainerNames_Text_bird_keeper_brianna_rematch_2 637
+
+#define NPCTrainerNames_Text_bird_keeper_audrey_rematch 638
+
+#define NPCTrainerNames_Text_breeder_albert_rematch_1 639
+
+#define NPCTrainerNames_Text_breeder_albert_rematch_2 640
+
+#define NPCTrainerNames_Text_breeder_albert_rematch_3 641
+
+#define NPCTrainerNames_Text_breeder_jennifer_rematch_1 642
+
+#define NPCTrainerNames_Text_breeder_jennifer_rematch_2 643
+
+#define NPCTrainerNames_Text_breeder_jennifer_rematch_3 644
+
+#define NPCTrainerNames_Text_camper_zackary_rematch_1 645
+
+#define NPCTrainerNames_Text_camper_zackary_rematch_2 646
+
+#define NPCTrainerNames_Text_camper_zackary_rematch_3 647
+
+#define NPCTrainerNames_Text_ace_trainer_dalton_rematch 648
+
+#define NPCTrainerNames_Text_ace_trainer_olivia_rematch 649
+
+#define NPCTrainerNames_Text_collector_ivan_rematch 650
+
+#define NPCTrainerNames_Text_dummy_058_rematch_1 651
+
+#define NPCTrainerNames_Text_dummy_058_rematch_2 652
+
+#define NPCTrainerNames_Text_cyclist_john_rematch_1 653
+
+#define NPCTrainerNames_Text_cyclist_john_rematch_2 654
+
+#define NPCTrainerNames_Text_cyclist_john_rematch_3 655
+
+#define NPCTrainerNames_Text_cyclist_kayla_rematch_1 656
+
+#define NPCTrainerNames_Text_cyclist_kayla_rematch_2 657
+
+#define NPCTrainerNames_Text_cyclist_kayla_rematch_3 658
+
+#define NPCTrainerNames_Text_dragon_tamer_patrick_rematch_1 659
+
+#define NPCTrainerNames_Text_dragon_tamer_patrick_rematch_2 660
+
+#define NPCTrainerNames_Text_dragon_tamer_hayden_rematch 661
+
+#define NPCTrainerNames_Text_dragon_tamer_geoffrey_rematch 662
+
+#define NPCTrainerNames_Text_ace_trainer_jake_rematch 663
+
+#define NPCTrainerNames_Text_ace_trainer_dennis_rematch_1 664
+
+#define NPCTrainerNames_Text_ace_trainer_dennis_rematch_2 665
+
+#define NPCTrainerNames_Text_ace_trainer_rodolfo_rematch 666
+
+#define NPCTrainerNames_Text_ace_trainer_saul_rematch 667
+
+#define NPCTrainerNames_Text_ace_trainer_shannon_rematch 668
+
+#define NPCTrainerNames_Text_ace_trainer_maya_rematch_1 669
+
+#define NPCTrainerNames_Text_ace_trainer_maya_rematch_2 670
+
+#define NPCTrainerNames_Text_ace_trainer_deanna_rematch 671
+
+#define NPCTrainerNames_Text_ace_trainer_moira_rematch 672
+
+#define NPCTrainerNames_Text_psychic_mitchell_rematch_1 673
+
+#define NPCTrainerNames_Text_psychic_mitchell_rematch_2 674
+
+#define NPCTrainerNames_Text_psychic_maxwell_rematch 675
+
+#define NPCTrainerNames_Text_psychic_corbin_rematch 676
+
+#define NPCTrainerNames_Text_psychic_abigail_rematch_1 677
+
+#define NPCTrainerNames_Text_psychic_abigail_rematch_2 678
+
+#define NPCTrainerNames_Text_psychic_brittney_rematch 679
+
+#define NPCTrainerNames_Text_psychic_daisy_rematch 680
+
+#define NPCTrainerNames_Text_rancher_marco_rematch_1 681
+
+#define NPCTrainerNames_Text_rancher_marco_rematch_2 682
+
+#define NPCTrainerNames_Text_fisherman_joseph_rematch_1 683
+
+#define NPCTrainerNames_Text_fisherman_joseph_rematch_2 684
+
+#define NPCTrainerNames_Text_fisherman_miguel_rematch 685
+
+#define NPCTrainerNames_Text_fisherman_alec_rematch 686
+
+#define NPCTrainerNames_Text_twins_teri_and_tia_rematch_1 687
+
+#define NPCTrainerNames_Text_twins_teri_and_tia_rematch_2 688
+
+#define NPCTrainerNames_Text_pi_carlos_rematch_1 689
+
+#define NPCTrainerNames_Text_pi_carlos_rematch_2 690
+
+#define NPCTrainerNames_Text_gentleman_jeremy_rematch_1 691
+
+#define NPCTrainerNames_Text_gentleman_jeremy_rematch_2 692
+
+#define NPCTrainerNames_Text_gentleman_jeremy_rematch_3 693
+
+#define NPCTrainerNames_Text_guitarist_tony_rematch 694
+
+#define NPCTrainerNames_Text_ruin_maniac_harry_rematch_1 695
+
+#define NPCTrainerNames_Text_ruin_maniac_harry_rematch_2 696
+
+#define NPCTrainerNames_Text_jogger_craig_rematch_1 697
+
+#define NPCTrainerNames_Text_jogger_craig_rematch_2 698
+
+#define NPCTrainerNames_Text_black_belt_philip_rematch 699
+
+#define NPCTrainerNames_Text_black_belt_davon_rematch 700
+
+#define NPCTrainerNames_Text_socialite_reina_rematch_1 701
+
+#define NPCTrainerNames_Text_socialite_reina_rematch_2 702
+
+#define NPCTrainerNames_Text_lass_samantha_rematch_1 703
+
+#define NPCTrainerNames_Text_lass_samantha_rematch_2 704
+
+#define NPCTrainerNames_Text_lass_samantha_rematch_3 705
+
+#define NPCTrainerNames_Text_lass_madeline_rematch_1 706
+
+#define NPCTrainerNames_Text_lass_madeline_rematch_2 707
+
+#define NPCTrainerNames_Text_lass_madeline_rematch_3 708
+
+#define NPCTrainerNames_Text_hiker_theodore_rematch_1 709
+
+#define NPCTrainerNames_Text_hiker_theodore_rematch_2 710
+
+#define NPCTrainerNames_Text_hiker_theodore_rematch_3 711
+
+#define NPCTrainerNames_Text_bug_catcher_brandon_rematch_1 712
+
+#define NPCTrainerNames_Text_bug_catcher_brandon_rematch_2 713
+
+#define NPCTrainerNames_Text_bug_catcher_brandon_rematch_3 714
+
+#define NPCTrainerNames_Text_parasol_lady_alexa_rematch_1 715
+
+#define NPCTrainerNames_Text_parasol_lady_alexa_rematch_2 716
+
+#define NPCTrainerNames_Text_parasol_lady_alexa_rematch_3 717
+
+#define NPCTrainerNames_Text_picnicker_karina_rematch_1 718
+
+#define NPCTrainerNames_Text_picnicker_karina_rematch_2 719
+
+#define NPCTrainerNames_Text_picnicker_karina_rematch_3 720
+
+#define NPCTrainerNames_Text_poke_kid_danielle_rematch_1 721
+
+#define NPCTrainerNames_Text_poke_kid_danielle_rematch_2 722
+
+#define NPCTrainerNames_Text_poke_kid_danielle_rematch_3 723
+
+#define NPCTrainerNames_Text_policeman_danny_rematch_1 724
+
+#define NPCTrainerNames_Text_policeman_danny_rematch_2 725
+
+#define NPCTrainerNames_Text_policeman_danny_rematch_3 726
+
+#define NPCTrainerNames_Text_rich_boy_trey_rematch_1 727
+
+#define NPCTrainerNames_Text_rich_boy_trey_rematch_2 728
+
+#define NPCTrainerNames_Text_lady_melissa_rematch_1 729
+
+#define NPCTrainerNames_Text_lady_melissa_rematch_2 730
+
+#define NPCTrainerNames_Text_lady_melissa_rematch_3 731
+
+#define NPCTrainerNames_Text_ranger_taylor_rematch_1 732
+
+#define NPCTrainerNames_Text_ranger_taylor_rematch_2 733
+
+#define NPCTrainerNames_Text_ranger_taylor_rematch_3 734
+
+#define NPCTrainerNames_Text_ranger_kyler_rematch 735
+
+#define NPCTrainerNames_Text_ranger_allison_rematch_1 736
+
+#define NPCTrainerNames_Text_ranger_allison_rematch_2 737
+
+#define NPCTrainerNames_Text_ranger_allison_rematch_3 738
+
+#define NPCTrainerNames_Text_ranger_ashlee_rematch 739
+
+#define NPCTrainerNames_Text_sailor_marc_rematch_1 740
+
+#define NPCTrainerNames_Text_sailor_marc_rematch_2 741
+
+#define NPCTrainerNames_Text_sailor_zachariah_rematch 742
+
+#define NPCTrainerNames_Text_scientist_shaun_rematch_1 743
+
+#define NPCTrainerNames_Text_scientist_shaun_rematch_2 744
+
+#define NPCTrainerNames_Text_scientist_shaun_rematch_3 745
+
+#define NPCTrainerNames_Text_ninja_boy_zach_rematch_1 746
+
+#define NPCTrainerNames_Text_ninja_boy_zach_rematch_2 747
+
+#define NPCTrainerNames_Text_ninja_boy_zach_rematch_3 748
+
+#define NPCTrainerNames_Text_beauty_cyndy_rematch_1 749
+
+#define NPCTrainerNames_Text_beauty_cyndy_rematch_2 750
+
+#define NPCTrainerNames_Text_skier_edward_rematch_1 751
+
+#define NPCTrainerNames_Text_skier_edward_rematch_2 752
+
+#define NPCTrainerNames_Text_skier_bjorn_rematch_1 753
+
+#define NPCTrainerNames_Text_skier_bjorn_rematch_2 754
+
+#define NPCTrainerNames_Text_skier_andrea_rematch_1 755
+
+#define NPCTrainerNames_Text_skier_andrea_rematch_2 756
+
+#define NPCTrainerNames_Text_skier_madison_rematch_1 757
+
+#define NPCTrainerNames_Text_skier_madison_rematch_2 758
+
+#define NPCTrainerNames_Text_swimmer_wesley_rematch 759
+
+#define NPCTrainerNames_Text_swimmer_francisco_rematch 760
+
+#define NPCTrainerNames_Text_swimmer_glenn_rematch 761
+
+#define NPCTrainerNames_Text_swimmer_miranda_rematch 762
+
+#define NPCTrainerNames_Text_swimmer_crystal_rematch 763
+
+#define NPCTrainerNames_Text_swimmer_joanna_rematch 764
+
+#define NPCTrainerNames_Text_youngster_tristan_rematch_1 765
+
+#define NPCTrainerNames_Text_youngster_tristan_rematch_2 766
+
+#define NPCTrainerNames_Text_youngster_tristan_rematch_3 767
+
+#define NPCTrainerNames_Text_youngster_dallas_rematch_1 768
+
+#define NPCTrainerNames_Text_youngster_dallas_rematch_2 769
+
+#define NPCTrainerNames_Text_youngster_dallas_rematch_3 770
+
+#define NPCTrainerNames_Text_tuber_jared_rematch_1 771
+
+#define NPCTrainerNames_Text_tuber_jared_rematch_2 772
+
+#define NPCTrainerNames_Text_tuber_chelsea_rematch_1 773
+
+#define NPCTrainerNames_Text_veteran_brian_rematch_1 774
+
+#define NPCTrainerNames_Text_tuber_chelsea_rematch_2 775
+
+#define NPCTrainerNames_Text_veteran_brian_rematch_2 776
+
+#define NPCTrainerNames_Text_veteran_armando_rematch 777
+
+#define NPCTrainerNames_Text_dummy_605_rematch 778
+
+#define NPCTrainerNames_Text_dummy_779 779
+
+#define NPCTrainerNames_Text_dummy_780 780
+
+#define NPCTrainerNames_Text_dummy_781 781
+
+#define NPCTrainerNames_Text_dummy_782 782
+
+#define NPCTrainerNames_Text_dummy_783 783
+
+#define NPCTrainerNames_Text_dummy_784 784
+
+#define NPCTrainerNames_Text_dummy_785 785
+
+#define NPCTrainerNames_Text_dummy_786 786
+
+#define NPCTrainerNames_Text_dummy_787 787
+
+#define NPCTrainerNames_Text_dummy_788 788
+
+#define NPCTrainerNames_Text_dummy_789 789
+
+#define NPCTrainerNames_Text_dummy_790 790
+
+#define NPCTrainerNames_Text_dummy_791 791
+
+#define NPCTrainerNames_Text_dummy_792 792
+
+#define NPCTrainerNames_Text_dummy_793 793
+
+#define NPCTrainerNames_Text_dummy_794 794
+
+#define NPCTrainerNames_Text_dummy_795 795
+
+#define NPCTrainerNames_Text_dummy_796 796
+
+#define NPCTrainerNames_Text_dummy_797 797
+
+#define NPCTrainerNames_Text_dummy_798 798
+
+#define NPCTrainerNames_Text_dummy_799 799
+
+#define NPCTrainerNames_Text_dummy_800 800
+
+#define NPCTrainerNames_Text_dummy_801 801
+
+#define NPCTrainerNames_Text_dummy_802 802
+
+#define NPCTrainerNames_Text_dummy_803 803
+
+#define NPCTrainerNames_Text_dummy_804 804
+
+#define NPCTrainerNames_Text_dummy_805 805
+
+#define NPCTrainerNames_Text_dummy_806 806
+
+#define NPCTrainerNames_Text_dummy_807 807
+
+#define NPCTrainerNames_Text_dummy_808 808
+
+#define NPCTrainerNames_Text_dummy_809 809
+
+#define NPCTrainerNames_Text_dummy_810 810
+
+#define NPCTrainerNames_Text_dummy_811 811
+
+#define NPCTrainerNames_Text_dummy_812 812
+
+#define NPCTrainerNames_Text_dummy_813 813
+
+#define NPCTrainerNames_Text_dummy_814 814
+
+#define NPCTrainerNames_Text_dummy_815 815
+
+#define NPCTrainerNames_Text_dummy_816 816
+
+#define NPCTrainerNames_Text_youngster_roland_unused_1 817
+
+#define NPCTrainerNames_Text_lass_carrie_unused_1 818
+
+#define NPCTrainerNames_Text_youngster_norman_unused_1 819
+
+#define NPCTrainerNames_Text_youngster_roland_unused_2 820
+
+#define NPCTrainerNames_Text_lass_carrie_unused_2 821
+
+#define NPCTrainerNames_Text_youngster_norman_unused_2 822
+
+#define NPCTrainerNames_Text_youngster_roland_unused_3 823
+
+#define NPCTrainerNames_Text_lass_carrie_unused_3 824
+
+#define NPCTrainerNames_Text_youngster_norman_unused_3 825
+
+#define NPCTrainerNames_Text_tower_tycoon_palmer_dummy 826
+
+#define NPCTrainerNames_Text_ace_trainer_anton 827
+
+#define NPCTrainerNames_Text_ace_trainer_brenna 828
+
+#define NPCTrainerNames_Text_scientist_darrius 829
+
+#define NPCTrainerNames_Text_scientist_fredrick 830
+
+#define NPCTrainerNames_Text_scientist_travon 831
+
+#define NPCTrainerNames_Text_poke_kid_janet 832
+
+#define NPCTrainerNames_Text_dummy_833 833
+
+#define NPCTrainerNames_Text_dummy_834 834
+
+#define NPCTrainerNames_Text_galactic_grunt_iron_island_1 835
+
+#define NPCTrainerNames_Text_galactic_grunt_iron_island_2 836
+
+#define NPCTrainerNames_Text_rival_survival_area_1_piplup 837
+
+#define NPCTrainerNames_Text_rival_survival_area_1_turtwig 838
+
+#define NPCTrainerNames_Text_rival_survival_area_1_chimchar 839
+
+#define NPCTrainerNames_Text_rival_survival_area_unused_piplup 840
+
+#define NPCTrainerNames_Text_rival_survival_area_unused_turtwig 841
+
+#define NPCTrainerNames_Text_rival_survival_area_unused_chimchar 842
+
+#define NPCTrainerNames_Text_galactic_grunt_valley_windworks_1 843
+
+#define NPCTrainerNames_Text_worker_dillan 844
+
+#define NPCTrainerNames_Text_worker_holden 845
+
+#define NPCTrainerNames_Text_worker_conrad 846
+
+#define NPCTrainerNames_Text_galactic_grunt_valor_lakefront 847
+
+#define NPCTrainerNames_Text_galactic_grunt_veilstone_city_1 848
+
+#define NPCTrainerNames_Text_galactic_grunt_veilstone_city_2 849
+
+#define NPCTrainerNames_Text_rival_route_201_piplup 850
+
+#define NPCTrainerNames_Text_rival_route_201_turtwig 851
+
+#define NPCTrainerNames_Text_rival_route_201_chimchar 852
+
+#define NPCTrainerNames_Text_leader_candice_rematch 853
+
+#define NPCTrainerNames_Text_leader_maylene_rematch 854
+
+#define NPCTrainerNames_Text_leader_volkner_rematch 855
+
+#define NPCTrainerNames_Text_leader_byron_rematch 856
+
+#define NPCTrainerNames_Text_leader_gardenia_rematch 857
+
+#define NPCTrainerNames_Text_leader_roark_rematch 858
+
+#define NPCTrainerNames_Text_leader_wake_rematch 859
+
+#define NPCTrainerNames_Text_leader_fantina_rematch 860
+
+#define NPCTrainerNames_Text_riley_battleground 861
+
+#define NPCTrainerNames_Text_buck_battleground 862
+
+#define NPCTrainerNames_Text_marley_battleground 863
+
+#define NPCTrainerNames_Text_mira_battleground 864
+
+#define NPCTrainerNames_Text_cheryl_battleground 865
+
+#define NPCTrainerNames_Text_elite_four_aaron_rematch 866
+
+#define NPCTrainerNames_Text_elite_four_bertha_rematch 867
+
+#define NPCTrainerNames_Text_elite_four_flint_rematch 868
+
+#define NPCTrainerNames_Text_elite_four_lucian_rematch 869
+
+#define NPCTrainerNames_Text_champion_cynthia_rematch 870
+
+#define NPCTrainerNames_Text_rival_survival_area_2_piplup 871
+
+#define NPCTrainerNames_Text_rival_survival_area_2_turtwig 872
+
+#define NPCTrainerNames_Text_rival_survival_area_2_chimchar 873
+
+#define NPCTrainerNames_Text_cameraman_tevin 874
+
+#define NPCTrainerNames_Text_cameraman_tevin_rematch_1 875
+
+#define NPCTrainerNames_Text_cameraman_tevin_rematch_2 876
+
+#define NPCTrainerNames_Text_guitarist_arturo 877
+
+#define NPCTrainerNames_Text_guitarist_arturo_rematch_1 878
+
+#define NPCTrainerNames_Text_guitarist_arturo_rematch_2 879
+
+#define NPCTrainerNames_Text_idol_grace 880
+
+#define NPCTrainerNames_Text_idol_grace_rematch_1 881
+
+#define NPCTrainerNames_Text_idol_grace_rematch_2 882
+
+#define NPCTrainerNames_Text_interviewers_roxy_and_oli 883
+
+#define NPCTrainerNames_Text_interviewers_roxy_and_oli_rematch_1 884
+
+#define NPCTrainerNames_Text_interviewers_roxy_and_oli_rematch_2 885
+
+#define NPCTrainerNames_Text_clown_lee 886
+
+#define NPCTrainerNames_Text_clown_lee_rematch_1 887
+
+#define NPCTrainerNames_Text_clown_lee_rematch_2 888
+
+#define NPCTrainerNames_Text_poke_kid_ariel 889
+
+#define NPCTrainerNames_Text_poke_kid_ariel_rematch_1 890
+
+#define NPCTrainerNames_Text_poke_kid_ariel_rematch_2 891
+
+#define NPCTrainerNames_Text_rich_boy_liam 892
+
+#define NPCTrainerNames_Text_lady_celeste 893
+
+#define NPCTrainerNames_Text_reporter_kinsey 894
+
+#define NPCTrainerNames_Text_reporter_kinsey_rematch_1 895
+
+#define NPCTrainerNames_Text_reporter_kinsey_rematch_2 896
+
+#define NPCTrainerNames_Text_maid_belinda 897
+
+#define NPCTrainerNames_Text_maid_sophie 898
+
+#define NPCTrainerNames_Text_maid_emily 899
+
+#define NPCTrainerNames_Text_maid_elena 900
+
+#define NPCTrainerNames_Text_maid_clare 901
+
+#define NPCTrainerNames_Text_hall_matron_argenta_dummy 902
+
+#define NPCTrainerNames_Text_factory_head_thorton_dummy 903
+
+#define NPCTrainerNames_Text_arcade_star_dahlia_dummy 904
+
+#define NPCTrainerNames_Text_castle_valet_darach_dummy 905
+
+#define NPCTrainerNames_Text_cameraman_tevin_rematch_3 906
+
+#define NPCTrainerNames_Text_guitarist_arturo_rematch_3 907
+
+#define NPCTrainerNames_Text_idol_grace_rematch_3 908
+
+#define NPCTrainerNames_Text_interviewers_roxy_and_oli_rematch_3 909
+
+#define NPCTrainerNames_Text_clown_lee_rematch_3 910
+
+#define NPCTrainerNames_Text_poke_kid_ariel_rematch_3 911
+
+#define NPCTrainerNames_Text_reporter_kinsey_rematch_3 912
+
+#define NPCTrainerNames_Text_galactic_boss_cyrus_celestic_town_ruins 913
+
+#define NPCTrainerNames_Text_cameraman_tevin_rematch_4 914
+
+#define NPCTrainerNames_Text_guitarist_arturo_rematch_4 915
+
+#define NPCTrainerNames_Text_idol_grace_rematch_4 916
+
+#define NPCTrainerNames_Text_interviewers_roxy_and_oli_rematch_4 917
+
+#define NPCTrainerNames_Text_clown_lee_rematch_4 918
+
+#define NPCTrainerNames_Text_poke_kid_ariel_rematch_4 919
+
+#define NPCTrainerNames_Text_reporter_kinsey_rematch_4 920
+
+#define NPCTrainerNames_Text_leader_volkner_fight_area 921
+
+#define NPCTrainerNames_Text_elite_four_flint_fight_area 922
+
+#define NPCTrainerNames_Text_rival_fight_area_piplup 923
+
+#define NPCTrainerNames_Text_rival_fight_area_turtwig 924
+
+#define NPCTrainerNames_Text_rival_fight_area_chimchar 925
+
+#define NPCTrainerNames_Text_commander_mars_stark_mountain 926
+
+#define NPCTrainerNames_Text_commander_jupiter_stark_mountain 927
+#define TEXT_BANK_NPC_TRAINER_NAMES_ENTRY_COUNT 928
+
+#endif 

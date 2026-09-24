@@ -1,0 +1,3780 @@
+#ifndef MSGENC_RES_TEXT_BANK_BATTLE_STRINGS_H
+#define MSGENC_RES_TEXT_BANK_BATTLE_STRINGS_H
+
+
+#define BattleStrings_Text_Dummy0 0
+
+
+#define BattleStrings_Text_PokemonGainedExpPoints 1
+
+
+#define BattleStrings_Text_PokemonGainedABoostedExpPoints 2
+
+
+#define BattleStrings_Text_PokemonGrewToLevel 3
+
+
+#define BattleStrings_Text_PokemonLearnedMove 4
+
+
+#define BattleStrings_Text_PokemonIsTryingToLearnMove 5
+
+
+#define BattleStrings_Text_ButPokemonCantLearnMoreThanFourMoves 6
+
+
+#define BattleStrings_Text_DeleteAMoveToMakeRoomForMove 7
+
+
+#define BattleStrings_Text_PokemonForgotTheMove 8
+
+
+#define BattleStrings_Text_GiveUpOnLearningTheMove 9
+
+
+#define BattleStrings_Text_PokemonDidNotLearnMove 10
+
+#define BattleStrings_Text_UseNextPokemonYesNo 11
+
+
+#define BattleStrings_Text_PokemonsAttackMissed_Ally 12
+
+
+#define BattleStrings_Text_PokemonsAttackMissed_Wild 13
+
+
+#define BattleStrings_Text_TheAttackOfPokemonMissed_Foe 14
+
+
+#define BattleStrings_Text_PokemonProtectedItself_Ally 15
+
+
+#define BattleStrings_Text_PokemonProtectedItself_Wild 16
+
+
+#define BattleStrings_Text_PokemonProtectedItself_Foe 17
+
+
+#define BattleStrings_Text_PokemonAvoidedDamageByUsingAbility_Ally 18
+
+
+#define BattleStrings_Text_PokemonAvoidedDamageByUsingAbility_Wild 19
+
+
+#define BattleStrings_Text_PokemonAvoidedDamageByUsingAbility_Foe 20
+
+
+#define BattleStrings_Text_PokemonMakesGroundMovesMissByUsingAbility_Ally 21
+
+
+#define BattleStrings_Text_PokemonMakesGroundMovesMissByUsingAbility_Wild 22
+
+
+#define BattleStrings_Text_PokemonMakesGroundMovesMissByUsingAbility_Foe 23
+
+
+#define BattleStrings_Text_PokemonAvoidedTheAttack_Ally 24
+
+
+#define BattleStrings_Text_PokemonAvoidedTheAttack_Wild 25
+
+
+#define BattleStrings_Text_PokemonAvoidedTheAttack_Foe 26
+
+
+#define BattleStrings_Text_ItDoesntAffectPokemon_Ally 27
+
+
+#define BattleStrings_Text_ItDoesntAffectPokemon_Wild 28
+
+
+#define BattleStrings_Text_ItDoesntAffectPokemon_Foe 29
+
+#define BattleStrings_Text_PokemonFainted_Ally 30
+
+#define BattleStrings_Text_PokemonFainted_Wild 31
+
+#define BattleStrings_Text_PokemonFainted_Foe 32
+
+
+#define BattleStrings_Text_PlayerGotMoneyForWinning 33
+
+
+#define BattleStrings_Text_PlayerDroppedMoneyInPanic 34
+
+
+#define BattleStrings_Text_PlayerPaidOutMoneyToTheWinner 35
+
+
+#define BattleStrings_Text_PlayerIsOutOfUsablePokemon 36
+
+#define BattleStrings_Text_PlayerBlackedOut 37
+
+#define BattleStrings_Text_BlackedOutDotDotDot 38
+
+
+#define BattleStrings_Text_PokemonPreventsEscapeWithAbility_Ally 39
+
+
+#define BattleStrings_Text_PokemonPreventsEscapeWithAbility_Wild 40
+
+
+#define BattleStrings_Text_PokemonPreventsEscapeWithAbility_Foe 41
+
+#define BattleStrings_Text_CantEscape 42
+
+#define BattleStrings_Text_PokemonCantEscape_Ally 43
+
+#define BattleStrings_Text_PokemonCantEscape_Wild 44
+
+#define BattleStrings_Text_PokemonCantEscape_Foe 45
+
+#define BattleStrings_Text_HitXTimes 46
+
+
+#define BattleStrings_Text_PokemonFellAsleep_Ally 47
+
+
+#define BattleStrings_Text_PokemonFellAsleep_Wild 48
+
+
+#define BattleStrings_Text_PokemonFellAsleep_Foe 49
+
+
+#define BattleStrings_Text_PokemonsAbilityMadePokemonFallAsleep_AllyAlly 50
+
+
+#define BattleStrings_Text_PokemonsAbilityMadePokemonFallAsleep_AllyWild 51
+
+
+#define BattleStrings_Text_PokemonsAbilityMadePokemonFallAsleep_AllyFoe 52
+
+
+
+#define BattleStrings_Text_PokemonsAbilityMadePokemonFallAsleep_WildAlly 53
+
+
+
+#define BattleStrings_Text_PokemonsAbilityMadePokemonFallAsleep_WildWild 54
+
+
+
+#define BattleStrings_Text_PokemonsAbilityMadePokemonFallAsleep_FoeAlly 55
+
+
+
+#define BattleStrings_Text_PokemonsAbilityMadePokemonFallAsleep_FoeFoe 56
+
+
+#define BattleStrings_Text_PokemonIsAlreadyAsleep_Ally 57
+
+
+#define BattleStrings_Text_PokemonIsAlreadyAsleep_Wild 58
+
+
+#define BattleStrings_Text_PokemonIsAlreadyAsleep_Foe 59
+
+
+#define BattleStrings_Text_PokemonWasntAffected_Ally 60
+
+
+#define BattleStrings_Text_PokemonWasntAffected_Wild 61
+
+
+#define BattleStrings_Text_PokemonWasntAffected_Foe 62
+
+
+#define BattleStrings_Text_PokemonWasPoisoned_Ally 63
+
+
+#define BattleStrings_Text_PokemonWasPoisoned_Wild 64
+
+
+#define BattleStrings_Text_PokemonWasPoisoned_Foe 65
+
+
+#define BattleStrings_Text_PokemonsAbilityPoisonedPokemon_AllyAlly 66
+
+
+#define BattleStrings_Text_PokemonsAbilityPoisonedPokemon_AllyWild 67
+
+
+#define BattleStrings_Text_PokemonsAbilityPoisonedPokemon_AllyFoe 68
+
+
+
+#define BattleStrings_Text_PokemonsAbilityPoisonedPokemon_WildAlly 69
+
+
+
+#define BattleStrings_Text_PokemonsAbilityPoisonedPokemon_WildWild 70
+
+
+
+#define BattleStrings_Text_PokemonsAbilityPoisonedPokemon_FoeAlly 71
+
+
+
+#define BattleStrings_Text_PokemonsAbilityPoisonedPokemon_FoeFoe 72
+
+
+#define BattleStrings_Text_PokemonIsHurtByPoison_Ally 73
+
+
+#define BattleStrings_Text_PokemonIsHurtByPoison_Wild 74
+
+
+#define BattleStrings_Text_PokemonIsHurtByPoison_Foe 75
+
+
+#define BattleStrings_Text_PokemonIsAlreadyPoisoned_Ally 76
+
+
+#define BattleStrings_Text_PokemonIsAlreadyPoisoned_Wild 77
+
+
+#define BattleStrings_Text_PokemonIsAlreadyPoisoned_Foe 78
+
+
+#define BattleStrings_Text_PokemonWasBadlyPoisoned_Ally 79
+
+
+#define BattleStrings_Text_PokemonWasBadlyPoisoned_Wild 80
+
+
+#define BattleStrings_Text_PokemonWasBadlyPoisoned_Foe 81
+
+
+#define BattleStrings_Text_PokemonHadItsEnergyDrained_Ally 82
+
+
+#define BattleStrings_Text_PokemonHadItsEnergyDrained_Wild 83
+
+
+#define BattleStrings_Text_PokemonHadItsEnergyDrained_Foe 84
+
+#define BattleStrings_Text_PokemonWasBurned_Ally 85
+
+
+#define BattleStrings_Text_PokemonWasBurned_Wild 86
+
+
+#define BattleStrings_Text_PokemonWasBurned_Foe 87
+
+
+#define BattleStrings_Text_PokemonsAbilityBurnedPokemon_AllyAlly 88
+
+
+#define BattleStrings_Text_PokemonsAbilityBurnedPokemon_AllyWild 89
+
+
+#define BattleStrings_Text_PokemonsAbilityBurnedPokemon_AllyFoe 90
+
+
+#define BattleStrings_Text_PokemonsAbilityBurnedPokemon_WildAlly 91
+
+
+
+#define BattleStrings_Text_PokemonsAbilityBurnedPokemon_WildWild 92
+
+
+#define BattleStrings_Text_PokemonsAbilityBurnedPokemon_FoeAlly 93
+
+
+
+#define BattleStrings_Text_PokemonsAbilityBurnedPokemon_FoeFoe 94
+
+
+#define BattleStrings_Text_PokemonIsHurtByItsBurn_Ally 95
+
+
+#define BattleStrings_Text_PokemonIsHurtByItsBurn_Wild 96
+
+
+#define BattleStrings_Text_PokemonIsHurtByItsBurn_Foe 97
+
+
+#define BattleStrings_Text_PokemonAlreadyHasABurn_Ally 98
+
+
+#define BattleStrings_Text_PokemonAlreadyHasABurn_Wild 99
+
+
+#define BattleStrings_Text_PokemonAlreadyHasABurn_Foe 100
+
+
+#define BattleStrings_Text_PokemonWasFrozenSolid_Ally 101
+
+
+#define BattleStrings_Text_PokemonWasFrozenSolid_Wild 102
+
+
+#define BattleStrings_Text_PokemonWasFrozenSolid_Foe 103
+
+
+#define BattleStrings_Text_PokemonsAbilityFrozePokemonSolid_AllyAlly 104
+
+
+#define BattleStrings_Text_PokemonsAbilityFrozePokemonSolid_AllyWild 105
+
+
+#define BattleStrings_Text_PokemonsAbilityFrozePokemonSolid_AllyFoe 106
+
+
+
+#define BattleStrings_Text_PokemonsAbilityFrozePokemonSolid_WildAlly 107
+
+
+
+#define BattleStrings_Text_PokemonsAbilityFrozePokemonSolid_WildWild 108
+
+
+
+#define BattleStrings_Text_PokemonsAbilityFrozePokemonSolid_FoeAlly 109
+
+
+
+#define BattleStrings_Text_PokemonsAbilityFrozePokemonSolid_FoeFoe 110
+
+
+#define BattleStrings_Text_PokemonIsFrozenSolid_Ally 111
+
+
+#define BattleStrings_Text_PokemonIsFrozenSolid_Wild 112
+
+
+#define BattleStrings_Text_PokemonIsFrozenSolid_Foe 113
+
+#define BattleStrings_Text_PokemonThawedOut_Ally 114
+
+#define BattleStrings_Text_PokemonThawedOut_Wild 115
+
+#define BattleStrings_Text_PokemonThawedOut_Foe 116
+
+
+#define BattleStrings_Text_PokemonWasDefrostedByMove_Ally 117
+
+
+#define BattleStrings_Text_PokemonWasDefrostedByMove_Wild 118
+
+
+#define BattleStrings_Text_PokemonWasDefrostedByMove_Foe 119
+
+
+#define BattleStrings_Text_PokemonIsParalyzedItMayBeUnableToMove_Ally 120
+
+
+#define BattleStrings_Text_PokemonIsParalyzedItMayBeUnableToMove_Wild 121
+
+
+#define BattleStrings_Text_PokemonIsParalyzedItMayBeUnableToMove_Foe 122
+
+
+
+#define BattleStrings_Text_PokemonsAbilityParalyzedPokemon_AllyAlly 123
+
+
+
+#define BattleStrings_Text_PokemonsAbilityParalyzedPokemon_AllyWild 124
+
+
+
+#define BattleStrings_Text_PokemonsAbilityParalyzedPokemon_AllyFoe 125
+
+
+
+#define BattleStrings_Text_PokemonsAbilityParalyzedPokemon_WildAlly 126
+
+
+
+
+#define BattleStrings_Text_PokemonsAbilityParalyzedPokemon_WildWild 127
+
+
+
+
+#define BattleStrings_Text_PokemonsAbilityParalyzedPokemon_FoeAlly 128
+
+
+
+
+#define BattleStrings_Text_PokemonsAbilityParalyzedPokemon_FoeFoe 129
+
+
+#define BattleStrings_Text_PokemonIsParalyzedItCantMove_Ally 130
+
+
+#define BattleStrings_Text_PokemonIsParalyzedItCantMove_Wild 131
+
+
+#define BattleStrings_Text_PokemonIsParalyzedItCantMove_Foe 132
+
+
+#define BattleStrings_Text_PokemonIsAlreadyParalyzed_Ally 133
+
+
+#define BattleStrings_Text_PokemonIsAlreadyParalyzed_Wild 134
+
+
+#define BattleStrings_Text_PokemonIsAlreadyParalyzed_Foe 135
+
+
+#define BattleStrings_Text_PokemonWasHealedOfParalysis_Ally 136
+
+
+#define BattleStrings_Text_PokemonWasHealedOfParalysis_Wild 137
+
+
+#define BattleStrings_Text_PokemonWasHealedOfParalysis_Foe 138
+
+
+#define BattleStrings_Text_PokemonsDreamWasEaten_Ally 139
+
+
+#define BattleStrings_Text_PokemonsDreamWasEaten_Wild 140
+
+
+#define BattleStrings_Text_PokemonsDreamWasEaten_Foe 141
+
+
+#define BattleStrings_Text_PokemonsStatWontGoHigher_Ally 142
+
+
+#define BattleStrings_Text_PokemonsStatWontGoHigher_Wild 143
+
+
+#define BattleStrings_Text_PokemonsStatWontGoHigher_Foe 144
+
+
+#define BattleStrings_Text_PokemonsStatWontGoLower_Ally 145
+
+
+#define BattleStrings_Text_PokemonsStatWontGoLower_Wild 146
+
+
+#define BattleStrings_Text_PokemonsStatWontGoLower_Foe 147
+
+
+#define BattleStrings_Text_00148 148
+
+
+#define BattleStrings_Text_00149 149
+
+
+#define BattleStrings_Text_PokemonIsConfused_Ally 150
+
+
+#define BattleStrings_Text_PokemonIsConfused_Wild 151
+
+
+#define BattleStrings_Text_PokemonIsConfused_Foe 152
+
+
+#define BattleStrings_Text_PokemonSnappedOutOfConfusion_Ally 153
+
+
+#define BattleStrings_Text_PokemonSnappedOutOfConfusion_Wild 154
+
+
+#define BattleStrings_Text_PokemonSnappedOutOfConfusion_Foe 155
+
+
+#define BattleStrings_Text_PokemonBecameConfused_Ally 156
+
+
+#define BattleStrings_Text_PokemonBecameConfused_Wild 157
+
+
+#define BattleStrings_Text_PokemonBecameConfused_Foe 158
+
+
+#define BattleStrings_Text_PokemonIsAlreadyConfused_Ally 159
+
+
+#define BattleStrings_Text_PokemonIsAlreadyConfused_Wild 160
+
+
+#define BattleStrings_Text_PokemonIsAlreadyConfused_Foe 161
+
+
+#define BattleStrings_Text_PokemonFellInLove_Ally 162
+
+
+#define BattleStrings_Text_PokemonFellInLove_Wild 163
+
+
+#define BattleStrings_Text_PokemonFellInLove_Foe 164
+
+
+#define BattleStrings_Text_PokemonIsInLoveWithPokemon_AllyAlly 165
+
+
+#define BattleStrings_Text_PokemonIsInLoveWithPokemon_AllyWild 166
+
+
+#define BattleStrings_Text_PokemonIsInLoveWithPokemon_AllyFoe 167
+
+
+#define BattleStrings_Text_PokemonIsInLoveWithPokemon_WildAlly 168
+
+
+#define BattleStrings_Text_PokemonIsInLoveWithPokemon_WildWild 169
+
+
+#define BattleStrings_Text_PokemonIsInLoveWithPokemon_FoeAlly 170
+
+
+#define BattleStrings_Text_PokemonIsInLoveWithPokemon_FoeFoe 171
+
+
+#define BattleStrings_Text_PokemonIsImmobilizedByLove_Ally 172
+
+
+#define BattleStrings_Text_PokemonIsImmobilizedByLove_Wild 173
+
+
+#define BattleStrings_Text_PokemonIsImmobilizedByLove_Foe 174
+
+
+#define BattleStrings_Text_PokemonWasBlownAway_Ally 175
+
+
+#define BattleStrings_Text_PokemonWasBlownAway_Wild 176
+
+
+#define BattleStrings_Text_PokemonWasBlownAway_Foe 177
+
+
+#define BattleStrings_Text_PokemonTransformedIntoType_Ally 178
+
+
+#define BattleStrings_Text_PokemonTransformedIntoType_Wild 179
+
+
+#define BattleStrings_Text_PokemonTransformedIntoType_Foe 180
+
+#define BattleStrings_Text_PokemonFlinched_Ally 181
+
+#define BattleStrings_Text_PokemonFlinched_Wild 182
+
+#define BattleStrings_Text_PokemonFlinched_Foe 183
+
+
+#define BattleStrings_Text_PokemonRegainedHealth_Ally 184
+
+
+#define BattleStrings_Text_PokemonRegainedHealth_Wild 185
+
+
+#define BattleStrings_Text_PokemonRegainedHealth_Foe 186
+
+
+#define BattleStrings_Text_PokemonsHPIsFull_Ally 187
+
+
+#define BattleStrings_Text_PokemonsHPIsFull_Wild 188
+
+
+#define BattleStrings_Text_PokemonsHPIsFull_Foe 189
+
+
+#define BattleStrings_Text_MoveRaisedYourTeamsSpecialDefense 190
+
+
+#define BattleStrings_Text_TheFoesMoveRaisedItsTeamsSpecialDefense 191
+
+
+#define BattleStrings_Text_MoveRaisedYourTeamsSpecialDefenseSlightly 192
+
+
+#define BattleStrings_Text_TheFoesMoveRaisedItsTeamsSpecialDefenseSlightly 193
+
+
+#define BattleStrings_Text_MoveRaisedYourTeamsDefense 194
+
+
+#define BattleStrings_Text_TheFoesMoveRaisedItsTeamsDefense 195
+
+
+#define BattleStrings_Text_MoveRaisedYourTeamsDefenseSlightly 196
+
+
+#define BattleStrings_Text_TheFoesMoveRaisedItsTeamsDefenseSlightly 197
+
+
+#define BattleStrings_Text_YourTeamBecameCloakedInAMysticalVeil 198
+
+
+#define BattleStrings_Text_TheFoesTeamBecameCloakedInAMysticalVeil 199
+
+
+#define BattleStrings_Text_PokemonIsProtectedBySafeguard_Ally 200
+
+
+#define BattleStrings_Text_PokemonIsProtectedBySafeguard_Wild 201
+
+
+#define BattleStrings_Text_PokemonIsProtectedBySafeguard_Foe 202
+
+
+#define BattleStrings_Text_YourTeamIsNoLongerProtectedBySafeguard 203
+
+
+#define BattleStrings_Text_TheFoeIsNoLongerProtectedBySafeguard 204
+
+
+#define BattleStrings_Text_PokemonWentToSleep_Ally 205
+
+
+#define BattleStrings_Text_PokemonWentToSleep_Wild 206
+
+
+#define BattleStrings_Text_PokemonWentToSleep_Foe 207
+
+
+#define BattleStrings_Text_PokemonSleptAndBecameHealthy_Ally 208
+
+
+#define BattleStrings_Text_PokemonSleptAndBecameHealthy_Wild 209
+
+
+#define BattleStrings_Text_PokemonSleptAndBecameHealthy_Foe 210
+
+
+#define BattleStrings_Text_PokemonWhippedUpAWhirlwind_Ally 211
+
+
+#define BattleStrings_Text_PokemonWhippedUpAWhirlwind_Wild 212
+
+
+#define BattleStrings_Text_PokemonWhippedUpAWhirlwind_Foe 213
+
+
+#define BattleStrings_Text_PokemonAbsorbedLight_Ally 214
+
+
+#define BattleStrings_Text_PokemonAbsorbedLight_Wild 215
+
+
+#define BattleStrings_Text_PokemonAbsorbedLight_Foe 216
+
+
+#define BattleStrings_Text_PokemonTuckedInItsHead_Ally 217
+
+
+#define BattleStrings_Text_PokemonTuckedInItsHead_Wild 218
+
+
+#define BattleStrings_Text_PokemonTuckedInItsHead_Foe 219
+
+
+#define BattleStrings_Text_PokemonBecameCloakedInAHarshLight_Ally 220
+
+
+#define BattleStrings_Text_PokemonBecameCloakedInAHarshLight_Wild 221
+
+
+#define BattleStrings_Text_PokemonBecameCloakedInAHarshLight_Foe 222
+
+
+#define BattleStrings_Text_PokemonFlewUpHigh_Ally 223
+
+
+#define BattleStrings_Text_PokemonFlewUpHigh_Wild 224
+
+
+#define BattleStrings_Text_PokemonFlewUpHigh_Foe 225
+
+
+#define BattleStrings_Text_PokemonBurrowedItsWayUnderTheGround_Ally 226
+
+
+#define BattleStrings_Text_PokemonBurrowedItsWayUnderTheGround_Wild 227
+
+
+#define BattleStrings_Text_PokemonBurrowedItsWayUnderTheGround_Foe 228
+
+
+#define BattleStrings_Text_PokemonHidUnderwater_Ally 229
+
+
+#define BattleStrings_Text_PokemonHidUnderwater_Wild 230
+
+
+#define BattleStrings_Text_PokemonHidUnderwater_Foe 231
+
+#define BattleStrings_Text_PokemonSprangUp_Ally 232
+
+#define BattleStrings_Text_PokemonSprangUp_Wild 233
+
+#define BattleStrings_Text_PokemonSprangUp_Foe 234
+
+
+#define BattleStrings_Text_PokemonWasSqueezedByPokemon_AllyAlly 235
+
+
+#define BattleStrings_Text_PokemonWasSqueezedByPokemon_AllyWild 236
+
+
+#define BattleStrings_Text_PokemonWasSqueezedByPokemon_AllyFoe 237
+
+
+#define BattleStrings_Text_PokemonWasSqueezedByPokemon_WildAlly 238
+
+
+#define BattleStrings_Text_PokemonWasSqueezedByPokemon_WildWild 239
+
+
+#define BattleStrings_Text_PokemonWasSqueezedByPokemon_FoeAlly 240
+
+
+#define BattleStrings_Text_PokemonWasSqueezedByPokemon_FoeFoe 241
+
+
+#define BattleStrings_Text_PokemonWasTrappedInAVortex_Ally 242
+
+
+#define BattleStrings_Text_PokemonWasTrappedInAVortex_Wild 243
+
+
+#define BattleStrings_Text_PokemonWasTrappedInAVortex_Foe 244
+
+
+#define BattleStrings_Text_PokemonWasTrappedBySandTomb_Ally 245
+
+
+#define BattleStrings_Text_PokemonWasTrappedBySandTomb_Wild 246
+
+
+#define BattleStrings_Text_PokemonWasTrappedBySandTomb_Foe 247
+
+
+#define BattleStrings_Text_PokemonWasWrappedByPokemon_AllyAlly 248
+
+
+#define BattleStrings_Text_PokemonWasWrappedByPokemon_AllyWild 249
+
+
+#define BattleStrings_Text_PokemonWasWrappedByPokemon_AllyFoe 250
+
+
+#define BattleStrings_Text_PokemonWasWrappedByPokemon_WildAlly 251
+
+
+#define BattleStrings_Text_PokemonWasWrappedByPokemon_WildWild 252
+
+
+#define BattleStrings_Text_PokemonWasWrappedByPokemon_FoeAlly 253
+
+
+#define BattleStrings_Text_PokemonWasWrappedByPokemon_FoeFoe 254
+
+
+#define BattleStrings_Text_PokemonClampedPokemon_AllyAlly 255
+
+
+#define BattleStrings_Text_PokemonClampedPokemon_WildAlly 256
+
+
+#define BattleStrings_Text_PokemonClampedPokemon_FoeAlly 257
+
+
+#define BattleStrings_Text_PokemonClampedPokemon_AllyWild 258
+
+
+#define BattleStrings_Text_PokemonClampedPokemon_WildWild 259
+
+
+#define BattleStrings_Text_PokemonClampedPokemon_AllyFoe 260
+
+
+#define BattleStrings_Text_PokemonClampedPokemon_FoeFoe 261
+
+
+#define BattleStrings_Text_PokemonIsHurtByMove_Ally 262
+
+
+#define BattleStrings_Text_PokemonIsHurtByMove_Wild 263
+
+
+#define BattleStrings_Text_PokemonIsHurtByMove_Foe 264
+
+
+#define BattleStrings_Text_PokemonWasFreedFromMove_Ally 265
+
+
+#define BattleStrings_Text_PokemonWasFreedFromMove_Wild 266
+
+
+#define BattleStrings_Text_PokemonWasFreedFromMove_Foe 267
+
+
+#define BattleStrings_Text_PokemonKeptGoingAndCrashed_Ally 268
+
+
+#define BattleStrings_Text_PokemonKeptGoingAndCrashed_Wild 269
+
+
+#define BattleStrings_Text_PokemonKeptGoingAndCrashed_Foe 270
+
+
+#define BattleStrings_Text_YourTeamBecameShroudedInMist 271
+
+
+#define BattleStrings_Text_TheFoesTeamBecameShroudedInMist 272
+
+
+#define BattleStrings_Text_PokemonIsProtectedByMist_Ally 273
+
+
+#define BattleStrings_Text_PokemonIsProtectedByMist_Wild 274
+
+
+#define BattleStrings_Text_PokemonIsProtectedByMist_Foe 275
+
+
+#define BattleStrings_Text_PokemonIsGettingPumped_Ally 276
+
+
+#define BattleStrings_Text_PokemonIsGettingPumped_Wild 277
+
+
+#define BattleStrings_Text_PokemonIsGettingPumped_Foe 278
+
+
+#define BattleStrings_Text_PokemonIsHitWithRecoil_Ally 279
+
+
+#define BattleStrings_Text_PokemonIsHitWithRecoil_Wild 280
+
+
+#define BattleStrings_Text_PokemonIsHitWithRecoil_Foe 281
+
+
+#define BattleStrings_Text_PokemonProtectedItself2_Ally 282
+
+
+#define BattleStrings_Text_PokemonProtectedItself2_Wild 283
+
+
+#define BattleStrings_Text_PokemonProtectedItself2_Foe 284
+
+
+#define BattleStrings_Text_PokemonIsBuffetedByTheWeather_Ally 285
+
+
+#define BattleStrings_Text_PokemonIsBuffetedByTheWeather_Wild 286
+
+
+#define BattleStrings_Text_PokemonIsBuffetedByTheWeather_Foe 287
+
+
+#define BattleStrings_Text_YourTeamsMoveEffectWoreOff 288
+
+
+#define BattleStrings_Text_TheFoesMoveEffectWoreOff 289
+
+#define BattleStrings_Text_PokemonWasSeeded_Ally 290
+
+
+#define BattleStrings_Text_PokemonWasSeeded_Wild 291
+
+
+#define BattleStrings_Text_PokemonWasSeeded_Foe 292
+
+
+#define BattleStrings_Text_PokemonEvadedTheAttack_Ally 293
+
+
+#define BattleStrings_Text_PokemonEvadedTheAttack_Wild 294
+
+
+#define BattleStrings_Text_PokemonEvadedTheAttack_Foe 295
+
+
+#define BattleStrings_Text_PokemonsHealthIsSappedByLeechSeed_Ally 296
+
+
+#define BattleStrings_Text_PokemonsHealthIsSappedByLeechSeed_Wild 297
+
+
+#define BattleStrings_Text_PokemonsHealthIsSappedByLeechSeed_Foe 298
+
+
+#define BattleStrings_Text_PokemonIsFastAsleep_Ally 299
+
+
+#define BattleStrings_Text_PokemonIsFastAsleep_Wild 300
+
+
+#define BattleStrings_Text_PokemonIsFastAsleep_Foe 301
+
+#define BattleStrings_Text_PokemonWokeUp_Ally 302
+
+
+#define BattleStrings_Text_PokemonWokeUp_Wild 303
+
+
+#define BattleStrings_Text_PokemonWokeUp_Foe 304
+
+
+#define BattleStrings_Text_TheUproarWokeUpThePokemon_Ally 305
+
+
+#define BattleStrings_Text_TheUproarWokeUpPokemon_Wild 306
+
+
+#define BattleStrings_Text_TheUproarWokeUpPokemon_Foe 307
+
+
+#define BattleStrings_Text_PokemonCausedAnUproar_Ally 308
+
+
+#define BattleStrings_Text_PokemonCausedAnUproar_Wild 309
+
+
+#define BattleStrings_Text_PokemonCausedAnUproar_Foe 310
+
+
+#define BattleStrings_Text_PokemonIsMakingAnUproar_Ally 311
+
+
+#define BattleStrings_Text_PokemonIsMakingAnUproar_Wild 312
+
+
+#define BattleStrings_Text_PokemonIsMakingAnUproar_Foe 313
+
+
+#define BattleStrings_Text_PokemonCalmedDown_Ally 314
+
+
+#define BattleStrings_Text_PokemonCalmedDown_Wild 315
+
+
+#define BattleStrings_Text_PokemonCalmedDown_Foe 316
+
+#define BattleStrings_Text_PokemonStockpiledX_Ally 317
+
+#define BattleStrings_Text_PokemonStockpiledX_Wild 318
+
+#define BattleStrings_Text_PokemonStockpiledX_Foe 319
+
+
+#define BattleStrings_Text_PokemonCantStockpileAnyMore_Ally 320
+
+
+#define BattleStrings_Text_PokemonCantStockpileAnyMore_Wild 321
+
+
+#define BattleStrings_Text_PokemonCantStockpileAnyMore_Foe 322
+
+
+#define BattleStrings_Text_ButPokemonCantSleepInAnUproar_Ally 323
+
+
+#define BattleStrings_Text_ButPokemonCantSleepInAnUproar_Wild 324
+
+
+#define BattleStrings_Text_ButPokemonCantSleepInAnUproar_Foe 325
+
+
+#define BattleStrings_Text_ButTheUproarKeptPokemonAwake_Ally 326
+
+
+#define BattleStrings_Text_ButTheUproarKeptPokemonAwake_Wild 327
+
+
+#define BattleStrings_Text_ButTheUproarKeptPokemonAwake_Foe 328
+
+
+#define BattleStrings_Text_PokemonStayedAwakeBecauseOfItsAbility_Ally 329
+
+
+#define BattleStrings_Text_PokemonStayedAwakeBecauseOfItsAbility_Wild 330
+
+
+#define BattleStrings_Text_PokemonStayedAwakeBecauseOfItsAbility_Foe 331
+
+
+#define BattleStrings_Text_PokemonIsStoringEnergy_Ally 332
+
+
+#define BattleStrings_Text_PokemonIsStoringEnergy_Wild 333
+
+
+#define BattleStrings_Text_PokemonIsStoringEnergy_Foe 334
+
+
+#define BattleStrings_Text_PokemonUnleashedEnergy_Ally 335
+
+
+#define BattleStrings_Text_PokemonUnleashedEnergy_Wild 336
+
+
+#define BattleStrings_Text_PokemonUnleashedEnergy_Foe 337
+
+
+#define BattleStrings_Text_PokemonBecameConfusedDueToFatigue_Ally 338
+
+
+#define BattleStrings_Text_PokemonBecameConfusedDueToFatigue_Wild 339
+
+
+#define BattleStrings_Text_PokemonBecameConfusedDueToFatigue_Foe 340
+
+
+#define BattleStrings_Text_PlayerPickedUpMoney 341
+
+
+#define BattleStrings_Text_PokemonIsUnaffected_Ally 342
+
+
+#define BattleStrings_Text_PokemonIsUnaffected_Wild 343
+
+
+#define BattleStrings_Text_PokemonIsUnaffected_Foe 344
+
+
+#define BattleStrings_Text_PokemonTransformedIntoPokemon_AllyAlly 345
+
+
+#define BattleStrings_Text_PokemonTransformedIntoPokemon_WildAlly 346
+
+
+#define BattleStrings_Text_PokemonTransformedIntoPokemon_FoeAlly 347
+
+
+#define BattleStrings_Text_PokemonMadeASubstitute_Ally 348
+
+
+#define BattleStrings_Text_PokemonMadeASubstitute_Wild 349
+
+
+#define BattleStrings_Text_PokemonMadeASubstitute_Foe 350
+
+
+#define BattleStrings_Text_PokemonAlreadyHasASubstitute_Ally 351
+
+
+#define BattleStrings_Text_PokemonAlreadyHasASubstitute_Wild 352
+
+
+#define BattleStrings_Text_PokemonAlreadyHasASubstitute_Foe 353
+
+
+#define BattleStrings_Text_TheSubstituteTookDamageForPokemon_Ally 354
+
+
+#define BattleStrings_Text_TheSubstituteTookDamageForPokemon_Wild 355
+
+
+#define BattleStrings_Text_TheSubstituteTookDamageForPokemon_Foe 356
+
+
+#define BattleStrings_Text_PokemonsSubstituteFaded_Ally 357
+
+
+#define BattleStrings_Text_PokemonsSubstituteFaded_Wild 358
+
+
+#define BattleStrings_Text_PokemonsSubstituteFaded_Foe 359
+
+
+#define BattleStrings_Text_PokemonMustRecharge_Ally 360
+
+
+#define BattleStrings_Text_PokemonMustRecharge_Wild 361
+
+
+#define BattleStrings_Text_PokemonMustRecharge_Foe 362
+
+
+#define BattleStrings_Text_PokemonsRageIsBuilding_Ally 363
+
+
+#define BattleStrings_Text_PokemonsRageIsBuilding_Wild 364
+
+
+#define BattleStrings_Text_PokemonsRageIsBuilding_Foe 365
+
+
+#define BattleStrings_Text_PokemonsMoveWasDisabled_Ally 366
+
+
+#define BattleStrings_Text_PokemonsMoveWasDisabled_Wild 367
+
+
+#define BattleStrings_Text_PokemonsMoveWasDisabled_Foe 368
+
+
+#define BattleStrings_Text_PokemonIsNoLongerDisabled_Ally 369
+
+
+#define BattleStrings_Text_PokemonIsNoLongerDisabled_Wild 370
+
+
+#define BattleStrings_Text_PokemonIsNoLongerDisabled_Foe 371
+
+
+#define BattleStrings_Text_PokemonReceivedAnEncore_Ally 372
+
+
+#define BattleStrings_Text_PokemonReceivedAnEncore_Wild 373
+
+
+#define BattleStrings_Text_PokemonReceivedAnEncore_Foe 374
+
+
+#define BattleStrings_Text_PokemonsEncoreEnded_Ally 375
+
+
+#define BattleStrings_Text_PokemonsEncoreEnded_Wild 376
+
+
+#define BattleStrings_Text_PokemonsEncoreEnded_Foe 377
+
+
+#define BattleStrings_Text_PokemonTookAimAtPokemon_AllyAlly 378
+
+
+#define BattleStrings_Text_PokemonTookAimAtPokemon_AllyWild 379
+
+
+#define BattleStrings_Text_PokemonTookAimAtPokemon_AllyFoe 380
+
+
+#define BattleStrings_Text_PokemonTookAimAtPokemon_WildAlly 381
+
+
+#define BattleStrings_Text_PokemonTookAimAtPokemon_WildWild 382
+
+
+#define BattleStrings_Text_PokemonTookAimAtPokemon_FoeAlly 383
+
+
+#define BattleStrings_Text_PokemonTookAimAtPokemon_FoeFoe 384
+
+
+#define BattleStrings_Text_PokemonSketchedMove_Ally 385
+
+
+#define BattleStrings_Text_PokemonSketchedMove_Wild 386
+
+
+#define BattleStrings_Text_PokemonSketchedMove_Foe 387
+
+
+#define BattleStrings_Text_PokemonIsTryingToTakeItsFoeWithIt_Ally 388
+
+
+#define BattleStrings_Text_PokemonIsTryingToTakeItsFoeWithIt_Wild 389
+
+
+#define BattleStrings_Text_PokemonIsTryingToTakeItsFoeWithIt_Foe 390
+
+
+#define BattleStrings_Text_PokemonTookPokemonDownWithIt_AllyAlly 391
+
+
+#define BattleStrings_Text_PokemonTookPokemonDownWithIt_AllyWild 392
+
+
+#define BattleStrings_Text_PokemonTookPokemonDownWithIt_AllyFoe 393
+
+
+#define BattleStrings_Text_PokemonTookPokemonDownWithIt_WildAlly 394
+
+
+#define BattleStrings_Text_PokemonTookPokemonDownWithIt_WildWild 395
+
+
+#define BattleStrings_Text_PokemonTookPokemonDownWithIt_FoeAlly 396
+
+
+#define BattleStrings_Text_PokemonTookPokemonDownWithIt_FoeFoe 397
+
+
+#define BattleStrings_Text_ItReducedThePPOfPokemonsMoveByX_Ally 398
+
+
+#define BattleStrings_Text_ItReducedThePPOfPokemonsMoveByX_Wild 399
+
+
+#define BattleStrings_Text_ItReducedThePPOfPokemonsMoveByX_Foe 400
+
+
+#define BattleStrings_Text_PokemonStolePokemonsItem_AllyAlly 401
+
+
+#define BattleStrings_Text_PokemonStolePokemonsItem_AllyWild 402
+
+
+#define BattleStrings_Text_PokemonStolePokemonsItem_AllyFoe 403
+
+
+#define BattleStrings_Text_PokemonStolePokemonsItem_WildAlly 404
+
+
+#define BattleStrings_Text_PokemonStolePokemonsItem_WildWild 405
+
+
+#define BattleStrings_Text_PokemonStolePokemonsItem_FoeAlly 406
+
+
+#define BattleStrings_Text_PokemonStolePokemonsItem_FoeFoe 407
+
+
+#define BattleStrings_Text_PokemonCanNoLongerEscape_Ally 408
+
+
+#define BattleStrings_Text_PokemonCanNoLongerEscape_Wild 409
+
+
+#define BattleStrings_Text_PokemonCanNoLongerEscape_Foe 410
+
+
+#define BattleStrings_Text_PokemonBeganHavingANightmare_Ally 411
+
+
+#define BattleStrings_Text_PokemonBeganHavingANightmare_Wild 412
+
+
+#define BattleStrings_Text_PokemonBeganHavingANightmare_Foe 413
+
+
+#define BattleStrings_Text_PokemonIsLockedInANightmare_Ally 414
+
+
+#define BattleStrings_Text_PokemonIsLockedInANightmare_Wild 415
+
+
+#define BattleStrings_Text_PokemonIsLockedInANightmare_Foe 416
+
+
+#define BattleStrings_Text_PokemonCutItsOwnHPAndLaidACurseOnPokemon_AllyAlly 417
+
+
+
+#define BattleStrings_Text_PokemonCutItsOwnHPAndLaidACurseOnPokemon_AllyWild 418
+
+
+
+#define BattleStrings_Text_PokemonCutItsOwnHPAndLaidACurseOnPokemon_AllyFoe 419
+
+
+#define BattleStrings_Text_PokemonCutItsOwnHPAndLaidACurseOnPokemon_WildAlly 420
+
+
+
+#define BattleStrings_Text_PokemonCutItsOwnHPAndLaidACurseOnPokemon_WildWild 421
+
+
+#define BattleStrings_Text_PokemonCutItsOwnHPAndLaidACurseOnPokemon_FoeAlly 422
+
+
+
+#define BattleStrings_Text_PokemonCutItsOwnHPAndLaidACurseOnPokemon_FoeFoe 423
+
+
+#define BattleStrings_Text_PokemonIsAfflictedByTheCurse_Ally 424
+
+
+#define BattleStrings_Text_PokemonIsAfflictedByTheCurse_Wild 425
+
+
+#define BattleStrings_Text_PokemonIsAfflictedByTheCurse_Foe 426
+
+
+#define BattleStrings_Text_SpikesWereScatteredAllAroundYourTeamsFeet 427
+
+
+#define BattleStrings_Text_SpikesWereScatteredAllAroundTheFeetOfTheFoesTeam 428
+
+
+#define BattleStrings_Text_PokemonIsHurtByTheSpikes_Ally 429
+
+
+#define BattleStrings_Text_PokemonIsHurtByTheSpikes_Wild 430
+
+
+#define BattleStrings_Text_PokemonIsHurtByTheSpikes_Foe 431
+
+
+#define BattleStrings_Text_PokemonIdentifiedPokemon_AllyAlly 432
+
+
+#define BattleStrings_Text_PokemonIdentifiedPokemon_AllyWild 433
+
+
+#define BattleStrings_Text_PokemonIdentifiedPokemon_AllyFoe 434
+
+
+#define BattleStrings_Text_PokemonIdentifiedPokemon_WildAlly 435
+
+
+#define BattleStrings_Text_PokemonIdentifiedPokemon_WildWild 436
+
+
+#define BattleStrings_Text_PokemonIdentifiedPokemon_FoeAlly 437
+
+
+#define BattleStrings_Text_PokemonIdentifiedPokemon_FoeFoe 438
+
+
+#define BattleStrings_Text_PokemonsPerishCountFellToX_Ally 439
+
+
+#define BattleStrings_Text_PokemonsPerishCountFellToX_Wild 440
+
+
+#define BattleStrings_Text_PokemonsPerishCountFellToX_Foe 441
+
+
+#define BattleStrings_Text_PokemonBracedItself_Ally 442
+
+
+#define BattleStrings_Text_PokemonBracedItself_Wild 443
+
+
+#define BattleStrings_Text_PokemonBracedItself_Foe 444
+
+
+#define BattleStrings_Text_PokemonEnduredTheHit_Ally 445
+
+
+#define BattleStrings_Text_PokemonEnduredTheHit_Wild 446
+
+
+#define BattleStrings_Text_PokemonEnduredTheHit_Foe 447
+
+#define BattleStrings_Text_MagnitudeX 448
+
+
+#define BattleStrings_Text_PokemonCutItsOwnHPAndMaximizedItsAttack_Ally 449
+
+
+#define BattleStrings_Text_PokemonCutItsOwnHPAndMaximizedItsAttack_Wild 450
+
+
+#define BattleStrings_Text_PokemonCutItsOwnHPAndMaximizedItsAttack_Foe 451
+
+
+#define BattleStrings_Text_PokemonCopiedPokemonsStatChanges_AllyAlly 452
+
+
+#define BattleStrings_Text_PokemonCopiedPokemonsStatChanges_AllyWild 453
+
+
+#define BattleStrings_Text_PokemonCopiedPokemonsStatChanges_AllyFoe 454
+
+
+#define BattleStrings_Text_PokemonCopiedPokemonsStatChanges_WildAlly 455
+
+
+#define BattleStrings_Text_PokemonCopiedPokemonsStatChanges_WildWild 456
+
+
+#define BattleStrings_Text_PokemonCopiedPokemonsStatChanges_FoeAlly 457
+
+
+#define BattleStrings_Text_PokemonCopiedPokemonsStatChanges_FoeFoe 458
+
+
+#define BattleStrings_Text_PokemonGotFreeOfPokemonsMove_AllyAlly 459
+
+
+#define BattleStrings_Text_PokemonGotFreeOfPokemonsMove_AllyWild 460
+
+
+#define BattleStrings_Text_PokemonGotFreeOfPokemonsMove_AllyFoe 461
+
+
+#define BattleStrings_Text_PokemonGotFreeOfPokemonsMove_WildAlly 462
+
+
+#define BattleStrings_Text_PokemonGotFreeOfPokemonsMove_WildWild 463
+
+
+#define BattleStrings_Text_PokemonGotFreeOfPokemonsMove_FoeAlly 464
+
+
+
+#define BattleStrings_Text_PokemonGotFreeOfPokemonsMove_FoeFoe 465
+
+
+#define BattleStrings_Text_PokemonBlewAwayHazards_Ally 466
+
+
+#define BattleStrings_Text_PokemonBlewAwayHazards_Wild 467
+
+
+#define BattleStrings_Text_PokemonBlewAwayHazards_Foe 468
+
+
+#define BattleStrings_Text_PokemonFledFromBattle_Ally 469
+
+
+#define BattleStrings_Text_PokemonFledFromBattle_Wild 470
+
+
+#define BattleStrings_Text_PokemonFledFromBattle_Foe 471
+
+
+#define BattleStrings_Text_PokemonForesawAnAttack_Ally 472
+
+
+#define BattleStrings_Text_PokemonForesawAnAttack_Wild 473
+
+
+#define BattleStrings_Text_PokemonForesawAnAttack_Foe 474
+
+
+#define BattleStrings_Text_PokemonTookTheMoveAttack_Ally 475
+
+
+#define BattleStrings_Text_PokemonTookTheMoveAttack_Wild 476
+
+
+#define BattleStrings_Text_PokemonTookTheMoveAttack_Foe 477
+
+
+#define BattleStrings_Text_PokemonChoseMoveAsItsDestiny_Ally 478
+
+
+#define BattleStrings_Text_PokemonChoseMoveAsItsDestiny_Wild 479
+
+
+#define BattleStrings_Text_PokemonChoseMoveAsItsDestiny_Foe 480
+
+#define BattleStrings_Text_PokemonsBeatUpAttack_Ally 481
+
+#define BattleStrings_Text_PokemonsBeatUpAttack_Wild 482
+
+#define BattleStrings_Text_PokemonsBeatUpAttack_Foe 483
+
+
+#define BattleStrings_Text_PokemonBecameTheCenterOfAttention_Ally 484
+
+
+#define BattleStrings_Text_PokemonBecameTheCenterOfAttention_Wild 485
+
+
+#define BattleStrings_Text_PokemonBecameTheCenterOfAttention_Foe 486
+
+
+#define BattleStrings_Text_PokemonBeganChargingPower_Ally 487
+
+
+#define BattleStrings_Text_PokemonBeganChargingPower_Wild 488
+
+
+#define BattleStrings_Text_PokemonBeganChargingPower_Foe 489
+
+
+#define BattleStrings_Text_MoveTurnedIntoMove 490
+
+
+#define BattleStrings_Text_PokemonsStatusReturnedToNormal_Ally 491
+
+
+#define BattleStrings_Text_PokemonsStatusReturnedToNormal_Wild 492
+
+
+#define BattleStrings_Text_PokemonsStatusReturnedToNormal_Foe 493
+
+
+#define BattleStrings_Text_PokemonWasSubjectedToTorment_Ally 494
+
+
+#define BattleStrings_Text_PokemonWasSubjectedToTorment_Wild 495
+
+
+#define BattleStrings_Text_PokemonWasSubjectedToTorment_Foe 496
+
+
+#define BattleStrings_Text_PokemonIsTighteningItsFocus_Ally 497
+
+
+#define BattleStrings_Text_PokemonIsTighteningItsFocus_Wild 498
+
+
+#define BattleStrings_Text_PokemonIsTighteningItsFocus_Foe 499
+
+
+#define BattleStrings_Text_PokemonFellForTheTaunt_Ally 500
+
+
+#define BattleStrings_Text_PokemonFellForTheTaunt_Wild 501
+
+
+#define BattleStrings_Text_PokemonFellForTheTaunt_Foe 502
+
+
+#define BattleStrings_Text_PokemonIsReadyToHelpPokemon_AllyAlly 503
+
+
+#define BattleStrings_Text_PokemonIsReadyToHelpPokemon_AllyWild 504
+
+
+#define BattleStrings_Text_PokemonIsReadyToHelpPokemon_AllyFoe 505
+
+
+#define BattleStrings_Text_PokemonIsReadyToHelpPokemon_WildAlly 506
+
+
+#define BattleStrings_Text_PokemonIsReadyToHelpPokemon_WildWild 507
+
+
+#define BattleStrings_Text_PokemonIsReadyToHelpPokemon_FoeAlly 508
+
+
+#define BattleStrings_Text_PokemonIsReadyToHelpPokemon_FoeFoe 509
+
+
+#define BattleStrings_Text_PokemonSwitchedItemsWithItsTarget_Ally 510
+
+
+#define BattleStrings_Text_PokemonSwitchedItemsWithItsTarget_Wild 511
+
+
+#define BattleStrings_Text_PokemonSwitchedItemsWithItsTarget_Foe 512
+
+
+#define BattleStrings_Text_PokemonObtainedOneItem_Ally 513
+
+
+#define BattleStrings_Text_PokemonObtainedOneItem_Wild 514
+
+
+#define BattleStrings_Text_PokemonObtainedOneItem_Foe 515
+
+
+
+
+#define BattleStrings_Text_PokemonObtainedOneItemPokemonObtainedOneItem_AllyAlly 516
+
+
+
+
+#define BattleStrings_Text_PokemonObtainedOneItemPokemonObtainedOneItem_AllyWild 517
+
+
+
+
+#define BattleStrings_Text_PokemonObtainedOneItemPokemonObtainedOneItem_AllyFoe 518
+
+
+
+
+#define BattleStrings_Text_PokemonObtainedOneItemPokemonObtainedOneItem_WildAlly 519
+
+
+
+
+#define BattleStrings_Text_PokemonObtainedOneItemPokemonObtainedOneItem_WildWild 520
+
+
+
+
+#define BattleStrings_Text_PokemonObtainedOneItemPokemonObtainedOneItem_FoeAlly 521
+
+
+
+
+#define BattleStrings_Text_PokemonObtainedOneItemPokemonObtainedOneItem_FoeFoe 522
+
+
+#define BattleStrings_Text_PokemonCopiedPokemonsAbility_AllyAlly 523
+
+
+#define BattleStrings_Text_PokemonCopiedPokemonsAbility_AllyWild 524
+
+
+#define BattleStrings_Text_PokemonCopiedPokemonsAbility_AllyFoe 525
+
+
+#define BattleStrings_Text_PokemonCopiedPokemonsAbility_WildAlly 526
+
+
+#define BattleStrings_Text_PokemonCopiedPokemonsAbility_WildWild 527
+
+
+#define BattleStrings_Text_PokemonCopiedPokemonsAbility_FoeAlly 528
+
+
+#define BattleStrings_Text_PokemonCopiedPokemonsAbility_FoeFoe 529
+
+#define BattleStrings_Text_PokemonMadeAWish_Ally 530
+
+
+#define BattleStrings_Text_PokemonMadeAWish_Wild 531
+
+
+#define BattleStrings_Text_PokemonMadeAWish_Foe 532
+
+
+#define BattleStrings_Text_PokemonsWishCameTrue_Ally 533
+
+
+#define BattleStrings_Text_PokemonsWishCameTrue_Wild 534
+
+
+#define BattleStrings_Text_PokemonsWishCameTrue_Foe 535
+
+#define BattleStrings_Text_PokemonPlantedItsRoots_Ally 536
+
+
+#define BattleStrings_Text_PokemonPlantedItsRoots_Wild 537
+
+
+#define BattleStrings_Text_PokemonPlantedItsRoots_Foe 538
+
+
+#define BattleStrings_Text_PokemonAbsorbedWithItsRoots_Ally 539
+
+
+#define BattleStrings_Text_PokemonAbsorbedWithItsRoots_Wild 540
+
+
+#define BattleStrings_Text_PokemonAbsorbedWithItsRoots_Foe 541
+
+
+#define BattleStrings_Text_PokemonAnchoredItselfWithItsRoots_Ally 542
+
+
+#define BattleStrings_Text_PokemonAnchoredItselfWithItsRoots_Wild 543
+
+
+#define BattleStrings_Text_PokemonAnchoredItselfWithItsRoots_Foe 544
+
+
+#define BattleStrings_Text_PokemonMadePokemonDrowsy_AllyAlly 545
+
+
+#define BattleStrings_Text_PokemonMadePokemonDrowsy_AllyWild 546
+
+
+#define BattleStrings_Text_PokemonMadePokemonDrowsy_AllyFoe 547
+
+
+#define BattleStrings_Text_PokemonMadePokemonDrowsy_WildAlly 548
+
+
+#define BattleStrings_Text_PokemonMadePokemonDrowsy_WildWild 549
+
+
+#define BattleStrings_Text_PokemonMadePokemonDrowsy_FoeAlly 550
+
+
+#define BattleStrings_Text_PokemonMadePokemonDrowsy_FoeFoe 551
+
+
+#define BattleStrings_Text_PokemonKnockedOffPokemonsItem_AllyAlly 552
+
+
+#define BattleStrings_Text_PokemonKnockedOffPokemonsItem_AllyWild 553
+
+
+#define BattleStrings_Text_PokemonKnockedOffPokemonsItem_AllyFoe 554
+
+
+#define BattleStrings_Text_PokemonKnockedOffPokemonsItem_WildAlly 555
+
+
+#define BattleStrings_Text_PokemonKnockedOffPokemonsItem_WildWild 556
+
+
+#define BattleStrings_Text_PokemonKnockedOffPokemonsItem_FoeAlly 557
+
+
+
+#define BattleStrings_Text_PokemonKnockedOffPokemonsItem_FoeFoe 558
+
+
+#define BattleStrings_Text_PokemonSwappedAbilitiesWithItsTarget_Ally 559
+
+
+#define BattleStrings_Text_PokemonSwappedAbilitiesWithItsTarget_Wild 560
+
+
+#define BattleStrings_Text_PokemonSwappedAbilitiesWithItsTarget_Foe 561
+
+
+#define BattleStrings_Text_PokemonSealedTheOpponentsMoves_Ally 562
+
+
+#define BattleStrings_Text_PokemonSealedTheOpponentsMoves_Wild 563
+
+
+#define BattleStrings_Text_PokemonSealedTheOpponentsMoves_Foe 564
+
+
+#define BattleStrings_Text_PokemonWantsTheFoeToBearAGrudge_Ally 565
+
+
+#define BattleStrings_Text_PokemonWantsTheFoeToBearAGrudge_Wild 566
+
+
+#define BattleStrings_Text_PokemonWantsTheFoeToBearAGrudge_Foe 567
+
+
+#define BattleStrings_Text_PokemonsMoveLostAllItsPPDueToTheGrudge_Ally 568
+
+
+
+#define BattleStrings_Text_PokemonsMoveLostAllItsPPDueToTheGrudge_Wild 569
+
+
+
+#define BattleStrings_Text_PokemonsMoveLostAllItsPPDueToTheGrudge_Foe 570
+
+
+#define BattleStrings_Text_PokemonShroudedItselfWithMagicCoat_Ally 571
+
+
+#define BattleStrings_Text_PokemonShroudedItselfWithMagicCoat_Wild 572
+
+
+#define BattleStrings_Text_PokemonShroudedItselfWithMagicCoat_Foe 573
+
+
+#define BattleStrings_Text_PokemonsMoveWasBouncedBackByMagicCoat_Ally 574
+
+
+
+#define BattleStrings_Text_PokemonsMoveWasBouncedBackByMagicCoat_Wild 575
+
+
+
+#define BattleStrings_Text_PokemonsMoveWasBouncedBackByMagicCoat_Foe 576
+
+
+#define BattleStrings_Text_PokemonWaitsForATargetToMakeAMove_Ally 577
+
+
+#define BattleStrings_Text_PokemonWaitsForATargetToMakeAMove_Wild 578
+
+
+#define BattleStrings_Text_PokemonWaitsForATargetToMakeAMove_Foe 579
+
+
+#define BattleStrings_Text_PokemonSnatchedPokemonsMove_AllyAlly 580
+
+
+#define BattleStrings_Text_PokemonSnatchedPokemonsMove_AllyWild 581
+
+
+#define BattleStrings_Text_PokemonSnatchedPokemonsMove_AllyFoe 582
+
+
+#define BattleStrings_Text_PokemonSnatchedPokemonsMove_WildAlly 583
+
+
+#define BattleStrings_Text_PokemonSnatchedPokemonsMove_WildWild 584
+
+
+#define BattleStrings_Text_PokemonSnatchedPokemonsMove_FoeAlly 585
+
+
+#define BattleStrings_Text_PokemonSnatchedPokemonsMove_FoeFoe 586
+
+#define BattleStrings_Text_ElectricitysPowerWasWeakened 587
+
+#define BattleStrings_Text_FirePowerWasWeakened 588
+
+
+#define BattleStrings_Text_PokemonFoundOneItem_Ally 589
+
+
+#define BattleStrings_Text_PokemonFoundOneItem_Wild 590
+
+
+#define BattleStrings_Text_PokemonFoundOneItem_Foe 591
+
+
+#define BattleStrings_Text_ASoothingAromaWaftedThroughTheArea 592
+
+#define BattleStrings_Text_ItemsCantBeUsedHere 593
+
+
+#define BattleStrings_Text_ForPokemonTheItemWasFlavor_Ally 594
+
+
+#define BattleStrings_Text_ForPokemonTheItemWasFlavor_Wild 595
+
+
+#define BattleStrings_Text_ForPokemonTheItemWasFlavor_Foe 596
+
+
+#define BattleStrings_Text_PokemonUsedTheItemToGetPumped_Ally 597
+
+
+#define BattleStrings_Text_PokemonUsedTheItemToGetPumped_Wild 598
+
+
+#define BattleStrings_Text_PokemonUsedTheItemToGetPumped_Foe 599
+
+
+#define BattleStrings_Text_PokemonLostItsFocusAndCouldntMove_Ally 600
+
+
+#define BattleStrings_Text_PokemonLostItsFocusAndCouldntMove_Wild 601
+
+
+#define BattleStrings_Text_PokemonLostItsFocusAndCouldntMove_Foe 602
+
+
+#define BattleStrings_Text_PokemonWasDraggedOut_Ally 603
+
+
+#define BattleStrings_Text_PokemonWasDraggedOut_Wild 604
+
+
+#define BattleStrings_Text_PokemonWasDraggedOut_Foe 605
+
+#define BattleStrings_Text_ItShatteredTheBarrier 606
+
+#define BattleStrings_Text_ButItHadNoEffect 607
+
+
+#define BattleStrings_Text_PokemonHasNoMovesLeft 608
+
+
+#define BattleStrings_Text_PokemonsMoveIsDisabled_Ally 609
+
+
+#define BattleStrings_Text_PokemonsMoveIsDisabled_Wild 610
+
+
+#define BattleStrings_Text_PokemonsMoveIsDisabled_Foe 611
+
+
+#define BattleStrings_Text_PokemonCantUseTheSameMoveTwiceInARowDueToTheTorment 612
+
+
+#define BattleStrings_Text_PokemonCantUseMoveAfterTheTaunt_Ally 613
+
+
+#define BattleStrings_Text_PokemonCantUseMoveAfterTheTaunt_Wild 614
+
+
+#define BattleStrings_Text_PokemonCantUseMoveAfterTheTaunt_Foe 615
+
+
+#define BattleStrings_Text_PokemonCantUseTheSealedMove_Ally 616
+
+
+#define BattleStrings_Text_PokemonCantUseTheSealedMove_Wild 617
+
+
+#define BattleStrings_Text_PokemonCantUseTheSealedMove_Foe 618
+
+
+#define BattleStrings_Text_PokemonsAbilityMadeItRain_Ally 619
+
+
+#define BattleStrings_Text_PokemonsAbilityMadeItRain_Wild 620
+
+
+#define BattleStrings_Text_PokemonsAbilityMadeItRain_Foe 621
+
+
+#define BattleStrings_Text_PokemonsAbilityRaisedItsStat_Ally 622
+
+
+#define BattleStrings_Text_PokemonsAbilityRaisedItsStat_Wild 623
+
+
+#define BattleStrings_Text_PokemonsAbilityRaisedItsStat_Foe 624
+
+
+#define BattleStrings_Text_PokemonWasProtectedByAbility_Ally 625
+
+
+#define BattleStrings_Text_PokemonWasProtectedByAbility_Wild 626
+
+
+#define BattleStrings_Text_PokemonWasProtectedByAbility_Foe 627
+
+
+
+#define BattleStrings_Text_PokemonsAbilityPreventsPokemonFromUsingMove_AllyAlly 628
+
+
+
+#define BattleStrings_Text_PokemonsAbilityPreventsPokemonFromUsingMove_AllyWild 629
+
+
+
+#define BattleStrings_Text_PokemonsAbilityPreventsPokemonFromUsingMove_AllyFoe 630
+
+
+
+#define BattleStrings_Text_PokemonsAbilityPreventsPokemonFromUsingMove_WildAlly 631
+
+
+
+
+#define BattleStrings_Text_PokemonsAbilityPreventsPokemonFromUsingMove_WildWild 632
+
+
+
+#define BattleStrings_Text_PokemonsAbilityPreventsPokemonFromUsingMove_FoeAlly 633
+
+
+
+
+#define BattleStrings_Text_PokemonsAbilityPreventsPokemonFromUsingMove_FoeFoe 634
+
+
+#define BattleStrings_Text_PokemonRestoredHPUsingItsAbility_Ally 635
+
+
+#define BattleStrings_Text_PokemonRestoredHPUsingItsAbility_Wild 636
+
+
+#define BattleStrings_Text_PokemonRestoredHPUsingItsAbility_Foe 637
+
+
+#define BattleStrings_Text_PokemonsAbilityMadeMoveUseless_Ally 638
+
+
+
+#define BattleStrings_Text_PokemonsAbilityMadeMoveUseless_Wild 639
+
+
+
+#define BattleStrings_Text_PokemonsAbilityMadeMoveUseless_Foe 640
+
+
+#define BattleStrings_Text_PokemonsAbilityMadeItType_Ally 641
+
+
+
+#define BattleStrings_Text_PokemonsAbilityMadeItType_Wild 642
+
+
+
+#define BattleStrings_Text_PokemonsAbilityMadeItType_Foe 643
+
+
+#define BattleStrings_Text_PokemonsAbilityPreventsParalysis_Ally 644
+
+
+#define BattleStrings_Text_PokemonsAbilityPreventsParalysis_Wild 645
+
+
+#define BattleStrings_Text_PokemonsAbilityPreventsParalysis_Foe 646
+
+
+#define BattleStrings_Text_PokemonsAbilityPreventsRomance_Ally 647
+
+
+#define BattleStrings_Text_PokemonsAbilityPreventsRomance_Wild 648
+
+
+#define BattleStrings_Text_PokemonsAbilityPreventsRomance_Foe 649
+
+
+#define BattleStrings_Text_PokemonsAbilityPreventsPoisoning_Ally 650
+
+
+#define BattleStrings_Text_PokemonsAbilityPreventsPoisoning_Wild 651
+
+
+#define BattleStrings_Text_PokemonsAbilityPreventsPoisoning_Foe 652
+
+
+#define BattleStrings_Text_PokemonsAbilityPreventsConfusion_Ally 653
+
+
+#define BattleStrings_Text_PokemonsAbilityPreventsConfusion_Wild 654
+
+
+#define BattleStrings_Text_PokemonsAbilityPreventsConfusion_Foe 655
+
+
+#define BattleStrings_Text_PokemonsAbilityRaisedThePowerOfItsFireTypeMoves_Ally 656
+
+
+
+#define BattleStrings_Text_PokemonsAbilityRaisedThePowerOfItsFireTypeMoves_Wild 657
+
+
+
+#define BattleStrings_Text_PokemonsAbilityRaisedThePowerOfItsFireTypeMoves_Foe 658
+
+
+#define BattleStrings_Text_PokemonAnchorsItselfWithAbility_Ally 659
+
+
+#define BattleStrings_Text_PokemonAnchorsItselfWithAbility_Wild 660
+
+
+#define BattleStrings_Text_PokemonAnchorsItselfWithAbility_Foe 661
+
+
+#define BattleStrings_Text_PokemonsAbilityCutsPokemonsStat_AllyAlly 662
+
+
+
+#define BattleStrings_Text_PokemonsAbilityCutsPokemonsStat_AllyWild 663
+
+
+
+#define BattleStrings_Text_PokemonsAbilityCutsPokemonsStat_AllyFoe 664
+
+
+
+#define BattleStrings_Text_PokemonsAbilityCutsPokemonsStat_WildAlly 665
+
+
+
+#define BattleStrings_Text_PokemonsAbilityCutsPokemonsStat_WildWild 666
+
+
+
+#define BattleStrings_Text_PokemonsAbilityCutsPokemonsStat_FoeAlly 667
+
+
+
+#define BattleStrings_Text_PokemonsAbilityCutsPokemonsStat_FoeFoe 668
+
+
+#define BattleStrings_Text_PokemonsAbilityPreventsStatLoss_Ally 669
+
+
+#define BattleStrings_Text_PokemonsAbilityPreventsStatLoss_Wild 670
+
+
+#define BattleStrings_Text_PokemonsAbilityPreventsStatLoss_Foe 671
+
+
+#define BattleStrings_Text_PokemonsAbilityHurtPokemon_AllyAlly 672
+
+
+#define BattleStrings_Text_PokemonsAbilityHurtPokemon_AllyWild 673
+
+
+#define BattleStrings_Text_PokemonsAbilityHurtPokemon_AllyFoe 674
+
+
+#define BattleStrings_Text_PokemonsAbilityHurtPokemon_WildAlly 675
+
+
+
+#define BattleStrings_Text_PokemonsAbilityHurtPokemon_WildWild 676
+
+
+#define BattleStrings_Text_PokemonsAbilityHurtPokemon_FoeAlly 677
+
+
+
+#define BattleStrings_Text_PokemonsAbilityHurtPokemon_FoeFoe 678
+
+
+#define BattleStrings_Text_PokemonTracedPokemonsAbility_AllyAlly 679
+
+
+#define BattleStrings_Text_PokemonTracedPokemonsAbility_AllyWild 680
+
+
+#define BattleStrings_Text_PokemonTracedPokemonsAbility_AllyFoe 681
+
+
+#define BattleStrings_Text_PokemonTracedPokemonsAbility_WildAlly 682
+
+
+#define BattleStrings_Text_PokemonTracedPokemonsAbility_WildWild 683
+
+
+#define BattleStrings_Text_PokemonTracedPokemonsAbility_FoeAlly 684
+
+
+#define BattleStrings_Text_PokemonTracedPokemonsAbility_FoeFoe 685
+
+
+#define BattleStrings_Text_PokemonsAbilityPreventsBurns_Ally 686
+
+
+#define BattleStrings_Text_PokemonsAbilityPreventsBurns_Wild 687
+
+
+#define BattleStrings_Text_PokemonsAbilityPreventsBurns_Foe 688
+
+
+#define BattleStrings_Text_PokemonsAbilityBlocksMove_Ally 689
+
+
+
+#define BattleStrings_Text_PokemonsAbilityBlocksMove_Wild 690
+
+
+
+#define BattleStrings_Text_PokemonsAbilityBlocksMove_Foe 691
+
+
+#define BattleStrings_Text_00692 692
+
+
+#define BattleStrings_Text_00693 693
+
+
+#define BattleStrings_Text_00694 694
+
+
+#define BattleStrings_Text_PokemonsAbilityWhippedUpASandstorm_Ally 695
+
+
+
+#define BattleStrings_Text_PokemonsAbilityWhippedUpASandstorm_Wild 696
+
+
+
+#define BattleStrings_Text_PokemonsAbilityWhippedUpASandstorm_Foe 697
+
+
+#define BattleStrings_Text_PokemonsAbilityIntensifiedTheSunsRays_Ally 698
+
+
+
+#define BattleStrings_Text_PokemonsAbilityIntensifiedTheSunsRays_Wild 699
+
+
+
+#define BattleStrings_Text_PokemonsAbilityIntensifiedTheSunsRays_Foe 700
+
+
+#define BattleStrings_Text_PokemonsAbilityWhippedUpAHailstorm_Ally 701
+
+
+
+#define BattleStrings_Text_PokemonsAbilityWhippedUpAHailstorm_Wild 702
+
+
+
+#define BattleStrings_Text_PokemonsAbilityWhippedUpAHailstorm_Foe 703
+
+
+#define BattleStrings_Text_PokemonsAbilityPreventsBufferStatLoss 704
+
+
+
+#define BattleStrings_Text_00705 705
+
+
+
+#define BattleStrings_Text_00706 706
+
+
+#define BattleStrings_Text_PokemonsAbilityInfatuatedPokemon_AllyAlly 707
+
+
+#define BattleStrings_Text_PokemonsAbilityInfatuatedPokemon_AllyWild 708
+
+
+#define BattleStrings_Text_PokemonsAbilityInfatuatedPokemon_AllyFoe 709
+
+
+
+#define BattleStrings_Text_PokemonsAbilityInfatuatedPokemon_WildAlly 710
+
+
+
+#define BattleStrings_Text_PokemonsAbilityInfatuatedPokemon_WildWild 711
+
+
+
+#define BattleStrings_Text_PokemonsAbilityInfatuatedPokemon_FoeAlly 712
+
+
+
+#define BattleStrings_Text_PokemonsAbilityInfatuatedPokemon_FoeFoe 713
+
+
+#define BattleStrings_Text_PokemonsAbilityMadeMoveIneffective_Ally 714
+
+
+
+#define BattleStrings_Text_PokemonsAbilityMadeMoveIneffective_Wild 715
+
+
+
+#define BattleStrings_Text_PokemonsAbilityMadeMoveIneffective_Foe 716
+
+
+#define BattleStrings_Text_PokemonsAbilityCuredItsStatus_Ally 717
+
+
+
+#define BattleStrings_Text_PokemonsAbilityCuredItsStatus_Wild 718
+
+
+
+#define BattleStrings_Text_PokemonsAbilityCuredItsStatus_Foe 719
+
+
+#define BattleStrings_Text_ItSuckedUpTheLiquidOoze 720
+
+#define BattleStrings_Text_PokemonTransformed_Ally 721
+
+
+#define BattleStrings_Text_PokemonTransformed_Wild 722
+
+
+#define BattleStrings_Text_PokemonTransformed_Foe 723
+
+
+#define BattleStrings_Text_PokemonsAbilityTookTheAttack_Ally 724
+
+
+#define BattleStrings_Text_PokemonsAbilityTookTheAttack_Wild 725
+
+
+#define BattleStrings_Text_PokemonsAbilityTookTheAttack_Foe 726
+
+
+
+#define BattleStrings_Text_PokemonsAbilitySuppressedPokemonsAbility_AllyAlly 727
+
+
+
+#define BattleStrings_Text_PokemonsAbilitySuppressedPokemonsAbility_AllyWild 728
+
+
+
+#define BattleStrings_Text_PokemonsAbilitySuppressedPokemonsAbility_AllyFoe 729
+
+
+
+#define BattleStrings_Text_PokemonsAbilitySuppressedPokemonsAbility_WildAlly 730
+
+
+
+#define BattleStrings_Text_PokemonsAbilitySuppressedPokemonsAbility_WildWild 731
+
+
+
+#define BattleStrings_Text_PokemonsAbilitySuppressedPokemonsAbility_FoeAlly 732
+
+
+
+#define BattleStrings_Text_PokemonsAbilitySuppressedPokemonsAbility_FoeFoe 733
+
+
+#define BattleStrings_Text_PokemonsAbilityMadeItIneffective_Ally 734
+
+
+#define BattleStrings_Text_PokemonsAbilityMadeItIneffective_Wild 735
+
+
+#define BattleStrings_Text_PokemonsAbilityMadeItIneffective_Foe 736
+
+
+#define BattleStrings_Text_PokemonWontFlinchBecauseOfItsAbility_Ally 737
+
+
+#define BattleStrings_Text_PokemonWontFlinchBecauseOfItsAbility_Wild 738
+
+
+#define BattleStrings_Text_PokemonWontFlinchBecauseOfItsAbility_Foe 739
+
+
+#define BattleStrings_Text_PokemonCuredItsStatusWithItsAbility_Ally 740
+
+
+
+#define BattleStrings_Text_PokemonCuredItsStatusWithItsAbility_Wild 741
+
+
+
+#define BattleStrings_Text_PokemonCuredItsStatusWithItsAbility_Foe 742
+
+
+#define BattleStrings_Text_00743 743
+
+
+#define BattleStrings_Text_00744 744
+
+
+#define BattleStrings_Text_00745 745
+
+
+
+#define BattleStrings_Text_00746 746
+
+
+
+#define BattleStrings_Text_00747 747
+
+
+
+#define BattleStrings_Text_00748 748
+
+
+
+#define BattleStrings_Text_00749 749
+
+
+#define BattleStrings_Text_PokemonsStatRose_Ally 750
+
+
+#define BattleStrings_Text_PokemonsStatRose_Wild 751
+
+
+#define BattleStrings_Text_PokemonsStatRose_Foe 752
+
+
+#define BattleStrings_Text_PokemonsStatSharplyRose_Ally 753
+
+
+#define BattleStrings_Text_PokemonsStatSharplyRose_Wild 754
+
+
+#define BattleStrings_Text_PokemonsStatSharplyRose_Foe 755
+
+
+#define BattleStrings_Text_TheItemRaisedPokemonsStat_Ally 756
+
+
+#define BattleStrings_Text_TheItemRaisedPokemonsStat_Wild 757
+
+
+#define BattleStrings_Text_TheItemRaisedPokemonsStat_Foe 758
+
+
+#define BattleStrings_Text_TheItemSharplyRaisedPokemonsStat_Ally 759
+
+
+#define BattleStrings_Text_TheItemSharplyRaisedPokemonsStat_Wild 760
+
+
+#define BattleStrings_Text_TheItemSharplyRaisedPokemonsStat_Foe 761
+
+
+#define BattleStrings_Text_PokemonsStatFell_Ally 762
+
+
+#define BattleStrings_Text_PokemonsStatFell_Wild 763
+
+
+#define BattleStrings_Text_PokemonsStatFell_Foe 764
+
+
+#define BattleStrings_Text_PokemonsStatHarshlyFell_Ally 765
+
+
+#define BattleStrings_Text_PokemonsStatHarshlyFell_Wild 766
+
+
+#define BattleStrings_Text_PokemonsStatHarshlyFell_Foe 767
+
+
+#define BattleStrings_Text_PokemonsStatsWontGoAnyHigher_Ally 768
+
+
+#define BattleStrings_Text_PokemonsStatsWontGoAnyHigher_Wild 769
+
+
+#define BattleStrings_Text_PokemonsStatsWontGoAnyHigher_Foe 770
+
+
+#define BattleStrings_Text_PokemonsStatsWontGoAnyLower_Ally 771
+
+
+#define BattleStrings_Text_PokemonsStatsWontGoAnyLower_Wild 772
+
+
+#define BattleStrings_Text_PokemonsStatsWontGoAnyLower_Foe 773
+
+#define BattleStrings_Text_ACriticalHit 774
+
+#define BattleStrings_Text_ItsAOneHitKO 775
+
+#define BattleStrings_Text_OneTwoAndPoof 776
+
+#define BattleStrings_Text_AndDotDotDot 777
+
+#define BattleStrings_Text_Dummy778 778
+
+#define BattleStrings_Text_ItsNotVeryEffective 779
+
+#define BattleStrings_Text_ItsSuperEffective 780
+
+#define BattleStrings_Text_GotAwaySafely 781
+
+
+#define BattleStrings_Text_PokemonFledUsingItsItem 782
+
+
+#define BattleStrings_Text_PokemonFledUsingItsAbility 783
+
+#define BattleStrings_Text_TheWildPokemonFled 784
+
+
+#define BattleStrings_Text_PlayerDefeatedLinkTr 785
+
+
+#define BattleStrings_Text_PlayerDefeatedLinkTr1AndLinkTr2 786
+
+
+#define BattleStrings_Text_PlayerLostAgainstLinkTr 787
+
+
+#define BattleStrings_Text_PlayerLostAgainstLinkTr1AndLinkTr2 788
+
+
+#define BattleStrings_Text_PlayerDrewAgainstLinkTr 789
+
+
+#define BattleStrings_Text_PlayerDrewAgainstLinkTr1AndLinkTr2 790
+
+#define BattleStrings_Text_LinkTrFled 791
+
+
+#define BattleStrings_Text_LinkTr1AndLinkTr2Fled 792
+
+
+#define BattleStrings_Text_NoTheresNoRunningFromATrainerBattle 793
+
+#define BattleStrings_Text_CantEscape2 794
+
+#define BattleStrings_Text_ButNothingHappened 795
+
+#define BattleStrings_Text_ButItFailed 796
+
+
+#define BattleStrings_Text_ItHurtItselfInItsConfusion 797
+
+#define BattleStrings_Text_MirrorMoveFailed 798
+
+#define BattleStrings_Text_ItStartedToRain 799
+
+#define BattleStrings_Text_ADownpourStarted 800
+
+#define BattleStrings_Text_RainContinuesToFall 801
+
+#define BattleStrings_Text_TheDownpourContinues 802
+
+#define BattleStrings_Text_TheRainStopped 803
+
+#define BattleStrings_Text_ASandstormBrewed 804
+
+#define BattleStrings_Text_TheSandstormRages 805
+
+#define BattleStrings_Text_TheSandstormSubsided 806
+
+#define BattleStrings_Text_TheSunlightTurnedHarsh 807
+
+#define BattleStrings_Text_TheSunlightIsStrong 808
+
+#define BattleStrings_Text_TheSunlightFaded 809
+
+#define BattleStrings_Text_ItStartedToHail 810
+
+#define BattleStrings_Text_HailContinuesToFall 811
+
+#define BattleStrings_Text_TheHailStopped 812
+
+#define BattleStrings_Text_TheFogIsDeep 813
+
+#define BattleStrings_Text_ButItFailedToSpitUpAThing 814
+
+#define BattleStrings_Text_ButItFailedToSwallowAThing 815
+
+
+#define BattleStrings_Text_TheWindTurnedIntoAHeatWave 816
+
+
+#define BattleStrings_Text_AllStatChangesWereEliminated 817
+
+#define BattleStrings_Text_CoinsScatteredEverywhere 818
+
+
+#define BattleStrings_Text_ItWasTooWeakToMakeASubstitute 819
+
+
+#define BattleStrings_Text_TheBattlersSharedTheirPain 820
+
+#define BattleStrings_Text_ABellChimed 821
+
+
+#define BattleStrings_Text_AllPokemonHearingTheSongWillFaintInThreeTurns 822
+
+#define BattleStrings_Text_TheresNoPPLeftForThisMove 823
+
+
+#define BattleStrings_Text_ButThereWasNoPPLeftForTheMove 824
+
+
+#define BattleStrings_Text_PokemonIgnoredOrdersWhileAsleep 825
+
+#define BattleStrings_Text_PokemonIgnoredOrders 826
+
+#define BattleStrings_Text_PokemonBeganToNap 827
+
+
+#define BattleStrings_Text_PokemonIsLoafingAround 828
+
+#define BattleStrings_Text_PokemonWontObey 829
+
+#define BattleStrings_Text_PokemonTurnedAway 830
+
+
+#define BattleStrings_Text_PokemonPretendedNotToNotice 831
+
+
+#define BattleStrings_Text_PokemonIsLoafingAround_Ally 832
+
+
+#define BattleStrings_Text_PokemonIsLoafingAround_Wild 833
+
+
+#define BattleStrings_Text_PokemonIsLoafingAround_Foe 834
+
+
+
+#define BattleStrings_Text_WillYouSwitchYourPokemon 835
+
+
+#define BattleStrings_Text_PokemonLearnedMove2_Ally 836
+
+
+#define BattleStrings_Text_PokemonLearnedMove_Wild 837
+
+
+#define BattleStrings_Text_PokemonLearnedMove_Foe 838
+
+
+#define BattleStrings_Text_PlayerDefeatedTr 839
+
+
+#define BattleStrings_Text_00840 840
+
+#define BattleStrings_Text_00841 841
+
+
+#define BattleStrings_Text_00842 842
+
+#define BattleStrings_Text_Dummy843 843
+
+#define BattleStrings_Text_Dummy844 844
+
+#define BattleStrings_Text_Dummy845 845
+
+
+#define BattleStrings_Text_00846 846
+
+
+
+#define BattleStrings_Text_YoureOutOfSafariBallsNewLineGameOver 847
+
+
+#define BattleStrings_Text_PlayerThrewASafariBall 848
+
+
+#define BattleStrings_Text_PokemonIsWatchingCarefully 849
+
+
+#define BattleStrings_Text_YoureOutOfSafariBallsGameOver 850
+
+
+#define BattleStrings_Text_PlayerThrewSomeBaitAtThePokemon 851
+
+#define BattleStrings_Text_PokemonIsEating 852
+
+#define BattleStrings_Text_PokemonIsBusyEating 853
+
+
+#define BattleStrings_Text_PlayerThrewMudAtThePokemon 854
+
+#define BattleStrings_Text_PokemonIsAngry 855
+
+
+#define BattleStrings_Text_PokemonIsBesideItselfWithAnger 856
+
+
+#define BattleStrings_Text_PlayerUsedOneItem 857
+
+
+#define BattleStrings_Text_TrUsedOneItem 858
+
+#define BattleStrings_Text_TheTrainerBlockedTheBall 859
+
+#define BattleStrings_Text_DontBeAThief 860
+
+
+#define BattleStrings_Text_ItDodgedTheThrownBallThisPokemonCantBeCaught 861
+
+#define BattleStrings_Text_YouMissedThePokemon 862
+
+
+#define BattleStrings_Text_OhNoThePokemonBrokeFree 863
+
+
+#define BattleStrings_Text_AwwItAppearedToBeCaught 864
+
+
+#define BattleStrings_Text_AarghAlmostHadIt 865
+
+
+#define BattleStrings_Text_ShootItWasSoCloseToo 866
+
+
+#define BattleStrings_Text_GotchaPokemonWasCaught 867
+
+
+#define BattleStrings_Text_GiveANicknameToTheCaughtPokemonYesNo 868
+
+
+#define BattleStrings_Text_PokemonWasSentToSomeonesPC 869
+
+
+#define BattleStrings_Text_PokemonWasSentToBebesPC 870
+
+
+#define BattleStrings_Text_PokemonsDataWasAddedToThePokedex 871
+
+#define BattleStrings_Text_ItIsRaining 872
+
+#define BattleStrings_Text_ASandstormIsRaging 873
+
+#define BattleStrings_Text_Dummy874 874
+
+
+#define BattleStrings_Text_PokemonsItemCuredItsParalysis_Ally 875
+
+
+#define BattleStrings_Text_PokemonsItemCuredItsParalysis_Wild 876
+
+
+#define BattleStrings_Text_PokemonsItemCuredItsParalysis_Foe 877
+
+
+#define BattleStrings_Text_PokemonsItemCuredItsPoison_Ally 878
+
+
+#define BattleStrings_Text_PokemonsItemCuredItsPoison_Wild 879
+
+
+#define BattleStrings_Text_PokemonsItemCuredItsPoison_Foe 880
+
+
+#define BattleStrings_Text_PokemonsItemCuredItsBurn_Ally 881
+
+
+#define BattleStrings_Text_PokemonsItemCuredItsBurn_Wild 882
+
+
+#define BattleStrings_Text_PokemonsItemCuredItsBurn_Foe 883
+
+
+#define BattleStrings_Text_PokemonsItemDefrostedIt_Ally 884
+
+
+#define BattleStrings_Text_PokemonsItemDefrostedIt_Wild 885
+
+
+#define BattleStrings_Text_PokemonsItemDefrostedIt_Foe 886
+
+
+#define BattleStrings_Text_PokemonsItemWokeItUp_Ally 887
+
+
+#define BattleStrings_Text_PokemonsItemWokeItUp_Wild 888
+
+
+#define BattleStrings_Text_PokemonsItemWokeItUp_Foe 889
+
+
+#define BattleStrings_Text_PokemonsItemSnappedItOutOfConfusion_Ally 890
+
+
+
+#define BattleStrings_Text_PokemonsItemSnappedItOutOfConfusion_Wild 891
+
+
+
+#define BattleStrings_Text_PokemonsItemSnappedItOutOfConfusion_Foe 892
+
+
+#define BattleStrings_Text_PokemonCuredItsStatusUsingItsItem_Ally 893
+
+
+
+#define BattleStrings_Text_PokemonCuredItsStatusUsingItsItem_Wild 894
+
+
+
+#define BattleStrings_Text_PokemonCuredItsStatusUsingItsItem_Foe 895
+
+
+#define BattleStrings_Text_PokemonNormalizedItsStatusUsingItsItem_Ally 896
+
+
+#define BattleStrings_Text_PokemonNormalizedItsStatusUsingItsItem_Wild 897
+
+
+#define BattleStrings_Text_PokemonNormalizedItsStatusUsingItsItem_Foe 898
+
+
+#define BattleStrings_Text_PokemonRestoredItsHealthUsingItsItem_Ally 899
+
+
+#define BattleStrings_Text_PokemonRestoredItsHealthUsingItsItem_Wild 900
+
+
+#define BattleStrings_Text_PokemonRestoredItsHealthUsingItsItem_Foe 901
+
+
+
+#define BattleStrings_Text_PokemonRestoredMovesPPUsingItsItem_Ally 902
+
+
+
+#define BattleStrings_Text_PokemonRestoredMovesPPUsingItsItem_Wild 903
+
+
+
+#define BattleStrings_Text_PokemonRestoredMovesPPUsingItsItem_Foe 904
+
+
+#define BattleStrings_Text_PokemonRestoredItsStatusUsingItsItem_Ally 905
+
+
+#define BattleStrings_Text_PokemonRestoredItsStatusUsingItsItem_Wild 906
+
+
+#define BattleStrings_Text_PokemonRestoredItsStatusUsingItsItem_Foe 907
+
+
+#define BattleStrings_Text_PokemonRestoredALittleHPUsingItsItem_Ally 908
+
+
+#define BattleStrings_Text_PokemonRestoredALittleHPUsingItsItem_Wild 909
+
+
+#define BattleStrings_Text_PokemonRestoredALittleHPUsingItsItem_Foe 910
+
+
+#define BattleStrings_Text_TheItemAllowsTheUseOfOnlyMove 911
+
+
+#define BattleStrings_Text_PokemonHungOnUsingItsItem_Ally 912
+
+
+#define BattleStrings_Text_PokemonHungOnUsingItsItem_Wild 913
+
+
+#define BattleStrings_Text_PokemonHungOnUsingItsItem_Foe 914
+
+
+#define BattleStrings_Text_WhatPokemonIsEvolving 915
+
+#define BattleStrings_Text_What 916
+
+#define BattleStrings_Text_PokemonIsEvolving 917
+
+
+#define BattleStrings_Text_CongratulationsYourPokemonEvolvedIntoPokemon 918
+
+
+#define BattleStrings_Text_HuhPokemonStoppedEvolving 919
+
+#define BattleStrings_Text_EllipsesEllipses 920
+
+#define BattleStrings_Text_WhatWillPokemonDo 921
+
+#define BattleStrings_Text_WhatWillPlayerThrow 922
+
+#define BattleStrings_Text_CommunicatingPleaseStandBy 923
+
+#define BattleStrings_Text_Fight 924
+
+#define BattleStrings_Text_Bag 925
+
+#define BattleStrings_Text_Pokemon 926
+
+#define BattleStrings_Text_Run 927
+
+#define BattleStrings_Text_Cancel 928
+
+#define BattleStrings_Text_Cancel2 929
+
+#define BattleStrings_Text_Cancel3 930
+
+#define BattleStrings_Text_Ball 931
+
+#define BattleStrings_Text_Bait 932
+
+#define BattleStrings_Text_Mud 933
+
+#define BattleStrings_Text_Dummy934 934
+
+#define BattleStrings_Text_Dummy935 935
+
+#define BattleStrings_Text_Run2 936
+
+#define BattleStrings_Text_CurPPOutOfMaxPP 937
+
+#define BattleStrings_Text_PP 938
+
+
+#define BattleStrings_Text_WhichMoveShouldBeForgotten 939
+
+#define BattleStrings_Text_Yes 940
+
+#define BattleStrings_Text_No 941
+
+#define BattleStrings_Text_Dummy942 942
+
+#define BattleStrings_Text_QuitTheBattleYesNo 943
+
+
+#define BattleStrings_Text_PokemonMaleLevel 944
+
+
+#define BattleStrings_Text_PokemonFemaleLevel 945
+
+
+#define BattleStrings_Text_PokemonGenderlessLevel 946
+
+#define BattleStrings_Text_StatName 947
+
+#define BattleStrings_Text_PlusStatIncrease 948
+
+#define BattleStrings_Text_StatValue 949
+
+#define BattleStrings_Text_SafariBalls 950
+
+#define BattleStrings_Text_SafariBallsLeft 951
+
+#define BattleStrings_Text_Dummy952 952
+
+
+
+#define BattleStrings_Text_PlayerBeatTr1AndTr2 953
+
+#define BattleStrings_Text_Dummy954 954
+
+
+#define BattleStrings_Text_WouldYouLikeToForfeitTheMatchAndQuitNowYesNo 955
+
+
+#define BattleStrings_Text_PlayerForfeitedTheMatch 956
+
+#define BattleStrings_Text_Dummy957 957
+
+#define BattleStrings_Text_Dummy958 958
+
+#define BattleStrings_Text_00959 959
+
+
+#define BattleStrings_Text_00960 960
+
+
+#define BattleStrings_Text_00961 961
+
+#define BattleStrings_Text_00962 962
+
+#define BattleStrings_Text_00963 963
+
+#define BattleStrings_Text_HealthBoxPokemonName 964
+
+#define BattleStrings_Text_AWildPokemonAppeared 965
+
+#define BattleStrings_Text_AWildPokemonAppeared2 966
+
+
+#define BattleStrings_Text_AWildPokemonAndPokemonAppeared 967
+
+
+#define BattleStrings_Text_AWildPokemonAppearedFromTheTreeYouSlatheredWithHoney 968
+
+
+#define BattleStrings_Text_YouAreChallengedByTr 969
+
+
+#define BattleStrings_Text_YouAreChallengedByLinkTr 970
+
+
+#define BattleStrings_Text_YouAreChallengedByLinkTr1AndLinkTr2 971
+
+
+#define BattleStrings_Text_TrSentOutPokemon 972
+
+
+#define BattleStrings_Text_TrSentOutPokemon1AndPokemon2 973
+
+
+#define BattleStrings_Text_LinkTrSentOutPokemon 974
+
+
+#define BattleStrings_Text_LinkTrSentOutPokemon1AndPokemon2 975
+
+
+#define BattleStrings_Text_LinkTr1SentOutPokemon1LinkTr2SentOutPokemon2 976
+
+
+
+#define BattleStrings_Text_LinkTrSentOutPokemon1GoPokemon2 977
+
+
+#define BattleStrings_Text_GoPokemon1AndPokemon2 978
+
+#define BattleStrings_Text_GoPokemon 979
+
+#define BattleStrings_Text_YoureInChargePokemon 980
+
+#define BattleStrings_Text_GoForItPokemon 981
+
+
+#define BattleStrings_Text_YourFoesWeakGetEmPokemon 982
+
+
+#define BattleStrings_Text_JustALittleMoreHangInTherePokemon 983
+
+
+#define BattleStrings_Text_PokemonSwitchOutComeBack 984
+
+#define BattleStrings_Text_PokemonComeBack 985
+
+
+#define BattleStrings_Text_PokemonOKComeBack 986
+
+
+#define BattleStrings_Text_PokemonEnoughGetBack 987
+
+
+#define BattleStrings_Text_PokemonGoodComeBack 988
+
+
+#define BattleStrings_Text_TrWithdrewPokemon 989
+
+
+#define BattleStrings_Text_LinkTrWithdrewPokemon 990
+
+
+
+
+#define BattleStrings_Text_Tr1SentOutPokemon1Tr2SentOutPokemon2 991
+
+
+
+#define BattleStrings_Text_YouAreChallengedByTr1AndTr2 992
+
+
+
+#define BattleStrings_Text_TrSentOutPokemon1GoPokemon2 993
+
+
+#define BattleStrings_Text_PokemonsStockpiledEffectWoreOff_Ally 994
+
+
+#define BattleStrings_Text_PokemonsStockpiledEffectWoreOff_Wild 995
+
+
+#define BattleStrings_Text_PokemonsStockpiledEffectWoreOff_Foe 996
+
+#define BattleStrings_Text_GravityIntensified 997
+
+
+#define BattleStrings_Text_PokemonCouldntStayAirborneBecauseOfGravity_Ally 998
+
+
+#define BattleStrings_Text_PokemonCouldntStayAirborneBecauseOfGravity_Wild 999
+
+
+#define BattleStrings_Text_PokemonCouldntStayAirborneBecauseOfGravity_Foe 1000
+
+
+#define BattleStrings_Text_PokemonCantUseMoveBecauseOfGravity_Ally 1001
+
+
+#define BattleStrings_Text_PokemonCantUseMoveBecauseOfGravity_Wild 1002
+
+
+#define BattleStrings_Text_PokemonCantUseMoveBecauseOfGravity_Foe 1003
+
+#define BattleStrings_Text_GravityReturnedToNormal 1004
+
+#define BattleStrings_Text_TheHealingWishCameTrue 1005
+
+
+#define BattleStrings_Text_ItBecameCloakedInAMysticalMoonlight 1006
+
+#define BattleStrings_Text_ATailwindStartedBlowing 1007
+
+#define BattleStrings_Text_TheTailwindPeteredOut 1008
+
+
+#define BattleStrings_Text_PokemonSwitchedItsAttackAndDefense_Ally 1009
+
+
+#define BattleStrings_Text_PokemonSwitchedItsAttackAndDefense_Wild 1010
+
+
+#define BattleStrings_Text_PokemonSwitchedItsAttackAndDefense_Foe 1011
+
+
+#define BattleStrings_Text_PokemonsAbilityWasSuppressed_Ally 1012
+
+
+#define BattleStrings_Text_PokemonsAbilityWasSuppressed_Wild 1013
+
+
+#define BattleStrings_Text_PokemonsAbilityWasSuppressed_Foe 1014
+
+
+
+#define BattleStrings_Text_PokemonSwitchedAllAttackChangesWithItsTarget_Ally 1015
+
+
+
+#define BattleStrings_Text_PokemonSwitchedAllAttackChangesWithItsTarget_Wild 1016
+
+
+
+#define BattleStrings_Text_PokemonSwitchedAllAttackChangesWithItsTarget_Foe 1017
+
+
+
+#define BattleStrings_Text_PokemonSwitchedAllDefenseChangesWithItsTarget_Ally 1018
+
+
+
+#define BattleStrings_Text_PokemonSwitchedAllDefenseChangesWithItsTarget_Wild 1019
+
+
+
+#define BattleStrings_Text_PokemonSwitchedAllDefenseChangesWithItsTarget_Foe 1020
+
+
+#define BattleStrings_Text_PokemonAcquiredAbility_Ally 1021
+
+
+#define BattleStrings_Text_PokemonAcquiredAbility_Wild 1022
+
+
+#define BattleStrings_Text_PokemonAcquiredAbility_Foe 1023
+
+
+#define BattleStrings_Text_PokemonSwitchedStatChangesWithTheTarget_Ally 1024
+
+
+#define BattleStrings_Text_PokemonSwitchedStatChangesWithTheTarget_Wild 1025
+
+
+#define BattleStrings_Text_PokemonSwitchedStatChangesWithTheTarget_Foe 1026
+
+
+#define BattleStrings_Text_PokemonSurroundedItselfWithAVeilOfWater_Ally 1027
+
+
+#define BattleStrings_Text_PokemonSurroundedItselfWithAVeilOfWater_Wild 1028
+
+
+#define BattleStrings_Text_PokemonSurroundedItselfWithAVeilOfWater_Foe 1029
+
+
+#define BattleStrings_Text_MoveRestoredPokemonsHP_Ally 1030
+
+
+#define BattleStrings_Text_MoveRestoredPokemonsHP_Wild 1031
+
+
+#define BattleStrings_Text_MoveRestoredPokemonsHP_Foe 1032
+
+
+#define BattleStrings_Text_PokemonLevitatedOnElectromagnetism_Ally 1033
+
+
+#define BattleStrings_Text_PokemonLevitatedOnElectromagnetism_Wild 1034
+
+
+#define BattleStrings_Text_PokemonLevitatedOnElectromagnetism_Foe 1035
+
+
+#define BattleStrings_Text_PokemonEvadesGroundMovesWithAbility_Ally 1036
+
+
+#define BattleStrings_Text_PokemonEvadesGroundMovesWithAbility_Wild 1037
+
+
+#define BattleStrings_Text_PokemonEvadesGroundMovesWithAbility_Foe 1038
+
+
+#define BattleStrings_Text_PokemonsElectromagnetismWoreOff_Ally 1039
+
+
+#define BattleStrings_Text_PokemonsElectromagnetismWoreOff_Wild 1040
+
+
+#define BattleStrings_Text_TheElectromagnetismOfPokemonsWoreOff_Foe 1041
+
+
+#define BattleStrings_Text_PokemonBlewAwayMove_Ally 1042
+
+
+#define BattleStrings_Text_PokemonBlewAwayMove_Wild 1043
+
+
+#define BattleStrings_Text_PokemonBlewAwayMove_Foe 1044
+
+
+#define BattleStrings_Text_PokemonBlewAwayTheDeepFogWithMove_Ally 1045
+
+
+#define BattleStrings_Text_PokemonBlewAwayTheDeepFogWithMove_Wild 1046
+
+
+#define BattleStrings_Text_PokemonBlewAwayTheDeepFogWithMove_Foe 1047
+
+
+#define BattleStrings_Text_PokemonFellForTheFeint_Ally 1048
+
+
+#define BattleStrings_Text_PokemonFellForTheFeint_Wild 1049
+
+
+#define BattleStrings_Text_PokemonFellForTheFeint_Foe 1050
+
+
+#define BattleStrings_Text_PokemonWasPreventedFromHealing_Ally 1051
+
+
+#define BattleStrings_Text_PokemonWasPreventedFromHealing_Wild 1052
+
+
+#define BattleStrings_Text_PokemonWasPreventedFromHealing_Foe 1053
+
+
+#define BattleStrings_Text_PokemonWasPreventedFromHealingDueToMove_Ally 1054
+
+
+#define BattleStrings_Text_PokemonWasPreventedFromHealingDueToMove_Wild 1055
+
+
+#define BattleStrings_Text_PokemonWasPreventedFromHealingDueToMove_Foe 1056
+
+
+
+#define BattleStrings_Text_PokemonCantUseMoveBecauseOfMove_Ally 1057
+
+
+
+#define BattleStrings_Text_PokemonCantUseMoveBecauseOfMove_Wild 1058
+
+
+
+#define BattleStrings_Text_PokemonCantUseMoveBecauseOfMove_Foe 1059
+
+
+#define BattleStrings_Text_PokemonsMoveWoreOff_Ally 1060
+
+
+#define BattleStrings_Text_PokemonsMoveWoreOff_Wild 1061
+
+
+#define BattleStrings_Text_PokemonsMoveWoreOff_Foe 1062
+
+
+#define BattleStrings_Text_PoisonSpikesWereScatteredAllAroundYourTeamsFeet 1063
+
+
+#define BattleStrings_Text_PoisonSpikesWereScatteredAllAroundTheEnemyTeamsFeet 1064
+
+
+#define BattleStrings_Text_ThePoisonSpikesDisappearedFromAroundYourTeamsFeet 1065
+
+
+#define BattleStrings_Text_ThePoisonSpikesDisappearedFromAroundTheEnemyTeamsFeet 1066
+
+
+#define BattleStrings_Text_PokemonWentBackToTrainer_Ally 1067
+
+
+#define BattleStrings_Text_PokemonWentBackToTrainer_Wild 1068
+
+
+#define BattleStrings_Text_PokemonWentBackToTrainer_Foe 1069
+
+
+#define BattleStrings_Text_PokemonTwistedTheDimensions_Ally 1070
+
+
+#define BattleStrings_Text_PokemonTwistedTheDimensions_Wild 1071
+
+
+#define BattleStrings_Text_PokemonTwistedTheDimensions_Foe 1072
+
+
+#define BattleStrings_Text_PokemonRestoredTheTwistedDimensions_Ally 1073
+
+
+#define BattleStrings_Text_PokemonRestoredTheTwistedDimensions_Wild 1074
+
+
+#define BattleStrings_Text_PokemonRestoredTheTwistedDimensions_Foe 1075
+
+
+#define BattleStrings_Text_TheTwistedDimensionsReturnedToNormal 1076
+
+
+#define BattleStrings_Text_PointedStonesFloatInTheAirAroundYourTeam 1077
+
+
+#define BattleStrings_Text_PointedStonesFloatInTheAirAroundYourFoesTeam 1078
+
+
+#define BattleStrings_Text_PointedStonesDugIntoPokemon_Ally 1079
+
+
+#define BattleStrings_Text_PointedStonesDugIntoPokemon_Wild 1080
+
+
+#define BattleStrings_Text_PointedStonesDugIntoPokemon_Foe 1081
+
+
+#define BattleStrings_Text_PokemonVanishedInstantly_Ally 1082
+
+
+#define BattleStrings_Text_PokemonVanishedInstantly_Wild 1083
+
+
+#define BattleStrings_Text_PokemonVanishedInstantly_Foe 1084
+
+#define BattleStrings_Text_YourTeamsLuckyChantWoreOff 1085
+
+#define BattleStrings_Text_TheFoesLuckyChantWoreOff 1086
+
+
+#define BattleStrings_Text_PokemonWasAbility_Ally 1087
+
+
+#define BattleStrings_Text_PokemonWasAbility_Wild 1088
+
+
+#define BattleStrings_Text_PokemonWasAbility_Foe 1089
+
+
+#define BattleStrings_Text_PokemonIsHurtByItsAbility_Ally 1090
+
+
+#define BattleStrings_Text_PokemonIsHurtByItsAbility_Wild 1091
+
+
+#define BattleStrings_Text_PokemonIsHurtByItsAbility_Foe 1092
+
+
+#define BattleStrings_Text_PokemonMaxedItsStatWithAbility_Ally 1093
+
+
+#define BattleStrings_Text_PokemonMaxedItsStatWithAbility_Wild 1094
+
+
+#define BattleStrings_Text_PokemonMaxedItsStatWithAbility_Foe 1095
+
+
+#define BattleStrings_Text_PokemonLostSomeHPBecauseOfItsAbility_Ally 1096
+
+
+#define BattleStrings_Text_PokemonLostSomeHPBecauseOfItsAbility_Wild 1097
+
+
+#define BattleStrings_Text_PokemonLostSomeHPBecauseOfItsAbility_Foe 1098
+
+
+#define BattleStrings_Text_PokemonWasHurtByPokemonsAbility_AllyAlly 1099
+
+
+#define BattleStrings_Text_PokemonWasHurtByPokemonsAbility_WildAlly 1100
+
+
+#define BattleStrings_Text_PokemonWasHurtByPokemonsAbility_FoeAlly 1101
+
+
+#define BattleStrings_Text_PokemonWasHurtByPokemonsAbility_AllyWild 1102
+
+
+#define BattleStrings_Text_PokemonWasHurtByPokemonsAbility_WildWild 1103
+
+
+#define BattleStrings_Text_PokemonWasHurtByPokemonsAbility_AllyFoe 1104
+
+
+
+#define BattleStrings_Text_PokemonWasHurtByPokemonsAbility_FoeFoe 1105
+
+
+#define BattleStrings_Text_PokemonsAbilityMadeItShudder_Ally 1106
+
+
+#define BattleStrings_Text_PokemonsAbilityMadeItShudder_Wild 1107
+
+
+#define BattleStrings_Text_PokemonsAbilityMadeItShudder_Foe 1108
+
+
+#define BattleStrings_Text_PokemonsAbilityAlertedItToMove_Ally 1109
+
+
+#define BattleStrings_Text_PokemonsForewarnAlertedItToMove_Wild 1110
+
+
+#define BattleStrings_Text_PokemonsForewarnAlertedItToMove_Foe 1111
+
+
+#define BattleStrings_Text_PokemonCantGetItGoingBecauseOfItsAbility_Ally 1112
+
+
+#define BattleStrings_Text_PokemonCantGetItGoingBecauseOfItsAbility_Wild 1113
+
+
+#define BattleStrings_Text_PokemonCantGetItGoingBecauseOfItsAbility_Foe 1114
+
+
+#define BattleStrings_Text_PokemonFinallyGotItsActTogether_Ally 1115
+
+
+#define BattleStrings_Text_PokemonFinallyGotItsActTogether_Wild 1116
+
+
+#define BattleStrings_Text_PokemonFinallyGotItsActTogether_Foe 1117
+
+
+#define BattleStrings_Text_PokemonFriskedItsFoeAndFoundOneItem_Ally 1118
+
+
+#define BattleStrings_Text_PokemonFriskedItsFoeAndFoundOneItem_Wild 1119
+
+
+#define BattleStrings_Text_PokemonFriskedItsFoeAndFoundOneItem_Foe 1120
+
+
+#define BattleStrings_Text_PokemonIsTormentedByPokemonsAbility_AllyAlly 1121
+
+
+#define BattleStrings_Text_PokemonIsTormentedByPokemonsAbility_WildAlly 1122
+
+
+#define BattleStrings_Text_PokemonIsTormentedByPokemonsAbility_FoeAlly 1123
+
+
+
+#define BattleStrings_Text_PokemonIsTormentedByPokemonsAbility_AllyWild 1124
+
+
+
+#define BattleStrings_Text_PokemonIsTormentedByPokemonsAbility_WildWild 1125
+
+
+
+#define BattleStrings_Text_PokemonIsTormentedByPokemonsAbility_AllyFoe 1126
+
+
+
+#define BattleStrings_Text_PokemonIsTormentedByPokemonsAbility_FoeFoe 1127
+
+
+#define BattleStrings_Text_01128 1128
+
+
+#define BattleStrings_Text_01129 1129
+
+
+#define BattleStrings_Text_01130 1130
+
+
+#define BattleStrings_Text_TheItemWeakenedMovesPower 1131
+
+
+#define BattleStrings_Text_PokemonIsHurtByItsItem_Ally 1132
+
+
+#define BattleStrings_Text_PokemonIsHurtByItsItem_Wild 1133
+
+
+#define BattleStrings_Text_PokemonIsHurtByItsItem_Foe 1134
+
+
+#define BattleStrings_Text_PokemonCantUseItemsAnymore_Ally 1135
+
+
+#define BattleStrings_Text_PokemonCantUseItemsAnymore_Wild 1136
+
+
+#define BattleStrings_Text_PokemonCantUseItemsAnymore_Foe 1137
+
+
+#define BattleStrings_Text_PokemonCanUseItemsAgain_Ally 1138
+
+
+#define BattleStrings_Text_PokemonCanUseItemsAgain_Wild 1139
+
+
+#define BattleStrings_Text_PokemonCanUseItemsAgain_Foe 1140
+
+
+#define BattleStrings_Text_PokemonStoleAndAteItsFoesItem_Ally 1141
+
+
+#define BattleStrings_Text_PokemonStoleAndAteItsFoesItem_Wild 1142
+
+
+#define BattleStrings_Text_PokemonStoleAndAteItsFoesItem_Foe 1143
+
+
+#define BattleStrings_Text_PokemonFlungItsItem_Ally 1144
+
+
+#define BattleStrings_Text_PokemonFlungItsItem_Wild 1145
+
+
+#define BattleStrings_Text_PokemonFlungItsItem_Foe 1146
+
+
+#define BattleStrings_Text_PokemonsAbilityMadeTheItemIneffective_Ally 1147
+
+
+
+#define BattleStrings_Text_PokemonsAbilityMadeTheItemIneffective_Wild 1148
+
+
+
+#define BattleStrings_Text_PokemonsAbilityMadeTheItemIneffective_Foe 1149
+
+
+#define BattleStrings_Text_PokemonsItemInfatuatedPokemon_AllyAlly 1150
+
+
+#define BattleStrings_Text_PokemonsItemInfatuatedPokemon_AllyWild 1151
+
+
+#define BattleStrings_Text_PokemonsItemInfatuatedPokemon_AllyFoe 1152
+
+
+
+#define BattleStrings_Text_PokemonsItemInfatuatedPokemon_WildAlly 1153
+
+
+
+#define BattleStrings_Text_PokemonsItemInfatuatedPokemon_WildWild 1154
+
+
+
+#define BattleStrings_Text_PokemonsItemInfatuatedPokemon_FoeAlly 1155
+
+
+
+#define BattleStrings_Text_PokemonsItemInfatuatedPokemon_FoeFoe 1156
+
+
+
+#define BattleStrings_Text_PokemonsBoostedTheAccuracyOfItsNextMoveUsingItsItem_Ally 1157
+
+
+
+#define BattleStrings_Text_PokemonsBoostedTheAccuracyOfItsNextMoveUsingItsItem_Wild 1158
+
+
+
+#define BattleStrings_Text_PokemonsBoostedTheAccuracyOfItsNextMoveUsingItsItem_Foe 1159
+
+
+#define BattleStrings_Text_PokemonIsHurtByPokemonsItem_AllyAlly 1160
+
+
+#define BattleStrings_Text_PokemonIsHurtByPokemonsItem_AllyWild 1161
+
+
+#define BattleStrings_Text_PokemonIsHurtByPokemonsItem_AllyFoe 1162
+
+
+#define BattleStrings_Text_PokemonIsHurtByPokemonsItem_WildAlly 1163
+
+
+#define BattleStrings_Text_PokemonIsHurtByPokemonsItem_WildWild 1164
+
+
+#define BattleStrings_Text_PokemonIsHurtByPokemonsItem_FoeAlly 1165
+
+
+#define BattleStrings_Text_PokemonIsHurtByPokemonsItem_FoeFoe 1166
+
+
+#define BattleStrings_Text_WhoaAWildPokemonCameCharging 1167
+
+
+#define BattleStrings_Text_PokemonWasBadlyPoisonedByTheItem_Ally 1168
+
+
+#define BattleStrings_Text_PokemonWasBadlyPoisonedByTheItem_Wild 1169
+
+
+#define BattleStrings_Text_PokemonWasBadlyPoisonedByTheItem_Foe 1170
+
+
+#define BattleStrings_Text_PokemonGotABurnFromTheItem_Ally 1171
+
+
+#define BattleStrings_Text_PokemonGotABurnFromTheItem_Wild 1172
+
+
+#define BattleStrings_Text_PokemonGotABurnFromTheItem_Foe 1173
+
+
+#define BattleStrings_Text_PokemonWasTransferredToBoxInSomeonesPC 1174
+
+
+#define BattleStrings_Text_PokemonWasTransferredToBoxInBebesPC 1175
+
+
+
+#define BattleStrings_Text_BoxInSomeonesPCIsFullPokemonWasTransferredToOtherBoxInstead 1176
+
+
+
+#define BattleStrings_Text_BoxInBebesPCIsFullPokemonWasTransferredToOtherBoxInstead 1177
+
+
+#define BattleStrings_Text_PokemonWantsToLearnMove 1178
+
+
+#define BattleStrings_Text_ButPokemonCantLearnMoreThanFourMoves2 1179
+
+
+#define BattleStrings_Text_MakeItForgetAnotherMoveYesNo 1180
+
+#define BattleStrings_Text_ForgetAMove 1181
+
+#define BattleStrings_Text_KeepOldMoves 1182
+
+
+#define BattleStrings_Text_WhichMoveShouldBeForgotten2 1183
+
+#define BattleStrings_Text_WellThen 1184
+
+
+#define BattleStrings_Text_ShouldPokemonGiveUpOnLearningMove 1185
+
+#define BattleStrings_Text_GiveUpOnMove 1186
+
+#define BattleStrings_Text_DontGiveUpOnMove 1187
+
+
+#define BattleStrings_Text_PokemonDidNotLearnMove2 1188
+
+#define BattleStrings_Text_BattleOneTwoAndPoof 1189
+
+
+#define BattleStrings_Text_BattlePokemonForgotHowToUseMove 1190
+
+#define BattleStrings_Text_BattleAndDotDotDot 1191
+
+
+#define BattleStrings_Text_BattlePokemonLearnedMove 1192
+
+
+#define BattleStrings_Text_PokemonWantsToLearnTheMove 1193
+
+
+#define BattleStrings_Text_HoweverPokemonAlreadyKnowsFourMoves 1194
+
+#define BattleStrings_Text_ShouldAMoveBeDeleted 1195
+
+#define BattleStrings_Text_WhichMoveShouldBeForgotten3 1196
+
+
+#define BattleStrings_Text_StopTryingToTeachMove 1197
+
+
+#define BattleStrings_Text_PokemonDidNotLearnTheMove 1198
+
+#define BattleStrings_Text_EvolutionOneTwoAndPoof 1199
+
+
+#define BattleStrings_Text_PokemonForgotHowToUseMove 1200
+
+#define BattleStrings_Text_EvolutionAndDotDotDot 1201
+
+
+#define BattleStrings_Text_EvolvedPokemonLearnedMove 1202
+
+
+#define BattleStrings_Text_PokemonsStatRose 1203
+
+
+#define BattleStrings_Text_YourTeamBecameShroudedInAWhiteFog 1204
+
+
+#define BattleStrings_Text_PokemonIsGettingPumped 1205
+
+#define BattleStrings_Text_UsedTheItem 1206
+
+
+#define BattleStrings_Text_PokemonWasCuredOfItsPoisoning 1207
+
+
+#define BattleStrings_Text_PokemonWasCuredOfParalysis 1208
+
+#define BattleStrings_Text_PokemonsBurnWasHealed 1209
+
+#define BattleStrings_Text_PokemonWokeUp 1210
+
+#define BattleStrings_Text_PokemonWasThawedOut 1211
+
+
+#define BattleStrings_Text_PokemonSnappedOutOfItsConfusion 1212
+
+
+#define BattleStrings_Text_PokemonGotOverItsInfatuation 1213
+
+
+#define BattleStrings_Text_PokemonsHPWasRestoredByXPoints 1214
+
+#define BattleStrings_Text_SwitchPokemon 1215
+
+#define BattleStrings_Text_KeepBattling 1216
+
+#define BattleStrings_Text_UseNextPokemon 1217
+
+#define BattleStrings_Text_Flee 1218
+
+
+#define BattleStrings_Text_01219 1219
+
+#define BattleStrings_Text_ParkBalls 1220
+
+#define BattleStrings_Text_ParkBallsLeft 1221
+
+#define BattleStrings_Text_WhatWillPlayerDo 1222
+
+#define BattleStrings_Text_BallPalPark 1223
+
+#define BattleStrings_Text_RunPalPark 1224
+
+#define BattleStrings_Text_PokemonComeBackPalPark 1225
+
+
+#define BattleStrings_Text_AllRightIGotItsHPDownTimeToThrowAPokeBall 1226
+
+
+#define BattleStrings_Text_OKTheGotIsHPDownTimeItsReadyForAPokeBall 1227
+
+
+#define BattleStrings_Text_01228 1228
+
+
+#define BattleStrings_Text_PokemonGotOverItsStatusTrouble 1229
+
+
+#define BattleStrings_Text_TheTailwindBlewFromBehindYourTeam 1230
+
+
+#define BattleStrings_Text_TheTailwindBlewFromBehindTheFoe 1231
+
+#define BattleStrings_Text_YourTeamsTailwindPeteredOut 1232
+
+#define BattleStrings_Text_TheFoesTailwindPeteredOut 1233
+
+#define BattleStrings_Text_ButThereWasNoTarget 1234
+
+
+#define BattleStrings_Text_ItFailedToAffectPokemon_Ally 1235
+
+
+#define BattleStrings_Text_ItFailedToAffectPokemon_Wild 1236
+
+
+#define BattleStrings_Text_ItFailedToAffectPokemon_Foe 1237
+
+
+#define BattleStrings_Text_PokemonIsExertingItsAbility_Ally 1238
+
+
+#define BattleStrings_Text_PokemonIsExertingItsAbility_Wild 1239
+
+
+#define BattleStrings_Text_PokemonIsExertingItsAbility_Foe 1240
+
+
+#define BattleStrings_Text_TheLuckyChantShieldedYourTeamFromCriticalHits 1241
+
+
+#define BattleStrings_Text_TheLuckyChantShieldedTheFoeFromCriticalHits 1242
+
+
+#define BattleStrings_Text_ItBrokeThroughPokemonsProtection_Ally 1243
+
+
+#define BattleStrings_Text_ItBrokeThroughPokemonsProtection_Wild 1244
+
+
+#define BattleStrings_Text_ItBrokeThroughPokemonsProtection_Foe 1245
+
+#define BattleStrings_Text_AWildPokemonAppeared3 1246
+
+
+#define BattleStrings_Text_PokemonBecameTrappedBySwirlingMagma_Ally 1247
+
+
+#define BattleStrings_Text_PokemonBecameTrappedBySwirlingMagma_Wild 1248
+
+
+#define BattleStrings_Text_PokemonBecameTrappedBySwirlingMagma_Foe 1249
+
+#define BattleStrings_Text_PokemonBecameHealthy 1250
+
+
+#define BattleStrings_Text_PokemonBecameFullyChargedDueToItsItem_Ally 1251
+
+
+#define BattleStrings_Text_PokemonBecameFullyChargedDueToItsItem_Wild 1252
+
+
+#define BattleStrings_Text_PokemonBecameFullyChargedDueToItsItem_Foe 1253
+
+
+#define BattleStrings_Text_PokemonsItemLetItMoveFirst_Ally 1254
+
+
+#define BattleStrings_Text_PokemonsItemLetItMoveFirst_Wild 1255
+
+
+#define BattleStrings_Text_PokemonsItemLetItMoveFirst_Foe 1256
+
+
+#define BattleStrings_Text_PokemonsTauntWoreOff_Ally 1257
+
+
+#define BattleStrings_Text_PokemonsTauntWoreOff_Wild 1258
+
+
+#define BattleStrings_Text_PokemonsTauntWoreOff_Foe 1259
+
+#define BattleStrings_Text_Stop 1260
+
+#define BattleStrings_Text_PlaybackPaused 1261
+
+#define BattleStrings_Text_PleaseWait 1262
+
+#define BattleStrings_Text_DataIsCorrupted 1263
+
+#define BattleStrings_Text_PlaybackCanceled 1264
+
+#define BattleStrings_Text_BattleIsTooLong 1265
+
+#define BattleStrings_Text_PlaybackCanceled2 1266
+
+#define BattleStrings_Text_TheDimensionsBecameDistorted 1267
+
+
+#define BattleStrings_Text_TheDistortionWorldsPokemonAppeared 1268
+
+
+
+#define BattleStrings_Text_WillYouSwitchYourPokemonHidden 1269
+#define TEXT_BANK_BATTLE_STRINGS_ENTRY_COUNT 1270
+
+#endif 

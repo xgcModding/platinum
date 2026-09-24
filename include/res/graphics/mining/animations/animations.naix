@@ -1,0 +1,15 @@
+#ifndef res_graphics_mining_animations_animations_naix
+#define res_graphics_mining_animations_animations_naix
+
+#define crack_end_NCLR 0
+#define crack_end_anim_NANR 1
+#define crack_end_cell_NCER 2
+#define crack_end_NCGR 3
+#define animations_anim_NANR 4
+#define animations_cell_NCER 5
+#define animations_NCGR 6
+#define animations_NCLR 7
+
+#define res_graphics_mining_animations_animations_COUNT 8
+
+#endif 

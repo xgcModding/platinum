@@ -1,0 +1,10 @@
+#ifndef res_graphics_mining_interface_interface_naix
+#define res_graphics_mining_interface_interface_naix
+
+#define interface_tiles_NCGR 0
+#define interface_tiles_NCLR 1
+#define interface_NSCR 2
+
+#define res_graphics_mining_interface_interface_COUNT 3
+
+#endif 

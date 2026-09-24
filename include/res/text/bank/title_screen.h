@@ -1,0 +1,8 @@
+#ifndef MSGENC_RES_TEXT_BANK_TITLE_SCREEN_H
+#define MSGENC_RES_TEXT_BANK_TITLE_SCREEN_H
+
+
+#define TitleScreen_Text_PressStart 0
+#define TEXT_BANK_TITLE_SCREEN_ENTRY_COUNT 1
+
+#endif 

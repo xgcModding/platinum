@@ -1,0 +1,59 @@
+#ifndef res_graphics_signposts_field_board_naix
+#define res_graphics_signposts_field_board_naix
+
+#define signpost_frame_NCGR 0
+#define signpost_NCLR 1
+#define route_map_00_NCGR 2
+#define route_map_01_NCGR 3
+#define route_map_02_NCGR 4
+#define route_map_03_NCGR 5
+#define route_map_04_NCGR 6
+#define route_map_05_NCGR 7
+#define route_map_06_NCGR 8
+#define route_map_07_NCGR 9
+#define route_map_08_NCGR 10
+#define route_map_09_NCGR 11
+#define route_map_10_NCGR 12
+#define route_map_11_NCGR 13
+#define route_map_12_NCGR 14
+#define route_map_13_NCGR 15
+#define route_map_14_NCGR 16
+#define route_map_15_NCGR 17
+#define route_map_16_NCGR 18
+#define route_map_17_NCGR 19
+#define route_map_18_NCGR 20
+#define route_map_19_NCGR 21
+#define route_map_20_NCGR 22
+#define route_map_21_NCGR 23
+#define route_map_22_NCGR 24
+#define route_map_23_NCGR 25
+#define route_map_24_NCGR 26
+#define route_map_25_NCGR 27
+#define route_map_26_NCGR 28
+#define route_map_27_NCGR 29
+#define route_map_28_NCGR 30
+#define route_map_29_NCGR 31
+#define route_map_30_NCGR 32
+#define city_map_empty_NCGR 33
+#define city_map_twinleaf_NCGR 34
+#define city_map_sandgem_NCGR 35
+#define city_map_floaroma_NCGR 36
+#define city_map_solaceon_NCGR 37
+#define city_map_celestic_NCGR 38
+#define city_map_survival_area_NCGR 39
+#define city_map_resort_area_NCGR 40
+#define city_map_jubilife_NCGR 41
+#define city_map_canalave_NCGR 42
+#define city_map_oreburgh_NCGR 43
+#define city_map_eterna_NCGR 44
+#define city_map_hearthome_NCGR 45
+#define city_map_pastoria_NCGR 46
+#define city_map_veilstone_NCGR 47
+#define city_map_sunyshore_NCGR 48
+#define city_map_snowpoint_NCGR 49
+#define city_map_pokemon_league_NCGR 50
+#define city_map_fight_area_NCGR 51
+
+#define res_graphics_signposts_field_board_COUNT 52
+
+#endif 

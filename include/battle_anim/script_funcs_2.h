@@ -1,0 +1,42 @@
+#ifndef POKEPLATINUM_SCRIPT_FUNCS_2_H
+#define POKEPLATINUM_SCRIPT_FUNCS_2_H
+
+#include "battle_anim/battle_anim_system.h"
+
+#include "sprite_system.h"
+
+void BattleAnimScriptFunc_QuickAttack(BattleAnimSystem *system);
+void BattleAnimScriptFunc_DrillPeck(BattleAnimSystem *system);
+void BattleAnimSpriteFunc_Kinesis(BattleAnimSystem *system, SpriteSystem *spriteSys, SpriteManager *spriteMan, ManagedSprite *sprite);
+void BattleAnimScriptFunc_Confusion(BattleAnimSystem *system);
+void BattleAnimScriptFunc_AcidArmor(BattleAnimSystem *system);
+void BattleAnimScriptFunc_NightShadeAttacker(BattleAnimSystem *system);
+void BattleAnimScriptFunc_NightShadeDefender(BattleAnimSystem *system);
+void BattleAnimScriptFunc_Spite(BattleAnimSystem *system);
+void BattleAnimSpriteFunc_Metronome(BattleAnimSystem *system, SpriteSystem *spriteSys, SpriteManager *spriteMan, ManagedSprite *sprite);
+void BattleAnimSpriteFunc_Constrict(BattleAnimSystem *system, SpriteSystem *spriteSys, SpriteManager *spriteMan, ManagedSprite *sprite);
+void BattleAnimSpriteFunc_Bonemerang(BattleAnimSystem *system, SpriteSystem *spriteSys, SpriteManager *spriteMan, ManagedSprite *sprite);
+void BattleAnimScriptFunc_FaintAttack(BattleAnimSystem *system);
+void BattleAnimSpriteFunc_ScaryFace(BattleAnimSystem *system, SpriteSystem *spriteSys, SpriteManager *spriteMan, ManagedSprite *sprite);
+void BattleAnimSpriteFunc_Foresight(BattleAnimSystem *system, SpriteSystem *spriteSys, SpriteManager *spriteMan, ManagedSprite *sprite);
+void BattleAnimSpriteFunc_LockOn(BattleAnimSystem *system, SpriteSystem *spriteSys, SpriteManager *spriteMan, ManagedSprite *sprite);
+void BattleAnimScriptFunc_PlayfulHops(BattleAnimSystem *system);
+void BattleAnimScriptFunc_Swagger(BattleAnimSystem *system);
+void BattleAnimSpriteFunc_MeanLook(BattleAnimSystem *system, SpriteSystem *spriteSys, SpriteManager *spriteMan, ManagedSprite *sprite);
+void BattleAnimScriptFunc_Return(BattleAnimSystem *system);
+void BattleAnimScriptFunc_VitalThrow(BattleAnimSystem *system);
+void BattleAnimSpriteFunc_Torment(BattleAnimSystem *system, SpriteSystem *spriteSys, SpriteManager *spriteMan, ManagedSprite *sprite);
+void BattleAnimSpriteFunc_BatonPass(BattleAnimSystem *system, SpriteSystem *spriteSys, SpriteManager *spriteMan, ManagedSprite *sprite);
+void BattleAnimScriptFunc_Memento(BattleAnimSystem *system);
+void BattleAnimSpriteFunc_Unused(BattleAnimSystem *system, SpriteSystem *spriteSys, SpriteManager *spriteMan, ManagedSprite *sprite);
+void BattleAnimSpriteFunc_Grudge(BattleAnimSystem *system, SpriteSystem *spriteSys, SpriteManager *spriteMan, ManagedSprite *sprite);
+void BattleAnimSpriteFunc_GrassWhistle(BattleAnimSystem *system, SpriteSystem *spriteSys, SpriteManager *spriteMan, ManagedSprite *sprite);
+void BattleAnimScriptFunc_Extrasensory(BattleAnimSystem *system);
+void BattleAnimScriptFunc_FakeOutCurtain(BattleAnimSystem *system);
+void BattleAnimSpriteFunc_FakeOut(BattleAnimSystem *system, SpriteSystem *spriteSys, SpriteManager *spriteMan, ManagedSprite *sprite);
+void BattleAnimScriptFunc_FakeOut(BattleAnimSystem *system);
+void BattleAnimScriptFunc_Megahorn(BattleAnimSystem *system);
+void BattleAnimScriptFunc_MegahornAttacker(BattleAnimSystem *system);
+void BattleAnimScriptFunc_MegahornDefender(BattleAnimSystem *system);
+
+#endif // POKEPLATINUM_SCRIPT_FUNCS_2_H

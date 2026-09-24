@@ -1,0 +1,19 @@
+#ifndef res_graphics_poffin_case_poru_gra_naix
+#define res_graphics_poffin_case_poru_gra_naix
+
+#define background_NCLR 0
+#define sprites_NCLR 1
+#define main_tiles_NCGR 2
+#define sub_tiles_NCGR 3
+#define main_sprites_NCGR 4
+#define sub_sprites_NCGR 5
+#define main_sprites_cell_NCER 6
+#define main_sprites_anim_NANR 7
+#define sub_sprites_cell_NCER 8
+#define sub_sprites_anim_NANR 9
+#define main_tilemap_NSCR 10
+#define sub_tilemap_NSCR 11
+
+#define res_graphics_poffin_case_poru_gra_COUNT 12
+
+#endif 

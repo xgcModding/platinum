@@ -1,0 +1,185 @@
+#include "error_message_reset.h"
+
+#include <nitro.h>
+#include <string.h>
+
+#include "constants/graphics.h"
+
+#include "bg_window.h"
+#include "brightness_controller.h"
+#include "comm_manager.h"
+#include "communication_system.h"
+#include "font.h"
+#include "graphics.h"
+#include "gx_layers.h"
+#include "heap.h"
+#include "main.h"
+#include "message.h"
+#include "render_window.h"
+#include "screen_fade.h"
+#include "string_gf.h"
+#include "system.h"
+#include "text.h"
+
+static const GXBanks sErrorMessageBanksConfig = {
+    GX_VRAM_BG_256_AB,
+    GX_VRAM_BGEXTPLTT_NONE,
+    GX_VRAM_SUB_BG_NONE,
+    GX_VRAM_SUB_BGEXTPLTT_NONE,
+    GX_VRAM_OBJ_NONE,
+    GX_VRAM_OBJEXTPLTT_NONE,
+    GX_VRAM_SUB_OBJ_NONE,
+    GX_VRAM_SUB_OBJEXTPLTT_NONE,
+    GX_VRAM_TEX_NONE,
+    GX_VRAM_TEXPLTT_NONE
+};
+
+static const GraphicsModes sErrorMessageBgModeSet = {
+    GX_DISPMODE_GRAPHICS,
+    GX_BGMODE_0,
+    GX_BGMODE_0,
+    GX_BG0_AS_2D
+};
+
+static const BgTemplate sErrorMessageBgTemplate = {
+    .x = 0x0,
+    .y = 0x0,
+    .bufferSize = 0x800,
+    .baseTile = 0x0,
+    .screenSize = BG_SCREEN_SIZE_256x256,
+    .colorMode = GX_BG_COLORMODE_16,
+    .screenBase = GX_BG_SCRBASE_0x0000,
+    .charBase = GX_BG_CHARBASE_0x18000,
+    .bgExtPltt = GX_BG_EXTPLTT_01,
+    .priority = 0x1,
+    .areaOver = 0x0,
+    .mosaic = FALSE,
+};
+
+static const WindowTemplate sErrorMessageWindowTemplate = {
+    0x0,
+    0x3,
+    0x3,
+    0x1A,
+    0x12,
+    0x1,
+    0x23
+};
+
+static const HeapParam sErrorMessageHeapParams[] = {
+    { .size = 0x20000,
+        .arena = OS_ARENA_MAIN }
+};
+
+static BOOL sErrorMessagePrinterLock;
+
+static void VBlankIntr(void)
+{
+    OS_SetIrqCheckFlag(OS_IE_V_BLANK);
+    MI_WaitDma(GX_DEFAULT_DMAID);
+}
+
+void ErrorMessageReset_PrintErrorAndReset(void)
+{
+    BgConfig *bgConfig;
+    Window window;
+    MessageLoader *errorMsgData;
+    String *errorString;
+    int v4;
+
+    if (sErrorMessagePrinterLock == TRUE) {
+        return;
+    }
+
+    sErrorMessagePrinterLock = TRUE;
+
+    OS_InitArenaHiAndLo(OS_ARENA_MAIN);
+    Heap_InitSystem(sErrorMessageHeapParams, NELEMS(sErrorMessageHeapParams), NELEMS(sErrorMessageHeapParams), 0);
+
+    v4 = 3;
+
+    SetScreenColorBrightness(DS_SCREEN_MAIN, COLOR_BLACK);
+    SetScreenColorBrightness(DS_SCREEN_SUB, COLOR_BLACK);
+
+    OS_DisableIrqMask(OS_IE_V_BLANK);
+    OS_SetIrqFunction(OS_IE_V_BLANK, VBlankIntr);
+    OS_EnableIrqMask(OS_IE_V_BLANK);
+
+    SetVBlankCallback(NULL, NULL);
+    SetHBlankCallback(NULL, NULL);
+
+    GXLayers_DisableEngineALayers();
+    GXLayers_DisableEngineBLayers();
+
+    GX_SetVisiblePlane(0);
+    GXS_SetVisiblePlane(0);
+
+    SetAutorepeat(4, 8);
+    gSystem.whichScreenIs3D = DS_SCREEN_MAIN;
+    GXLayers_SwapDisplay();
+
+    G2_BlendNone();
+    G2S_BlendNone();
+    GX_SetVisibleWnd(GX_WNDMASK_NONE);
+    GXS_SetVisibleWnd(GX_WNDMASK_NONE);
+
+    GXLayers_SetBanks(&sErrorMessageBanksConfig);
+    bgConfig = BgConfig_New(HEAP_ID_SYSTEM);
+
+    SetAllGraphicsModes(&sErrorMessageBgModeSet);
+    Bg_InitFromTemplate(bgConfig, BG_LAYER_MAIN_0, &sErrorMessageBgTemplate, 0);
+    Bg_ClearTilemap(bgConfig, BG_LAYER_MAIN_0);
+    LoadStandardWindowGraphics(bgConfig, BG_LAYER_MAIN_0, 512 - 9, 2, 0, HEAP_ID_SYSTEM);
+    Font_LoadTextPalette(PAL_LOAD_MAIN_BG, PLTT_OFFSET(1), HEAP_ID_SYSTEM);
+    Bg_ClearTilesRange(BG_LAYER_MAIN_0, 32, 0, HEAP_ID_SYSTEM);
+    Bg_MaskPalette(BG_LAYER_MAIN_0, 0x6c21);
+    Bg_MaskPalette(BG_LAYER_SUB_0, 0x6c21);
+
+    errorMsgData = MessageLoader_Init(MSG_LOADER_LOAD_ON_DEMAND, NARC_INDEX_MSGDATA__PL_MSG, TEXT_BANK_NETWORK_ERRORS, HEAP_ID_SYSTEM);
+    errorString = String_Init(0x180, HEAP_ID_SYSTEM);
+
+    Text_ResetAllPrinters();
+
+    Window_AddFromTemplate(bgConfig, &window, &sErrorMessageWindowTemplate);
+    Window_FillRectWithColor(&window, 15, 0, 0, 26 * 8, 18 * 8);
+    Window_DrawStandardFrame(&window, 0, 512 - 9, 2);
+    MessageLoader_GetString(errorMsgData, v4, errorString);
+    Text_AddPrinterWithParams(&window, FONT_SYSTEM, errorString, 0, 0, TEXT_SPEED_INSTANT, NULL);
+    String_Free(errorString);
+
+    GXLayers_TurnBothDispOn();
+    ResetScreenMasterBrightness(DS_SCREEN_MAIN);
+    ResetScreenMasterBrightness(DS_SCREEN_SUB);
+    BrightnessController_SetScreenBrightness(0, GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD, BRIGHTNESS_BOTH_SCREENS);
+    CommManager_ExitOrReset();
+
+    while (TRUE) {
+        HandleConsoleFold();
+        CommSys_Update();
+
+        if (CommManager_CheckResetFinished()) {
+            break;
+        }
+
+        OS_WaitIrq(1, OS_IE_V_BLANK);
+    }
+
+    while (TRUE) {
+        HandleConsoleFold();
+
+        if (PAD_Read() & PAD_BUTTON_A) {
+            break;
+        }
+
+        OS_WaitIrq(1, OS_IE_V_BLANK);
+    }
+
+    SetScreenColorBrightness(DS_SCREEN_MAIN, COLOR_WHITE);
+    SetScreenColorBrightness(DS_SCREEN_SUB, COLOR_WHITE);
+
+    Window_Remove(&window);
+    MessageLoader_Free(errorMsgData);
+    Heap_Free(bgConfig);
+
+    OS_ResetSystem(0);
+}

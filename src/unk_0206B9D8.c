@@ -1,0 +1,507 @@
+#include "unk_0206B9D8.h"
+
+#include <nitro.h>
+#include <string.h>
+
+#include "constants/species.h"
+
+#include "struct_defs/battle_frontier.h"
+#include "struct_defs/struct_0206BC70.h"
+#include "struct_defs/wifi_battle_tower_data.h"
+
+#include "applications/party_menu/defs.h"
+#include "applications/party_menu/main.h"
+#include "applications/pokemon_summary_screen/main.h"
+#include "field/field_system.h"
+
+#include "bag.h"
+#include "battle_frontier_save.h"
+#include "communication_system.h"
+#include "dexmode_checker.h"
+#include "field_system.h"
+#include "field_task.h"
+#include "heap.h"
+#include "party.h"
+#include "record_mixed_rng.h"
+#include "save_player.h"
+#include "savedata.h"
+#include "script_manager.h"
+#include "underground.h"
+#include "unk_0202D778.h"
+#include "unk_020363E8.h"
+#include "unk_02038FFC.h"
+#include "unk_0203D1B8.h"
+#include "unk_0204AEE8.h"
+#include "wifi_battle_tower_save.h"
+
+#include "constdata/const_020F410C.h"
+
+typedef struct {
+    int unk_00;
+    int unk_04;
+    u8 unk_08;
+    u8 unk_09;
+    u8 unk_0A;
+    u8 unk_0B;
+    u8 unk_0C;
+    u8 unk_0D;
+    u8 unk_0E[6];
+    void **unk_14;
+} UnkStruct_0206B9D8;
+
+typedef struct {
+    int unk_00;
+    int unk_04;
+    UnkStruct_0206BC70 *unk_08;
+    u16 **unk_0C;
+    u16 unk_10;
+    u16 unk_12;
+    u16 unk_14;
+} UnkStruct_0206BC48;
+
+typedef struct {
+    u16 unk_00;
+    u16 unk_02;
+} UnkStruct_0206BD88;
+
+static int sub_0206B9D8(UnkStruct_0206B9D8 *param0, FieldSystem *fieldSystem, enum HeapID heapID)
+{
+    u8 v0;
+    SaveData *saveData;
+    PartyMenu *partyMenu = Heap_AllocAtEnd(heapID, sizeof(PartyMenu));
+
+    saveData = fieldSystem->saveData;
+    MI_CpuClear8(partyMenu, sizeof(PartyMenu));
+
+    partyMenu->options = SaveData_GetOptions(saveData);
+    partyMenu->party = SaveData_GetParty(saveData);
+    partyMenu->bag = SaveData_GetBag(saveData);
+    partyMenu->type = PARTY_MENU_TYPE_BASIC;
+    partyMenu->mode = param0->unk_08;
+    partyMenu->minSelectionSlots = param0->unk_0A;
+    partyMenu->maxSelectionSlots = param0->unk_0B;
+    partyMenu->reqLevel = param0->unk_0C;
+    partyMenu->selectedMonSlot = param0->unk_0D;
+
+    for (v0 = 0; v0 < 6; v0++) {
+        partyMenu->selectionOrder[v0] = param0->unk_0E[v0];
+    }
+
+    FieldSystem_StartChildProcess(fieldSystem, &gPokemonPartyAppTemplate, partyMenu);
+
+    *(param0->unk_14) = partyMenu;
+    return 1;
+}
+
+static int sub_0206BA84(UnkStruct_0206B9D8 *param0, FieldSystem *fieldSystem)
+{
+    int v0;
+    PartyMenu *partyMenu;
+
+    if (FieldSystem_IsRunningApplication(fieldSystem)) {
+        return 1;
+    }
+
+    partyMenu = *(param0->unk_14);
+
+    switch (partyMenu->selectedMonSlot) {
+    case 7:
+        param0->unk_00 = 0;
+        return 4;
+    case 6:
+        param0->unk_00 = 1;
+        return 4;
+    default:
+        break;
+    }
+
+    MI_CpuCopy8(partyMenu->selectionOrder, param0->unk_0E, 6);
+    param0->unk_0D = partyMenu->selectedMonSlot;
+    Heap_Free(partyMenu);
+    *(param0->unk_14) = NULL;
+
+    return 2;
+}
+
+static int sub_0206BAE0(UnkStruct_0206B9D8 *param0, FieldSystem *fieldSystem, enum HeapID heapID)
+{
+    static const u8 visiblePages[] = {
+        SUMMARY_PAGE_INFO,
+        SUMMARY_PAGE_MEMO,
+        SUMMARY_PAGE_SKILLS,
+        SUMMARY_PAGE_CONDITION,
+        SUMMARY_PAGE_BATTLE_MOVES,
+        SUMMARY_PAGE_CONTEST_MOVES,
+        SUMMARY_PAGE_RIBBONS,
+        SUMMARY_PAGE_EXIT,
+        SUMMARY_PAGE_MAX,
+    };
+
+    SaveData *saveData = fieldSystem->saveData;
+    PokemonSummary *monSummary = Heap_AllocAtEnd(heapID, sizeof(PokemonSummary));
+    MI_CpuClear8(monSummary, sizeof(PokemonSummary));
+
+    monSummary->options = SaveData_GetOptions(saveData);
+    monSummary->monData = SaveData_GetParty(saveData);
+    monSummary->dexMode = SaveData_GetDexMode(saveData);
+    monSummary->showContest = PokemonSummaryScreen_ShowContestData(saveData);
+    monSummary->dataType = SUMMARY_DATA_PARTY_MON;
+    monSummary->monIndex = param0->unk_0D;
+    monSummary->monMax = Party_GetCurrentCount(monSummary->monData);
+    monSummary->move = 0;
+    monSummary->mode = param0->unk_09;
+    monSummary->specialRibbons = SaveData_GetRibbons(saveData);
+
+    PokemonSummaryScreen_FlagVisiblePages(monSummary, visiblePages);
+    PokemonSummaryScreen_SetPlayerProfile(monSummary, SaveData_GetTrainerInfo(saveData));
+    FieldSystem_StartChildProcess(fieldSystem, &gPokemonSummaryScreenApp, monSummary);
+    *param0->unk_14 = monSummary;
+
+    return 3;
+}
+
+static int sub_0206BB6C(UnkStruct_0206B9D8 *param0, FieldSystem *fieldSystem)
+{
+    if (FieldSystem_IsRunningApplication(fieldSystem)) {
+        return 3;
+    }
+
+    PokemonSummary *monSummary = *param0->unk_14;
+    param0->unk_0D = monSummary->monIndex;
+    Heap_Free(monSummary);
+    *param0->unk_14 = NULL;
+
+    return 0;
+}
+
+static BOOL sub_0206BB94(FieldTask *param0)
+{
+    FieldSystem *v0 = FieldTask_GetFieldSystem(param0);
+    UnkStruct_0206B9D8 *v1 = FieldTask_GetEnv(param0);
+
+    switch (v1->unk_04) {
+    case 0:
+        v1->unk_04 = sub_0206B9D8(v1, v0, HEAP_ID_FIELD2);
+        break;
+    case 1:
+        v1->unk_04 = sub_0206BA84(v1, v0);
+        break;
+    case 2:
+        v1->unk_04 = sub_0206BAE0(v1, v0, HEAP_ID_FIELD2);
+        break;
+    case 3:
+        v1->unk_04 = sub_0206BB6C(v1, v0);
+        break;
+    case 4:
+        Heap_Free(v1);
+        return 1;
+    }
+
+    return 0;
+}
+
+void sub_0206BBFC(FieldTask *param0, void **param1, u8 param2, u8 param3, u8 param4, u8 param5, u8 param6, u8 param7)
+{
+    FieldSystem *fieldSystem = FieldTask_GetFieldSystem(param0);
+    UnkStruct_0206B9D8 *v1 = Heap_Alloc(HEAP_ID_FIELD2, sizeof(UnkStruct_0206B9D8));
+
+    MI_CpuClear8(v1, sizeof(UnkStruct_0206B9D8));
+
+    v1->unk_08 = param2;
+    v1->unk_09 = param3;
+    v1->unk_0A = param4;
+    v1->unk_0B = param5;
+    v1->unk_0C = param6;
+    v1->unk_0D = param7;
+    v1->unk_14 = param1;
+
+    FieldTask_InitCall(fieldSystem->task, sub_0206BB94, v1);
+}
+
+static int sub_0206BC48(UnkStruct_0206BC48 *param0, FieldSystem *fieldSystem)
+{
+    if (WiFiList_HasValidLogin(fieldSystem->saveData)) {
+        param0->unk_08 = sub_0203E1AC(fieldSystem, param0->unk_12, param0->unk_14);
+        return 1;
+    }
+
+    param0->unk_00 = 1;
+    return 2;
+}
+
+static int sub_0206BC70(UnkStruct_0206BC48 *param0, FieldSystem *fieldSystem)
+{
+    if (FieldSystem_IsRunningApplication(fieldSystem)) {
+        return 1;
+    }
+
+    param0->unk_00 = param0->unk_08->unk_20;
+    Heap_Free(param0->unk_08);
+
+    return 2;
+}
+
+static BOOL sub_0206BC94(FieldTask *taskMan)
+{
+    FieldSystem *fieldSystem = FieldTask_GetFieldSystem(taskMan);
+    UnkStruct_0206BC48 *v2 = FieldTask_GetEnv(taskMan);
+
+    switch (v2->unk_04) {
+    case 0:
+        v2->unk_04 = sub_0206BC48(v2, fieldSystem);
+        break;
+    case 1:
+        v2->unk_04 = sub_0206BC70(v2, fieldSystem);
+        break;
+    case 2:
+        u16 *v0 = FieldSystem_GetVarPointer(fieldSystem, v2->unk_10);
+        *v0 = v2->unk_00;
+        Heap_Free(v2);
+        return 1;
+    }
+
+    return 0;
+}
+
+void sub_0206BCE4(FieldTask *taskMan, u16 param1, u16 param2, u16 param3)
+{
+    FieldSystem *fieldSystem = FieldTask_GetFieldSystem(taskMan);
+    UnkStruct_0206BC48 *v1 = Heap_Alloc(HEAP_ID_FIELD2, sizeof(UnkStruct_0206BC48));
+
+    MI_CpuClear8(v1, sizeof(UnkStruct_0206BC48));
+
+    v1->unk_12 = param1;
+    v1->unk_14 = param3;
+    v1->unk_10 = param2;
+
+    FieldTask_InitCall(fieldSystem->task, sub_0206BC94, v1);
+}
+
+static BOOL sub_0206BD1C(FieldTask *param0)
+{
+    FieldSystem *fieldSystem = FieldTask_GetFieldSystem(param0);
+    UnkStruct_0206BD88 *v3 = FieldTask_GetEnv(param0);
+
+    const void *v1 = sub_0203664C(1 - CommSys_CurNetId());
+
+    if (v1 == NULL) {
+        return 0;
+    }
+
+    u16 *v0 = FieldSystem_GetVarPointer(fieldSystem, v3->unk_02);
+
+    switch (v3->unk_00) {
+    case 0:
+        *v0 = sub_0204AFC4(fieldSystem, v1);
+        break;
+    case 1:
+        *v0 = sub_0204B020(fieldSystem, v1);
+        break;
+    case 2:
+        *v0 = sub_0204B044(fieldSystem, v1);
+    }
+
+    Heap_Free(v3);
+    return 1;
+}
+
+void sub_0206BD88(FieldTask *param0, u16 param1, u16 param2)
+{
+    FieldSystem *fieldSystem = FieldTask_GetFieldSystem(param0);
+    UnkStruct_0206BD88 *v1 = Heap_Alloc(HEAP_ID_FIELD2, sizeof(UnkStruct_0206BD88));
+
+    MI_CpuClear8(v1, sizeof(UnkStruct_0206BD88));
+
+    v1->unk_00 = param1;
+    v1->unk_02 = param2;
+
+    FieldTask_InitCall(fieldSystem->task, sub_0206BD1C, v1);
+}
+
+u16 sub_0206BDBC(SaveData *saveData)
+{
+    BattleFrontierSave *frontier = SaveData_GetBattleFrontier(saveData);
+    u16 v3 = BattleFrontierSave_GetStat(frontier, STAT_TOWER_RECORD_STREAK_SINGLE, 0xff);
+
+    if (v3 < 20) {
+        return 0;
+    }
+
+    WifiBattleTowerRecord *record = SaveData_GetWifiBattleTowerRecord(saveData);
+    u8 v4 = WifiBattleTowerRecord_UpdateBitFlag(record, 13, 0);
+    u8 v5 = WifiBattleTowerRecord_UpdateBitFlag(record, 0, 0);
+    u8 v6 = WifiBattleTowerRecord_UpdateBitFlag(record, 1, 0);
+    u8 v7 = WifiBattleTowerRecord_UpdateBitFlag(record, 14, 0);
+    u8 v8 = WifiBattleTowerRecord_UpdateBitFlag(record, 2, 0);
+    u8 v9 = WifiBattleTowerRecord_UpdateBitFlag(record, 3, 0);
+
+    if (v4 && v5 && v6) {
+        return 0;
+    }
+
+    Underground *v2 = SaveData_GetUnderground(saveData);
+
+    if (!v4) {
+        if (Underground_IsRoomForGoodsInPC(v2, 85)) {
+            WifiBattleTowerRecord_UpdateBitFlag(record, 13, 1);
+            return 1;
+        }
+
+        if (!v7) {
+            WifiBattleTowerRecord_UpdateBitFlag(record, 14, 1);
+        }
+
+        return 4;
+    }
+
+    if (v3 < 50) {
+        return 0;
+    }
+
+    if (!v5) {
+        if (Underground_IsRoomForGoodsInPC(v2, 86)) {
+            WifiBattleTowerRecord_UpdateBitFlag(record, 0, 1);
+            return 2;
+        }
+
+        if (!v8) {
+            WifiBattleTowerRecord_UpdateBitFlag(record, 2, 1);
+        }
+
+        return 4;
+    }
+
+    if ((v3 < 100) || v6) {
+        return 0;
+    }
+
+    if (Underground_IsRoomForGoodsInPC(v2, 87)) {
+        WifiBattleTowerRecord_UpdateBitFlag(record, 1, 1);
+        return 3;
+    }
+
+    if (!v9) {
+        WifiBattleTowerRecord_UpdateBitFlag(record, 3, 1);
+    }
+
+    return 4;
+}
+
+u16 sub_0206BF04(SaveData *saveData)
+{
+    BattleFrontierSave *frontier = SaveData_GetBattleFrontier(saveData);
+    u16 frontierStats = BattleFrontierSave_GetStat(frontier, STAT_TOWER_RECORD_STREAK_SINGLE, 0xff);
+
+    if (frontierStats < 20) {
+        return 0;
+    }
+
+    WifiBattleTowerRecord *record = SaveData_GetWifiBattleTowerRecord(saveData);
+    u8 v3 = WifiBattleTowerRecord_UpdateBitFlag(record, 13, 0);
+    u8 v4 = WifiBattleTowerRecord_UpdateBitFlag(record, 0, 0);
+    u8 v5 = WifiBattleTowerRecord_UpdateBitFlag(record, 1, 0);
+    u8 v6 = WifiBattleTowerRecord_UpdateBitFlag(record, 14, 0);
+    u8 v7 = WifiBattleTowerRecord_UpdateBitFlag(record, 2, 0);
+    u8 v8 = WifiBattleTowerRecord_UpdateBitFlag(record, 3, 0);
+
+    if (v3 && v4 && v5) {
+        return 0;
+    }
+
+    if (!v3) {
+        if (v6) {
+            return 4;
+        }
+
+        return 1;
+    }
+
+    if (frontierStats < 50) {
+        return 0;
+    }
+
+    if (!v4) {
+        if (v7) {
+            return 5;
+        }
+
+        return 2;
+    }
+
+    if (frontierStats < 100) {
+        return 0;
+    }
+
+    if (v5) {
+        return 0;
+    }
+
+    if (v8) {
+        return 6;
+    }
+
+    return 3;
+}
+
+u32 sub_0206BFF0(u32 param0)
+{
+    return param0 * 48828125L + 1;
+}
+
+u32 sub_0206BFFC(u32 param0)
+{
+    return param0 * 1566083941 + 1;
+}
+
+u32 sub_0206C008(SaveData *saveData)
+{
+    u32 v0 = RecordMixedRNG_GetRand(SaveData_GetRecordMixedRNG(saveData));
+    v0 = sub_0206BFFC(v0);
+
+    WifiBattleTowerRecord_SetRngState(SaveData_GetWifiBattleTowerRecord(saveData), v0);
+
+    return v0;
+}
+
+u32 sub_0206C02C(SaveData *saveData)
+{
+    WifiBattleTowerRecord *record = SaveData_GetWifiBattleTowerRecord(saveData);
+
+    u32 v1 = WifiBattleTowerRecord_GetRngState(record);
+    v1 = sub_0206BFFC(v1);
+
+    WifiBattleTowerRecord_SetRngState(record, v1);
+    u32 v0 = sub_0206BFF0(v1);
+    WifiBattleTowerSave_SetField(SaveData_GetWifiBattleTowerSave(saveData), 10, &v0);
+
+    return v0;
+}
+
+u32 sub_0206C068(SaveData *saveData)
+{
+    WifiBattleTowerRecord *record = SaveData_GetWifiBattleTowerRecord(saveData);
+    WifiBattleTowerSave *save = SaveData_GetWifiBattleTowerSave(saveData);
+
+    int v0;
+    u32 v3 = WifiBattleTowerRecord_GetRngState(record);
+    u32 v2 = sub_0206BFF0(v3);
+    int v1 = WifiBattleTowerRecord_UpdateRoomNum(record, WifiBattleTowerSave_GetField(save, 0, NULL), 0);
+    v1 *= 24;
+
+    for (v0 = 0; v0 < v1; v0++) {
+        v2 = sub_0206BFF0(v2);
+    }
+
+    WifiBattleTowerSave_SetField(SaveData_GetWifiBattleTowerSave(saveData), 10, &v2);
+
+    return v2;
+}
+
+BOOL FieldSystem_IsInBattleTowerSalon(FieldSystem *fieldSystem)
+{
+    if (fieldSystem->location->mapHeaderID == MAP_HEADER_BATTLE_TOWER_BATTLE_SALON) {
+        return TRUE;
+    }
+
+    return FALSE;
+}

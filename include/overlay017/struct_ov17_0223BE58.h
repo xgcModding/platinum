@@ -1,0 +1,11 @@
+#ifndef POKEPLATINUM_STRUCT_OV17_0223BE58_H
+#define POKEPLATINUM_STRUCT_OV17_0223BE58_H
+
+#include "constants/contests.h"
+
+typedef struct {
+    u16 moveIDs[CONTEST_NUM_PARTICIPANTS];
+    u8 unk_08[CONTEST_NUM_PARTICIPANTS];
+} UnkStruct_ov17_0223BE58;
+
+#endif // POKEPLATINUM_STRUCT_OV17_0223BE58_H

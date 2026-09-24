@@ -1,0 +1,18 @@
+#ifndef res_graphics_start_menu_start_menu_naix
+#define res_graphics_start_menu_start_menu_naix
+
+#define cursor_anim_NANR 0
+#define cursor_cell_NCER 1
+#define cursor_NCGR 2
+#define icons_anim_NANR 3
+#define icons_cell_NCER 4
+#define menu_NCLR 5
+#define icons_NCGR 6
+#define underground_icons_anim_NANR 7
+#define underground_icons_cell_NCER 8
+#define underground_menu_NCLR 9
+#define underground_icons_NCGR 10
+
+#define res_graphics_start_menu_start_menu_COUNT 11
+
+#endif 

@@ -1,0 +1,18 @@
+#ifndef res_field_frontier_scripts_fr_script_naix
+#define res_field_frontier_scripts_fr_script_naix
+
+#define frontier_scripts_battle_castle 0
+#define frontier_scripts_battle_factory 1
+#define frontier_scripts_battle_arcade 2
+#define frontier_scripts_battle_hall 3
+#define frontier_scripts_unused_04_bin 4
+#define frontier_scripts_unused_05_bin 5
+#define frontier_scripts_battle_tower_corridor 6
+#define frontier_scripts_battle_tower_corridor_multi 7
+#define frontier_scripts_battle_tower_battle_room 8
+#define frontier_scripts_battle_tower_multi_battle_room 9
+#define frontier_scripts_wfc_facility_selector 10
+
+#define res_field_frontier_scripts_fr_script_COUNT 11
+
+#endif 

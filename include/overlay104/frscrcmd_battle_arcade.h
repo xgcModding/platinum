@@ -1,0 +1,22 @@
+#ifndef POKEPLATINUM_FRSCRCMD_BATTLE_ARCADE_H
+#define POKEPLATINUM_FRSCRCMD_BATTLE_ARCADE_H
+
+#include "overlay104/defs.h"
+
+BOOL FrontierScrCmd_InitBattleArcade(FrontierScriptContext *ctx);
+BOOL FrontierScrCmd_BattleArcade_LoadTrainersForRound(FrontierScriptContext *ctx);
+BOOL FrontierScrCmd_FreeBattleArcade(FrontierScriptContext *ctx);
+BOOL FrontierScrCmd_OpenBattleArcadeApp(FrontierScriptContext *ctx);
+BOOL FrontierScrCmd_BattleArcade_CleanupBattle(FrontierScriptContext *ctx);
+BOOL FrontierScrCmd_BattleArcade_StartBattle(FrontierScriptContext *ctx);
+BOOL FrontierScrCmd_BattleArcade_SetupFirstOpponent(FrontierScriptContext *ctx);
+BOOL FrontierScrCmd_BattleArcade_SetupNextOpponent(FrontierScriptContext *ctx);
+BOOL FrontierScrCmd_CallBattleArcadeFunction(FrontierScriptContext *ctx);
+BOOL FrontierScrCmd_BattleArcade_CheckWonBattle(FrontierScriptContext *ctx);
+BOOL FrontierScrCmd_BattleArcade_SendCommMessage(FrontierScriptContext *ctx);
+BOOL FrontierScrCmd_BattleArcade_WaitForCommResponses(FrontierScriptContext *ctx);
+BOOL FrontierScrCmd_BattleArcade_PrintTrainerIntro(FrontierScriptContext *ctx);
+BOOL FrontierScrCmd_ApplyArcadeEffect(FrontierScriptContext *ctx);
+BOOL FrontierScrCmd_SetItemDrawFlag(FrontierScriptContext *ctx);
+
+#endif // POKEPLATINUM_FRSCRCMD_BATTLE_ARCADE_H

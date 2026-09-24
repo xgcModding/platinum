@@ -1,0 +1,26 @@
+#ifndef res_graphics_naming_screen_namein_naix
+#define res_graphics_naming_screen_namein_naix
+
+#define naming_screen_NCLR 0
+#define naming_screen_sprites_NCLR 1
+#define naming_screen_main_tiles_NCGR_lz 2
+#define naming_screen_dummy_0_NCGR_lz 3
+#define naming_screen_bg_NSCR_lz 4
+#define naming_screen_dummy_1_NSCR_lz 5
+#define naming_screen_chars_bg_0_NSCR_lz 6
+#define naming_screen_chars_bg_1_NSCR_lz 7
+#define naming_screen_chars_bg_2_NSCR_lz 8
+#define naming_screen_chars_bg_3_NSCR_lz 9
+#define naming_screen_sprites_NCGR_lz 10
+#define naming_screen_unk_sprite_NCGR_lz 11
+#define naming_screen_sprites_cell_NCER_lz 12
+#define naming_screen_unk_sprite_cell_NCER_lz 13
+#define naming_screen_sprites_anim_NANR_lz 14
+#define naming_screen_unk_sprite_anim_NANR_lz 15
+#define naming_screen_unk_tiles_NCGR_lz 16
+#define naming_screen_dummy_2_NSCR_lz 17
+#define naming_screen_dummy_3_NSCR_lz 18
+
+#define res_graphics_naming_screen_namein_COUNT 19
+
+#endif 

@@ -1,0 +1,185 @@
+#ifndef POKEPLATINUM_OV66_0222DDF0_H
+#define POKEPLATINUM_OV66_0222DDF0_H
+
+#include <ppwlobby/ppw_lobby.h>
+
+#include "constants/pokemon.h"
+#include "constants/string.h"
+
+#include "overlay066/struct_ov66_0222DFF8_decl.h"
+#include "overlay066/struct_ov66_0222E294.h"
+#include "overlay066/struct_ov66_0222E908.h"
+#include "overlay066/struct_ov66_02230914.h"
+#include "overlay066/struct_ov66_02231428.h"
+#include "overlay066/struct_ov66_02231560.h"
+#include "overlay066/struct_ov66_0223177C_decl.h"
+#include "overlay066/struct_ov66_02232068.h"
+#include "overlay068/struct_ov68_0225DC74.h"
+
+#include "charcode.h"
+#include "enums.h"
+#include "savedata.h"
+#include "trainer_info.h"
+
+typedef struct WiFiPlazaProfile {
+    s32 unk_00;
+    u32 trainerID;
+    charcode_t trainerName[TRAINER_NAME_LEN + 1];
+    UnkStruct_ov66_02231428 unk_18;
+    UnkStruct_ov66_02231428 unk_1C;
+    u16 partySpecies[MAX_PARTY_SIZE];
+    u8 partyForms[MAX_PARTY_SIZE];
+    u8 partyIsEgg[MAX_PARTY_SIZE];
+    u8 trainerGender;
+    u8 language;
+    u16 trainerAppearanceIdx;
+    u16 country;
+    u8 region;
+    u8 isNationalDexObtained;
+    u8 isMainStoryCleared;
+    u8 unk_41;
+    u8 gameVersion;
+    u8 unk_43;
+    s64 startTimestamp;
+    u8 unk_4C[12];
+    s32 unk_58[12];
+    u16 unk_88[2];
+    UnkStruct_ov66_0222E908 unk_8C;
+} WiFiPlazaProfile;
+
+UnkStruct_ov66_0222DFF8 *ov66_0222DDF0(SaveData *saveData, enum HeapID heapID);
+void ov66_0222DEEC(UnkStruct_ov66_0222DFF8 *param0);
+void ov66_0222DF58(UnkStruct_ov66_0222DFF8 *param0);
+void ov66_0222DFF4(UnkStruct_ov66_0222DFF8 *param0);
+int ov66_0222DFF8(const UnkStruct_ov66_0222DFF8 *param0);
+BOOL ov66_0222E004(const UnkStruct_ov66_0222DFF8 *param0);
+UnkStruct_ov66_0223177C *ov66_0222E00C(UnkStruct_ov66_0222DFF8 *param0);
+const UnkStruct_ov66_02231560 *ov66_0222E010(UnkStruct_ov66_0222DFF8 *param0);
+const UnkStruct_ov66_02231428 *ov66_0222E028(const UnkStruct_ov66_0222DFF8 *param0);
+BOOL ov66_0222E02C(UnkStruct_ov66_0222DFF8 *param0, u32 param1);
+BOOL ov66_0222E058(UnkStruct_ov66_0222DFF8 *param0, u32 param1);
+BOOL ov66_0222E084(UnkStruct_ov66_0222DFF8 *param0, int param1);
+BOOL ov66_0222E09C(UnkStruct_ov66_0222DFF8 *param0, u32 param1);
+SaveData *ov66_0222E0C4(UnkStruct_ov66_0222DFF8 *param0);
+BOOL ov66_0222E0C8(const UnkStruct_ov66_0222DFF8 *param0);
+BOOL ov66_0222E0DC(const UnkStruct_ov66_0222DFF8 *param0);
+BOOL ov66_0222E0F4(const UnkStruct_ov66_0222DFF8 *param0);
+void ov66_0222E10C(UnkStruct_ov66_0222DFF8 *param0);
+BOOL ov66_0222E120(const UnkStruct_ov66_0222DFF8 *param0);
+BOOL ov66_0222E12C(const UnkStruct_ov66_0222DFF8 *param0);
+BOOL ov66_0222E138(const UnkStruct_ov66_0222DFF8 *param0);
+int ov66_0222E158(const UnkStruct_ov66_0222DFF8 *param0);
+BOOL ov66_0222E170(const UnkStruct_ov66_0222DFF8 *param0);
+BOOL ov66_0222E190(const UnkStruct_ov66_0222DFF8 *param0);
+BOOL ov66_0222E19C(const UnkStruct_ov66_0222DFF8 *param0);
+PPW_LOBBY_TIME_EVENT ov66_0222E1B8(const UnkStruct_ov66_0222DFF8 *param0);
+PPW_LOBBY_TIME_EVENT ov66_0222E1D0(const UnkStruct_ov66_0222DFF8 *param0);
+PPW_LOBBY_TIME_EVENT ov66_0222E1E8(const UnkStruct_ov66_0222DFF8 *param0);
+void ov66_0222E200(UnkStruct_ov66_0222DFF8 *param0);
+BOOL ov66_0222E210(const UnkStruct_ov66_0222DFF8 *param0);
+BOOL ov66_0222E220(const UnkStruct_ov66_0222DFF8 *param0);
+void ov66_0222E22C(UnkStruct_ov66_0222DFF8 *param0, BOOL param1);
+void ov66_0222E238(UnkStruct_ov66_0222DFF8 *param0);
+void ov66_0222E24C(UnkStruct_ov66_0222DFF8 *param0, s32 param1, u32 param2);
+void ov66_0222E27C(UnkStruct_ov66_0222DFF8 *param0, u32 param1);
+void ov66_0222E294(const UnkStruct_ov66_0222DFF8 *param0, UnkStruct_ov66_0222E294 *param1);
+void ov66_0222E2A4(UnkStruct_ov66_0222DFF8 *param0);
+BOOL ov66_0222E2B4(const UnkStruct_ov66_0222DFF8 *param0);
+void ov66_0222E2C4(UnkStruct_ov66_0222DFF8 *param0, BOOL param1);
+void ov66_0222E2CC(const UnkStruct_ov66_0222DFF8 *param0);
+void ov66_0222E31C(UnkStruct_ov66_0222DFF8 *param0, BOOL param1);
+u32 ov66_0222E338(const UnkStruct_ov66_0222DFF8 *param0);
+s32 ov66_0222E344(const UnkStruct_ov66_0222DFF8 *param0);
+BOOL ov66_0222E34C(const UnkStruct_ov66_0222DFF8 *param0, u32 param1);
+const WiFiPlazaProfile *ov66_0222E374(const UnkStruct_ov66_0222DFF8 *param0, u32 param1);
+WiFiPlazaProfile *ov66_0222E3BC(UnkStruct_ov66_0222DFF8 *param0);
+void ov66_0222E3E4(UnkStruct_ov66_0222DFF8 *param0, int param1);
+void ov66_0222E500(UnkStruct_ov66_0222DFF8 *param0, int param1, s32 param2);
+void ov66_0222E528(UnkStruct_ov66_0222DFF8 *param0, u32 param1);
+void ov66_0222E56C(UnkStruct_ov66_0222DFF8 *param0, int type1, int type2);
+void ov66_0222E5D8(UnkStruct_ov66_0222DFF8 *param0, u32 param1, u32 param2);
+void ov66_0222E640(const WiFiPlazaProfile *profile, TrainerInfo *param1, enum HeapID heapID);
+u32 ov66_0222E71C(const WiFiPlazaProfile *profile);
+int ov66_0222E728(const WiFiPlazaProfile *profile, u32 param1);
+s32 ov66_0222E760(const WiFiPlazaProfile *profile, u32 param1);
+s32 ov66_0222E798(const WiFiPlazaProfile *profile);
+u32 WiFiPlazaProfile_GetTrainerID(const WiFiPlazaProfile *profile);
+int ov66_0222E7A0(const WiFiPlazaProfile *profile);
+UnkStruct_ov66_02231428 ov66_0222E7C4(const WiFiPlazaProfile *profile);
+u32 WiFiPlazaProfile_GetGender(const WiFiPlazaProfile *profile);
+u32 WiFiPlazaProfile_GetNormalizedLanguage(const WiFiPlazaProfile *profile);
+BOOL WiFiPlazaProfile_IsLanguageValid(const WiFiPlazaProfile *profile);
+u32 WiFiPlazaProfile_GetLanguage(const WiFiPlazaProfile *profile);
+u32 WiFiPlazaProfile_GetTrainerAppearanceGraphicsID(const WiFiPlazaProfile *profile);
+u32 ov66_0222E880(const WiFiPlazaProfile *profile);
+u32 ov66_0222E8A4(const WiFiPlazaProfile *profile);
+u32 ov66_0222E8C4(const WiFiPlazaProfile *profile);
+BOOL ov66_0222E8D8(const WiFiPlazaProfile *profile);
+int ov66_0222E8E8(const WiFiPlazaProfile *profile, u32 param1);
+void ov66_0222E908(const WiFiPlazaProfile *profile, UnkStruct_ov66_0222E908 *param1);
+TrainerInfo *ov66_0222E918(const UnkStruct_ov66_0222DFF8 *param0);
+BOOL ov66_0222E924(const UnkStruct_ov66_0222DFF8 *param0, u32 param1);
+void ov66_0222E934(const UnkStruct_ov66_0222DFF8 *param0, UnkStruct_ov66_02232068 *param1);
+BOOL ov66_0222E944(const UnkStruct_ov66_0222DFF8 *param0, u32 param1);
+const UnkStruct_ov66_02230914 *ov66_0222E954(const UnkStruct_ov66_0222DFF8 *param0, u32 param1);
+u32 ov66_0222E964(const UnkStruct_ov66_0222DFF8 *param0);
+u32 ov66_0222E974(const UnkStruct_ov66_0222DFF8 *param0, u32 param1);
+void ov66_0222E990(UnkStruct_ov66_0222DFF8 *param0, u32 param1, u32 param2);
+void ov66_0222E9CC(UnkStruct_ov66_0222DFF8 *param0, u32 param1, u32 param2, u32 param3);
+void ov66_0222EA10(UnkStruct_ov66_0222DFF8 *param0, enum PlazaMinigame param1, u32 param2, u32 param3, u32 param4, u32 param5, u32 param6, BOOL param7);
+void ov66_0222EAB4(UnkStruct_ov66_0222DFF8 *param0, enum PlazaMinigame param1, u32 param2, u32 param3, u32 param4, u32 param5, u32 param6);
+u32 ov66_0222EB28(const UnkStruct_ov66_0222DFF8 *param0);
+u32 ov66_0222EB38(const UnkStruct_ov66_0222DFF8 *param0);
+u32 ov66_0222EB48(const UnkStruct_ov66_0222DFF8 *param0);
+BOOL ov66_0222EB54(const UnkStruct_ov66_0222DFF8 *param0, u32 param1);
+void ov66_0222EB6C(UnkStruct_ov66_0222DFF8 *param0, u32 param1);
+int ov66_0222EB7C(const UnkStruct_ov66_0222DFF8 *param0, u32 param1);
+u32 ov66_0222EB8C(const UnkStruct_ov66_0222DFF8 *param0, u32 param1);
+u32 ov66_0222EB9C(const UnkStruct_ov66_0222DFF8 *param0);
+u32 ov66_0222EBA4(const UnkStruct_ov66_0222DFF8 *param0, u32 param1);
+u32 ov66_0222EBB4(UnkStruct_ov66_0222DFF8 *param0, u32 param1, int param2);
+void ov66_0222EBC4(UnkStruct_ov66_0222DFF8 *param0, u32 param1);
+void ov66_0222EBD4(UnkStruct_ov66_0222DFF8 *param0, u32 param1);
+BOOL ov66_0222EBE4(const UnkStruct_ov66_0222DFF8 *param0, u32 param1);
+void ov66_0222EBF4(UnkStruct_ov66_0222DFF8 *param0, u32 param1);
+void ov66_0222EC04(u32 param0, u32 *param1, u32 *param2);
+void ov66_0222EC20(UnkStruct_ov66_0222DFF8 *param0, u32 param1, int param2);
+int ov66_0222EC30(const UnkStruct_ov66_0222DFF8 *param0, u32 param1);
+void ov66_0222EC40(UnkStruct_ov66_0222DFF8 *param0);
+void ov66_0222EC50(UnkStruct_ov66_0222DFF8 *param0);
+void ov66_0222EC60(UnkStruct_ov66_0222DFF8 *param0);
+BOOL ov66_0222EC70(UnkStruct_ov66_0222DFF8 *param0, u32 param1);
+void ov66_0222ECD4(UnkStruct_ov66_0222DFF8 *param0, u16 param1);
+void ov66_0222ED7C(UnkStruct_ov66_0222DFF8 *param0);
+void ov66_0222EDC0(UnkStruct_ov66_0222DFF8 *param0);
+BOOL ov66_0222EDF4(const UnkStruct_ov66_0222DFF8 *param0);
+BOOL ov66_0222EE08(const UnkStruct_ov66_0222DFF8 *param0);
+u32 ov66_0222EE1C(const UnkStruct_ov66_0222DFF8 *param0);
+BOOL ov66_0222EE24(const UnkStruct_ov66_0222DFF8 *param0);
+int ov66_0222EE30(const UnkStruct_ov66_0222DFF8 *param0);
+u16 ov66_0222EE3C(const UnkStruct_ov66_0222DFF8 *param0);
+BOOL ov66_0222EE44(const UnkStruct_ov66_0222DFF8 *param0, u32 param1);
+BOOL ov66_0222EE68(const UnkStruct_ov66_0222DFF8 *param0);
+s16 ov66_0222EE90(const UnkStruct_ov66_0222DFF8 *param0);
+void ov66_0222EEA0(UnkStruct_ov66_0222DFF8 *param0);
+BOOL ov66_0222EEAC(const UnkStruct_ov66_0222DFF8 *param0);
+void ov66_0222EEB8(UnkStruct_ov66_0222DFF8 *param0);
+void ov66_0222EED4(UnkStruct_ov66_0222DFF8 *param0, u32 param1);
+void ov66_0222EEE4(UnkStruct_ov66_0222DFF8 *param0, u32 param1);
+void ov66_0222EEF4(UnkStruct_ov66_0222DFF8 *param0, u32 param1);
+void ov66_0222EF44(UnkStruct_ov66_0222DFF8 *param0, u32 param1);
+void ov66_0222EF94(UnkStruct_ov66_0222DFF8 *param0, enum PlazaMinigame param1);
+void ov66_0222F000(UnkStruct_ov66_0222DFF8 *param0);
+void ov66_0222F020(UnkStruct_ov66_0222DFF8 *param0);
+void ov66_0222F030(UnkStruct_ov66_0222DFF8 *param0);
+void ov66_0222F040(UnkStruct_ov66_0222DFF8 *param0, int param1);
+int ov66_0222F05C(const UnkStruct_ov66_0222DFF8 *param0);
+u32 ov66_0222F0DC(const UnkStruct_ov66_0222DFF8 *param0);
+int ov66_0222F104(const UnkStruct_ov66_0222DFF8 *param0);
+u32 ov66_0222F114(const UnkStruct_ov66_0222DFF8 *param0);
+void ov66_0222F124(UnkStruct_ov66_0222DFF8 *param0, const UnkStruct_ov68_0225DC74 *param1);
+BOOL ov66_0222F144(const UnkStruct_ov66_0222DFF8 *param0, UnkStruct_ov68_0225DC74 *param1);
+void ov66_0222F16C(UnkStruct_ov66_0222DFF8 *param0);
+void ov66_0222F198(UnkStruct_ov66_0222DFF8 *param0);
+
+#endif // POKEPLATINUM_OV66_0222DDF0_H

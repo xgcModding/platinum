@@ -1,0 +1,22 @@
+#ifndef SIM_GUI_PRJ_H
+#define SIM_GUI_PRJ_H
+#include <stdbool.h>
+
+void SIM_GUI_Prj_main(bool * p_open);
+
+
+
+void GUI_CreateItem_Init();
+void GUI_CreateItem_Main(bool * p_open);
+
+void GUI_CreateMon_Init();
+void GUI_CreateMon_Main(bool * p_open);
+
+void GUI_FieldInfo_Init();
+void GUI_FieldInfo_Main(bool * p_open);
+
+void GUI_MapJump_Init();
+void GUI_MapJump_Main(bool * p_open);
+
+
+#endif

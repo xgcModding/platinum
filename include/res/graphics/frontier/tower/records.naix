@@ -1,0 +1,16 @@
+#ifndef res_graphics_frontier_tower_records_naix
+#define res_graphics_frontier_tower_records_naix
+
+#define sprites_NCLR 0
+#define sprites_NCGR 1
+#define sprites_cell_NCER 2
+#define sprites_anim_NANR 3
+#define records_tiles_NCLR 4
+#define records_tiles_NCGR 5
+#define records_solo_NSCR 6
+#define records_ranks_NSCR 7
+#define records_wifi_NSCR 8
+
+#define res_graphics_frontier_tower_records_COUNT 9
+
+#endif 

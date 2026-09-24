@@ -1,0 +1,46 @@
+#ifndef res_graphics_bag_bag_graphics_naix
+#define res_graphics_bag_bag_graphics_naix
+
+#define bag_sprite_anim_NANR 0
+#define bag_sprite_cell_NCER 1
+#define bag_sprite_male_NCGR 2
+#define bag_sprite_male_NCLR 3
+#define bag_sprite_anim_female_unused_NANR 4
+#define bag_sprite_cell_female_unused_NCER 5
+#define bag_sprite_female_NCGR 6
+#define bag_sprite_female_NCLR 7
+#define pocket_selector_arrows_anim_NANR 8
+#define pocket_selector_arrows_cell_NCER 9
+#define pocket_selector_arrows_NCGR 10
+#define bag_ui_main_tileset_NCGR 11
+#define bag_ui_main_NCLR 12
+#define item_list_border_NSCR 13
+#define bag_ui_main_NSCR 14
+#define pokeball_borders_tileset_NCGR 15
+#define pokeball_borders_NCLR 16
+#define pokeball_borders_NSCR 17
+#define buttons_NCLR 18
+#define buttons_NCGR 19
+#define ui_elements_NCLR 20
+#define pocket_selector_icons_NCGR 21
+#define pocket_selector_icons_NCLR 22
+#define pocket_highlight_anim_NANR 23
+#define pocket_highlight_cell_NCER 24
+#define pocket_highlight_NCGR 25
+#define item_highlight_anim_NANR 26
+#define item_highlight_cell_NCER 27
+#define item_highlight_NCGR 28
+#define moving_item_pos_bar_anim_NANR 29
+#define moving_item_pos_bar_cell_NCER 30
+#define moving_item_pos_bar_NCGR 31
+#define pokeball_inside_NCGR 32
+#define pokeball_inside_NSCR 33
+#define button_shockwave_anim_NANR 34
+#define button_shockwave_cell_NCER 35
+#define button_shockwave_NCGR 36
+#define button_shockwave_NCLR 37
+#define item_entry_icons_NCGR 38
+
+#define res_graphics_bag_bag_graphics_COUNT 39
+
+#endif 

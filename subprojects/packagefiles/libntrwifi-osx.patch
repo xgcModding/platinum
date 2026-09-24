@@ -1,0 +1,27 @@
+diff --git a/libraries/cps/src/network.c b/libraries/cps/src/network.c
+--- a/libraries/cps/src/network.c
++++ b/libraries/cps/src/network.c
+@@ -14,6 +14,13 @@
+ #endif
+ #endif
+ 
++#ifdef SDK_BUILD_OSX
++#include <fcntl.h>
++#ifndef SOCK_NONBLOCK
++#define SOCK_NONBLOCK 0
++#endif
++#endif
++
+ #ifndef SDK_BUILD_ARM
+ #include <SDL2/SDL.h>
+ #include <SDL2/SDL_thread.h>
+@@ -3403,6 +3410,9 @@ int CPS_SocBind(CPS_Soc *mySoc, u16 local_port, u16 remote_port, u32 remote_ip)
+       #endif
+     }
+ 
++    #ifdef SDK_BUILD_OSX
++    fcntl(mySoc->WIN_socket, F_SETFL, O_NONBLOCK);
++    #endif
+     int status;
+ 
+     CreateSocketEvent(mySoc);

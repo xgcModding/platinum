@@ -1,0 +1,97 @@
+#ifndef MSGENC_RES_TEXT_BANK_RANKINGS_MACHINE_H
+#define MSGENC_RES_TEXT_BANK_RANKINGS_MACHINE_H
+
+
+#define RankingsMachine_Text_SingleBattlesRecordTitle 0
+
+#define RankingsMachine_Text_DoubleBattlesRecordTitle 1
+
+#define RankingsMachine_Text_MultiBattlesRecordTitle 2
+
+#define RankingsMachine_Text_LinkMultiBattlesRecordTitle 3
+
+#define RankingsMachine_Text_WiFiBattleRoomRecordTitle 4
+
+#define RankingsMachine_Text_AvgWinStreakRecordTitle 5
+
+#define RankingsMachine_Text_PokemonDefeatedRecordTitle 6
+
+#define RankingsMachine_Text_PokemonCaughtRecordTitle 7
+
+#define RankingsMachine_Text_PokemonEggsRecordTitle 8
+
+#define RankingsMachine_Text_EncounteredWhileFishingRecordTitle 9
+
+#define RankingsMachine_Text_ContestWinsRecordTitle 10
+
+#define RankingsMachine_Text_ContestWinPercentRecordTitle 11
+
+#define RankingsMachine_Text_RibbonsRecordTitle 12
+
+#define RankingsMachine_Text_Exit 13
+
+#define RankingsMachine_Text_RecordEntryInfo 14
+
+#define RankingsMachine_Text_BattleWinsValue 15
+
+#define RankingsMachine_Text_AvgWinStreakValue 16
+
+#define RankingsMachine_Text_RibbonsValue 17
+
+#define RankingsMachine_Text_PokemonHatchedValue 18
+
+#define RankingsMachine_Text_PokemonCaughtValue 19
+
+#define RankingsMachine_Text_ContestWinPercentValue 20
+
+#define RankingsMachine_Text_ContestWinsValue 21
+
+#define RankingsMachine_Text_WhichRecordWouldYouLikeToSee 22
+
+
+#define RankingsMachine_Text_SingleBattlesRecordExplanation 23
+
+
+#define RankingsMachine_Text_DoubleBattlesRecordExplanation 24
+
+
+#define RankingsMachine_Text_MultiBattlesRecordExplanation 25
+
+
+#define RankingsMachine_Text_LinkMultiBattlesRecordExplanation 26
+
+
+#define RankingsMachine_Text_WiFiBattlesRecordExplanation 27
+
+
+#define RankingsMachine_Text_AvgWinStreakRecordExplanation 28
+
+#define RankingsMachine_Text_PokemonDefeatedRecordExplanation 29
+
+
+#define RankingsMachine_Text_PokemonCaughtRecordExplanation 30
+
+
+#define RankingsMachine_Text_PokemonEggsRecordExplanation 31
+
+
+#define RankingsMachine_Text_EncounteredWhileFishingRecordExplanation 32
+
+#define RankingsMachine_Text_ContestWinsRecordExplanation 33
+
+#define RankingsMachine_Text_ContestWinPercentRecordExplanation 34
+
+
+#define RankingsMachine_Text_RibbonsRecordExplanation 35
+
+#define RankingsMachine_Text_DeleteRecord 36
+
+
+#define RankingsMachine_Text_SelectTheRecordYouWantToDeleteThenPressA 37
+
+#define RankingsMachine_Text_AskDeleteThisRecord 38
+
+#define RankingsMachine_Text_YourOwnRecordCantBeDeleted 39
+#define TEXT_BANK_RANKINGS_MACHINE_ENTRY_COUNT 40
+
+#endif 

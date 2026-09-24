@@ -1,0 +1,13 @@
+#ifndef res_graphics_poffin_case_feeding_cutscene_cutscene_naix
+#define res_graphics_poffin_case_feeding_cutscene_cutscene_naix
+
+#define top_screen_tiles_NCLR 0
+#define bottom_screen_tiles_NCLR 1
+#define top_screen_tiles_NCGR 2
+#define bottom_screen_tiles_NCGR 3
+#define top_screen_tilemap_NSCR 4
+#define bottom_screen_tilemap_NSCR 5
+
+#define res_graphics_poffin_case_feeding_cutscene_cutscene_COUNT 6
+
+#endif 

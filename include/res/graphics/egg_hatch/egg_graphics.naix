@@ -1,0 +1,18 @@
+#ifndef res_graphics_egg_hatch_egg_graphics_naix
+#define res_graphics_egg_hatch_egg_graphics_naix
+
+#define background_NCGR_lz 0
+#define background_NSCR_lz 1
+#define egg_anim_NANR_lz 2
+#define egg_cell_NCER_lz 3
+#define egg_NCGR_lz 4
+#define black_bar_anim_NANR_lz 5
+#define black_bar_cell_NCER_lz 6
+#define black_bar_NCGR_lz 7
+#define background_NCLR 8
+#define egg_NCLR 9
+#define black_bar_NCLR 10
+
+#define res_graphics_egg_hatch_egg_graphics_COUNT 11
+
+#endif 

@@ -1,0 +1,8 @@
+#ifndef _USERS_XGC1986_CODE_PLATA_BUILD_OSX_RES_GRAPHICS_SPRITE_TEMPLATES_SHOP_MENU_H
+#define _USERS_XGC1986_CODE_PLATA_BUILD_OSX_RES_GRAPHICS_SPRITE_TEMPLATES_SHOP_MENU_H
+
+#define ShopMenu_Template_ScrollArrow 0
+#define ShopMenu_Template_Cursor 1
+#define ShopMenu_Template_ItemIcon 2
+
+#endif 

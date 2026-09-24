@@ -1,0 +1,44 @@
+#ifndef res_graphics_mail_mail_naix
+#define res_graphics_mail_mail_naix
+
+#define grass_mail_tiles_NCLR 0
+#define flame_mail_tiles_NCLR 1
+#define bubble_mail_tiles_NCLR 2
+#define bloom_mail_tiles_NCLR 3
+#define tunnel_mail_tiles_NCLR 4
+#define steel_mail_tiles_NCLR 5
+#define heart_mail_tiles_NCLR 6
+#define snow_mail_tiles_NCLR 7
+#define space_mail_tiles_NCLR 8
+#define air_mail_tiles_NCLR 9
+#define mosaic_mail_tiles_NCLR 10
+#define brick_mail_tiles_NCLR 11
+#define grass_mail_tiles_NCGR 12
+#define flame_mail_tiles_NCGR 13
+#define bubble_mail_tiles_NCGR 14
+#define bloom_mail_tiles_NCGR 15
+#define tunnel_mail_tiles_NCGR 16
+#define steel_mail_tiles_NCGR 17
+#define heart_mail_tiles_NCGR 18
+#define snow_mail_tiles_NCGR 19
+#define space_mail_tiles_NCGR 20
+#define air_mail_tiles_NCGR 21
+#define mosaic_mail_tiles_NCGR 22
+#define brick_mail_tiles_NCGR 23
+#define grass_mail_NSCR 24
+#define flame_mail_NSCR 25
+#define bubble_mail_NSCR 26
+#define bloom_mail_NSCR 27
+#define tunnel_mail_NSCR 28
+#define steel_mail_NSCR 29
+#define heart_mail_NSCR 30
+#define snow_mail_NSCR 31
+#define space_mail_NSCR 32
+#define air_mail_NSCR 33
+#define mosaic_mail_NSCR 34
+#define brick_mail_NSCR 35
+#define interface_NSCR 36
+
+#define res_graphics_mail_mail_COUNT 37
+
+#endif 

@@ -1,0 +1,12 @@
+#ifndef MSGENC_RES_TEXT_BANK_MYSTERY_GIFT_PHRASE_H
+#define MSGENC_RES_TEXT_BANK_MYSTERY_GIFT_PHRASE_H
+
+
+
+#define MysteryGiftPhrase_EveryoneHappyWiFiConnection 0
+
+
+#define MysteryGiftPhrase_CustomMessageWords 1
+#define TEXT_BANK_MYSTERY_GIFT_PHRASE_ENTRY_COUNT 2
+
+#endif 

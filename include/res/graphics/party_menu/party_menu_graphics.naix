@@ -1,0 +1,31 @@
+#ifndef res_graphics_party_menu_party_menu_graphics_naix
+#define res_graphics_party_menu_party_menu_graphics_naix
+
+#define member_ball_anim_NANR 0
+#define member_ball_cell_NCER 1
+#define member_ball_NCGR 2
+#define touch_button_NCGR 3
+#define touch_button_NCLR 4
+#define cursor_anim_NANR 5
+#define cursor_cell_NCER 6
+#define cursor_NCGR 7
+#define shared_NCLR 8
+#define button_anim_NANR 9
+#define button_cell_NCER 10
+#define button_NCGR 11
+#define subscreen_tiles_NCGR 12
+#define subscreen_NCLR 13
+#define subscreen_NSCR 14
+#define menu_tiles_NCGR 15
+#define menu_NCLR 16
+#define menu_NSCR 17
+#define icons_anim_NANR 18
+#define icons_cell_NCER 19
+#define icons_NCGR 20
+#define icons_NCLR 21
+#define menu_panels_NSCR 22
+#define touch_button_shockwave_NCLR 23
+
+#define res_graphics_party_menu_party_menu_graphics_COUNT 24
+
+#endif 

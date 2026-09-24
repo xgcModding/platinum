@@ -1,0 +1,17 @@
+#ifndef res_graphics_yes_no_touch_menu_yes_no_touch_menu_naix
+#define res_graphics_yes_no_touch_menu_yes_no_touch_menu_naix
+
+#define yes_no_button_tiles_NCLR 0
+#define yes_no_button_tiles_NCGR_lz 1
+#define yes_button_NSCR_lz 2
+#define no_button_NSCR_lz 3
+#define yes_button_pressed_1_NSCR_lz 4
+#define no_button_pressed_1_NSCR_lz 5
+#define yes_button_pressed_2_NSCR_lz 6
+#define no_button_pressed_2_NSCR_lz 7
+#define yes_button_pressed_3_NSCR_lz 8
+#define no_button_pressed_3_NSCR_lz 9
+
+#define res_graphics_yes_no_touch_menu_yes_no_touch_menu_COUNT 10
+
+#endif 

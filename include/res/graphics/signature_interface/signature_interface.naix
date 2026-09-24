@@ -1,0 +1,17 @@
+#ifndef res_graphics_signature_interface_signature_interface_naix
+#define res_graphics_signature_interface_signature_interface_naix
+
+#define bottom_screen_tiles_NCLR 0
+#define done_button_NCLR 1
+#define top_screen_tiles_NCLR 2
+#define bottom_screen_tiles_NCGR_lz 3
+#define top_screen_tiles_NCGR_lz 4
+#define bottom_screen_NSCR_lz 5
+#define top_screen_NSCR_lz 6
+#define done_button_NCGR_lz 7
+#define done_button_cell_NCER_lz 8
+#define done_button_anim_NANR_lz 9
+
+#define res_graphics_signature_interface_signature_interface_COUNT 10
+
+#endif 

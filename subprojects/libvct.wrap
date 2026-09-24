@@ -1,0 +1,9 @@
+[wrap-git]
+url = https://github.com/cybervisi0n/libvct.git
+revision = main
+depth = 1
+directory = libvct
+
+[provide]
+dependency_names = libvct
+

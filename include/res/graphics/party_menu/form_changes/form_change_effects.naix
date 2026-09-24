@@ -1,0 +1,9 @@
+#ifndef res_graphics_party_menu_form_changes_form_change_effects_naix
+#define res_graphics_party_menu_form_changes_form_change_effects_naix
+
+#define giratina_spa 0
+#define shaymin_spa 1
+
+#define res_graphics_party_menu_form_changes_form_change_effects_COUNT 2
+
+#endif 

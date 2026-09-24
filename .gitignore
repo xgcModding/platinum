@@ -1,0 +1,160 @@
+# Build directory
+/pokeplatinum.nds
+/build/
+/build_linux_old/
+/build_linux.pre-fps-fix-*/
+/build_win64/
+/build_nx/
+/build_osx/
+/build_source_only_check/
+
+# MSys2
+/msys2/
+
+# Metroskrew artifacts
+/metroskrew-*.tar.xz
+/metroskrew-*.7z
+
+# Subproject folders
+/subprojects/libvct/
+/subprojects/NitroDWC-*/
+/subprojects/NitroSDK-*/
+/subprojects/NitroSystem-*/
+/subprojects/NitroWiFi-*/
+/subprojects/libntr/
+/subprojects/libntrsystem/
+/subprojects/libntrwifi/
+/subprojects/libntrdwc/
+/subprojects/nitrogfx/
+/subprojects/libpng-*/
+/subprojects/zlib-*/
+/subprojects/packagecache
+/subprojects/metang/
+/subprojects/rapidjson-*/
+/subprojects/meson-*/
+/subprojects/nitrorom/
+/subprojects/metroskrew/
+/subprojects/yyjson-*/
+/subprojects/tracy/
+/subprojects/.wraplock
+
+# Metroskrew
+/tools/metroskrew/
+
+# Legacy mwrap compiler
+/tools/cw/mwrap
+
+# CLion folders
+.idea/
+cmake-build-debug/
+
+# Generated files
+*.4bpp
+*.lz
+*.gbapal
+
+# For asmdiff
+*/baserom.*
+*.dump
+
+# For decomp.me
+ctx.c
+
+# Working files
+overlays/*/module_*.s
+overlays/*/module_*.sbin
+overlays/*/module_*.cfg
+
+*.bnr
+*.nbfp
+*.nbfc
+
+# Dism scripts
+dism.sh
+asmdiff.sh
+
+# Symbols CSV
+symbols.csv
+
+# Object Files
+*.o
+
+# SDAT Files
+res/sound/*.sdat
+res/sound/*/Files/BANK/*.sbnk
+res/sound/*/Files/SEQ/*.sseq
+res/sound/*/Files/WAVARC/*.swar
+
+# Utilities
+ntruncompbw
+*.elf
+cmake-build-*
+*.sbin_LZ
+*.diff
+
+*.dSYM
+
+# LinuxDeploy
+tools/linuxdeploy/linuxdeploy-x86_64.AppImage
+
+# MacOS garbage
+.DS_Store
+
+# Depfiles
+*.d
+
+diff.txt
+
+.vs/
+.vscode/*
+!.vscode/launch.json
+!.vscode/settings.json
+
+temp_asm/
+asm_old/
+
+!platinum.us/banner.bnr
+
+uncrustify.cfg
+compare.sh
+diff/
+
+sdk/
+
+!tools/asmdiff/asmdiff.sh
+
+__pycache__
+.cache
+.venv/
+.python-version
+
+compile_commands.json
+
+# Save files
+*.dsv
+*.sav
+
+# Savestate files
+*.ds[0-9]
+*.dst
+*.ml[0-9]
+*.mln
+
+# Cheat files
+*.dct
+*.mch
+
+/subprojects/lua-*/
+
+# Local ROMs, imported resources and user data must never be distributed.
+*.nds
+/assets/
+/res/
+firmware.bin
+header.bin
+save.bin
+DbgLog.txt
+
+# Compiler caches and preserved previous build layouts
+/.build/
+/build*/

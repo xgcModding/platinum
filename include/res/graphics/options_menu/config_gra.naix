@@ -1,0 +1,10 @@
+#ifndef res_graphics_options_menu_config_gra_naix
+#define res_graphics_options_menu_config_gra_naix
+
+#define tiles_NCLR 0
+#define tiles_NCGR 1
+#define tilemap_bin 2
+
+#define res_graphics_options_menu_config_gra_COUNT 3
+
+#endif 

@@ -1,0 +1,36 @@
+#ifndef res_graphics_title_screen_titledemo_naix
+#define res_graphics_title_screen_titledemo_naix
+
+#define giratina_nsbta 0
+#define giratina_nsbmd 1
+#define giratina_nsbca 2
+#define gf_presents_NSCR 3
+#define gf_presents_NCLR 4
+#define gf_presents_NCGR 5
+#define bottom_screen_border_NCLR 6
+#define top_screen_border_NCLR 7
+#define logo_jp_NCLR 8
+#define logo_jp_NCGR 9
+#define logo_jp_NSCR 10
+#define logo_NCLR 11
+#define logo_NCGR 12
+#define copyright_NSCR 13
+#define copyright_NCLR 14
+#define copyright_NCGR 15
+#define giratina_portal_nsbmd 16
+#define giratina_portal_nsbta 17
+#define giratina_portal_nsbca 18
+#define giratina_face_nsbmd 19
+#define giratina_face_nsbma 20
+#define giratina_face_nsbca 21
+#define logo_NSCR 22
+#define top_screen_border_NCGR 23
+#define top_screen_border_NSCR 24
+#define top_screen_border_2_NSCR 25
+#define bottom_screen_border_NCGR 26
+#define bottom_screen_border_NSCR 27
+#define bottom_screen_border_2_NSCR 28
+
+#define res_graphics_title_screen_titledemo_COUNT 29
+
+#endif 

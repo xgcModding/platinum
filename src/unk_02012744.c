@@ -1,0 +1,798 @@
+#include "unk_02012744.h"
+
+#include <nitro.h>
+#include <string.h>
+
+#include "struct_defs/struct_020127E8.h"
+
+#include "bg_window.h"
+#include "char_transfer.h"
+#include "graphics.h"
+#include "heap.h"
+#include "sprite.h"
+
+typedef struct {
+    Sprite *unk_00;
+    int unk_04;
+    int unk_08;
+} UnkStruct_02012CE0_sub1;
+
+typedef struct FontOAM {
+    UnkStruct_02012CE0_sub1 *unk_00;
+    int unk_04;
+    const Sprite *unk_08;
+    int x;
+    int y;
+} FontOAM;
+
+typedef struct UnkStruct_02012744_t {
+    void *unk_00[12];
+    NNSG2dCellDataBank *unk_30[12];
+    FontOAM *unk_60;
+    int unk_64;
+} UnkStruct_02012744;
+
+typedef struct {
+    int unk_00;
+    int unk_04;
+    int unk_08;
+    int unk_0C;
+} UnkStruct_02012DE4;
+
+typedef struct {
+    UnkStruct_02012DE4 unk_00;
+    UnkStruct_02012DE4 unk_10;
+    u8 unk_20;
+} UnkStruct_02012D34;
+
+typedef struct UnkStruct_02013034_t {
+    int unk_00;
+    int unk_04;
+    int unk_08;
+    struct UnkStruct_02013034_t *unk_0C;
+    struct UnkStruct_02013034_t *unk_10;
+} UnkStruct_02013034;
+
+typedef struct UnkStruct_02012B20_t {
+    UnkStruct_02013034 unk_00;
+    int unk_14;
+} UnkStruct_02012B20;
+
+static void sub_02012CD0(FontOAM *param0);
+static FontOAM *sub_02012CE0(const UnkStruct_02012744 *param0);
+static int sub_02012D08(int param0, int param1);
+static int sub_02012DE4(int param0, int param1, enum HeapID heapID, UnkStruct_02013034 *param3);
+static void sub_02012E6C(const Window *param0, const UnkStruct_02013034 *param1, NNSG2dImageProxy *param2, int param3, int param4, enum HeapID heapID);
+static int sub_02012EE0(const Window *param0, const UnkStruct_02013034 *param1, NNSG2dImageProxy *param2, int param3, int param4, int param5, int param6, enum HeapID heapID);
+static int sub_02013034(const UnkStruct_02013034 *param0, int param1);
+static void sub_02013088(const UnkStruct_020127E8 *param0, const UnkStruct_02013034 *param1, const NNSG2dImageProxy *param2, FontOAM *param3);
+static Sprite *sub_02013100(const UnkStruct_020127E8 *param0, const UnkStruct_02013034 *param1, const NNSG2dImageProxy *param2);
+static void sub_020130DC(FontOAM *param0);
+static UnkStruct_02013034 *sub_02013188(enum HeapID heapID);
+static void sub_020131A4(UnkStruct_02013034 *param0);
+static void sub_020131B8(UnkStruct_02013034 *param0);
+static void sub_020131D0(UnkStruct_02013034 *param0, UnkStruct_02013034 *param1);
+static void sub_02012F98(const Window *param0, char *param1, const UnkStruct_02013034 *param2, int param3, int param4);
+static int sub_02012FF0(const Window *param0, const UnkStruct_02013034 *param1, char *param2, int param3, int param4, int param5, int param6);
+
+static const u8 Unk_020E52E4[12][2] = {
+    { 0x8, 0x8 },
+    { 0x8, 0x4 },
+    { 0x4, 0x8 },
+    { 0x4, 0x4 },
+    { 0x4, 0x2 },
+    { 0x4, 0x1 },
+    { 0x2, 0x4 },
+    { 0x2, 0x2 },
+    { 0x2, 0x1 },
+    { 0x1, 0x4 },
+    { 0x1, 0x2 },
+    { 0x1, 0x1 }
+};
+
+UnkStruct_02012744 *sub_02012744(int param0, enum HeapID heapID)
+{
+    UnkStruct_02012744 *v0;
+    int v1;
+
+    v0 = Heap_Alloc(heapID, sizeof(UnkStruct_02012744));
+    GF_ASSERT(v0);
+
+    for (v1 = 0; v1 < 12; v1++) {
+        v0->unk_00[v1] = Graphics_GetCellBank(35, v1, 0, &v0->unk_30[v1], heapID);
+
+        GF_ASSERT(v0->unk_00[v1]);
+    }
+
+    v0->unk_60 = Heap_Alloc(heapID, sizeof(FontOAM) * param0);
+    GF_ASSERT(v0->unk_60);
+
+    v0->unk_64 = param0;
+    memset(v0->unk_60, 0, sizeof(FontOAM) * param0);
+
+    return v0;
+}
+
+void sub_020127BC(UnkStruct_02012744 *param0)
+{
+    int v0;
+
+    GF_ASSERT(param0);
+
+    for (v0 = 0; v0 < 12; v0++) {
+        Heap_Free(param0->unk_00[v0]);
+    }
+
+    Heap_Free(param0->unk_60);
+    Heap_Free(param0);
+}
+
+FontOAM *sub_020127E8(const UnkStruct_020127E8 *param0)
+{
+    FontOAM *v0;
+    UnkStruct_02013034 v1;
+    int v2;
+    NNSG2dImageProxy *v3;
+
+    GF_ASSERT(param0);
+
+    v0 = sub_02012CE0(param0->unk_00);
+    GF_ASSERT(v0);
+
+    v0->unk_08 = param0->unk_10;
+    v0->x = param0->unk_18;
+    v0->y = param0->unk_1C;
+
+    v1.unk_0C = &v1;
+    v1.unk_10 = &v1;
+
+    v2 = sub_02012DE4(param0->unk_04->width, param0->unk_04->height, param0->heapID, &v1);
+    v3 = Heap_AllocAtEnd(param0->heapID, sizeof(NNSG2dImageProxy) * v2);
+
+    v0->unk_00 = Heap_Alloc(param0->heapID, sizeof(UnkStruct_02012CE0_sub1) * v2);
+    v0->unk_04 = v2;
+
+    sub_02012E6C(param0->unk_04, &v1, v3, param0->unk_14, param0->unk_28, param0->heapID);
+    sub_02013088(param0, &v1, v3, v0);
+    Heap_Free(v3);
+    sub_020131B8(&v1);
+
+    return v0;
+}
+
+void sub_02012870(FontOAM *param0)
+{
+    GF_ASSERT(param0);
+    GF_ASSERT(param0->unk_00);
+
+    sub_020130DC(param0);
+    Heap_Free(param0->unk_00);
+    sub_02012CD0(param0);
+}
+
+int sub_02012898(const Window *param0, int param1, enum HeapID heapID)
+{
+    UnkStruct_02013034 v0;
+    int v1;
+
+    v0.unk_0C = &v0;
+    v0.unk_10 = &v0;
+
+    sub_02012DE4(param0->width, param0->height, heapID, &v0);
+    v1 = sub_02013034(&v0, param1);
+    sub_020131B8(&v0);
+
+    return v1;
+}
+
+void FontOAM_SetXY(FontOAM *fontOAM, int x, int y)
+{
+    GF_ASSERT(fontOAM);
+
+    fontOAM->x = x;
+    fontOAM->y = y;
+
+    x *= FX32_ONE;
+    y *= FX32_ONE;
+
+    if (fontOAM->unk_08) {
+        const VecFx32 *fontPos = Sprite_GetPosition(fontOAM->unk_08);
+
+        x += fontPos->x;
+        y += fontPos->y;
+    }
+
+    VecFx32 spritePos;
+    spritePos.z = 0;
+
+    for (int v0 = 0; v0 < fontOAM->unk_04; v0++) {
+        spritePos.x = x + (fontOAM->unk_00[v0].unk_04 << FX32_SHIFT);
+        spritePos.y = y + (fontOAM->unk_00[v0].unk_08 << FX32_SHIFT);
+
+        Sprite_SetPosition(fontOAM->unk_00[v0].unk_00, &spritePos);
+    }
+}
+
+void sub_02012938(FontOAM *param0)
+{
+    int v0;
+    VecFx32 v1;
+    const VecFx32 *v2;
+    fx32 v3, v4;
+
+    GF_ASSERT(param0);
+
+    if (param0->unk_08) {
+        v3 = param0->x << FX32_SHIFT;
+        v4 = param0->y << FX32_SHIFT;
+        v2 = Sprite_GetPosition(param0->unk_08);
+
+        v3 += v2->x;
+        v4 += v2->y;
+
+        v1.z = 0;
+
+        for (v0 = 0; v0 < param0->unk_04; v0++) {
+            v1.x = v3 + (param0->unk_00[v0].unk_04 << FX32_SHIFT);
+            v1.y = v4 + (param0->unk_00[v0].unk_08 << FX32_SHIFT);
+
+            Sprite_SetPosition(param0->unk_00[v0].unk_00, &v1);
+        }
+    }
+}
+
+void FontOAM_GetXY(const FontOAM *fontOAM, int *x, int *y)
+{
+    GF_ASSERT(fontOAM);
+    GF_ASSERT(x);
+    GF_ASSERT(y);
+
+    *x = fontOAM->x;
+    *y = fontOAM->y;
+}
+
+void sub_020129D0(FontOAM *param0, BOOL param1)
+{
+    int v0;
+
+    GF_ASSERT(param0);
+
+    for (v0 = 0; v0 < param0->unk_04; v0++) {
+        Sprite_SetDrawFlag(param0->unk_00[v0].unk_00, param1);
+    }
+}
+
+void sub_02012A00(FontOAM *param0, u8 param1)
+{
+    int v0;
+
+    GF_ASSERT(param0);
+
+    for (v0 = 0; v0 < param0->unk_04; v0++) {
+        Sprite_SetExplicitPriority(param0->unk_00[v0].unk_00, param1);
+    }
+}
+
+void sub_02012A30(FontOAM *param0, u32 param1)
+{
+    int v0;
+
+    GF_ASSERT(param0);
+
+    for (v0 = 0; v0 < param0->unk_04; v0++) {
+        Sprite_SetPriority(param0->unk_00[v0].unk_00, param1);
+    }
+}
+
+void sub_02012A60(FontOAM *param0, u32 param1)
+{
+    int v0;
+
+    GF_ASSERT(param0);
+
+    for (v0 = 0; v0 < param0->unk_04; v0++) {
+        Sprite_SetExplicitPalette(param0->unk_00[v0].unk_00, param1);
+    }
+}
+
+void sub_02012A90(FontOAM *param0, u32 param1)
+{
+    int v0;
+
+    GF_ASSERT(param0);
+
+    for (v0 = 0; v0 < param0->unk_04; v0++) {
+        Sprite_SetExplicitPaletteOffset(param0->unk_00[v0].unk_00, param1);
+    }
+}
+
+void sub_02012AC0(FontOAM *param0, u32 param1)
+{
+    int v0;
+
+    GF_ASSERT(param0);
+
+    for (v0 = 0; v0 < param0->unk_04; v0++) {
+        Sprite_SetExplicitPaletteOffsetAutoAdjust(param0->unk_00[v0].unk_00, param1);
+    }
+}
+
+void sub_02012AF0(FontOAM *param0, GXOamMode param1)
+{
+    int v0;
+
+    GF_ASSERT(param0);
+
+    for (v0 = 0; v0 < param0->unk_04; v0++) {
+        Sprite_SetExplicitOAMMode(param0->unk_00[v0].unk_00, param1);
+    }
+}
+
+UnkStruct_02012B20 *sub_02012B20(const Window *param0, enum HeapID heapID)
+{
+    UnkStruct_02012B20 *v0 = Heap_Alloc(heapID, sizeof(UnkStruct_02012B20));
+
+    v0->unk_00.unk_0C = &v0->unk_00;
+    v0->unk_00.unk_10 = &v0->unk_00;
+    v0->unk_14 = sub_02012DE4(param0->width, param0->height, heapID, &v0->unk_00);
+
+    return v0;
+}
+
+void sub_02012B48(UnkStruct_02012B20 *param0)
+{
+    sub_020131B8(&param0->unk_00);
+    Heap_Free(param0);
+}
+
+int sub_02012B58(const UnkStruct_02012B20 *param0, int param1)
+{
+    return sub_02013034(&param0->unk_00, param1);
+}
+
+FontOAM *sub_02012B60(const UnkStruct_020127E8 *param0, const UnkStruct_02012B20 *param1)
+{
+    FontOAM *v0;
+    NNSG2dImageProxy *v1;
+
+    GF_ASSERT(param0);
+    v0 = sub_02012CE0(param0->unk_00);
+
+    GF_ASSERT(v0);
+
+    v0->unk_08 = param0->unk_10;
+    v0->x = param0->unk_18;
+    v0->y = param0->unk_1C;
+
+    v1 = Heap_AllocAtEnd(param0->heapID, sizeof(NNSG2dImageProxy) * param1->unk_14);
+
+    v0->unk_00 = Heap_Alloc(param0->heapID, sizeof(UnkStruct_02012CE0_sub1) * param1->unk_14);
+    v0->unk_04 = param1->unk_14;
+
+    sub_02012E6C(param0->unk_04, &param1->unk_00, v1, param0->unk_14, param0->unk_28, param0->heapID);
+    sub_02013088(param0, &param1->unk_00, v1, v0);
+    Heap_Free(v1);
+
+    return v0;
+}
+
+void sub_02012BD8(FontOAM *param0)
+{
+    sub_02012870(param0);
+}
+
+void sub_02012BE0(FontOAM *param0, const UnkStruct_02012B20 *param1, const Window *param2, enum HeapID heapID)
+{
+    int v0;
+    char *v1;
+    NNSG2dImageProxy *v2;
+    Sprite *v3 = param0->unk_00[0].unk_00;
+    int v4 = Sprite_GetVRamType(v3);
+    v0 = sub_02012B58(param1, v4);
+    v1 = (char *)Heap_AllocAtEnd(heapID, v0);
+
+    memset(v1, 0, v0);
+
+    sub_02012F98(param2, v1, &param1->unk_00, v4, heapID);
+    DC_FlushRange(v1, v0);
+
+    v2 = Sprite_GetImageProxy(v3);
+
+    if (v4 == NNS_G2D_VRAM_TYPE_2DMAIN) {
+        GX_LoadOBJ(v1, NNS_G2dGetImageLocation(v2, NNS_G2D_VRAM_TYPE_2DMAIN), v0);
+    } else {
+        GXS_LoadOBJ(v1, NNS_G2dGetImageLocation(v2, NNS_G2D_VRAM_TYPE_2DSUB), v0);
+    }
+
+    Heap_Free(v1);
+}
+
+void sub_02012C60(
+    const Window *window,
+    int width,
+    int height,
+    int x,
+    int y,
+    char *output)
+{
+    // this function copies a rectangle of pixels from the window
+    // to the output starting at (x,y) and spanning (width,height)
+    int i;
+    int dstOffset;
+    int srcOffset;
+
+    GF_ASSERT(window->width >= (width + x));
+    GF_ASSERT(window->height >= (height + y));
+
+    for (i = 0; i < height; i++) {
+        dstOffset = i * width;
+        dstOffset *= 32;
+        srcOffset = ((i + y) * window->width);
+        srcOffset += x;
+        srcOffset *= 32;
+
+        memcpy(output + dstOffset, (char *)(window->pixels) + srcOffset, 32 * width);
+    }
+}
+
+static void sub_02012CD0(FontOAM *param0)
+{
+    memset(param0, 0, sizeof(FontOAM));
+}
+
+static FontOAM *sub_02012CE0(const UnkStruct_02012744 *param0)
+{
+    int v0;
+
+    for (v0 = 0; v0 < param0->unk_64; v0++) {
+        if (param0->unk_60[v0].unk_00 == NULL) {
+            return param0->unk_60 + v0;
+        }
+    }
+
+    return NULL;
+}
+
+static int sub_02012D08(int param0, int param1)
+{
+    int v0;
+
+    for (v0 = 0; v0 < 12; v0++) {
+        if ((Unk_020E52E4[v0][0] <= param0) && (Unk_020E52E4[v0][1] <= param1)) {
+            return v0;
+        }
+    }
+
+    return 12;
+}
+
+static BOOL sub_02012D34(UnkStruct_02012D34 *param0, UnkStruct_02013034 *param1, enum HeapID heapID)
+{
+    UnkStruct_02013034 *v0;
+    int v1;
+    int v2;
+
+    v0 = sub_02013188(heapID);
+    sub_020131D0(v0, param1->unk_10);
+
+    v0->unk_08 = sub_02012D08(param0->unk_00.unk_08, param0->unk_00.unk_0C);
+    v0->unk_00 = param0->unk_00.unk_04;
+    v0->unk_04 = param0->unk_00.unk_00;
+
+    v2 = param0->unk_00.unk_08 - Unk_020E52E4[v0->unk_08][0];
+    v1 = param0->unk_00.unk_0C - Unk_020E52E4[v0->unk_08][1];
+
+    if (v2 > 0) {
+        param0->unk_10.unk_0C = param0->unk_00.unk_0C;
+        param0->unk_10.unk_08 = v2;
+        param0->unk_10.unk_00 = param0->unk_00.unk_00;
+        param0->unk_10.unk_04 = param0->unk_00.unk_04 + Unk_020E52E4[v0->unk_08][0];
+
+        GF_ASSERT(param0->unk_20 != 1);
+        param0->unk_20 = 1;
+    }
+
+    if (v1 > 0) {
+        param0->unk_00.unk_00 = param0->unk_00.unk_00 + Unk_020E52E4[v0->unk_08][1];
+        param0->unk_00.unk_0C = v1;
+    } else {
+        if (param0->unk_20 == 1) {
+            param0->unk_00 = param0->unk_10;
+            param0->unk_20 = 0;
+        } else {
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
+static int sub_02012DE4(int param0, int param1, enum HeapID heapID, UnkStruct_02013034 *param3)
+{
+    UnkStruct_02012DE4 v0;
+    UnkStruct_02012D34 v1;
+    int v2;
+    int v3;
+
+    GF_ASSERT(param0);
+    GF_ASSERT(param1);
+
+    v3 = 0;
+
+    v1.unk_00.unk_00 = 0;
+    v1.unk_00.unk_04 = 0;
+    v1.unk_00.unk_08 = param0;
+    v1.unk_00.unk_0C = param1;
+    v1.unk_20 = 0;
+
+    v0.unk_04 = 0;
+    v0.unk_08 = param0;
+
+    while (v1.unk_00.unk_0C != 0) {
+        v2 = sub_02012D08(v1.unk_00.unk_08, v1.unk_00.unk_0C);
+
+        v0.unk_00 = v1.unk_00.unk_00 + Unk_020E52E4[v2][1];
+        v0.unk_0C = v1.unk_00.unk_0C - Unk_020E52E4[v2][1];
+        v1.unk_00.unk_0C = Unk_020E52E4[v2][1];
+
+        do {
+            v3++;
+        } while (sub_02012D34(&v1, param3, heapID) == 0);
+
+        v1.unk_00 = v0;
+    }
+
+    return v3;
+}
+
+static void sub_02012E6C(const Window *param0, const UnkStruct_02013034 *param1, NNSG2dImageProxy *param2, int param3, int param4, enum HeapID heapID)
+{
+    UnkStruct_02013034 *v0;
+    int v1;
+    int v2;
+    GXOBJVRamModeChar v3;
+
+    if (param4 == NNS_G2D_VRAM_TYPE_2DMAIN) {
+        v3 = GX_GetOBJVRamModeChar();
+    } else {
+        v3 = GXS_GetOBJVRamModeChar();
+    }
+
+    v2 = CharTransfer_GetBlockSize(v3);
+    v1 = 0;
+    v0 = param1->unk_0C;
+
+    while (v0 != param1) {
+        NNS_G2dInitImageProxy(param2 + v1);
+        param3 = sub_02012EE0(param0, v0, param2 + v1, v2, v3, param3, param4, heapID);
+        v0 = v0->unk_0C;
+        v1++;
+    }
+}
+
+static int sub_02012EE0(const Window *param0, const UnkStruct_02013034 *param1, NNSG2dImageProxy *param2, int param3, int param4, int param5, int param6, enum HeapID heapID)
+{
+    char *v0;
+    int v1;
+    int v2 = Unk_020E52E4[param1->unk_08][0];
+    int v3 = Unk_020E52E4[param1->unk_08][1];
+    v1 = v2;
+    v1 *= v3;
+
+    if (v1 < param3) {
+        v1 = param3;
+    }
+
+    v1 *= 32;
+    v0 = Heap_AllocAtEnd(heapID, v1);
+
+    sub_02012C60(param0, v2, v3, param1->unk_00, param1->unk_04, v0);
+    DC_FlushRange(v0, v1);
+
+    if (param6 == NNS_G2D_VRAM_TYPE_2DMAIN) {
+        GX_LoadOBJ(v0, param5, v1);
+        param2->vramLocation.baseAddrOfVram[NNS_G2D_VRAM_TYPE_2DMAIN] = param5;
+        param2->attr.mappingType = GX_GetOBJVRamModeChar();
+    } else {
+        GXS_LoadOBJ(v0, param5, v1);
+        param2->vramLocation.baseAddrOfVram[NNS_G2D_VRAM_TYPE_2DSUB] = param5;
+        param2->attr.mappingType = GXS_GetOBJVRamModeChar();
+    }
+
+    param2->attr.sizeS = NNS_G2D_1D_MAPPING_CHAR_SIZE;
+    param2->attr.sizeT = NNS_G2D_1D_MAPPING_CHAR_SIZE;
+    param2->attr.fmt = GX_TEXFMT_PLTT16;
+    param2->attr.bExtendedPlt = 0;
+    param2->attr.plttUse = GX_TEXPLTTCOLOR0_TRNS;
+    param2->attr.mappingType = param4;
+
+    Heap_Free(v0);
+
+    return param5 + v1;
+}
+
+static void sub_02012F98(const Window *param0, char *param1, const UnkStruct_02013034 *param2, int param3, int param4)
+{
+    UnkStruct_02013034 *v0;
+    int v1;
+    int v2;
+    int v3;
+    GXOBJVRamModeChar v4;
+
+    if (param3 == NNS_G2D_VRAM_TYPE_2DMAIN) {
+        v4 = GX_GetOBJVRamModeChar();
+    } else {
+        v4 = GXS_GetOBJVRamModeChar();
+    }
+
+    v2 = CharTransfer_GetBlockSize(v4);
+    v3 = 0;
+    v0 = param2->unk_0C;
+
+    while (v0 != param2) {
+        v3 = sub_02012FF0(param0, v0, param1, v3, v2, v4, param4);
+        v0 = v0->unk_0C;
+    }
+}
+
+static int sub_02012FF0(const Window *param0, const UnkStruct_02013034 *param1, char *param2, int param3, int param4, int param5, int param6)
+{
+    int v0;
+    int v1 = Unk_020E52E4[param1->unk_08][0];
+    int v2 = Unk_020E52E4[param1->unk_08][1];
+    v0 = v1;
+    v0 *= v2;
+
+    if (v0 < param4) {
+        v0 = param4;
+    }
+
+    v0 *= 32;
+    sub_02012C60(param0, v1, v2, param1->unk_00, param1->unk_04, &param2[param3]);
+
+    return param3 + v0;
+}
+
+static int sub_02013034(const UnkStruct_02013034 *param0, int param1)
+{
+    UnkStruct_02013034 *v0;
+    int v1;
+    GXOBJVRamModeChar v2;
+    int v3;
+    int v4;
+    int v5, v6;
+
+    if (param1 == NNS_G2D_VRAM_TYPE_2DMAIN) {
+        v2 = GX_GetOBJVRamModeChar();
+    } else {
+        v2 = GXS_GetOBJVRamModeChar();
+    }
+
+    v1 = CharTransfer_GetBlockSize(v2);
+    v3 = 0;
+    v0 = param0->unk_0C;
+
+    while (v0 != param0) {
+        v5 = Unk_020E52E4[v0->unk_08][0];
+        v6 = Unk_020E52E4[v0->unk_08][1];
+        v4 = v5 * v6;
+
+        if (v4 < v1) {
+            v4 = v1;
+        }
+
+        v3 += v4 * 32;
+        v0 = v0->unk_0C;
+    }
+
+    return v3;
+}
+
+static void sub_02013088(const UnkStruct_020127E8 *param0, const UnkStruct_02013034 *param1, const NNSG2dImageProxy *param2, FontOAM *param3)
+{
+    UnkStruct_02013034 *v0;
+    int v1 = 0;
+    v0 = param1->unk_0C;
+
+    while (v0 != param1) {
+        param3->unk_00[v1].unk_00 = sub_02013100(param0, v0, param2 + v1);
+        GF_ASSERT(param3->unk_00[v1].unk_00);
+
+        param3->unk_00[v1].unk_04 = v0->unk_00 * 8;
+        param3->unk_00[v1].unk_08 = v0->unk_04 * 8;
+
+        v0 = v0->unk_0C;
+        v1++;
+    }
+}
+
+static void sub_020130DC(FontOAM *param0)
+{
+    int v0;
+
+    for (v0 = 0; v0 < param0->unk_04; v0++) {
+        Sprite_Delete(param0->unk_00[v0].unk_00);
+    }
+}
+
+static Sprite *sub_02013100(const UnkStruct_020127E8 *param0, const UnkStruct_02013034 *param1, const NNSG2dImageProxy *param2)
+{
+    SpriteListTemplate v0;
+    SpriteResourcesHeader v1;
+
+    v1.imageProxy = param2;
+    v1.charData = NULL;
+    v1.paletteProxy = param0->unk_0C;
+    v1.cellBank = param0->unk_00->unk_30[param1->unk_08];
+    v1.cellAnimBank = NULL;
+    v1.multiCellBank = NULL;
+    v1.multiCellAnimBank = NULL;
+    v1.isVRamTransfer = 0;
+    v1.priority = param0->unk_20;
+
+    v0.list = param0->unk_08;
+    v0.resourceData = &v1;
+    v0.priority = param0->unk_24;
+    v0.vramType = param0->unk_28;
+    v0.heapID = param0->heapID;
+    v0.position.x = 0;
+    v0.position.y = 0;
+    v0.position.z = 0;
+
+    if (param0->unk_10) {
+        const VecFx32 *v2;
+
+        v2 = Sprite_GetPosition(param0->unk_10);
+        v0.position = *v2;
+    }
+
+    v0.position.x += (param0->unk_18 << FX32_SHIFT) + ((param1->unk_00 * 8) << FX32_SHIFT);
+    v0.position.y += (param0->unk_1C << FX32_SHIFT) + ((param1->unk_04 * 8) << FX32_SHIFT);
+
+    return SpriteList_Add(&v0);
+}
+
+static UnkStruct_02013034 *sub_02013188(enum HeapID heapID)
+{
+    UnkStruct_02013034 *v0 = Heap_AllocAtEnd(heapID, sizeof(UnkStruct_02013034));
+    GF_ASSERT(v0);
+
+    v0->unk_0C = NULL;
+    v0->unk_10 = NULL;
+
+    return v0;
+}
+
+static void sub_020131A4(UnkStruct_02013034 *param0)
+{
+    GF_ASSERT(param0);
+    Heap_Free(param0);
+}
+
+static void sub_020131B8(UnkStruct_02013034 *param0)
+{
+    UnkStruct_02013034 *v0;
+    UnkStruct_02013034 *v1;
+
+    v0 = param0->unk_0C;
+
+    while (v0 != param0) {
+        v1 = v0->unk_0C;
+        sub_020131A4(v0);
+        v0 = v1;
+    }
+}
+
+static void sub_020131D0(UnkStruct_02013034 *param0, UnkStruct_02013034 *param1)
+{
+    param0->unk_0C = param1->unk_0C;
+    param0->unk_10 = param1;
+    param1->unk_0C->unk_10 = param0;
+    param1->unk_0C = param0;
+}
+
+void sub_020131E0(FontOAM *param0, const Sprite *param1)
+{
+    param0->unk_08 = param1;
+    sub_02012938(param0);
+}

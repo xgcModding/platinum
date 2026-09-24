@@ -1,0 +1,37 @@
+#ifndef res_graphics_town_map_town_map_graphics_naix
+#define res_graphics_town_map_town_map_graphics_naix
+
+#define top_screen_map_NCLR 0
+#define bottom_screen_bg_NCLR 1
+#define top_screen_sprites_NCLR 2
+#define zoom_button_shockwave_NCLR 3
+#define zoom_button_shockwave_NCGR 4
+#define zoom_button_shockwave_cell_NCER 5
+#define zoom_button_shockwave_anim_NANR 6
+#define cursor_NCGR 7
+#define cursor_cell_NCER 8
+#define cursor_anim_NANR 9
+#define player_icons_NCGR 10
+#define player_icons_cell_NCER 11
+#define player_icons_anim_NANR 12
+#define location_history_dot_NCGR 13
+#define location_history_dot_cell_NCER 14
+#define location_history_dot_anim_NANR 15
+#define fly_destination_blocks_NCGR 16
+#define fly_destination_blocks_cell_NCER 17
+#define fly_destination_blocks_anim_NANR 18
+#define top_screen_map_tiles_NCGR 19
+#define bottom_screen_map_tiles_NCGR 20
+#define bottom_screen_button_tiles_NCGR 21
+#define top_screen_region_bg_tilemap_NSCR 22
+#define hidden_locations_top_screen_NSCR 23
+#define top_screen_region_map_tilemap_NSCR 24
+#define bottom_screen_region_bg_tilemap_NSCR 25
+#define bottom_screen_region_map_tilemap_NSCR 26
+#define zoom_button_states_NSCR 27
+#define bottom_screen_zoom_button_screen_NSCR 28
+#define hidden_location_bottom_screen_NSCR 29
+
+#define res_graphics_town_map_town_map_graphics_COUNT 30
+
+#endif 

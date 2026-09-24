@@ -1,0 +1,73 @@
+#ifndef res_graphics_trainer_case_trainer_case_naix
+#define res_graphics_trainer_case_trainer_case_naix
+
+#define trainer_card_normal_NCLR 0
+#define trainer_card_cobalt_NCLR 1
+#define trainer_card_bronze_NCLR 2
+#define trainer_card_silver_NCLR 3
+#define trainer_card_gold_NCLR 4
+#define trainer_card_black_NCLR 5
+#define trainer_card_normal_no_dex_NCLR 6
+#define case_diamond_NCLR 7
+#define case_pearl_NCLR 8
+#define case_unused_NCLR 9
+#define case_platinum_NCLR 10
+#define case_heartgold_NCLR 11
+#define case_soulsilver_NCLR 12
+#define badge_case_lid_tiles_NCLR 13
+#define badge_case_sprites_NCLR 14
+#define unused_NCLR 15
+#define coal_badge_NCLR 16
+#define forest_badge_NCLR 17
+#define cobble_badge_NCLR 18
+#define fen_badge_NCLR 19
+#define relic_badge_NCLR 20
+#define mine_badge_NCLR 21
+#define icicle_badge_NCLR 22
+#define beacon_badge_NCLR 23
+#define signature_unused_NCLR 24
+#define unused2_NCLR 25
+#define player_dp_tiles_NCLR 26
+#define trainer_card_tiles_NCGR 27
+#define case_top_screen_tiles_NCGR 28
+#define badge_case_tiles_NCGR 29
+#define badge_case_lid_tiles_NCGR 30
+#define player_tiles_NCGR 31
+#define player_dp_tiles_NCGR 32
+#define badge_case_sprites_NCGR 33
+#define signature_unused_NCGR 34
+#define trainer_card_front_NSCR 35
+#define trainer_card_back_NSCR 36
+#define case_top_screen_NSCR 37
+#define badge_case_NSCR 38
+#define badge_case_lid_NSCR 39
+#define lucas_NSCR 40
+#define dawn_NSCR 41
+#define lucas_dp_NSCR 42
+#define dawn_dp_NSCR 43
+#define badge_case_sprites_cell_NCER 44
+#define signature_unused_cell_NCER 45
+#define badge_case_sprites_anim_NANR 46
+#define signature_unused_anim_NANR 47
+#define trainer_appearances_NCLR 48
+#define trainer_appearance_NSCR 49
+#define battle_girl_NCGR 50
+#define cowgirl_NCGR 51
+#define ace_trainer_m_NCGR 52
+#define ace_trainer_f_NCGR 53
+#define psychic_m_NCGR 54
+#define roughneck_NCGR 55
+#define idol_NCGR 56
+#define ruin_maniac_NCGR 57
+#define black_belt_NCGR 58
+#define socialite_NCGR 59
+#define lass_NCGR 60
+#define bug_catcher_NCGR 61
+#define rich_boy_NCGR 62
+#define lady_NCGR 63
+#define school_kid_m_NCGR 64
+#define beauty_NCGR 65
+
+#define res_graphics_trainer_case_trainer_case_COUNT 66
+
+#endif 

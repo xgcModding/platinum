@@ -1,0 +1,14 @@
+#ifndef POKEPLATINUM_OV5_021F5284_H
+#define POKEPLATINUM_OV5_021F5284_H
+
+#include "struct_decls/map_object.h"
+
+#include "overlay005/field_effect_manager.h"
+
+#include "overworld_anim_manager.h"
+
+void *ov5_021F5284(FieldEffectManager *param0);
+void ov5_021F52A0(void *param0);
+OverworldAnimManager *ov5_021F52E4(MapObject *param0);
+
+#endif // POKEPLATINUM_OV5_021F5284_H

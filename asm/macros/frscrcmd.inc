@@ -1,0 +1,1376 @@
+#include "generated/battle_tower_modes.h"
+#include "generated/fade_types.h"
+#include "generated/game_records.h"
+#include "res/sound/pl_sound_data.naix"
+#include "generated/trainer_score_events.h"
+#include "generated/vars_flags.h"
+#include "constants/battle_frontier_movements.h"
+#include "constants/battle_tower_functions.h"
+#include "constants/battle_tower.h"
+#include "constants/colors.h"
+#include "constants/fade_screen.h"
+#include "constants/scrcmd.h"
+
+#include "data/scripts/frscrcmd.h"
+
+    .set FALSE, 0
+    .set TRUE, 1
+
+    .macro Noop
+    .short FRSCRCMD_NOOP
+    .endm
+
+    .macro End
+    .short FRSCRCMD_END
+    .endm
+
+    .macro FrontierScrCmd_02
+    .short FRSCRCMD_02
+    .endm
+
+    .macro FrontierScrCmd_03 sceneID
+    .short FRSCRCMD_03
+    .short \sceneID
+    .endm
+
+    .macro FrontierScrCmd_04 sceneID, arg1
+    .short FRSCRCMD_04
+    .short \sceneID
+    .short \arg1
+    .endm
+
+    .macro WaitTime frames, countdownVarID
+    .short FRSCRCMD_WAITTIME
+    .short \frames
+    .short \countdownVarID
+    .endm
+
+    .macro SetVar destVarID, valueOrVarID
+    .if \valueOrVarID < 0x8000
+        .short FRSCRCMD_SETVARFROMVALUE
+    .else
+        .short FRSCRCMD_SETVARFROMVAR
+    .endif
+    .short \destVarID
+    .short \valueOrVarID
+    .endm
+
+    .macro AddVar destVarID, valueOrVarID
+    .short FRSCRCMD_ADDVAR
+    .short \destVarID
+    .short \valueOrVarID
+    .endm
+
+    .macro SubVar destVarID, valueOrVarID
+    .short FRSCRCMD_SUBVAR
+    .short \destVarID
+    .short \valueOrVarID
+    .endm
+
+    .macro GoTo offset
+    .short FRSCRCMD_GOTO
+    .long \offset-.-4
+    .endm
+
+    .macro GoToIf condition, offset
+    .short FRSCRCMD_GOTOIF
+    .byte \condition
+    .long \offset-.-4
+    .endm
+
+    .macro Call offset
+    .short FRSCRCMD_CALL
+    .long \offset-.-4
+    .endm
+
+    .macro Return
+    .short FRSCRCMD_RETURN
+    .endm
+
+    .macro CallIf condition, offset
+    .short FRSCRCMD_CALLIF
+    .byte \condition
+    .long \offset-.-4
+    .endm
+
+    .macro MessageInstant messageID
+    .short FRSCRCMD_MESSAGEINSTANT
+    .short \messageID
+    .endm
+
+    .macro MessageNoSkip messageID
+    .short FRSCRCMD_MESSAGENOSKIP
+    .short \messageID
+    .endm
+
+    .macro Message messageID
+    .short FRSCRCMD_MESSAGE
+    .short \messageID
+    .endm
+
+    .macro CloseMessage
+    .short FRSCRCMD_CLOSEMESSAGE
+    .endm
+
+    .macro FadeScreen transition, frames, type, color
+    .short FRSCRCMD_FADESCREEN
+    .short \transition
+    .short \frames
+    .short \type
+    .short \color
+    .endm
+
+    .macro WaitFadeScreen
+    .short FRSCRCMD_WAITFADESCREEN
+    .endm
+
+    .macro FadeScreenOut color=COLOR_BLACK
+    FadeScreen FADE_SCREEN_CMD_STEPS, FADE_SCREEN_SPEED_FAST, FADE_TYPE_BRIGHTNESS_OUT, \color
+    WaitFadeScreen
+    .endm
+
+    .macro FadeScreenIn color=COLOR_BLACK
+    FadeScreen FADE_SCREEN_CMD_STEPS, FADE_SCREEN_SPEED_FAST, FADE_TYPE_BRIGHTNESS_IN, \color
+    WaitFadeScreen
+    .endm
+
+    .macro InitGlobalTextMenu anchorX, anchorY, initialCursorPos, canExitWithB, selectedOption
+    .short FRSCRCMD_INITGLOBALTEXTMENU
+    .byte \anchorX
+    .byte \anchorY
+    .byte \initialCursorPos
+    .byte \canExitWithB
+    .short \selectedOption
+    .endm
+
+    .macro InitLocalTextMenu anchorX, anchorY, initialCursorPos, canExitWithB, selectedOption
+    .short FRSCRCMD_INITLOCALTEXTMENU
+    .byte \anchorX
+    .byte \anchorY
+    .byte \initialCursorPos
+    .byte \canExitWithB
+    .short \selectedOption
+    .endm
+
+    .macro AddMenuEntry entryID, index
+    .short FRSCRCMD_ADDMENUENTRY
+    .short \entryID
+    .short \index
+    .endm
+
+    .macro AddMenuEntryWithDesc entryID, descriptionID, index
+    .short FRSCRCMD_ADDMENUENTRYWITHDESC
+    .short \entryID
+    .short \descriptionID
+    .short \index
+    .endm
+
+    .macro ShowMenu
+    .short FRSCRCMD_SHOWMENU
+    .endm
+
+    .macro InitGlobalTextListMenu anchorX, anchorY, initialCursorPos, canExitWithB, selectedOption
+    .short FRSCRCMD_INITGLOBALTEXTLISTMENU
+    .byte \anchorX
+    .byte \anchorY
+    .byte \initialCursorPos
+    .byte \canExitWithB
+    .short \selectedOption
+    .endm
+
+    .macro InitLocalTextListMenu anchorX, anchorY, initialCursorPos, canExitWithB, selectedOption
+    .short FRSCRCMD_INITLOCALTEXTLISTMENU
+    .byte \anchorX
+    .byte \anchorY
+    .byte \initialCursorPos
+    .byte \canExitWithB
+    .short \selectedOption
+    .endm
+
+    .macro AddListMenuEntry entryID, descriptionID, index
+    .short FRSCRCMD_ADDLISTMENUENTRY
+    .short \entryID
+    .short \descriptionID
+    .short \index
+    .endm
+
+    .macro ShowListMenu
+    .short FRSCRCMD_SHOWLISTMENU
+    .endm
+
+    .macro FreeListMenu
+    .short FRSCRCMD_FREELISTMENU
+    .endm
+
+    .macro ShowYesNoMenu destVarID, cursorStart
+    .short FRSCRCMD_SHOWYESNOMENU
+    .short \destVarID
+    .byte \cursorStart
+    .endm
+
+    .macro CompareVar varID, valueOrVarID
+    .if \valueOrVarID < 0x8000
+        .short FRSCRCMD_COMPAREVARTOVALUE
+    .else
+        .short FRSCRCMD_COMPAREVARTOVAR
+    .endif
+    .short \varID
+    .short \valueOrVarID
+    .endm
+
+    .macro FrontierScrCmd_22 offset
+    .short FRSCRCMD_22
+    .long \offset-.-4
+    .endm
+
+    .macro FrontierScrCmd_23 arg0
+    .short FRSCRCMD_23
+    .short \arg0
+    .endm
+
+    .macro FrontierScrCmd_24 offset
+    .short FRSCRCMD_24
+    .long \offset-.-4
+    .endm
+
+    .macro FrontierScrCmd_25 arg0
+    .short FRSCRCMD_25
+    .short \arg0
+    .endm
+
+    .macro FrontierScrCmd_26 arg0, arg1
+    .short FRSCRCMD_26
+    .short \arg0
+    .byte \arg1
+    .endm
+
+    .macro FrontierScrCmd_Dummy27
+    .short FRSCRCMD_DUMMY27
+    .endm
+
+    .macro ApplyMovement localID, offset
+    .short FRSCRCMD_APPLYMOVEMENT
+    .short \localID
+    .long \offset-.-4
+    .endm
+
+    .macro WaitMovement
+    .short FRSCRCMD_WAITMOVEMENT
+    .endm
+
+    .macro FrontierScrCmd_2A offset
+    .short FRSCRCMD_2A
+    .long \offset-.-4
+    .endm
+
+    .macro FrontierScrCmd_2B arg0
+    .short FRSCRCMD_2B
+    .short \arg0
+    .endm
+
+    .macro FrontierScrCmd_2C offset
+    .short FRSCRCMD_2C
+    .long \offset-.-4
+    .endm
+
+    .macro FrontierScrCmd_2D arg0
+    .short FRSCRCMD_2D
+    .short \arg0
+    .endm
+
+    .macro FrontierScrCmd_2E arg0, draw
+    .short FRSCRCMD_2E
+    .short \arg0
+    .byte \draw
+    .endm
+
+    .macro FrontierScrCmd_2F arg0
+    .short FRSCRCMD_2F
+    .short \arg0
+    .endm
+
+    .macro FrontierScrCmd_30 arg0, arg1
+    .short FRSCRCMD_30
+    .short \arg0
+    .short \arg1
+    .endm
+
+    .macro FrontierScrCmd_31 arg0, arg1
+    .short FRSCRCMD_31
+    .short \arg0
+    .short \arg1
+    .endm
+
+    .macro FrontierScrCmd_32 arg0
+    .short FRSCRCMD_32
+    .short \arg0
+    .endm
+
+    .macro FrontierScrCmd_33 arg0
+    .short FRSCRCMD_33
+    .short \arg0
+    .endm
+
+    .macro FrontierScrCmd_34
+    .short FRSCRCMD_34
+    .endm
+
+    .macro SyncConnectedPlayers syncNo
+    .short FRSCRCMD_SYNCCONNECTEDPLAYERS
+    .short \syncNo
+    .endm
+
+    .macro ClearReceivedTempDataAllPlayers
+    .short FRSCRCMD_CLEARRECEIVEDTEMPDATAALLPLAYERS
+    .endm
+
+    .macro EndCommunication
+    .short FRSCRCMD_ENDCOMMUNICATION
+    .endm
+
+    .macro GetRandom destVarID, upperBound
+    .short FRSCRCMD_GETRANDOM
+    .short \destVarID
+    .short \upperBound
+    .endm
+
+    .macro HealParty
+    .short FRSCRCMD_HEALPARTY
+    .endm
+
+    .macro WaitABPress
+    .short FRSCRCMD_WAITABPRESS
+    .endm
+
+    .macro WaitABPressTime frames
+    .short FRSCRCMD_WAITABPRESSTIME
+    .short \frames
+    .endm
+
+    .macro FrontierScrCmd_Dummy3C unused
+    .short FRSCRCMD_DUMMY3C
+    .short \unused
+    .endm
+
+    .macro SetSystemVar destVar, value
+    .short FRSCRCMD_SETSYSTEMVAR
+    .short \destVar
+    .short \value
+    .endm
+
+    .macro GetSystemVar srcVar, destVar
+    .short FRSCRCMD_GETSYSTEMVAR
+    .short \srcVar
+    .short \destVar
+    .endm
+
+    .macro FrontierScrCmd_3F arg0
+    .short FRSCRCMD_3F
+    .short \arg0
+    .endm
+
+    .macro GetPlayerObjEventGfx destVar
+    .short FRSCRCMD_GETPLAYEROBJEVENTGFX
+    .short \destVar
+    .endm
+
+    .macro InitParticleSystem index, narcIdx, projection=1
+    .short FRSCRCMD_INITPARTICLESYSTEM
+    .short \index
+    .short \narcIdx
+    .short \projection
+    .endm
+
+    .macro FreeParticleSystem index
+    .short FRSCRCMD_FREEPARTICLESYSTEM
+    .short \index
+    .endm
+
+    .macro CreateParticleSystemEmitter index, resourceID
+    .short FRSCRCMD_CREATEPARTICLESYSTEMEMITTER
+    .short \index
+    .short \resourceID
+    .endm
+
+    .macro WaitForParticleSystemEmitters
+    .short FRSCRCMD_WAITFORPARTICLESYSTEMEMITTERS
+    .endm
+
+    .macro FrontierScrCmd_45 slot, x, y, arg3, blendFraction, blendTarget
+    .short FRSCRCMD_45
+    .short \slot
+    .short \x
+    .short \y
+    .short \arg3
+    .short \blendFraction
+    .short \blendTarget
+    .endm
+
+    .macro FrontierScrCmd_46 arg0
+    .short FRSCRCMD_46
+    .short \arg0
+    .endm
+
+    .macro FrontierScrCmd_47 arg0
+    .short FRSCRCMD_47
+    .short \arg0
+    .endm
+
+    .macro IncrementRecordValue recordID
+    .short FRSCRCMD_INCREMENTRECORDVALUE
+    .short \recordID
+    .endm
+
+    .macro AddToRecordValue recordID, value
+    .short FRSCRCMD_ADDTORECORDVALUE
+    .short \recordID
+    .short \value
+    .endm
+
+    .macro IncrementTrainerScore scoreID
+    .short FRSCRCMD_INCREMENTTRAINERSCORE
+    .short \scoreID
+    .endm
+
+    .macro FrontierScrCmd_4B destVar
+    .short FRSCRCMD_4B
+    .short \destVar
+    .endm
+
+    .macro FrontierScrCmd_4C arg0, arg1, arg2, arg3
+    .short FRSCRCMD_4C
+    .short \arg0
+    .short \arg1
+    .short \arg2
+    .short \arg3
+    .endm
+
+    .macro FrontierScrCmd_4D
+    .short FRSCRCMD_4D
+    .endm
+
+    .macro FrontierScrCmd_4E arg0, arg1, arg2, arg3, arg4, arg5
+    .short FRSCRCMD_4E
+    .short \arg0
+    .short \arg1
+    .short \arg2
+    .short \arg3
+    .short \arg4
+    .short \arg5
+    .endm
+
+    .macro FrontierScrCmd_4F
+    .short FRSCRCMD_4F
+    .endm
+
+    .macro ShowCastlePointsWindows
+    .short FRSCRCMD_SHOWCASTLEPOINTSWINDOWS
+    .endm
+
+    .macro ClearCastlePointsWindows
+    .short FRSCRCMD_CLEARCASTLEPOINTSWINDOWS
+    .endm
+
+    .macro ReprintCastlePointsInfo
+    .short FRSCRCMD_REPRINTCASTLEPOINTSINFO
+    .endm
+
+    .macro FrontierScrCmd_53 arg0
+    .short FRSCRCMD_53
+    .short \arg0
+    .endm
+
+    .macro FrontierScrCmd_54
+    .short FRSCRCMD_54
+    .endm
+
+    .macro PlaySoundEffect seqID
+    .short FRSCRCMD_PLAYSOUNDEFFECT
+    .short \seqID
+    .endm
+
+    .macro StopSoundEffect seqID
+    .short FRSCRCMD_STOPSOUNDEFFECT
+    .short \seqID
+    .endm
+
+    .macro WaitSoundEffect seqID
+    .short FRSCRCMD_WAITSOUNDEFFECT
+    .short \seqID
+    .endm
+
+    .macro PlayFanfare seqID
+    .short FRSCRCMD_PLAYFANFARE
+    .short \seqID
+    .endm
+
+    .macro WaitFanfare
+    .short FRSCRCMD_WAITFANFARE
+    .endm
+
+    .macro PlayBGM seqID
+    .short FRSCRCMD_PLAYBGM
+    .short \seqID
+    .endm
+
+    .macro StopBGM seqID
+    .short FRSCRCMD_STOPBGM
+    .short \seqID
+    .endm
+
+    .macro InitBattleFactory resumingFromSave, challengeType, isOpenLevel
+    .short FRSCRCMD_INITBATTLEFACTORY
+    .short \resumingFromSave
+    .short \challengeType
+    .short \isOpenLevel
+    .endm
+
+    .macro BattleFactory_LoadTrainersForRound resumingFromSave
+    .short FRSCRCMD_BATTLEFACTORY_LOADTRAINERSFORROUND
+    .short \resumingFromSave
+    .endm
+
+    .macro FreeBattleFactory
+    .short FRSCRCMD_FREEBATTLEFACTORY
+    .endm
+
+    .macro OpenBattleFactoryAppInitial
+    .short FRSCRCMD_OPENBATTLEFACTORYAPPINITIAL
+    .endm
+
+    .macro BattleFactory_CleanupBattle
+    .short FRSCRCMD_BATTLEFACTORY_CLEANUPBATTLE
+    .endm
+
+    .macro BattleFactory_StartBattle
+    .short FRSCRCMD_BATTLEFACTORY_STARTBATTLE
+    .endm
+
+    .macro OpenBattleFactoryAppForTrade
+    .short FRSCRCMD_OPENBATTLEFACTORYAPPFORTRADE
+    .endm
+
+    .macro AddSelectedRentalsToParty
+    .short FRSCRCMD_ADDSELECTEDRENTALSTOPARTY
+    .endm
+
+    .macro BattleFactory_SetupNextOpponent
+    .short FRSCRCMD_BATTLEFACTORY_SETUPNEXTOPPONENT
+    .endm
+
+    .macro BattleFactory_ApplyTrade
+    .short FRSCRCMD_BATTLEFACTORY_APPLYTRADE
+    .endm
+
+    .macro BattleFactory_SetupNextOpponentsParty
+    .short FRSCRCMD_BATTLEFACTORY_SETUPNEXTOPPONENTSPARTY
+    .endm
+
+    .macro CallBattleFactoryFunction command, arg1, arg2, destVar
+    .short FRSCRCMD_CALLBATTLEFACTORYFUNCTION
+    .byte \command
+    .byte \arg1
+    .byte \arg2
+    .short \destVar
+    .endm
+
+    .macro BattleFactory_CheckWonBattle destVar
+    .short FRSCRCMD_BATTLEFACTORY_CHECKWONBATTLE
+    .short \destVar
+    .endm
+
+    .macro BattleFactory_SendCommMessage command, arg, success
+    .short FRSCRCMD_BATTLEFACTORY_SENDCOMMMESSAGE
+    .short \command
+    .short \arg
+    .short \success
+    .endm
+
+    .macro BattleFactory_WaitForCommResponses unused
+    .short FRSCRCMD_BATTLEFACTORY_WAITFORCOMMRESPONSES
+    .short \unused
+    .endm
+
+    .macro BattleFactory_PrintTrainerIntro index
+    .short FRSCRCMD_BATTLEFACTORY_PRINTTRAINERINTRO
+    .byte \index
+    .endm
+
+    .macro InitNewBattleRecording
+    .short FRSCRCMD_INITNEWBATTLERECORDING
+    .endm
+
+    .macro FrontierScrCmd_6D arg0, arg1, arg2, arg3
+    .short FRSCRCMD_6D
+    .short \arg0
+    .short \arg1
+    .short \arg2
+    .short \arg3
+    .endm
+
+    .macro FrontierScrCmd_6E
+    .short FRSCRCMD_6E
+    .endm
+
+    .macro FreeBattleRecording
+    .short FRSCRCMD_FREEBATTLERECORDING
+    .endm
+
+    .macro FrontierScrCmd_70 arg0
+    .short FRSCRCMD_70
+    .short \arg0
+    .endm
+
+    .macro FrontierScrCmd_71 destVar
+    .short FRSCRCMD_71
+    .short \destVar
+    .endm
+
+    .macro FrontierScrCmd_72 arg0
+    .short FRSCRCMD_72
+    .short \arg0
+    .endm
+
+    .macro FrontierScrCmd_73 arg0
+    .short FRSCRCMD_73
+    .short \arg0
+    .endm
+
+    .macro SaveDataExtraInit
+    .short FRSCRCMD_SAVEDATAEXTRAINIT
+    .endm
+
+    .macro FrontierScrCmd_GetMiscSaveBlockInitFlag destVar
+    .short FRSCRCMD_GETMISCSAVEBLOCKINITFLAG
+    .short \destVar
+    .endm
+
+    .macro BattleHall_UpdateWinRecord destVar
+    .short FRSCRCMD_BATTLEHALL_UPDATEWINRECORD
+    .short \destVar
+    .endm
+
+    .macro ShowSavingIcon
+    .short FRSCRCMD_SHOWSAVINGICON
+    .endm
+
+    .macro HideSavingIcon
+    .short FRSCRCMD_HIDESAVINGICON
+    .endm
+
+    .macro BufferItemName templateArg, item
+    .short FRSCRCMD_BUFFERITEMNAME
+    .byte \templateArg
+    .short \item
+    .endm
+
+    .macro BufferNumber templateArg, number
+    .short FRSCRCMD_BUFFERNUMBER
+    .byte \templateArg
+    .short \number
+    .endm
+
+    .macro BufferPlayerName templateArg
+    .short FRSCRCMD_BUFFERPLAYERNAME
+    .byte \templateArg
+    .endm
+
+    .macro BufferPartnerName templateArg
+    .short FRSCRCMD_BUFFERPARTNERNAME
+    .byte \templateArg
+    .endm
+
+    .macro BufferMoveName templateArg, move
+    .short FRSCRCMD_BUFFERMOVENAME
+    .byte \templateArg
+    .short \move
+    .endm
+
+    .macro BufferSpeciesName templateArg, species, unused1=0, unused2=0
+    .short FRSCRCMD_BUFFERSPECIESNAME
+    .byte \templateArg
+    .short \species
+    .short \unused1
+    .byte \unused2
+    .endm
+
+    .macro BufferTypeName templateArg, type
+    .short FRSCRCMD_BUFFERTYPENAME
+    .byte \templateArg
+    .short \type
+    .endm
+
+    .macro BufferRivalName templateArg
+    .short FRSCRCMD_BUFFERRIVALNAME
+    .byte \templateArg
+    .endm
+
+    .macro GetNumBattlePoints destVar
+    .short FRSCRCMD_GETNUMBATTLEPOINTS
+    .short \destVar
+    .endm
+
+    .macro GiveBattlePoints battlePoints
+    .short FRSCRCMD_GIVEBATTLEPOINTS
+    .short \battlePoints
+    .endm
+
+    .macro RemoteBattlePoints battlePoints
+    .short FRSCRCMD_REMOTEBATTLEPOINTS
+    .short \battlePoints
+    .endm
+
+    .macro CallBattleTowerFunction functionIndex, functionArgument, destVar
+    .short FRSCRCMD_CALLBATTLETOWERFUNCTION
+    .short \functionIndex
+    .short \functionArgument
+    .short \destVar
+    .endm
+
+    .macro FrontierScrCmd_85 arg0
+    .short FRSCRCMD_85
+    .byte \arg0
+    .endm
+
+    .macro FreeTowerStruct
+    .short FRSCRCMD_FREETOWERSTRUCT
+    .endm
+
+    .macro BattleTower_StartBattle
+    .short FRSCRCMD_BATTLETOWER_STARTBATTLE
+    .endm
+
+    .macro BattleTower_CheckWonBattle destVar
+    .short FRSCRCMD_BATTLETOWER_CHECKWONBATTLE
+    .short \destVar
+    .endm
+
+    .macro FrontierScrCmd_89 arg0, arg1, arg2
+    .short FRSCRCMD_89
+    .short \arg0
+    .short \arg1
+    .short \arg2
+    .endm
+
+    .macro FrontierScrCmd_8A arg0, arg1
+    .short FRSCRCMD_8A
+    .short \arg0
+    .short \arg1
+    .endm
+
+    .macro InitBattleHall resumingFromSave, challengeType, partySlot1, partySlot2
+    .short FRSCRCMD_INITBATTLEHALL
+    .short \resumingFromSave
+    .short \challengeType
+    .short \partySlot1
+    .short \partySlot2
+    .endm
+
+    .macro BattleHall_SetupNextOpponent unused=VAR_0x8003
+    .short FRSCRCMD_BATTLEHALL_SETUP_NEXT_OPPONENT
+    .short \unused
+    .endm
+
+    .macro FreeBattleHall
+    .short FRSCRCMD_FREEBATTLEHALL
+    .endm
+
+    .macro OpenBattleHallApp
+    .short FRSCRCMD_OPENBATTLEHALLAPP
+    .endm
+
+    .macro BattleHall_CleanupBattle
+    .short FRSCRCMD_BATTLEHALL_CLEANUPBATTLE
+    .endm
+
+    .macro BattleHall_StartBattle
+    .short FRSCRCMD_BATTLEHALL_STARTBATTLE
+    .endm
+
+    .macro CallBattleHallFunction command, arg1, arg2, returnVar
+    .short FRSCRCMD_CALLBATTLEHALLFUNCTION
+    .byte \command
+    .byte \arg1
+    .byte \arg2
+    .short \returnVar
+    .endm
+
+    .macro BattleHall_CheckWonBattle destVar
+    .short FRSCRCMD_BATTLEHALL_CHECKWONBATTLE
+    .short \destVar
+    .endm
+
+    .macro BattleHall_SendCommMessage command, arg, returnVar
+    .short FRSCRCMD_BATTLEHALL_SENDCOMMMESSAGE
+    .short \command
+    .short \arg
+    .short \returnVar
+    .endm
+
+    .macro FrontierScrCmd_94 arg0
+    .short FRSCRCMD_94
+    .short \arg0
+    .endm
+
+    .macro BattleHall_PrintTrainerIntro index
+    .short FRSCRCMD_BATTLEHALL_PRINTTRAINERINTRO
+    .byte \index
+    .endm
+
+    .macro FrontierScrCmd_Dummy96 arg0
+    .short FRSCRCMD_DUMMY96
+    .short \arg0
+    .endm
+
+    .macro InitBattleCastle resumingFromSave, challengeType, partySlot1, partySlot2, partySlot3, arg5
+    .short FRSCRCMD_INITBATTLECASTLE
+    .short \resumingFromSave
+    .short \challengeType
+    .short \partySlot1
+    .short \partySlot2
+    .short \partySlot3
+    .short \arg5
+    .endm
+
+    .macro LoadTrainersForRound resumingFromSave
+    .short FRSCRCMD_LOADTRAINERSFORROUND
+    .short \resumingFromSave
+    .endm
+
+    .macro FreeBattleCastle
+    .short FRSCRCMD_FREEBATTLECASTLE
+    .endm
+
+    .macro OpenBattleCastleSelfApp
+    .short FRSCRCMD_OPENBATTLECASTLESELFAPP
+    .endm
+
+    .macro BattleCastle_CleanupBattle
+    .short FRSCRCMD_BATTLECASTLE_CLEANUPBATTLE
+    .endm
+
+    .macro BattleCastle_StartBattle
+    .short FRSCRCMD_BATTLECASTLE_STARTBATTLE
+    .endm
+
+    .macro OpenBattleCastleOpponentApp
+    .short FRSCRCMD_OPENBATTLECASTLEOPPONENTAPP
+    .endm
+
+    .macro BattleCastle_SetupFirstOpponent
+    .short FRSCRCMD_BATTLECASTLE_SETUPFIRSTOPPONENT
+    .endm
+
+    .macro BattleCastle_SetupNextOpponent
+    .short FRSCRCMD_BATTLECASTLE_SETUPNEXTOPPONENT
+    .endm
+
+    .macro CallBattleCastleFunction command, arg1, arg2, destVar
+    .short FRSCRCMD_CALLBATTLECASTLEFUNCTION
+    .byte \command
+    .byte \arg1
+    .byte \arg2
+    .short \destVar
+    .endm
+
+    .macro BattleCastle_CheckWonBattle destVar
+    .short FRSCRCMD_BATTLECASTLE_CHECKWONBATTLE
+    .short \destVar
+    .endm
+
+    .macro BattleCastle_SendCommMessage command, arg, result
+    .short FRSCRCMD_BATTLECASTLE_SENDCOMMMESSAGE
+    .short \command
+    .short \arg
+    .short \result
+    .endm
+
+    .macro BattleCastle_WaitForCommResponses unused
+    .short FRSCRCMD_BATTLECASTLE_WAITFORCOMMRESPONSES
+    .short \unused
+    .endm
+
+    .macro DummyOpenBattleCastleApp
+    .short FRSCRCMD_DUMMYOPENBATTLECASTLEAPP
+    .endm
+
+    .macro FrontierScrCmd_A5 arg0
+    .short FRSCRCMD_A5
+    .short \arg0
+    .endm
+
+    .macro GetCurrentCastlePoints challengeType, result
+    .short FRSCRCMD_GETCURRENTCASTLEPOINTS
+    .short \challengeType
+    .short \result
+    .endm
+
+    .macro SpendCastlePoints challengeType, cp
+    .short FRSCRCMD_SPENDCASTLEPOINTS
+    .short \challengeType
+    .short \cp
+    .endm
+
+    .macro ReceiveCastlePoints challengeType, cp
+    .short FRSCRCMD_RECEIVECASTLEPOINTS
+    .short \challengeType
+    .short \cp
+    .endm
+
+    .macro BattleCastle_PrintTrainerIntro index
+    .short FRSCRCMD_BATTLECASTLE_PRINTRAINERINTRO
+    .byte \index
+    .endm
+
+    .macro InitWFCFacilitySelector
+    .short FRSCRCMD_INITWFCFACILITYSELECTOR
+    .endm
+
+    .macro FreeWFCFacilitySelector
+    .short FRSCRCMD_FREEWFCFACILITYSELECTOR
+    .endm
+
+    .macro WFCFacilitySelector_SendCommMessage command, arg1, arg2, success
+    .short FRSCRCMD_WFCFACILITYSELECTOR_SENDCOMMMESSAGE
+    .short \command
+    .short \arg1
+    .short \arg2
+    .short \success
+    .endm
+
+    .macro WFCFacilitySelector_WaitForCommResponses unused
+    .short FRSCRCMD_WFCFACILITYSELECTOR_WAITFORCOMMRESPONSES
+    .short \unused
+    .endm
+
+    .macro CheckIfSameFacilityChosen facility, result
+    .short FRSCRCMD_CHECKIFSAMEFACILITYCHOSEN
+    .short \facility
+    .short \result
+    .endm
+
+    .macro ManageFacilitySelectorSubApp unused, action, result
+    .short FRSCRCMD_MANAGEFACILITYSELECTORSUBAPP
+    .short \unused
+    .short \action
+    .short \result
+    .endm
+
+    .macro GetSelectedPartyMenuSlots selectedSlot1, selectedSlot2
+    .short FRSCRCMD_GETSELECTEDPARTYMENUSLOTS
+    .short \selectedSlot1
+    .short \selectedSlot2
+    .endm
+
+    .macro CheckIfPartnerDroppedOut didDropOut
+    .short FRSCRCMD_CHECKIFPARTNERDROPPEDOUT
+    .short \didDropOut
+    .endm
+
+    .macro CallWFCFacilitySelectorFunction command, arg1, arg2, returnVar
+    .short FRSCRCMD_CALLWFCFACILITYSELECTORFUNCTION
+    .byte \command
+    .byte \arg1
+    .byte \arg2
+    .short \returnVar
+    .endm
+
+    .macro InitBattleTower
+    .short FRSCRCMD_INITBATTLETOWER
+    .endm
+
+    .macro SendTowerTrainerIDList success
+    .short FRSCRCMD_SENDTOWERTRAINERIDLIST
+    .short \success
+    .endm
+
+    .macro WaitForTowerTrainerIDListResponses
+    .short FRSCRCMD_WAITFORTOWERTRAINERIDLISTRESPONSES
+    .endm
+
+    .macro FreeBattleTower
+    .short FRSCRCMD_FREEBATTLETOWER
+    .endm
+
+    .macro SetWiFiListHostFriendCurrentDate
+    .short FRSCRCMD_SETWIFILISTHOSTFRIENDCURRENTDATE
+    .endm
+
+    .macro InitBattleArcade resumingFromSave, challengeType, partySlot1, partySlot2, partySlot3, arg5
+    .short FRSCRCMD_INITBATTLEARCADE
+    .short \resumingFromSave
+    .short \challengeType
+    .short \partySlot1
+    .short \partySlot2
+    .short \partySlot3
+    .short \arg5
+    .endm
+
+    .macro BattleArcade_LoadTrainersForRound resumingFromSave
+    .short FRSCRCMD_BATTLEARCADE_LOADTRAINERSFORROUND
+    .short \resumingFromSave
+    .endm
+
+    .macro FreeBattleArcade
+    .short FRSCRCMD_FREEBATTLEARCADE
+    .endm
+
+    .macro BattleArcade_CleanupBattle
+    .short FRSCRCMD_BATTLEARCADE_CLEANUPBATTLE
+    .endm
+
+    .macro BattleArcade_StartBattle
+    .short FRSCRCMD_BATTLEARCADE_STARTBATTLE
+    .endm
+
+    .macro BattleArcade_SetupFirstOpponent
+    .short FRSCRCMD_BATTLEARCADE_SETUPFIRSTOPPONENT
+    .endm
+
+    .macro BattleArcade_SetupNextOpponent
+    .short FRSCRCMD_BATTLEARCADE_SETUPNEXTOPPONENT
+    .endm
+
+    .macro CallBattleArcadeFunction command, arg1, arg2, destVar
+    .short FRSCRCMD_CALLBATTLEARCADEFUNCTION
+    .byte \command
+    .short \arg1
+    .short \arg2
+    .short \destVar
+    .endm
+
+    .macro BattleArcade_CheckWonBattle destVar
+    .short FRSCRCMD_BATTLEARCADE_CHECKWONBATTLE
+    .short \destVar
+    .endm
+
+    .macro BattleArcade_SendCommMessage command, arg, successs
+    .short FRSCRCMD_BATTLEARCADE_SENDCOMMMESSAGE
+    .short \command
+    .short \arg
+    .short \successs
+    .endm
+
+    .macro BattleArcade_WaitForCommResponses unused
+    .short FRSCRCMD_BATTLEARCADE_WAITFORCOMMRESPONSES
+    .short \unused
+    .endm
+
+    .macro OpenBattleArcadeApp
+    .short FRSCRCMD_OPENBATTLEARCADEAPP
+    .endm
+
+    .macro BattleArcade_PrintTrainerInfo index
+    .short FRSCRCMD_BATTLEARCADE_PRINTTRAINERINFO
+    .byte \index
+    .endm
+
+    .macro ApplyArcadeEffect
+    .short FRSCRCMD_APPLYARCADEEFFECT
+    .endm
+
+    .macro SetItemDrawFlag isOpponent, slot, draw
+    .short FRSCRCMD_SETITEMDRAWFLAG
+    .short \isOpponent
+    .short \slot
+    .short \draw
+    .endm
+
+    .macro FrontierScrCmd_C7
+    .short FRSCRCMD_C7
+    .endm
+
+    .macro FrontierScrCmd_C8 arg0
+    .short FRSCRCMD_C8
+    .short \arg0
+    .endm
+
+    .macro FrontierScrCmd_C9 arg0
+    .short FRSCRCMD_C9
+    .short \arg0
+    .endm
+
+    .macro SetMenuXOriginSide isRightSide
+    .short FRSCRCMD_SETMENUXORIGINSIDE
+    .byte \isRightSide
+    .endm
+
+    .macro SetMenuYOriginSide isBottomSide
+    .short FRSCRCMD_SETMENUYORIGINSIDE
+    .byte \isBottomSide
+    .endm
+
+
+
+    .macro GoToIfLt varID, valueOrVarID, offset
+    CompareVar \varID, \valueOrVarID
+    GoToIf 0, \offset
+    .endm
+
+	.macro GoToIfEq varID, valueOrVarID, offset
+    CompareVar \varID, \valueOrVarID
+    GoToIf 1, \offset
+    .endm
+
+    .macro GoToIfGt varID, valueOrVarID, offset
+    CompareVar \varID, \valueOrVarID
+    GoToIf 2, \offset
+    .endm
+
+    .macro GoToIfLe varID, valueOrVarID, offset
+    CompareVar \varID, \valueOrVarID
+    GoToIf 3, \offset
+    .endm
+
+    .macro GoToIfGe varID, valueOrVarID, offset
+    CompareVar \varID, \valueOrVarID
+    GoToIf 4, \offset
+    .endm
+
+    .macro GoToIfNe varID, valueOrVarID, offset
+    CompareVar \varID, \valueOrVarID
+    GoToIf 5, \offset
+    .endm
+
+    .macro CallIfLt varID, valueOrVarID, offset
+    CompareVar \varID, \valueOrVarID
+    CallIf 0, \offset
+    .endm
+
+    .macro CallIfEq varID, valueOrVarID, offset
+    CompareVar \varID, \valueOrVarID
+    CallIf 1, \offset
+    .endm
+
+    .macro CallIfGt varID, valueOrVarID, offset
+    CompareVar \varID, \valueOrVarID
+    CallIf 2, \offset
+    .endm
+
+    .macro CallIfLe varID, valueOrVarID, offset
+    CompareVar \varID, \valueOrVarID
+    CallIf 3, \offset
+    .endm
+
+    .macro CallIfGe varID, valueOrVarID, offset
+    CompareVar \varID, \valueOrVarID
+    CallIf 4, \offset
+    .endm
+
+    .macro CallIfNe varID, valueOrVarID, offset
+    CompareVar \varID, \valueOrVarID
+    CallIf 5, \offset
+    .endm
+
+    .macro FaceNorth length=1
+    .short FRONTIER_MOVEMENT_FACE_NORTH
+    .short \length
+    .endm
+
+    .macro FaceSouth length=1
+    .short FRONTIER_MOVEMENT_FACE_SOUTH
+    .short \length
+    .endm
+
+    .macro FaceWest length=1
+    .short FRONTIER_MOVEMENT_FACE_WEST
+    .short \length
+    .endm
+
+    .macro FaceEast length=1
+    .short FRONTIER_MOVEMENT_FACE_EAST
+    .short \length
+    .endm
+
+    .macro WalkNorth length=1
+    .short FRONTIER_MOVEMENT_WALK_NORTH
+    .short \length
+    .endm
+
+    .macro WalkSouth length=1
+    .short FRONTIER_MOVEMENT_WALK_SOUTH
+    .short \length
+    .endm
+    
+    .macro WalkWest length=1
+    .short FRONTIER_MOVEMENT_WALK_WEST
+    .short \length
+    .endm
+
+    .macro WalkEast length=1
+    .short FRONTIER_MOVEMENT_WALK_EAST
+    .short \length
+    .endm
+
+    .macro WalkSlowNorth length=1
+    .short FRONTIER_MOVEMENT_WALK_SLOW_NORTH
+    .short \length
+    .endm
+
+    .macro WalkSlowSouth length=1
+    .short FRONTIER_MOVEMENT_WALK_SLOW_SOUTH
+    .short \length
+    .endm
+
+    .macro WalkSlowWest length=1
+    .short FRONTIER_MOVEMENT_WALK_SLOW_WEST
+    .short \length
+    .endm
+
+    .macro WalkSlowEast length=1
+    .short FRONTIER_MOVEMENT_WALK_SLOW_EAST
+    .short \length
+    .endm
+
+    .macro WalkFastNorth length=1
+    .short FRONTIER_MOVEMENT_WALK_FAST_NORTH
+    .short \length
+    .endm
+
+    .macro WalkFastSouth length=1
+    .short FRONTIER_MOVEMENT_WALK_FAST_SOUTH
+    .short \length
+    .endm
+
+    .macro WalkFastWest length=1
+    .short FRONTIER_MOVEMENT_WALK_FAST_WEST
+    .short \length
+    .endm
+
+    .macro WalkFastEast length=1
+    .short FRONTIER_MOVEMENT_WALK_FAST_EAST
+    .short \length
+    .endm
+
+    .macro WalkOnSpotNorth length=1
+    .short FRONTIER_MOVEMENT_WALK_ON_SPOT_NORTH
+    .short \length
+    .endm
+
+    .macro WalkOnSpotSouth length=1
+    .short FRONTIER_MOVEMENT_WALK_ON_SPOT_SOUTH
+    .short \length
+    .endm
+    
+    .macro WalkOnSpotWest length=1
+    .short FRONTIER_MOVEMENT_WALK_ON_SPOT_WEST
+    .short \length
+    .endm
+
+    .macro WalkOnSpotEast length=1
+    .short FRONTIER_MOVEMENT_WALK_ON_SPOT_EAST
+    .short \length
+    .endm
+
+    .macro WalkOnSpotSlowNorth length=1
+    .short FRONTIER_MOVEMENT_WALK_ON_SPOT_SLOW_NORTH
+    .short \length
+    .endm
+
+    .macro WalkOnSpotSlowSouth length=1
+    .short FRONTIER_MOVEMENT_WALK_ON_SPOT_SLOW_SOUTH
+    .short \length
+    .endm
+
+    .macro WalkOnSpotSlowWest length=1
+    .short FRONTIER_MOVEMENT_WALK_ON_SPOT_SLOW_WEST
+    .short \length
+    .endm
+
+    .macro WalkOnSpotSlowEast length=1
+    .short FRONTIER_MOVEMENT_WALK_ON_SPOT_SLOW_EAST
+    .short \length
+    .endm
+
+    .macro WalkOnSpotFastNorth length=1
+    .short FRONTIER_MOVEMENT_WALK_ON_SPOT_FAST_NORTH
+    .short \length
+    .endm
+
+    .macro WalkOnSpotFastSouth length=1
+    .short FRONTIER_MOVEMENT_WALK_ON_SPOT_FAST_SOUTH
+    .short \length
+    .endm
+
+    .macro WalkOnSpotFastWest length=1
+    .short FRONTIER_MOVEMENT_WALK_ON_SPOT_FAST_WEST
+    .short \length
+    .endm
+
+    .macro WalkOnSpotFastEast length=1
+    .short FRONTIER_MOVEMENT_WALK_ON_SPOT_FAST_EAST
+    .short \length
+    .endm
+
+    .macro WalkOnSpotFasterNorth length=1
+    .short FRONTIER_MOVEMENT_WALK_ON_SPOT_FASTER_NORTH
+    .short \length
+    .endm
+
+    .macro WalkOnSpotFasterSouth length=1
+    .short FRONTIER_MOVEMENT_WALK_ON_SPOT_FASTER_SOUTH
+    .short \length
+    .endm
+
+    .macro WalkOnSpotFasterWest length=1
+    .short FRONTIER_MOVEMENT_WALK_ON_SPOT_FASTER_WEST
+    .short \length
+    .endm
+
+    .macro WalkOnSpotFasterEast length=1
+    .short FRONTIER_MOVEMENT_WALK_ON_SPOT_FASTER_EAST
+    .short \length
+    .endm
+
+    .macro Delay1 length=1
+    .short FRONTIER_MOVEMENT_DELAY_1
+    .short \length
+    .endm
+
+    .macro Delay2 length=1
+    .short FRONTIER_MOVEMENT_DELAY_2
+    .short \length
+    .endm
+
+    .macro Delay4 length=1
+    .short FRONTIER_MOVEMENT_DELAY_4
+    .short \length
+    .endm
+
+    .macro Delay8 length=1
+    .short FRONTIER_MOVEMENT_DELAY_8
+    .short \length
+    .endm
+
+    .macro Delay15 length=1
+    .short FRONTIER_MOVEMENT_DELAY_15
+    .short \length
+    .endm
+
+    .macro Delay16 length=1
+    .short FRONTIER_MOVEMENT_DELAY_16
+    .short \length
+    .endm
+
+    .macro Delay32 length=1
+    .short FRONTIER_MOVEMENT_DELAY_32
+    .short \length
+    .endm
+
+    .macro WarpIn
+    .short FRONTIER_MOVEMENT_WARP_IN
+    .short 0x01
+    .endm
+
+    .macro WarpOut
+    .short FRONTIER_MOVEMENT_WARP_OUT
+    .short 0x01
+    .endm
+
+    .macro EndMovement
+    .short FRONTIER_MOVEMENT_END_MOVEMENT
+    .endm
+
+    .text
+    .globl _start
+_start:

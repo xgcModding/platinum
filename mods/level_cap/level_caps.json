@@ -1,0 +1,78 @@
+[
+  {
+    "checkpoint": "initial",
+    "level_cap": 5
+  },
+  {
+    "checkpoint": "route_201_rival",
+    "level_cap": 9
+  },
+  {
+    "checkpoint": "route_203_rival",
+    "level_cap": 14
+  },
+  {
+    "checkpoint": "coal_badge",
+    "level_cap": 17
+  },
+  {
+    "checkpoint": "valley_windworks_mars",
+    "level_cap": 22
+  },
+  {
+    "checkpoint": "forest_badge",
+    "level_cap": 23
+  },
+  {
+    "checkpoint": "galactic_eterna_cleared",
+    "level_cap": 26
+  },
+  {
+    "checkpoint": "relic_badge",
+    "level_cap": 27
+  },
+  {
+    "checkpoint": "route_209_rival",
+    "level_cap": 32
+  },
+  {
+    "checkpoint": "cobble_badge",
+    "level_cap": 36
+  },
+  {
+    "checkpoint": "pastoria_rival",
+    "level_cap": 37
+  },
+  {
+    "checkpoint": "fen_badge",
+    "level_cap": 38
+  },
+  {
+    "checkpoint": "canalave_rival",
+    "level_cap": 41
+  },
+  {
+    "checkpoint": "mine_badge",
+    "level_cap": 44
+  },
+  {
+    "checkpoint": "icicle_badge",
+    "level_cap": 46
+  },
+  {
+    "checkpoint": "galactic_hq_cyrus",
+    "level_cap": 48
+  },
+  {
+    "checkpoint": "distortion_world_cyrus",
+    "level_cap": 50
+  },
+  {
+    "checkpoint": "beacon_badge",
+    "level_cap": 62
+  },
+  {
+    "checkpoint": "champion",
+    "level_cap": 100
+  }
+]

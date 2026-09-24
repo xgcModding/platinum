@@ -1,0 +1,23 @@
+#ifndef POKEPLATINUM_FRSCRCMD_BATTLE_FACTORY_H
+#define POKEPLATINUM_FRSCRCMD_BATTLE_FACTORY_H
+
+#include "overlay104/defs.h"
+
+BOOL FrontierScrCmd_InitBattleFactory(FrontierScriptContext *ctx);
+BOOL FrontierScrCmd_BattleFactory_LoadTrainersForRound(FrontierScriptContext *ctx);
+BOOL FrontierScrCmd_FreeBattleFactory(FrontierScriptContext *ctx);
+BOOL FrontierScrCmd_OpenBattleFactoryAppInitial(FrontierScriptContext *ctx);
+BOOL FrontierScrCmd_BattleFactory_CleanupBattle(FrontierScriptContext *ctx);
+BOOL FrontierScrCmd_BattleFactory_StartBattle(FrontierScriptContext *ctx);
+BOOL FrontierScrCmd_OpenBattleFactoryAppForTrade(FrontierScriptContext *ctx);
+BOOL FrontierScrCmd_AddSelectedRentalsToParty(FrontierScriptContext *ctx);
+BOOL FrontierScrCmd_BattleFactory_SetupNextOpponent(FrontierScriptContext *ctx);
+BOOL FrontierScrCmd_BattleFactory_ApplyTrade(FrontierScriptContext *ctx);
+BOOL FrontierScrCmd_BattleFactory_SetupNextOpponentsParty(FrontierScriptContext *ctx);
+BOOL FrontierScrCmd_CallBattleFactoryFunction(FrontierScriptContext *ctx);
+BOOL FrontierScrCmd_BattleFactory_CheckWonBattle(FrontierScriptContext *ctx);
+BOOL FrontierScrCmd_BattleFactory_SendCommMessage(FrontierScriptContext *ctx);
+BOOL FrontierScrCmd_BattleFactory_WaitForCommResponses(FrontierScriptContext *ctx);
+BOOL FrontierScrCmd_BattleFactory_PrintTrainerIntro(FrontierScriptContext *ctx);
+
+#endif // POKEPLATINUM_FRSCRCMD_BATTLE_FACTORY_H

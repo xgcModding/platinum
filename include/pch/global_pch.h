@@ -1,0 +1,41 @@
+#ifndef POKEPLATINUM_GLOBAL_H
+#define POKEPLATINUM_GLOBAL_H
+
+#ifdef EXPLICIT_WCHAR_TYPEDEF
+typedef unsigned short wchar_t;
+#endif
+
+#include <nitro.h>
+#pragma thumb on
+#include <nnsys.h>
+#include <stddef.h>
+#include <string.h>
+
+#include "global/assert.h"
+#include "global/config.h" // MUST COME BEFORE ANY OTHER GAMEFREAK HEADERS
+#include "global/pm_version.h"
+
+#define NELEMS(a)                     (sizeof(a) / sizeof(*(a)))
+#define SNELEMS(a)                    ((int)(sizeof(a) / sizeof(*(a))))
+#define XtOffset(pointer_type, field) ((unsigned int)&(((pointer_type)NULL)->field))
+#define HI_HALF(i)                    (((i) >> 16) & 0xFFFF)
+#define LO_HALF(i)                    ((i) & 0xFFFF)
+#define HI_AND_LO(h, l)               (((h) << 16) | l)
+#define max(x, y)                     ((x) > (y) ? (x) : (y))
+#define min(x, y)                     ((x) < (y) ? (x) : (y))
+
+#define ALIGN_4 __attribute__((aligned(4)))
+
+#ifdef SDK_BUILD_ARM
+#define ALIGN_PTR(ptr, alignment) ((void *)(((u32)(ptr) + (alignment - 1)) / (alignment) * (alignment)))
+#else
+#define ALIGN_PTR(ptr, alignment) ((void *)(((u64)(ptr) + (alignment - 1)) / (alignment) * (alignment)))
+#endif
+
+typedef struct {
+    int x;
+    int y;
+    int z;
+} Vec32;
+
+#endif // POKEPLATINUM_GLOBAL_H

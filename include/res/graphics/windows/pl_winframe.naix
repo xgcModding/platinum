@@ -1,0 +1,57 @@
+#ifndef res_graphics_windows_pl_winframe_naix
+#define res_graphics_windows_pl_winframe_naix
+
+#define standard_system_NCGR 0
+#define standard_field_NCGR 1
+#define message_box_00_NCGR 2
+#define message_box_01_NCGR 3
+#define message_box_02_NCGR 4
+#define message_box_03_NCGR 5
+#define message_box_04_NCGR 6
+#define message_box_05_NCGR 7
+#define message_box_06_NCGR 8
+#define message_box_07_NCGR 9
+#define message_box_08_NCGR 10
+#define message_box_09_NCGR 11
+#define message_box_10_NCGR 12
+#define message_box_11_NCGR 13
+#define message_box_12_NCGR 14
+#define message_box_13_NCGR 15
+#define message_box_14_NCGR 16
+#define message_box_15_NCGR 17
+#define message_box_16_NCGR 18
+#define message_box_17_NCGR 19
+#define message_box_18_NCGR 20
+#define message_box_19_NCGR 21
+#define scroll_cursor_NCGR 22
+#define wait_dial_NCGR 23
+#define standard_system_NCLR 24
+#define message_box_00_NCLR 25
+#define message_box_01_NCLR 26
+#define message_box_02_NCLR 27
+#define message_box_03_NCLR 28
+#define message_box_04_NCLR 29
+#define message_box_05_NCLR 30
+#define message_box_06_NCLR 31
+#define message_box_07_NCLR 32
+#define message_box_08_NCLR 33
+#define message_box_09_NCLR 34
+#define message_box_10_NCLR 35
+#define message_box_11_NCLR 36
+#define message_box_12_NCLR 37
+#define message_box_13_NCLR 38
+#define message_box_14_NCLR 39
+#define message_box_15_NCLR 40
+#define message_box_16_NCLR 41
+#define message_box_17_NCLR 42
+#define message_box_18_NCLR 43
+#define message_box_19_NCLR 44
+#define standard_underground_NCLR 45
+#define pokemon_preview_anim_NANR 46
+#define pokemon_preview_cell_NCER 47
+#define pokemon_preview_NCGR 48
+#define pokemon_preview_NCLR 49
+
+#define res_graphics_windows_pl_winframe_COUNT 50
+
+#endif 

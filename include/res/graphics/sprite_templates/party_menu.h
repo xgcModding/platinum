@@ -1,0 +1,17 @@
+#ifndef _USERS_XGC1986_CODE_PLATA_BUILD_OSX_RES_GRAPHICS_SPRITE_TEMPLATES_PARTY_MENU_H
+#define _USERS_XGC1986_CODE_PLATA_BUILD_OSX_RES_GRAPHICS_SPRITE_TEMPLATES_PARTY_MENU_H
+
+#define PartyMenu_Template_MemberPokeball 0
+#define PartyMenu_Template_Cursor 1
+#define PartyMenu_Template_Button 2
+#define PartyMenu_Template_StatusIcons 3
+#define PartyMenu_Template_MemberIcon0 4
+#define PartyMenu_Template_MemberIcon1 5
+#define PartyMenu_Template_MemberIcon2 6
+#define PartyMenu_Template_MemberIcon3 7
+#define PartyMenu_Template_MemberIcon4 8
+#define PartyMenu_Template_MemberIcon5 9
+#define PartyMenu_Template_HeldIcons 10
+#define PartyMenu_Template_TouchButtonEffect 11
+
+#endif 

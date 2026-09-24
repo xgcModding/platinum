@@ -1,0 +1,62 @@
+#ifndef res_trainers_classes_trbgra_naix
+#define res_trainers_classes_trbgra_naix
+
+#define player_male_back_NCGR 0
+#define player_male_back_NCLR 1
+#define player_male_back_cell_NCER 2
+#define player_male_back_anim_NANR 3
+#define player_male_back_scan_NCGR 4
+#define player_female_back_NCGR 5
+#define player_female_back_NCLR 6
+#define player_female_back_cell_NCER 7
+#define player_female_back_anim_NANR 8
+#define player_female_back_scan_NCGR 9
+#define rival_back_NCGR 10
+#define rival_back_NCLR 11
+#define rival_back_cell_NCER 12
+#define rival_back_anim_NANR 13
+#define rival_back_scan_NCGR 14
+#define trainer_cheryl_back_NCGR 15
+#define trainer_cheryl_back_NCLR 16
+#define trainer_cheryl_back_cell_NCER 17
+#define trainer_cheryl_back_anim_NANR 18
+#define trainer_cheryl_back_scan_NCGR 19
+#define trainer_riley_back_NCGR 20
+#define trainer_riley_back_NCLR 21
+#define trainer_riley_back_cell_NCER 22
+#define trainer_riley_back_anim_NANR 23
+#define trainer_riley_back_scan_NCGR 24
+#define trainer_marley_back_NCGR 25
+#define trainer_marley_back_NCLR 26
+#define trainer_marley_back_cell_NCER 27
+#define trainer_marley_back_anim_NANR 28
+#define trainer_marley_back_scan_NCGR 29
+#define trainer_buck_back_NCGR 30
+#define trainer_buck_back_NCLR 31
+#define trainer_buck_back_cell_NCER 32
+#define trainer_buck_back_anim_NANR 33
+#define trainer_buck_back_scan_NCGR 34
+#define trainer_mira_back_NCGR 35
+#define trainer_mira_back_NCLR 36
+#define trainer_mira_back_cell_NCER 37
+#define trainer_mira_back_anim_NANR 38
+#define trainer_mira_back_scan_NCGR 39
+#define dp_player_male_back_NCGR 40
+#define dp_player_male_back_NCLR 41
+#define dp_player_male_back_cell_NCER 42
+#define dp_player_male_back_anim_NANR 43
+#define dp_player_male_back_scan_NCGR 44
+#define dp_player_female_back_NCGR 45
+#define dp_player_female_back_NCLR 46
+#define dp_player_female_back_cell_NCER 47
+#define dp_player_female_back_anim_NANR 48
+#define dp_player_female_back_scan_NCGR 49
+#define dp_rival_back_NCGR 50
+#define dp_rival_back_NCLR 51
+#define dp_rival_back_cell_NCER 52
+#define dp_rival_back_anim_NANR 53
+#define dp_rival_back_scan_NCGR 54
+
+#define res_trainers_classes_trbgra_COUNT 55
+
+#endif 

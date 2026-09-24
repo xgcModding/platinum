@@ -1,0 +1,37 @@
+#include "sys_task_extensions.h"
+
+#include <nitro.h>
+#include <string.h>
+
+#include "heap.h"
+#include "sys_task.h"
+#include "sys_task_manager.h"
+
+SysTask *SysTask_StartAndAllocateParam(SysTaskFunc callback, int paramSize, u32 priority, enum HeapID heapID)
+{
+    void *param;
+
+    if (paramSize) {
+        param = Heap_Alloc(heapID, paramSize);
+
+        if (param == NULL) {
+            return NULL;
+        }
+
+        memset(param, 0, paramSize);
+    } else {
+        param = NULL;
+    }
+
+    return SysTask_Start(callback, param, priority);
+}
+
+void SysTask_FinishAndFreeParam(SysTask *task)
+{
+    void *param = SysTask_GetParam(task);
+    if (param != NULL) {
+        Heap_Free(param);
+    }
+
+    SysTask_Done(task);
+}

@@ -1,0 +1,10 @@
+#ifndef _USERS_XGC1986_CODE_PLATA_BUILD_OSX_RES_GRAPHICS_SPRITE_TEMPLATES_TOWN_MAP_H
+#define _USERS_XGC1986_CODE_PLATA_BUILD_OSX_RES_GRAPHICS_SPRITE_TEMPLATES_TOWN_MAP_H
+
+#define TownMap_Template_ZoomButtonShockwave 0
+#define TownMap_Template_Cursor 1
+#define TownMap_Template_PlayerIcons 2
+#define TownMap_Template_LocationHistoryDot 3
+#define TownMap_Template_FlyDestinationBlocks 4
+
+#endif 

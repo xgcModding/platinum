@@ -1,0 +1,11 @@
+#ifndef res_graphics_scroll_prompts_scroll_prompts_naix
+#define res_graphics_scroll_prompts_scroll_prompts_naix
+
+#define scroll_prompts_NCLR 0
+#define scroll_prompts_NCGR 1
+#define scroll_prompts_cell_NCER 2
+#define scroll_prompts_anim_NANR 3
+
+#define res_graphics_scroll_prompts_scroll_prompts_COUNT 4
+
+#endif 

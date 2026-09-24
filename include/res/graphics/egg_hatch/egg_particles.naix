@@ -1,0 +1,9 @@
+#ifndef res_graphics_egg_hatch_egg_particles_naix
+#define res_graphics_egg_hatch_egg_particles_naix
+
+#define normal_spa 0
+#define manaphy_spa 1
+
+#define res_graphics_egg_hatch_egg_particles_COUNT 2
+
+#endif 

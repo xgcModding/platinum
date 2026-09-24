@@ -1,0 +1,19 @@
+#ifndef res_graphics_shop_menu_shop_gra_naix
+#define res_graphics_shop_menu_shop_gra_naix
+
+#define tiles_NCGR 0
+#define default_NCLR 1
+#define tilemap_NSCR 2
+#define tilemap_no_item_NSCR 3
+#define scroll_arrow_NCGR 4
+#define scroll_arrow_cell_NCER 5
+#define scroll_arrow_anim_NANR 6
+#define cursor_NCGR 7
+#define cursor_cell_NCER 8
+#define cursor_anim_NANR 9
+#define sprites_NCLR 10
+#define frontier_NCLR 11
+
+#define res_graphics_shop_menu_shop_gra_COUNT 12
+
+#endif 

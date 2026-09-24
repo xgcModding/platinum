@@ -1,0 +1,14 @@
+#ifndef res_graphics_sprite_templates_underground_map_transition_templates_naix
+#define res_graphics_sprite_templates_underground_map_transition_templates_naix
+
+#define underground_map_transition_cells_resdat 0
+#define underground_map_transition_anims_resdat 1
+#define underground_map_transition_chars_resdat 2
+#define underground_map_transition_dawn_chars_resdat 3
+#define underground_map_transition_cldat 4
+#define underground_map_transition_pltts_resdat 5
+#define underground_map_transition_dawn_pltts_resdat 6
+
+#define res_graphics_sprite_templates_underground_map_transition_templates_COUNT 7
+
+#endif 

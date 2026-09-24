@@ -1,0 +1,15 @@
+#ifndef res_fonts_pl_font_naix
+#define res_fonts_pl_font_naix
+
+#define font_system_NFGR 0
+#define font_message_NFGR 1
+#define font_subscreen_NFGR 2
+#define font_unown_NFGR 3
+#define font_special_chars_NCGR_lz 4
+#define screen_indicators_NCGR 5
+#define font_NCLR 6
+#define screen_indicators_NCLR 7
+
+#define res_fonts_pl_font_COUNT 8
+
+#endif 

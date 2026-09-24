@@ -1,0 +1,654 @@
+#include "unk_02056B30.h"
+
+#include <nitro.h>
+#include <string.h>
+
+#include "generated/movement_actions.h"
+
+#include "struct_decls/map_object.h"
+
+#include "field/field_system.h"
+#include "field/field_system_sub2_t.h"
+#include "functypes/funcptr_020EC560.h"
+#include "functypes/funcptr_020EC57C.h"
+#include "overlay005/fieldmap.h"
+#include "overlay005/hblank_system.h"
+#include "overlay005/map_name_popup.h"
+#include "overlay005/ov5_021D431C.h"
+#include "overlay005/struct_ov5_021D432C_decl.h"
+#include "overlay005/struct_ov5_021D4E00_decl.h"
+
+#include "camera.h"
+#include "field_bgm.h"
+#include "field_map_change.h"
+#include "field_task.h"
+#include "field_transition.h"
+#include "heap.h"
+#include "inlines.h"
+#include "location.h"
+#include "map_header.h"
+#include "map_object.h"
+#include "map_tile_behavior.h"
+#include "player_avatar.h"
+#include "screen_fade.h"
+#include "sound_playback.h"
+#include "terrain_collision_manager.h"
+#include "unk_020655F4.h"
+
+typedef struct {
+    int unk_00;
+    int unk_04;
+    Location unk_08;
+    void *unk_1C;
+    int unk_20;
+} UnkStruct_02056BDC;
+
+typedef struct {
+    int unk_00;
+    int unk_04;
+    int unk_08;
+    int unk_0C;
+    u16 unk_10;
+    int unk_14;
+    int unk_18;
+    enum HeapID heapID;
+} UnkStruct_02056B30;
+
+static BOOL sub_02056B70(FieldTask *taskMan);
+static BOOL sub_02056CFC(FieldTask *taskMan);
+static BOOL sub_02056DE4(FieldTask *taskMan);
+static BOOL sub_02056E20(FieldTask *taskMan);
+static BOOL sub_02056EA4(FieldTask *taskMan);
+static BOOL sub_02056F1C(FieldTask *taskMan);
+static BOOL sub_02056FC0(FieldTask *taskMan);
+static BOOL sub_02057008(FieldTask *taskMan);
+static BOOL sub_02057050(FieldTask *taskMan);
+static BOOL sub_0205711C(FieldTask *taskMan);
+static BOOL sub_020571A0(FieldTask *taskMan);
+static BOOL sub_02057218(FieldTask *taskMan);
+static BOOL sub_020572B8(FieldTask *taskMan);
+static void sub_02057300(FieldSystem *fieldSystem);
+static void sub_02057368(FieldSystem *fieldSystem);
+
+static const UnkFuncPtr_020EC560 Unk_020EC560[7] = {
+    sub_02056DE4,
+    sub_02056E20,
+    sub_02056EA4,
+    sub_02056F1C,
+    sub_02056FC0,
+    sub_02057008,
+    sub_02056DE4
+};
+
+static const UnkFuncPtr_020EC560 Unk_020EC544[7] = {
+    sub_02057050,
+    sub_0205711C,
+    sub_020571A0,
+    sub_02057218,
+    sub_0205711C,
+    sub_020572B8,
+    sub_0205711C
+};
+
+static const UnkFuncPtr_020EC57C Unk_020EC57C[7] = {
+    NULL,
+    NULL,
+    sub_02057300,
+    sub_02057368,
+    NULL,
+    NULL,
+    NULL
+};
+
+void sub_02056B30(FieldTask *taskMan, int param1, int param2, int param3, u16 param4, int param5, int param6, enum HeapID heapID)
+{
+    UnkStruct_02056B30 *v0 = Heap_Alloc(heapID, sizeof(UnkStruct_02056B30));
+
+    v0->unk_04 = param1;
+    v0->unk_08 = param2;
+    v0->unk_0C = param3;
+    v0->unk_10 = param4;
+    v0->unk_14 = param5;
+    v0->unk_18 = param6;
+    v0->heapID = heapID;
+    v0->unk_00 = 0;
+
+    FieldTask_InitCall(taskMan, sub_02056B70, v0);
+}
+
+static BOOL sub_02056B70(FieldTask *taskMan)
+{
+    FieldSystem *fieldSystem = FieldTask_GetFieldSystem(taskMan);
+    UnkStruct_02056B30 *v1 = FieldTask_GetEnv(taskMan);
+
+    switch (v1->unk_00) {
+    case 0:
+        HBlankSystem_Stop(fieldSystem->unk_04->hBlankSystem);
+        StartScreenFade(v1->unk_04, v1->unk_08, v1->unk_0C, v1->unk_10, v1->unk_14, v1->unk_18, v1->heapID);
+        v1->unk_00++;
+        break;
+    case 1:
+        if (IsScreenFadeDone()) {
+            HBlankSystem_Start(fieldSystem->unk_04->hBlankSystem);
+            Heap_Free(v1);
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
+void sub_02056BDC(FieldSystem *fieldSystem, const int param1, const int param2, const int param3, const int param4, const int param5, const int param6)
+{
+    UnkStruct_02056BDC *v0 = Heap_AllocAtEnd(HEAP_ID_FIELD2, sizeof(UnkStruct_02056BDC));
+
+    v0->unk_00 = 0;
+    v0->unk_04 = 0;
+
+    Location_Set(&v0->unk_08, param1, param2, param3, param4, param5);
+
+    v0->unk_20 = param6;
+
+    FieldSystem_CreateTask(fieldSystem, sub_02056CFC, v0);
+}
+
+void sub_02056C18(FieldSystem *fieldSystem, const int param1, const int param2, const int param3, const int param4, const int param5)
+{
+    UnkStruct_02056BDC *v2 = Heap_AllocAtEnd(HEAP_ID_FIELD2, sizeof(UnkStruct_02056BDC));
+
+    v2->unk_00 = 0;
+    v2->unk_04 = 0;
+
+    Location_Set(&v2->unk_08, param1, param2, param3, param4, param5);
+
+    enum MapHeaderID mapHeaderID = fieldSystem->location->mapHeaderID;
+    int v1 = 0;
+
+    if (MapHeader_IsCave(mapHeaderID)) {
+        if (MapHeader_IsCave(param1)) {
+            v1 = 6;
+        } else if (MapHeader_IsOutdoors(param1)) {
+            v1 = 5;
+        } else if (MapHeader_IsBuilding(param1)) {
+            v1 = 6;
+        } else {
+            GF_ASSERT(FALSE);
+        }
+    } else if (MapHeader_IsOutdoors(mapHeaderID)) {
+        if (MapHeader_IsCave(param1)) {
+            v1 = 4;
+        } else if (MapHeader_IsBuilding(param1)) {
+            v1 = 6;
+        } else {
+            GF_ASSERT(FALSE);
+        }
+    } else if (MapHeader_IsBuilding(mapHeaderID)) {
+        if (MapHeader_IsOutdoors(param1)) {
+            v1 = 0;
+        } else if (MapHeader_IsBuilding(param1)) {
+            v1 = 6;
+        } else if (MapHeader_IsCave(param1)) {
+            v1 = 0;
+        } else {
+            GF_ASSERT(FALSE);
+        }
+    } else {
+        GF_ASSERT(FALSE);
+    }
+
+    v2->unk_20 = v1;
+
+    FieldSystem_CreateTask(fieldSystem, sub_02056CFC, v2);
+}
+
+static BOOL sub_02056CFC(FieldTask *taskMan)
+{
+    FieldSystem *fieldSystem = FieldTask_GetFieldSystem(taskMan);
+    UnkStruct_02056BDC *v1 = FieldTask_GetEnv(taskMan);
+    Location *v2 = &v1->unk_08;
+
+    switch (v1->unk_00) {
+    case 0:
+        v1->unk_04 = 0;
+        FieldBGM_TryFadeIn(fieldSystem, v2->mapHeaderID);
+        FieldTask_InitCall(taskMan, Unk_020EC560[v1->unk_20], v1);
+        (v1->unk_00)++;
+        break;
+    case 1:
+        FieldTransition_FinishMap(taskMan);
+        (v1->unk_00)++;
+        break;
+    case 2:
+        FieldTask_ChangeMapByLocation(taskMan, &v1->unk_08);
+        (v1->unk_00)++;
+        break;
+    case 3:
+        FieldTransition_StartMap(taskMan);
+        (v1->unk_00)++;
+        break;
+    case 4:
+        if (Unk_020EC57C[v1->unk_20] != NULL) {
+            Unk_020EC57C[v1->unk_20](fieldSystem);
+        }
+
+        (v1->unk_00)++;
+        break;
+    case 5:
+        if (Sound_IsFadeActive()) {
+            break;
+        }
+
+        FieldBGM_PlayForMapHeader(fieldSystem, v2->mapHeaderID);
+        FieldSystem_RequestLocationName(fieldSystem);
+
+        v1->unk_04 = 0;
+        FieldTask_InitCall(taskMan, Unk_020EC544[v1->unk_20], v1);
+        (v1->unk_00)++;
+        break;
+    case 6:
+        Heap_Free(v1);
+        return 1;
+    }
+
+    return 0;
+}
+
+static BOOL sub_02056DE4(FieldTask *taskMan)
+{
+    FieldSystem *fieldSystem = FieldTask_GetFieldSystem(taskMan);
+    UnkStruct_02056BDC *v1 = FieldTask_GetEnv(taskMan);
+
+    switch (v1->unk_04) {
+    case 0:
+        Sound_PlayEffect(SEQ_SE_DP_KAIDAN2_sseq);
+
+        FieldTransition_FadeOut(taskMan);
+        (v1->unk_04)++;
+        break;
+    case 1:
+        return 1;
+    }
+
+    return 0;
+}
+
+static BOOL sub_02056E20(FieldTask *taskMan)
+{
+    FieldSystem *fieldSystem = FieldTask_GetFieldSystem(taskMan);
+    UnkStruct_02056BDC *v1 = FieldTask_GetEnv(taskMan);
+    UnkStruct_ov5_021D432C *v2;
+
+    switch (v1->unk_04) {
+    case 0:
+        v1->unk_1C = ov5_021D431C();
+        v2 = (UnkStruct_ov5_021D432C *)v1->unk_1C;
+        ov5_021D4334(PlayerAvatar_GetXPos(fieldSystem->playerAvatar), PlayerAvatar_GetZPos(fieldSystem->playerAvatar), v2);
+        (v1->unk_04)++;
+        break;
+    case 1:
+        v2 = (UnkStruct_ov5_021D432C *)v1->unk_1C;
+
+        if (ov5_021D433C(fieldSystem, v2)) {
+            ov5_021D432C(v1->unk_1C);
+            (v1->unk_04)++;
+        }
+        break;
+    case 2:
+        FieldTransition_FadeOut(taskMan);
+        (v1->unk_04)++;
+        break;
+    case 3:
+        return 1;
+    }
+
+    return 0;
+}
+
+static BOOL sub_02056EA4(FieldTask *taskMan)
+{
+    FieldSystem *fieldSystem = FieldTask_GetFieldSystem(taskMan);
+    UnkStruct_02056BDC *v1 = FieldTask_GetEnv(taskMan);
+    UnkStruct_ov5_021D432C *v2;
+
+    switch (v1->unk_04) {
+    case 0:
+        v1->unk_1C = ov5_021D431C();
+        v2 = (UnkStruct_ov5_021D432C *)v1->unk_1C;
+        ov5_021D4334(PlayerAvatar_GetXPos(fieldSystem->playerAvatar), PlayerAvatar_GetZPos(fieldSystem->playerAvatar), v2);
+        (v1->unk_04)++;
+        break;
+    case 1:
+        v2 = (UnkStruct_ov5_021D432C *)v1->unk_1C;
+
+        if (ov5_021D4A24(fieldSystem, v2, PlayerAvatar_GetFacingDir(fieldSystem->playerAvatar))) {
+            ov5_021D432C(v1->unk_1C);
+            (v1->unk_04)++;
+        }
+        break;
+    case 2:
+        return 1;
+    }
+
+    return 0;
+}
+
+static BOOL sub_02056F1C(FieldTask *taskMan)
+{
+    FieldSystem *fieldSystem = FieldTask_GetFieldSystem(taskMan);
+    UnkStruct_02056BDC *v1 = FieldTask_GetEnv(taskMan);
+    MapObject *v2;
+
+    switch (v1->unk_04) {
+    case 0: {
+        int v3 = PlayerAvatar_GetFacingDir(fieldSystem->playerAvatar);
+
+        v2 = PlayerAvatar_GetMapObject(fieldSystem->playerAvatar);
+
+        if (v3 == 2) {
+            LocalMapObj_SetAnimationCode(v2, MOVEMENT_ACTION_WALK_SLOW_WEST);
+        } else if (v3 == 3) {
+            LocalMapObj_SetAnimationCode(v2, MOVEMENT_ACTION_WALK_SLOW_EAST);
+        } else {
+            GF_ASSERT(FALSE);
+        }
+    }
+        (v1->unk_04)++;
+        break;
+    case 1:
+        v2 = PlayerAvatar_GetMapObject(fieldSystem->playerAvatar);
+
+        if (LocalMapObj_CheckAnimationFinished(v2) == 1) {
+            sub_020656AC(v2);
+            (v1->unk_04)++;
+        }
+        break;
+    case 2:
+        Sound_PlayEffect(SEQ_SE_DP_KAIDAN2_sseq);
+        FieldMap_FadeScreen(FADE_TYPE_BRIGHTNESS_OUT);
+        (v1->unk_04)++;
+        break;
+    case 3:
+        if (IsScreenFadeDone()) {
+            return 1;
+        }
+        break;
+    }
+
+    return 0;
+}
+
+static BOOL sub_02056FC0(FieldTask *taskMan)
+{
+    FieldSystem *fieldSystem = FieldTask_GetFieldSystem(taskMan);
+    UnkStruct_02056BDC *v1 = FieldTask_GetEnv(taskMan);
+    MapObject *v2 = PlayerAvatar_GetMapObject(fieldSystem->playerAvatar);
+
+    switch (v1->unk_04) {
+    case 0: {
+        UnkStruct_ov5_021D4E00 *v3;
+
+        v3 = ov5_021D4E00();
+        FieldTask_InitCall(taskMan, ov5_021D4FA0, v3);
+        v1->unk_04++;
+    } break;
+    case 1:
+        return 1;
+    }
+
+    return 0;
+}
+
+static BOOL sub_02057008(FieldTask *taskMan)
+{
+    FieldSystem *fieldSystem = FieldTask_GetFieldSystem(taskMan);
+    UnkStruct_02056BDC *v1 = FieldTask_GetEnv(taskMan);
+    MapObject *v2 = PlayerAvatar_GetMapObject(fieldSystem->playerAvatar);
+
+    switch (v1->unk_04) {
+    case 0: {
+        UnkStruct_ov5_021D4E00 *v3;
+
+        v3 = ov5_021D4E00();
+        FieldTask_InitCall(taskMan, ov5_021D4F14, v3);
+        v1->unk_04++;
+    } break;
+    case 1:
+        return 1;
+    }
+
+    return 0;
+}
+
+static BOOL sub_02057050(FieldTask *taskMan)
+{
+    MapObject *mapObj;
+    FieldSystem *fieldSystem = FieldTask_GetFieldSystem(taskMan);
+    UnkStruct_02056BDC *v2 = FieldTask_GetEnv(taskMan);
+    UnkStruct_ov5_021D432C *v3;
+
+    switch (v2->unk_04) {
+    case 0: {
+        u8 v4;
+        MapObject *v5 = PlayerAvatar_GetMapObject(fieldSystem->playerAvatar);
+
+        v4 = TerrainCollisionManager_GetTileBehavior(fieldSystem, PlayerAvatar_GetXPos(fieldSystem->playerAvatar), PlayerAvatar_GetZPos(fieldSystem->playerAvatar));
+
+        if (TileBehavior_IsDoor(v4)) {
+            MapObject_SetHidden(v5, 1);
+            (v2->unk_04) = 1;
+        } else {
+            UnkStruct_ov5_021D4E00 *v6;
+
+            v6 = ov5_021D4E00();
+            FieldTask_InitCall(taskMan, ov5_021D5020, v6);
+            (v2->unk_04) = 3;
+        }
+    } break;
+    case 1:
+        v2->unk_1C = (UnkStruct_ov5_021D432C *)ov5_021D431C();
+        v3 = (UnkStruct_ov5_021D432C *)v2->unk_1C;
+        ov5_021D4334(PlayerAvatar_GetXPos(fieldSystem->playerAvatar), PlayerAvatar_GetZPos(fieldSystem->playerAvatar), v3);
+        (v2->unk_04)++;
+        break;
+    case 2:
+        v3 = (UnkStruct_ov5_021D432C *)v2->unk_1C;
+
+        if (ov5_021D453C(fieldSystem, v3)) {
+            ov5_021D432C(v3);
+            {
+                MapObject *v7 = PlayerAvatar_GetMapObject(fieldSystem->playerAvatar);
+
+                MapObject_SetHidden(v7, 0);
+            }
+            return 1;
+        }
+        break;
+    case 3:
+        return 1;
+    }
+
+    return 0;
+}
+
+static BOOL sub_0205711C(FieldTask *taskMan)
+{
+    MapObject *mapObj;
+    FieldSystem *fieldSystem = FieldTask_GetFieldSystem(taskMan);
+    UnkStruct_02056BDC *v2 = FieldTask_GetEnv(taskMan);
+    UnkStruct_ov5_021D432C *v3;
+
+    switch (v2->unk_04) {
+    case 0: {
+        u8 v4;
+        MapObject *v5 = PlayerAvatar_GetMapObject(fieldSystem->playerAvatar);
+
+        v4 = TerrainCollisionManager_GetTileBehavior(fieldSystem, PlayerAvatar_GetXPos(fieldSystem->playerAvatar), PlayerAvatar_GetZPos(fieldSystem->playerAvatar));
+
+        if (TileBehavior_IsDoor(v4)) {
+            MapObject_SetHidden(v5, 1);
+            v2->unk_04 = 1;
+            FieldTask_InitJump(taskMan, sub_02057050, v2);
+        } else {
+            UnkStruct_ov5_021D4E00 *v6;
+
+            v6 = ov5_021D4E00();
+            FieldTask_InitCall(taskMan, ov5_021D5150, v6);
+            (v2->unk_04)++;
+        }
+    } break;
+    case 1:
+        return 1;
+    }
+
+    return 0;
+}
+
+static BOOL sub_020571A0(FieldTask *taskMan)
+{
+    FieldSystem *fieldSystem = FieldTask_GetFieldSystem(taskMan);
+    UnkStruct_02056BDC *v1 = FieldTask_GetEnv(taskMan);
+    UnkStruct_ov5_021D432C *v2;
+
+    switch (v1->unk_04) {
+    case 0:
+        v1->unk_1C = ov5_021D431C();
+        v2 = (UnkStruct_ov5_021D432C *)v1->unk_1C;
+        ov5_021D4334(PlayerAvatar_GetXPos(fieldSystem->playerAvatar), PlayerAvatar_GetZPos(fieldSystem->playerAvatar), v2);
+        (v1->unk_04)++;
+        break;
+    case 1:
+        v2 = (UnkStruct_ov5_021D432C *)v1->unk_1C;
+
+        if (ov5_021D4858(fieldSystem, v2, PlayerAvatar_GetFacingDir(fieldSystem->playerAvatar))) {
+            ov5_021D432C(v1->unk_1C);
+            (v1->unk_04)++;
+        }
+        break;
+    case 2:
+        return 1;
+    }
+
+    return 0;
+}
+
+static BOOL sub_02057218(FieldTask *taskMan)
+{
+    FieldSystem *fieldSystem = FieldTask_GetFieldSystem(taskMan);
+    UnkStruct_02056BDC *v1 = FieldTask_GetEnv(taskMan);
+    MapObject *v2;
+
+    switch (v1->unk_04) {
+    case 0:
+
+        FieldMap_FadeScreen(FADE_TYPE_BRIGHTNESS_IN);
+        v2 = PlayerAvatar_GetMapObject(fieldSystem->playerAvatar);
+
+        if (1) {
+            int v3;
+
+            v3 = PlayerAvatar_GetFacingDir(fieldSystem->playerAvatar);
+
+            if (v3 == 2) {
+                LocalMapObj_SetAnimationCode(v2, MOVEMENT_ACTION_WALK_SLOW_WEST);
+            } else if (v3 == 3) {
+                LocalMapObj_SetAnimationCode(v2, MOVEMENT_ACTION_WALK_SLOW_EAST);
+            } else {
+                GF_ASSERT(FALSE);
+            }
+        } else {
+            GF_ASSERT(FALSE);
+        }
+
+        (v1->unk_04)++;
+        break;
+    case 1:
+        v2 = PlayerAvatar_GetMapObject(fieldSystem->playerAvatar);
+
+        if (LocalMapObj_CheckAnimationFinished(v2) == 1) {
+            sub_020656AC(v2);
+            (v1->unk_04)++;
+        }
+        break;
+    case 2:
+        if (IsScreenFadeDone()) {
+            (v1->unk_04)++;
+        }
+        break;
+    case 3:
+        return 1;
+    }
+
+    return 0;
+}
+
+static BOOL sub_020572B8(FieldTask *taskMan)
+{
+    FieldSystem *fieldSystem = FieldTask_GetFieldSystem(taskMan);
+    UnkStruct_02056BDC *v1 = FieldTask_GetEnv(taskMan);
+    MapObject *v2 = PlayerAvatar_GetMapObject(fieldSystem->playerAvatar);
+
+    switch (v1->unk_04) {
+    case 0: {
+        UnkStruct_ov5_021D4E00 *v3;
+
+        v3 = ov5_021D4E00();
+        FieldTask_InitCall(taskMan, ov5_021D4E10, v3);
+        v1->unk_04++;
+    } break;
+    case 1:
+        return 1;
+    }
+
+    return 0;
+}
+
+static void sub_02057300(FieldSystem *fieldSystem)
+{
+    int v0;
+    VecFx32 v1;
+
+    v0 = PlayerAvatar_GetFacingDir(fieldSystem->playerAvatar);
+    PlayerAvatar_GetPosPtr(fieldSystem->playerAvatar, &v1);
+
+    if (v0 == 3) {
+        v1.x -= (FX32_ONE * 16);
+    } else {
+        v1.x += (FX32_ONE * 16);
+    }
+
+    v1.y = TerrainCollisionManager_GetHeight(fieldSystem, v1.y, v1.x, v1.z, NULL);
+
+    PlayerAvatar_SetPosDirFromVec(fieldSystem->playerAvatar, &v1, v0);
+    Camera_SetTargetAndUpdatePosition(PlayerAvatar_GetPos(fieldSystem->playerAvatar), fieldSystem->camera);
+    Camera_TrackTarget(PlayerAvatar_GetPos(fieldSystem->playerAvatar), fieldSystem->camera);
+}
+
+static void sub_02057368(FieldSystem *fieldSystem)
+{
+    int v0, v1, v2;
+    VecFx32 v3;
+    u8 v4;
+
+    v2 = PlayerAvatar_GetFacingDir(fieldSystem->playerAvatar);
+    PlayerAvatar_GetPosPtr(fieldSystem->playerAvatar, &v3);
+
+    v0 = PlayerAvatar_GetXPos(fieldSystem->playerAvatar);
+    v1 = PlayerAvatar_GetZPos(fieldSystem->playerAvatar);
+    v4 = TerrainCollisionManager_GetTileBehavior(fieldSystem, v0, v1);
+
+    if (TileBehavior_IsWarpStairsEast(v4)) {
+        v3.x += (FX32_ONE * 16);
+        v2 = 2;
+    } else if (TileBehavior_IsWarpStairsWest(v4)) {
+        v3.x -= (FX32_ONE * 16);
+        v2 = 3;
+    } else {
+        (void)0;
+    }
+
+    v3.y = TerrainCollisionManager_GetHeight(fieldSystem, v3.y, v3.x, v3.z, NULL);
+
+    PlayerAvatar_SetPosDirFromVec(fieldSystem->playerAvatar, &v3, v2);
+    Camera_SetTargetAndUpdatePosition(PlayerAvatar_GetPos(fieldSystem->playerAvatar), fieldSystem->camera);
+    Camera_TrackTarget(PlayerAvatar_GetPos(fieldSystem->playerAvatar), fieldSystem->camera);
+}

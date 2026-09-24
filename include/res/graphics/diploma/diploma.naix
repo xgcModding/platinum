@@ -1,0 +1,19 @@
+#ifndef res_graphics_diploma_diploma_naix
+#define res_graphics_diploma_diploma_naix
+
+#define sinnoh_document_NCGR 0
+#define national_dex_document_NCGR 1
+#define sinnoh_blank_NCGR 2
+#define national_dex_blank_NCGR 3
+#define sinnoh_document_NCLR 4
+#define national_dex_document_NCLR 5
+#define sinnoh_blank_NCLR 6
+#define national_dex_blank_NCLR 7
+#define sinnoh_document_NSCR 8
+#define national_dex_document_NSCR 9
+#define sinnoh_blank_NSCR 10
+#define national_dex_blank_NSCR 11
+
+#define res_graphics_diploma_diploma_COUNT 12
+
+#endif 

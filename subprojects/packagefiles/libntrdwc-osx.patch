@@ -1,0 +1,27 @@
+diff --git a/include/decomp/decomp_defs.h b/include/decomp/decomp_defs.h
+--- a/include/decomp/decomp_defs.h
++++ b/include/decomp/decomp_defs.h
+@@ -45,7 +45,9 @@ typedef unsigned long long unsigned_long_long;
+ 
+ typedef int BOOL;
+ 
++#ifndef SDK_BUILD_OSX
+ typedef ushort wctype_t;
++#endif
+ 
+ typedef struct tagACHOLD tagACHOLD, *PtagACHOLD;
+ 
+diff --git a/libraries/auth/src/dwc_prof.c b/libraries/auth/src/dwc_prof.c
+--- a/libraries/auth/src/dwc_prof.c
++++ b/libraries/auth/src/dwc_prof.c
+@@ -164,7 +164,9 @@ typedef int BOOL;
+ 
+ typedef uint CPSInAddr;
+ 
++#ifndef SDK_BUILD_OSX
+ typedef ushort wctype_t;
++#endif
+ 
+ typedef struct DWCAuthParam DWCAuthParam, *PDWCAuthParam;
+ 
+ typedef struct DWCAuthResult DWCAuthResult, *PDWCAuthResult;

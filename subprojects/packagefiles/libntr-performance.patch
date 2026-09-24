@@ -1,0 +1,1020 @@
+diff --git a/include/nitro/hw/X86/mmap_global.h b/include/nitro/hw/X86/mmap_global.h
+index 3be08a2..2ec6704 100644
+--- a/include/nitro/hw/X86/mmap_global.h
++++ b/include/nitro/hw/X86/mmap_global.h
+@@ -94,7 +94,7 @@ extern u8 s_HW_BG_VRAM[0x80000];
+ extern u8 s_HW_DB_BG_VRAM[0x20000];
+ #define HW_DB_BG_VRAM              ((u64)s_HW_DB_BG_VRAM)
+ #define HW_DB_BG_VRAM_END          ((u64)s_HW_DB_BG_VRAM + 0x20000)
+-#define HW_DB_BG_VRAM_SIZE         (HW_BG_VRAM_END-HW_BG_VRAM)
++#define HW_DB_BG_VRAM_SIZE         (HW_DB_BG_VRAM_END-HW_DB_BG_VRAM)
+ 
+ //#define HW_OBJ_VRAM             0x06400000
+ //#define HW_OBJ_VRAM_END         0x06440000
+@@ -109,7 +109,7 @@ extern u8 s_HW_DB_OBJ_VRAM[0x20000];
+ //#define HW_DB_OBJ_VRAM          0x06600000
+ //#define HW_DB_OBJ_VRAM_END      0x06620000
+ #define HW_DB_OBJ_VRAM             ((u64)s_HW_DB_OBJ_VRAM)
+-#define HW_DB_OBJ_VRAM_END         ((u64)s_HW_DB_OBJ_VRAM + 0x40000)
++#define HW_DB_OBJ_VRAM_END         ((u64)s_HW_DB_OBJ_VRAM + 0x20000)
+ #define HW_DB_OBJ_VRAM_SIZE     (HW_DB_OBJ_VRAM_END-HW_DB_OBJ_VRAM)
+ //#define HW_LCDC_VRAM            0x06800000
+ //#ifdef SDK_TS
+@@ -138,7 +138,7 @@ extern u8 s_HW_OAM[0x400];
+ extern u8 s_HW_DB_OAM[0x400];
+ #define HW_DB_OAM              ((u64)s_HW_DB_OAM)
+ #define HW_DB_OAM_END          ((u64)s_HW_DB_OAM + 0x400)
+-#define HW_DB_OAM_SIZE         (HW_OAM_END-HW_OAM)
++#define HW_DB_OAM_SIZE         (HW_DB_OAM_END-HW_DB_OAM)
+ 
+ //----------------------------- Cartridge Bus
+ //#define HW_CTRDG_ROM            0x08000000
+diff --git a/libraries/os/src/os_thread.c b/libraries/os/src/os_thread.c
+index 4d031ff..d442bb6 100644
+--- a/libraries/os/src/os_thread.c
++++ b/libraries/os/src/os_thread.c
+@@ -19,12 +19,18 @@ typedef struct {
+ 
+ static SIM_OSThreadList_t s_threadList[SIM_OS_THREAD_LIST_MAX] = {0};
+ static int s_curThreadListIdx = 0;
++#ifdef SDK_BUILD_OSX
++static _Thread_local OSThread *s_OSX_currentThread;
++#endif
+ 
+ 
+ int SIM_OS_RunThread(void * thread)
+ {
+ 	OSThread * curThread;
+ 	curThread = (OSThread *)thread;
++#ifdef SDK_BUILD_OSX
++    s_OSX_currentThread = curThread;
++#endif
+     s_threadList[s_curThreadListIdx].thread = curThread;
+     s_threadList[s_curThreadListIdx].threadId = SDL_GetThreadID(NULL);
+     curThread->threadListIdx = s_curThreadListIdx;
+@@ -167,6 +173,11 @@ static OSThread s_WIN_unknownThread;
+ 
+ OSThread * WIN_OS_GetCurrentThread(void)
+ {
++#ifdef SDK_BUILD_OSX
++    if (s_OSX_currentThread != NULL) {
++        return s_OSX_currentThread;
++    }
++#endif
+     pthread_mutex_lock(&osiThreadMutex);
+     OSThread * thread = NULL;
+     SDL_threadID self = SDL_GetThreadID(NULL);
+@@ -445,6 +456,13 @@ void OS_InitThread (void)
+ 
+     OS_SetCurrentThread(&OSi_LauncherThread);
+ 
++    #if defined(SDK_PORT) && defined(SDK_BUILD_OSX)
++    // The launcher does not pass through SIM_OS_RunThread(). Record it in
++    // thread-local storage so every OS_GetCurrentThread() is constant-time and
++    // resolves to the real launcher instead of s_WIN_unknownThread.
++    s_OSX_currentThread = &OSi_LauncherThread;
++    #endif
++
+     #ifdef SDK_PORT
+     stackLo = (OSi_SYS_STACKSIZE <= 0) ?
+               (void *)((u64)OSi_LAUNCHER_STACK_LO_DEFAULT - OSi_SYS_STACKSIZE) :
+@@ -1007,8 +1025,16 @@ void OS_SleepThread (OSThreadQueue * queue)
+         currentThread->state = OS_THREAD_STATE_WAITING;
+         OSi_RescheduleThread();
+         #ifdef SDK_PORT
++        #ifdef SDK_BUILD_OSX
++        // Worker threads still yield as before. The launcher must not sleep
++        // here: its actual frame wait is performed by the render/VSync path.
++        if (currentThread != &OSi_LauncherThread) {
++            SDL_Delay(1);
++        }
++        #else
+         SDL_Delay(1);
+         #endif
++        #endif
+     }
+ #endif
+     (void)OS_RestoreInterrupts(enable);
+diff --git a/libraries/sim/meson.build b/libraries/sim/meson.build
+index e8be1d4..3ecf346 100644
+--- a/libraries/sim/meson.build
++++ b/libraries/sim/meson.build
+@@ -3,17 +3,18 @@ subdir('src')
+ 
+ libsim_includes = include_directories('include')
+ 
+-sdl2_lib = library('SDL2')
+-enet_lib = library('enet')
+-
+-if(build_target == 'linux' or build_target == 'win64')
++if(build_target == 'osx')
++sdl2_lib = dependency('sdl2')
++elif(build_target == 'linux' or build_target == 'win64')
+ sdl2_lib = meson.get_compiler('c').find_library('SDL2')
+ elif(build_target == 'nx')
+ sdl2_lib = meson.get_compiler('c').find_library('SDL2', dirs: '/opt/devkitpro/portlibs/switch/lib/')
+ endif
+ sdl2_dep = declare_dependency(dependencies: [sdl2_lib])
+ 
+-if(build_target == 'linux' or build_target == 'win64')
++if(build_target == 'osx')
++enet_lib = dependency('libenet')
++elif(build_target == 'linux' or build_target == 'win64')
+ enet_lib = meson.get_compiler('c').find_library('enet')
+ elif(build_target == 'nx')
+ enet_lib = meson.get_compiler('c').find_library('enet', dirs: '/opt/devkitpro/portlibs/switch/lib/')
+@@ -41,7 +42,7 @@ if(get_option('card_maker_code') != '')
+ endif
+ 
+ if(get_option('tracy_enable') == true)
+-    if(build_target =='linux' or build_target == 'win64')
++    if(build_target =='linux' or build_target == 'osx' or build_target == 'win64')
+         tracy_native = dependency(
+             'tracy_native', 
+             default_options: {
+@@ -106,4 +107,3 @@ libsim = library('sim',
+ )
+ 
+ nitrosdk_libs += libsim
+-
+diff --git a/libraries/sim/src/g3_handler.cpp b/libraries/sim/src/g3_handler.cpp
+index 7ad7abd..3de5b9b 100644
+--- a/libraries/sim/src/g3_handler.cpp
++++ b/libraries/sim/src/g3_handler.cpp
+@@ -414,7 +414,9 @@ void G3SIM_Begin(GXBegin type)
+     }
+     snprintf(debugMessage, 50, "GX_Begin %s", typeString);
+ 
++#ifndef SDK_BUILD_OSX
+     glDebugMessageInsert(GL_DEBUG_SOURCE_APPLICATION, GL_DEBUG_TYPE_OTHER, 1337, GL_DEBUG_SEVERITY_NOTIFICATION, 50, debugMessage);
++#endif
+     s_primType = type;
+     s_G3numInPoly = 0;
+     s_G3drawPoly = 0;
+diff --git a/libraries/sim/src/gui/gui.c b/libraries/sim/src/gui/gui.c
+index 67b3da3..7fa55f2 100644
+--- a/libraries/sim/src/gui/gui.c
++++ b/libraries/sim/src/gui/gui.c
+@@ -6,6 +6,8 @@
+ #include "simulator/gui.h"
+ 
+ extern u64 s_SIM_frameTime;
++extern u64 s_SIM_renderTime;
++extern u64 s_SIM_gameTime;
+ extern float s_SIM_presentedFps;
+ 
+ static SDL_Window * SIM_GUI_SDLwindow;
+@@ -42,7 +44,16 @@ void SIM_GUI_Init(SDL_Window * aWindow, SDL_GLContext aContext)
+ 	ioptr->DisplaySize.y = (float)(SIM_NDS_SCREEN_HEIGHT*2*SIM_NDS_WINDOW_SCALE_FACTOR);
+ 
+ 	ImGui_ImplSDL2_InitForOpenGL(SIM_GUI_SDLwindow, SIM_GUI_GLcontext);
++	#ifdef SDK_BUILD_OSX
++	// SDL enables desktop text input by default. On macOS that makes Cocoa
++	// display the accent picker when a gameplay key is held down.
++	SDL_StopTextInput();
++	#endif
++	#ifdef SDK_BUILD_OSX
++	const char * glsl_version = "#version 410";
++	#else
+ 	const char * glsl_version = "#version 420";
++	#endif
+   	ImGui_ImplOpenGL3_Init(glsl_version);
+ 
+ 	igStyleColorsDark(NULL);
+@@ -78,6 +89,8 @@ void SIM_GUI_Main(void)
+         frameTimeMs = (float)s_SIM_frameTime / 1000000.0f;
+         igText("FrameTime %.3fms", frameTimeMs);
+         igText("%.0ffps", 1000.0f / frameTimeMs);
++        igText("Render %.3fms", (float)s_SIM_renderTime / 1000000.0f);
++        igText("Game %.3fms", (float)s_SIM_gameTime / 1000000.0f);
+ 
+         SIM_GUI_AppButton("Config", &s_showWindowConfig, NULL, GUI_AppConfigMain);
+         SIM_GUI_AppButton("Input", &s_showWindowPad, NULL, GUI_AppPadMain);
+@@ -96,6 +109,19 @@ void SIM_GUI_NewFrame(void)
+     ImGui_ImplOpenGL3_NewFrame();
+     ImGui_ImplSDL2_NewFrame();
+     igNewFrame();
++
++    #ifdef SDK_BUILD_OSX
++    // Gameplay only needs SDL_KEYDOWN/SDL_KEYUP. Enable Cocoa text input
++    // exclusively while an ImGui text field is active.
++    ImGuiIO * ioptr = igGetIO_ContextPtr(SIM_GUI_ig_context);
++    if (SIM_GUI_State && ioptr->WantTextInput) {
++        if (!SDL_IsTextInputActive()) {
++            SDL_StartTextInput();
++        }
++    } else if (SDL_IsTextInputActive()) {
++        SDL_StopTextInput();
++    }
++    #endif
+ }
+ 
+ void Mods_NotifyKeyDown(s32 keycode, u8 repeat) __attribute__((weak));
+diff --git a/libraries/sim/src/meson.build b/libraries/sim/src/meson.build
+index 6aaaa86..ede08b0 100644
+--- a/libraries/sim/src/meson.build
++++ b/libraries/sim/src/meson.build
+@@ -21,6 +21,6 @@ libsim_srcs = files(
+     'sim_shaders.cpp'
+ )
+ 
+-if(build_target == 'linux' or build_target == 'win64')
++if(build_target == 'linux' or build_target == 'osx' or build_target == 'win64')
+ libsim_srcs += files('glad.c')
+ endif
+diff --git a/libraries/sim/src/shaders/g2_fragment.glsl b/libraries/sim/src/shaders/g2_fragment.glsl
+index b652bd5..2e5f632 100644
+--- a/libraries/sim/src/shaders/g2_fragment.glsl
++++ b/libraries/sim/src/shaders/g2_fragment.glsl
+@@ -142,4 +142,4 @@ void main()
+         color.b = color.b - (color.b * (inMasterBrightFactor / 16.0));
+     }
+ }
+-)""
+\ No newline at end of file
++)""
+diff --git a/libraries/sim/src/shaders/g2_vertex.glsl b/libraries/sim/src/shaders/g2_vertex.glsl
+index fc7a724..1d911fb 100644
+--- a/libraries/sim/src/shaders/g2_vertex.glsl
++++ b/libraries/sim/src/shaders/g2_vertex.glsl
+@@ -10,4 +10,4 @@ void main()
+     gl_Position = vec4(position.x, position.y, position.z, 1.);
+     fragTexCoord = vec2(texCoord.x, texCoord.y);
+ }
+-)""
+\ No newline at end of file
++)""
+diff --git a/libraries/sim/src/shaders/g3_fragment.glsl b/libraries/sim/src/shaders/g3_fragment.glsl
+index ffd028a..9d885cb 100644
+--- a/libraries/sim/src/shaders/g3_fragment.glsl
++++ b/libraries/sim/src/shaders/g3_fragment.glsl
+@@ -60,4 +60,4 @@ void main()
+      color = shadedColor;
+     }
+ }
+-)""
+\ No newline at end of file
++)""
+diff --git a/libraries/sim/src/sim_g2.cpp b/libraries/sim/src/sim_g2.cpp
+index aa852a4..9315746 100644
+--- a/libraries/sim/src/sim_g2.cpp
++++ b/libraries/sim/src/sim_g2.cpp
+@@ -10,10 +10,10 @@
+ #include "tracy/TracyC.h"
+ #endif
+ 
+-#if (defined(SDK_BUILD_OSX) || defined(SDK_BUILD_LINUX)) && defined(__GNUC__) && !defined(__clang__)
++#if defined(SDK_BUILD_OSX) && defined(__GNUC__) && !defined(__clang__)
+ // The DS 2D engines are rasterized pixel-by-pixel on the CPU. Keep the rest of
+ // the simulator unoptimized because it contains timing-sensitive shared state,
+-// but optimize this self-contained render translation unit on desktop builds.
++// but optimize this self-contained render translation unit on macOS.
+ #pragma GCC optimize("O3")
+ #endif
+ 
+diff --git a/libraries/sim/src/sim_main.cpp b/libraries/sim/src/sim_main.cpp
+index 17f3c77..0b8f6aa 100644
+--- a/libraries/sim/src/sim_main.cpp
++++ b/libraries/sim/src/sim_main.cpp
+@@ -1,7 +1,12 @@
+ extern "C" void NitroMain();
+ extern "C" int NitroSpMain(void *arg);
++extern "C" void Mods_Init(void);
++extern "C" void Mods_Shutdown(void);
++extern "C" unsigned int Mods_GetLoadedCount(void);
+ #define SDL_MAIN_HANDLED
++#ifndef __APPLE__
+ #define _POSIX_C_SOURCE 199309L
++#endif
+ 
+ #include <atomic>
+ #include <string>
+@@ -22,6 +27,12 @@ extern "C" int NitroSpMain(void *arg);
+ #include <stdio.h>
+ #include <stdlib.h>
+ 
++#ifdef SDK_BUILD_OSX
++#include <limits.h>
++#include <mach-o/dyld.h>
++#include <unistd.h>
++#endif
++
+ #include <nitro/gx/g3.h>
+ #include <nitro/gx/gx_load.h>
+ #include <nitro/gx/gx_vramcnt.h>
+@@ -104,11 +115,19 @@ static u64 s_SIM_nextFrameDeadline;
+ static u64 s_SIM_nextPresentDeadline;
+ static u64 s_SIM_fpsWindowStart;
+ static u32 s_SIM_presentedFrameCount;
++#ifndef SDK_BUILD_OSX
+ static GLuint sPresentationTextureId;
+ static GLuint sPresentationFramebufferId;
+ static int sPresentationWidth;
+ static int sPresentationHeight;
++#endif
++static u64 s_SIM_outsideTime;
++static u64 s_SIM_presentTime;
++static u64 s_SIM_paceTime;
+ u64 s_SIM_frameTime;
++u64 s_SIM_renderTime;
++u64 s_SIM_gameTime;
++u64 s_SIM_swapTime;
+ float s_SIM_presentedFps;
+ 
+ static u64 MonotonicTimeNs(const struct timespec *time) {
+@@ -260,6 +279,12 @@ static u64 map(u64 x, u64 in_min, u64 in_max, u64 out_min, u64 out_max);
+ static void process_nibble(unsigned char data4bit, int *Index, int *Pcm16bit);
+ static void DrawScreenQuad();
+ static void DrawEngine(BOOL isSub);
++#ifdef SDK_BUILD_OSX
++static void CopyFrontBufferToBackBuffer();
++#else
++static BOOL CacheCurrentFrame();
++static void CopyCachedFrameToBackBuffer();
++#endif
+ 
+ static u8 s_numG3DrawsThisFrame = 0;
+ static u8 s_numG3CommandsThisFrame = 0;
+@@ -569,20 +594,45 @@ void SIM_RequestFpsCounterEnabled(u32 enabled) {
+ 
+ static void UpdateMonitorRefreshRate(u32 monitor) {
+   SDL_DisplayMode mode;
++  u32 refreshRate = 60;
++#ifdef SDK_BUILD_OSX
++  // On ProMotion, SDL_GetCurrentDisplayMode can expose the instantaneous
++  // adaptive rate (for example 40 Hz) instead of the panel's 120 Hz maximum.
++  // AUTO means the maximum refresh supported by the selected display.
++  const int modeCount = SDL_GetNumDisplayModes(monitor - 1);
++  for (int modeIndex = 0; modeIndex < modeCount; modeIndex++) {
++    if (SDL_GetDisplayMode(monitor - 1, modeIndex, &mode) == 0
++        && mode.refresh_rate >= 30 && mode.refresh_rate <= 240
++        && (u32)mode.refresh_rate > refreshRate) {
++      refreshRate = mode.refresh_rate;
++    }
++  }
++#else
+   if (SDL_GetCurrentDisplayMode(monitor - 1, &mode) == 0
+-      && mode.refresh_rate > 0) {
+-    sMonitorRefreshRate.store(mode.refresh_rate);
+-  } else {
+-    sMonitorRefreshRate.store(60);
++      && mode.refresh_rate >= 30 && mode.refresh_rate <= 240) {
++    refreshRate = mode.refresh_rate;
+   }
++#endif
++
++  sMonitorRefreshRate.store(refreshRate);
+ }
+ 
+ void SIM_ApplyPendingDisplaySettings(void) {
+   BOOL changed = FALSE;
+   u32 requestedVsync = sRequestedVsyncEnabled.load();
+   if (requestedVsync != 0 && requestedVsync - 1 != s_SIM_config.vsyncEnabled) {
+-    if (SDL_GL_SetSwapInterval(requestedVsync - 1) == 0) {
++#ifdef SDK_BUILD_OSX
++    // macOS' legacy OpenGL swap interval can block the entire game thread at
++    // 60 Hz even on a 120 Hz ProMotion display. The compositor still presents
++    // window contents on VBlank, so pace submissions ourselves instead.
++    const int swapInterval = 0;
++#else
++    const int swapInterval = requestedVsync - 1;
++#endif
++    if (SDL_GL_SetSwapInterval(swapInterval) == 0) {
+       s_SIM_config.vsyncEnabled = requestedVsync - 1;
++      s_SIM_nextFrameDeadline = 0;
++      s_SIM_nextPresentDeadline = 0;
+       changed = TRUE;
+     } else {
+       sRequestedVsyncEnabled.store(s_SIM_config.vsyncEnabled + 1);
+@@ -593,6 +643,8 @@ void SIM_ApplyPendingDisplaySettings(void) {
+   if (requestedFrameRate != 0
+       && requestedFrameRate - 1 != s_SIM_config.frameRateMode) {
+     s_SIM_config.frameRateMode = requestedFrameRate - 1;
++    s_SIM_nextFrameDeadline = 0;
++    s_SIM_nextPresentDeadline = 0;
+     changed = TRUE;
+   }
+ 
+@@ -610,6 +662,8 @@ void SIM_ApplyPendingDisplaySettings(void) {
+     }
+     s_SIM_config.monitor = requestedMonitor;
+     UpdateMonitorRefreshRate(requestedMonitor);
++    s_SIM_nextFrameDeadline = 0;
++    s_SIM_nextPresentDeadline = 0;
+     changed = TRUE;
+   }
+ 
+@@ -1290,6 +1344,22 @@ void GLAPIENTRY MessageCallback(GLenum source, GLenum type, GLuint id,
+   //           type, severity, message );
+ }
+ 
++static const char *GetPlatformShaderSource(const char *source,
++                                            std::string &storage) {
++#ifdef SDK_BUILD_OSX
++  storage = source;
++  const std::string desktopVersion = "#version 420 core";
++  size_t versionOffset = storage.find(desktopVersion);
++  if (versionOffset != std::string::npos) {
++    storage.replace(versionOffset, desktopVersion.size(), "#version 410 core");
++  }
++  return storage.c_str();
++#else
++  (void)storage;
++  return source;
++#endif
++}
++
+ void *SIM_RenderInit(void *arg) {
+ 
+ #ifdef SDK_BUILD_LINUX
+@@ -1314,7 +1384,13 @@ void *SIM_RenderInit(void *arg) {
+   UpdateMonitorRefreshRate(s_SIM_config.monitor);
+ 
+   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
++#ifdef SDK_BUILD_OSX
++  SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
++  SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS,
++                      SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG);
++#else
+   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
++#endif
+   SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+   SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+   SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+@@ -1351,18 +1427,39 @@ void *SIM_RenderInit(void *arg) {
+       windowWidth, windowHeight,
+       SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE
+           | (s_SIM_config.windowSizeMode == 5 ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0));
++  if (window == NULL) {
++    fprintf(stderr, "SDL_CreateWindow failed: %s\n", SDL_GetError());
++    exit(EXIT_FAILURE);
++  }
++
+   context = SDL_GL_CreateContext(window);
++  if (context == NULL) {
++    fprintf(stderr, "SDL_GL_CreateContext failed: %s\n", SDL_GetError());
++    exit(EXIT_FAILURE);
++  }
++
++#ifdef SDK_BUILD_OSX
++  // Avoid the blocking 60 Hz NSOpenGL swap path. macOS' compositor performs
++  // the actual display synchronization; the render loop is paced below.
++  SDL_GL_SetSwapInterval(0);
++#else
+   SDL_GL_SetSwapInterval(s_SIM_config.vsyncEnabled ? 1 : 0);
++#endif
+ 
+-  gladLoadGLLoader(SDL_GL_GetProcAddress);
++  if (!gladLoadGLLoader(SDL_GL_GetProcAddress)) {
++    fprintf(stderr, "Failed to load OpenGL functions\n");
++    exit(EXIT_FAILURE);
++  }
+ 
+   glViewport(0, 0, windowWidth, windowHeight);
+ 
+   glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+   glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
+ 
++#ifndef SDK_BUILD_OSX
+   glEnable(GL_DEBUG_OUTPUT);
+   glDebugMessageCallback(MessageCallback, 0);
++#endif
+ 
+   GLenum glErrCode;
+   GLint status;
+@@ -1414,7 +1511,11 @@ void *SIM_RenderInit(void *arg) {
+                GL_UNSIGNED_BYTE, NULL);
+ 
+ #define CompileShaderCommon(_id, _source)                                      \
+-  glShaderSource(_id, 1, &_source, NULL);                                      \
++  do {                                                                         \
++  std::string platformShaderStorage;                                           \
++  const char *platformShaderSource =                                           \
++      GetPlatformShaderSource(_source, platformShaderStorage);                 \
++  glShaderSource(_id, 1, &platformShaderSource, NULL);                          \
+   glCompileShader(_id);                                                        \
+   glGetShaderiv(_id, GL_COMPILE_STATUS, &status);                              \
+   if (status != GL_TRUE) {                                                     \
+@@ -1423,7 +1524,8 @@ void *SIM_RenderInit(void *arg) {
+     glGetShaderInfoLog(_id, logSize, &logSize, (GLchar *)errorBuf);            \
+     printf("ERROR COMPILING _source SHADER:\n%s\n", errorBuf);                 \
+     free(errorBuf);                                                            \
+-  }
++  }                                                                            \
++  } while (0)
+ 
+ #define CompileVertexShader(_id, _source)                                      \
+   _id = glCreateShader(GL_VERTEX_SHADER);                                      \
+@@ -1551,8 +1653,7 @@ void *SIM_RenderInit(void *arg) {
+ 
+   clock_gettime(CLOCK_MONOTONIC, &s_SIM_lastFrameEnd);
+   s_SIM_fpsWindowStart = MonotonicTimeNs(&s_SIM_lastFrameEnd);
+-  s_SIM_nextFrameDeadline = MonotonicTimeNs(&s_SIM_lastFrameEnd)
+-      + 1000000000ULL / 60;
++  s_SIM_nextFrameDeadline = s_SIM_fpsWindowStart + 1000000000ULL / 60;
+ 
+   return nullptr;
+ }
+@@ -1573,6 +1674,13 @@ static void DrawEngine(BOOL isSub) {
+   GLint bgPriorities[4];
+ 
+   u32 dispSel = s_reg_GX_POWCNT >> 15;
++  BOOL topScreen = dispSel ? !isSub : isSub;
++#ifdef SDK_BUILD_OSX
++  const size_t screenTextureBytes =
++      (size_t)4 * SIM_NDS_SCREEN_WIDTH * SIM_NDS_SCREEN_HEIGHT;
++  const size_t screenTextureOffset = topScreen ? screenTextureBytes : 0;
++  const GLint textureY = topScreen ? SIM_NDS_SCREEN_HEIGHT : 0;
++#endif
+ 
+   // Get the enabled BGs
+   u32 dispcnt = isSub ? s_reg_GXS_DB_DISPCNT : s_reg_GX_DISPCNT;
+@@ -1661,6 +1769,31 @@ static void DrawEngine(BOOL isSub) {
+   }
+ 
+   // Draw the Sprites
++#ifdef SDK_BUILD_OSX
++  if (isSub) {
++    memset(oam0sTex + screenTextureOffset, 0, screenTextureBytes);
++    memset(oam1sTex + screenTextureOffset, 0, screenTextureBytes);
++    memset(oam2sTex + screenTextureOffset, 0, screenTextureBytes);
++    memset(oam3sTex + screenTextureOffset, 0, screenTextureBytes);
++    memset(objWindowsTex + screenTextureOffset, 0, screenTextureBytes);
++  } else {
++    memset(oam0Tex + screenTextureOffset, 0, screenTextureBytes);
++    memset(oam1Tex + screenTextureOffset, 0, screenTextureBytes);
++    memset(oam2Tex + screenTextureOffset, 0, screenTextureBytes);
++    memset(oam3Tex + screenTextureOffset, 0, screenTextureBytes);
++    memset(objWindowTex + screenTextureOffset, 0, screenTextureBytes);
++  }
++
++  u8 *bgPixelBufs[4] = {
++      isSub ? bg0stex : bg0tex,
++      isSub ? bg1stex : bg1tex,
++      isSub ? bg2stex : bg2tex,
++      isSub ? bg3stex : bg3tex,
++  };
++  for (int i = 0; i < 4; i++) {
++    memset(bgPixelBufs[i] + screenTextureOffset, 0, screenTextureBytes);
++  }
++#else
+   if (isSub) {
+     memset(oam0sTex, 0, sizeof(oam0sTex));
+     memset(oam1sTex, 0, sizeof(oam1sTex));
+@@ -1674,6 +1807,7 @@ static void DrawEngine(BOOL isSub) {
+     memset(oam3Tex, 0, sizeof(oam3Tex));
+     memset(objWindowTex, 0, sizeof(objWindowTex));
+   }
++#endif
+ 
+   for (int i = 0; i < SIM_NDS_SCREEN_HEIGHT; i++) {
+     for (int bgnum = 0x0C00; bgnum >= 0x0000; bgnum -= 0x0400) {
+@@ -1759,9 +1893,15 @@ static void DrawEngine(BOOL isSub) {
+       oamPixelBuf = NULL;
+       break;
+     }
++#ifdef SDK_BUILD_OSX
++    glTexSubImage2D(GL_TEXTURE_2D, 0, 0, textureY, SIM_NDS_SCREEN_WIDTH,
++                    SIM_NDS_SCREEN_HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE,
++                    (void *)((u8 *)oamPixelBuf + screenTextureOffset));
++#else
+     glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, SIM_NDS_SCREEN_WIDTH,
+                     SIM_NDS_SCREEN_HEIGHT * 2, GL_RGBA, GL_UNSIGNED_BYTE,
+-                    (void *)oamPixelBuf);
++                    oamPixelBuf);
++#endif
+   }
+ 
+   glActiveTexture(GL_TEXTURE0 + s_bgTexUnits[0]);
+@@ -1780,9 +1920,15 @@ static void DrawEngine(BOOL isSub) {
+   glActiveTexture(GL_TEXTURE0 + s_objWindowTexUnit);
+   glBindTexture(GL_TEXTURE_2D, objWindowTextureId);
+   u8 *objWindowBuf = isSub ? objWindowsTex : objWindowTex;
++#ifdef SDK_BUILD_OSX
++  glTexSubImage2D(GL_TEXTURE_2D, 0, 0, textureY, SIM_NDS_SCREEN_WIDTH,
++                  SIM_NDS_SCREEN_HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE,
++                  (void *)(objWindowBuf + screenTextureOffset));
++#else
+   glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, SIM_NDS_SCREEN_WIDTH,
+                   SIM_NDS_SCREEN_HEIGHT * 2, GL_RGBA, GL_UNSIGNED_BYTE,
+-                  (void *)objWindowBuf);
++                  objWindowBuf);
++#endif
+   glProgramUniform1i(
+       g2shaderProgramID,
+       glGetUniformLocation(g2shaderProgramID, "objWindowTexture"),
+@@ -1800,7 +1946,6 @@ static void DrawEngine(BOOL isSub) {
+   glProgramUniform1i(g2shaderProgramID,
+                      glGetUniformLocation(g2shaderProgramID, "bldy"), bldy);
+ 
+-  int topScreen = dispSel ? !isSub : isSub;
+   glProgramUniform1i(g2shaderProgramID,
+                      glGetUniformLocation(g2shaderProgramID, "topScreen"),
+                      topScreen);
+@@ -1855,7 +2000,24 @@ static void DrawEngine(BOOL isSub) {
+ #endif
+ }
+ 
+-static BOOL CacheCurrentFrame(void) {
++#ifdef SDK_BUILD_OSX
++static void CopyFrontBufferToBackBuffer() {
++  int drawableWidth;
++  int drawableHeight;
++  SDL_GL_GetDrawableSize(window, &drawableWidth, &drawableHeight);
++
++  glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
++  glReadBuffer(GL_FRONT);
++  glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
++  glDrawBuffer(GL_BACK);
++  glBlitFramebuffer(0, 0, drawableWidth, drawableHeight,
++                    0, 0, drawableWidth, drawableHeight,
++                    GL_COLOR_BUFFER_BIT, GL_NEAREST);
++  glReadBuffer(GL_BACK);
++  glDrawBuffer(GL_BACK);
++}
++#else
++static BOOL CacheCurrentFrame() {
+   int drawableWidth;
+   int drawableHeight;
+   SDL_GL_GetDrawableSize(window, &drawableWidth, &drawableHeight);
+@@ -1892,7 +2054,7 @@ static BOOL CacheCurrentFrame(void) {
+   return TRUE;
+ }
+ 
+-static void CopyCachedFrameToBackBuffer(void) {
++static void CopyCachedFrameToBackBuffer() {
+   glBindFramebuffer(GL_READ_FRAMEBUFFER, sPresentationFramebufferId);
+   glReadBuffer(GL_COLOR_ATTACHMENT0);
+   glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+@@ -1903,6 +2065,7 @@ static void CopyCachedFrameToBackBuffer(void) {
+   glBindFramebuffer(GL_FRAMEBUFFER, 0);
+   glReadBuffer(GL_BACK);
+ }
++#endif
+ 
+ static void HandleExtraButtonDown(u32 button) {
+   __atomic_fetch_and(&s_reg_PAD_EXTRA_KEYINPUT, ~button, __ATOMIC_RELEASE);
+@@ -2017,6 +2180,11 @@ static void HandleJoystickKeyUp(int aKey) {
+ 
+ void *SIM_Render(void *arg) {
+ 
++  struct timespec renderStart;
++  clock_gettime(CLOCK_MONOTONIC, &renderStart);
++  u64 renderStartTime = MonotonicTimeNs(&renderStart);
++  s_SIM_outsideTime = renderStartTime - MonotonicTimeNs(&s_SIM_lastFrameEnd);
++
+   SDL_Event Event;
+   char c;
+   int x;
+@@ -2031,6 +2199,7 @@ void *SIM_Render(void *arg) {
+   G3SIM_DrawItems();
+ 
+   do {
++    BOOL perfWindowReady = FALSE;
+ #ifdef SDK_TRACY_ENABLE
+     TracyCZone(SimRenderZone, 1);
+ #endif
+@@ -2138,10 +2307,13 @@ void *SIM_Render(void *arg) {
+ 
+     while (SDL_PollEvent(&Event)) {
+       SIM_GUI_ProcessEvent(&Event);
++      if (Event.type == SDL_QUIT) {
++        exit(EXIT_SUCCESS);
++      }
+       if (Event.type == SDL_WINDOWEVENT) {
+         switch (Event.window.event) {
+         case SDL_WINDOWEVENT_CLOSE:
+-          exit(0);
++          exit(EXIT_SUCCESS);
+           break;
+         }
+       }
+@@ -2347,6 +2519,7 @@ void *SIM_Render(void *arg) {
+     SIM_GUI_NewFrame();
+     SIM_GUI_Main();
+ 
++#ifndef SDK_BUILD_OSX
+     memset(bgtex, 0,
+            sizeof(u8) * 4 * SIM_NDS_SCREEN_WIDTH * SIM_NDS_SCREEN_HEIGHT * 2);
+     memset(bg0tex, 0,
+@@ -2365,6 +2538,7 @@ void *SIM_Render(void *arg) {
+            sizeof(u8) * 4 * SIM_NDS_SCREEN_WIDTH * SIM_NDS_SCREEN_HEIGHT * 2);
+     memset(bg3stex, 0,
+            sizeof(u8) * 4 * SIM_NDS_SCREEN_WIDTH * SIM_NDS_SCREEN_HEIGHT * 2);
++#endif
+ 
+     // Draw MAIN engine
+     DrawEngine(FALSE);
+@@ -2381,43 +2555,129 @@ void *SIM_Render(void *arg) {
+     *((u32 *)HW_VBLANK_COUNT_BUF) = *((u32 *)HW_VBLANK_COUNT_BUF) + 1;
+ 
+     SIM_GUI_Render();
++#ifndef SDK_BUILD_OSX
+     BOOL cachedFrame = CacheCurrentFrame();
+-
++#endif
+ #ifdef SDK_TRACY_ENABLE
+     TracyCZoneEnd(SimRenderZone);
+ #endif
+-    u32 presentationFrameRate = s_SIM_config.frameRateMode == SIM_CONFIG_FRAME_RATE_30
++    // Present the rendered frame directly.
++    struct timespec curTime;
++    clock_gettime(CLOCK_MONOTONIC, &curTime);
++    u64 currentTime = MonotonicTimeNs(&curTime);
++    s_SIM_renderTime = currentTime - MonotonicTimeNs(&renderStart);
++
++    s_SIM_paceTime = 0;
++#ifdef SDK_BUILD_OSX
++    // Match the Linux scheduler: simulation remains at 60 Hz while presentation
++    // follows the selected display rate. A 120 Hz display therefore receives
++    // two paced presentations for each completed simulation frame.
++    u32 presentationFrameRate =
++        s_SIM_config.frameRateMode == SIM_CONFIG_FRAME_RATE_30
+         ? 30
+         : s_SIM_config.frameRateMode == SIM_CONFIG_FRAME_RATE_AUTO
+         ? sMonitorRefreshRate.load()
+         : 60;
+-    if (presentationFrameRate == 0) {
++    if (presentationFrameRate < 30 || presentationFrameRate > 240) {
+       presentationFrameRate = 60;
+     }
+-    u64 presentationInterval = 1000000000ULL / presentationFrameRate;
++    const u64 presentationInterval =
++        1000000000ULL / presentationFrameRate;
++    const u64 simulationInterval = 1000000000ULL / 60;
++    u64 frameDeadline = s_SIM_nextFrameDeadline;
++    if (frameDeadline == 0) {
++      frameDeadline = MonotonicTimeNs(&s_SIM_lastFrameEnd)
++          + simulationInterval;
++    }
++    if (s_SIM_nextPresentDeadline == 0) {
++      s_SIM_nextPresentDeadline = MonotonicTimeNs(&s_SIM_lastFrameEnd)
++          + presentationInterval;
++    }
+ 
+-    struct timespec curTime;
+-    clock_gettime(CLOCK_MONOTONIC, &curTime);
+-    u64 currentTime = MonotonicTimeNs(&curTime);
++    s_SIM_swapTime = 0;
++    u64 presentTime = currentTime;
++    BOOL needsCopy = FALSE;
++    while (s_SIM_nextPresentDeadline <= frameDeadline) {
++      const u64 paceStart = currentTime;
++      while (currentTime < s_SIM_nextPresentDeadline) {
++        u64 remainingMs =
++            (s_SIM_nextPresentDeadline - currentTime) / 1000000ULL;
++        if (remainingMs > 1) {
++          SDL_Delay(remainingMs - 1);
++        }
++        clock_gettime(CLOCK_MONOTONIC, &curTime);
++        currentTime = MonotonicTimeNs(&curTime);
++      }
++      s_SIM_paceTime += currentTime - paceStart;
++
++      if (needsCopy) {
++        CopyFrontBufferToBackBuffer();
++      }
++      clock_gettime(CLOCK_MONOTONIC, &curTime);
++      const u64 swapStart = MonotonicTimeNs(&curTime);
++      SDL_GL_SwapWindow(window);
++      clock_gettime(CLOCK_MONOTONIC, &curTime);
++      presentTime = MonotonicTimeNs(&curTime);
++      currentTime = presentTime;
++      s_SIM_swapTime += presentTime - swapStart;
++      s_SIM_presentedFrameCount++;
++      s_SIM_nextPresentDeadline += presentationInterval;
++      needsCopy = TRUE;
++    }
++
++    const u64 framePaceStart = currentTime;
++    while (currentTime < frameDeadline) {
++      u64 remainingMs = (frameDeadline - currentTime) / 1000000ULL;
++      if (remainingMs > 1) {
++        SDL_Delay(remainingMs - 1);
++      }
++      clock_gettime(CLOCK_MONOTONIC, &curTime);
++      currentTime = MonotonicTimeNs(&curTime);
++    }
++    s_SIM_paceTime += currentTime - framePaceStart;
++    presentTime = currentTime;
++    s_SIM_nextFrameDeadline = frameDeadline + simulationInterval;
++    if (s_SIM_nextFrameDeadline <= currentTime) {
++      s_SIM_nextFrameDeadline = currentTime + simulationInterval;
++    }
++#else
++    // Keep the original Linux/Windows scheduler unchanged. Game simulation is
++    // 60 Hz, while cached presentations may run at the selected higher rate.
++    u32 presentationFrameRate =
++        s_SIM_config.frameRateMode == SIM_CONFIG_FRAME_RATE_30
++        ? 30
++        : s_SIM_config.frameRateMode == SIM_CONFIG_FRAME_RATE_AUTO
++        ? sMonitorRefreshRate.load()
++        : 60;
++    if (presentationFrameRate == 0) {
++      presentationFrameRate = 60;
++    }
++    const u64 presentationInterval =
++        1000000000ULL / presentationFrameRate;
+     if (s_SIM_nextPresentDeadline == 0) {
+       s_SIM_nextPresentDeadline = currentTime + presentationInterval;
+     }
+ 
++    s_SIM_swapTime = 0;
++    u64 presentTime = currentTime;
+     BOOL needsCopy = FALSE;
+     while (s_SIM_nextPresentDeadline <= s_SIM_nextFrameDeadline) {
+       clock_gettime(CLOCK_MONOTONIC, &curTime);
+       currentTime = MonotonicTimeNs(&curTime);
+ 
+-      while (currentTime > s_SIM_nextPresentDeadline + presentationInterval) {
++      while (currentTime
++             > s_SIM_nextPresentDeadline + presentationInterval) {
+         s_SIM_nextPresentDeadline += presentationInterval;
+       }
+       if (s_SIM_nextPresentDeadline > s_SIM_nextFrameDeadline) {
+         break;
+       }
+ 
++      const u64 paceStart = currentTime;
+       if (!s_SIM_config.vsyncEnabled) {
+         while (currentTime < s_SIM_nextPresentDeadline) {
+-          u64 remainingMs = (s_SIM_nextPresentDeadline - currentTime) / 1000000ULL;
++          u64 remainingMs =
++              (s_SIM_nextPresentDeadline - currentTime) / 1000000ULL;
+           if (remainingMs > 1) {
+             SDL_Delay(remainingMs - 1);
+           }
+@@ -2425,6 +2685,7 @@ void *SIM_Render(void *arg) {
+           currentTime = MonotonicTimeNs(&curTime);
+         }
+       }
++      s_SIM_paceTime += currentTime - paceStart;
+ 
+       if (needsCopy) {
+         if (!cachedFrame) {
+@@ -2432,40 +2693,60 @@ void *SIM_Render(void *arg) {
+         }
+         CopyCachedFrameToBackBuffer();
+       }
++      clock_gettime(CLOCK_MONOTONIC, &curTime);
++      const u64 swapStart = MonotonicTimeNs(&curTime);
+       SDL_GL_SwapWindow(window);
+       clock_gettime(CLOCK_MONOTONIC, &curTime);
+-      u64 presentTime = MonotonicTimeNs(&curTime);
++      presentTime = MonotonicTimeNs(&curTime);
++      currentTime = presentTime;
++      s_SIM_swapTime += presentTime - swapStart;
+       s_SIM_presentedFrameCount++;
+-      u64 fpsWindowDuration = presentTime - s_SIM_fpsWindowStart;
+-      if (fpsWindowDuration >= 1000000000ULL) {
+-        s_SIM_presentedFps = (float)s_SIM_presentedFrameCount
+-            * 1000000000.0f / (float)fpsWindowDuration;
+-        s_SIM_presentedFrameCount = 0;
+-        s_SIM_fpsWindowStart = presentTime;
+-      }
+       s_SIM_nextPresentDeadline += presentationInterval;
+       needsCopy = TRUE;
+     }
+ 
+-    // The Nintendo DS simulation always advances at 60 Hz. Presentation may
+-    // skip frames, but it must never change the speed of game logic or audio.
+-    clock_gettime(CLOCK_MONOTONIC, &curTime);
+-    currentTime = MonotonicTimeNs(&curTime);
++    const u64 framePaceStart = currentTime;
+     while (currentTime < s_SIM_nextFrameDeadline) {
+-      u64 remainingMs = (s_SIM_nextFrameDeadline - currentTime) / 1000000ULL;
++      u64 remainingMs =
++          (s_SIM_nextFrameDeadline - currentTime) / 1000000ULL;
+       if (remainingMs > 1) {
+         SDL_Delay(remainingMs - 1);
+       }
+       clock_gettime(CLOCK_MONOTONIC, &curTime);
+       currentTime = MonotonicTimeNs(&curTime);
+     }
+-
+-    s_SIM_frameTime = currentTime - MonotonicTimeNs(&s_SIM_lastFrameEnd);
+-    s_SIM_lastFrameEnd = curTime;
++    s_SIM_paceTime += currentTime - framePaceStart;
++    presentTime = currentTime;
+     s_SIM_nextFrameDeadline += 1000000000ULL / 60;
+     if (s_SIM_nextFrameDeadline <= currentTime) {
+       s_SIM_nextFrameDeadline = currentTime + 1000000000ULL / 60;
+     }
++#endif
++    s_SIM_presentTime = s_SIM_paceTime + s_SIM_swapTime;
++    const u64 fpsWindowDuration = presentTime - s_SIM_fpsWindowStart;
++    if (fpsWindowDuration >= 1000000000ULL) {
++      s_SIM_presentedFps = (float)s_SIM_presentedFrameCount
++          * 1000000000.0f / (float)fpsWindowDuration;
++      perfWindowReady = TRUE;
++      s_SIM_presentedFrameCount = 0;
++      s_SIM_fpsWindowStart = presentTime;
++    }
++
++    s_SIM_frameTime = presentTime - MonotonicTimeNs(&s_SIM_lastFrameEnd);
++    s_SIM_gameTime = s_SIM_outsideTime;
++    s_SIM_lastFrameEnd = curTime;
++    if (perfWindowReady && getenv("LIBNTR_PERF_LOG") != NULL) {
++      fprintf(stderr,
++              "[perf] %.1f FPS, outside %.3f ms, render %.3f ms, present %.3f ms, "
++              "swap %.3f ms, pace %.3f ms, frame %.3f ms\n",
++              s_SIM_presentedFps,
++              (double)s_SIM_outsideTime / 1000000.0,
++              (double)s_SIM_renderTime / 1000000.0,
++              (double)s_SIM_presentTime / 1000000.0,
++              (double)s_SIM_swapTime / 1000000.0,
++              (double)s_SIM_paceTime / 1000000.0,
++              (double)s_SIM_frameTime / 1000000.0);
++    }
+ #ifdef SDK_TRACY_ENABLE
+     TracyCFrameMark;
+ #endif
+@@ -2530,6 +2811,35 @@ int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hInstPrev, PSTR cmdline,
+ #endif
+ 
+ int main(int argc, char *argv[]) {
++#ifdef SDK_BUILD_OSX
++  char executablePath[PATH_MAX];
++  uint32_t executablePathSize = sizeof(executablePath);
++
++  if (_NSGetExecutablePath(executablePath, &executablePathSize) == 0) {
++    char resolvedPath[PATH_MAX];
++
++    if (realpath(executablePath, resolvedPath) != NULL) {
++      char *lastSlash = strrchr(resolvedPath, '/');
++      if (lastSlash != NULL) {
++        *lastSlash = '\0';
++        if (chdir(resolvedPath) != 0) {
++          fprintf(stderr, "Failed to use executable directory: %s\n",
++                  resolvedPath);
++          return EXIT_FAILURE;
++        }
++      }
++    }
++  }
++#endif
++
++  if (getenv("POKEPLATINUM_VALIDATE_MODS") != NULL) {
++    Mods_Init();
++    u32 loadedModCount = Mods_GetLoadedCount();
++    fprintf(stderr, "[mods] validation: %u loaded\n", loadedModCount);
++    Mods_Shutdown();
++    return loadedModCount == 12 ? EXIT_SUCCESS : EXIT_FAILURE;
++  }
++
+ #ifdef SDK_BUILD_NX
+   // Start up libnx sockets
+   socketInitializeDefault();
+diff --git a/meson.build b/meson.build
+index 4e30d0d..c0c0eb8 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1,4 +1,4 @@
+-project('libntr', 'c', 'cpp', 'nasm',
++project('libntr', 'c', 'cpp',
+     default_options: {
+         'default_library': 'static',
+         'prefer_static':    false
+@@ -13,6 +13,10 @@ buildtype = get_option('buildtype')
+ cc = meson.get_compiler('c')
+ build_target = get_option('build_target')
+ 
++if build_target == 'arm'
++    add_languages('nasm', native: false)
++endif
++
+ ############################################################
+ ###                    COMPILER FLAGS                    ###
+ ############################################################
+@@ -103,6 +107,17 @@ if (build_target == 'linux')
+     ]
+ endif
+ 
++if (build_target == 'osx')
++    nitrosdk_args += [
++        '-DSDK_PORT',
++        '-DSDK_AARCH64',
++        '-DSDK_BUILD_LINUX',
++        '-DSDK_BUILD_OSX',
++        '-D_NITRO',
++        '-w',
++    ]
++endif
++
+ if (build_target == 'nx')
+     nitrosdk_args += [
+         '-DSDK_PORT',
+diff --git a/meson.options b/meson.options
+index 01157d3..c96fd16 100644
+--- a/meson.options
++++ b/meson.options
+@@ -2,7 +2,7 @@ option('standalone', type: 'boolean', value: false, description: 'Build a standa
+ option('mwrap_ver', type: 'string', value: 'default', description: 'Version of Metrowerks toolchain to use')
+ option('mwrap_sdk', type: 'string', value: 'default', description: 'Version of Metrowerks libraries to use')
+ option('sp1p3_conditionals', type: 'boolean', value: false)
+-option('build_target', type: 'combo', choices: ['arm', 'win64', 'linux', 'nx'], value: 'arm', description: 'Target build platform', yield: true)
++option('build_target', type: 'combo', choices: ['arm', 'win64', 'linux', 'osx', 'nx'], value: 'arm', description: 'Target build platform', yield: true)
+ option('tracy_enable' , type : 'boolean' , value : false, description : 'Enable profiling', yield: true)
+ option('card_game_code', type: 'string', value: '', description: 'Game Code. Must be exactly four letters.')
+ option('card_maker_code', type: 'string', value: '', description: 'Maker Code. Must be exactly two characters. Typically 01.')
+\ No newline at end of file

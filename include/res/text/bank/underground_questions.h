@@ -1,0 +1,30 @@
+#ifndef MSGENC_RES_TEXT_BANK_UNDERGROUND_QUESTIONS_H
+#define MSGENC_RES_TEXT_BANK_UNDERGROUND_QUESTIONS_H
+
+
+#define UndergroundQuestions_Text_FavoriteColor 0
+
+#define UndergroundQuestions_Text_FavoriteSport 1
+
+#define UndergroundQuestions_Text_FavoritePlace 2
+
+#define UndergroundQuestions_Text_FavoriteClass 3
+
+#define UndergroundQuestions_Text_LeastFavoriteClass 4
+
+#define UndergroundQuestions_Text_FavoriteThing 5
+
+#define UndergroundQuestions_Text_FavoritePersonality 6
+
+#define UndergroundQuestions_Text_MostWantedThing 7
+
+#define UndergroundQuestions_Text_OwnDream 8
+
+#define UndergroundQuestions_Text_FoodIWantNow 9
+
+#define UndergroundQuestions_Text_FavoritePokemon 10
+
+#define UndergroundQuestions_Text_HolidayActivity 11
+#define TEXT_BANK_UNDERGROUND_QUESTIONS_ENTRY_COUNT 12
+
+#endif 
