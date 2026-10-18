@@ -8,6 +8,7 @@
 #include <QMainWindow>
 #include <QMenuBar>
 #include <QScreen>
+#include <QSurfaceFormat>
 #include <QWindow>
 #include <qpa/qplatformnativeinterface.h>
 #include <dlfcn.h>
@@ -96,6 +97,14 @@ extern "C" void PlatformWindow_Init()
     static int argc = 1;
     static char name[] = "pokeplatinum";
     static char *argv[] = { name, nullptr };
+    // A packaged application must never mix its Qt with host Qt plugins.
+    const QString appDir = qEnvironmentVariable("APPDIR");
+    if (!appDir.isEmpty()) {
+        QCoreApplication::setLibraryPaths({appDir + "/usr/plugins"});
+    }
+    // Use the same EGL backend for Qt's X11 visual and SDL's foreign window.
+    // GLX independently chooses a framebuffer config and can fail with BadMatch.
+    qputenv("QT_XCB_GL_INTEGRATION", "xcb_egl");
     application = new QApplication(argc, argv);
     application->setApplicationName("pokeplatinum");
     application->setDesktopFileName("pokeplatinum");
@@ -120,6 +129,7 @@ extern "C" void PlatformWindow_Init()
     } else {
         SDL_SetHint("SDL_VIDEODRIVER", "x11");
         SDL_SetHint("SDL_VIDEO_DRIVER", "x11");
+        SDL_SetHint("SDL_VIDEO_FORCE_EGL", "1");
     }
 }
 
@@ -138,6 +148,16 @@ extern "C" SDL_Window *PlatformWindow_Create(const char *title, int width, int h
     QObject::connect(controls, &QAction::triggered, [] { pendingAction = 2; });
     viewport = new QWindow;
     viewport->setSurfaceType(QSurface::OpenGLSurface);
+    // The X11 visual is chosen when Qt creates this window. Match the game's
+    // framebuffer requirements before SDL attaches its OpenGL context.
+    QSurfaceFormat format;
+    format.setVersion(4, 2);
+    format.setProfile(QSurfaceFormat::CoreProfile);
+    format.setDepthBufferSize(24);
+    format.setStencilBufferSize(0);
+    format.setAlphaBufferSize(0);
+    format.setSwapBehavior(QSurfaceFormat::DoubleBuffer);
+    viewport->setFormat(format);
     auto *container = QWidget::createWindowContainer(viewport, shell);
     container->setFocusPolicy(Qt::StrongFocus);
     shell->setCentralWidget(container);

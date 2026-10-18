@@ -16,6 +16,13 @@ Download your platform's build from [Releases](../../releases), extract it and l
 - **Linux:** `pokeplatinum.AppImage` — mark it as executable first.
 - **macOS:** `Pokémon Platinum.app`
 
+The Linux x86-64 AppImage includes Qt, its plugins, SDL and the C/C++ runtime;
+you do not need to install a matching Qt version. It supports Wayland and X11
+and requires a working graphics driver with OpenGL 4.2 support. Shipped mods are
+included and installed beside the AppImage on first launch, preserving existing
+settings. Keep the AppImage in a writable folder. If FUSE is unavailable, launch
+it with `--appimage-extract-and-run`.
+
 Choose **File → Import ROM…** and select your Pokémon Platinum `.nds` file. Both US and European versions are supported. The game starts once the import finishes. You'll need your own ROM; it isn't included.
 
 ## Controls

@@ -141,6 +141,8 @@ elif [[ "$(uname -s)" == "Darwin" && "${SKIP_MACOS_APP:-0}" != "1" ]]; then
 elif [[ "$(uname -s)" == "Linux" && "${SKIP_APPIMAGE:-0}" != "1" ]]; then
   AppDir="$BUILDDIR/.build-temp/pokeplatinum.AppDir"
   LinuxDeploy="$PROJECTDIR/tools/linuxdeploy/linuxdeploy-x86_64.AppImage"
+  # Never retain Qt libraries from an earlier build after system updates.
+  rm -rf "$AppDir"
   mkdir -p "$AppDir/usr/bin" "$AppDir/usr/lib"
   cp "$BUILDDIR/main" "$AppDir/usr/bin/app"
   cp "$PROJECTDIR/icon.png" "$OUTPUTDIR/icon.png"
@@ -155,7 +157,8 @@ elif [[ "$(uname -s)" == "Linux" && "${SKIP_APPIMAGE:-0}" != "1" ]]; then
     chmod +x "$LinuxDeploy"
   fi
   # Qt platform plugins are loaded dynamically, so ELF dependency scanning
-  # alone cannot discover them. Bundle them beside the executable.
+  # alone cannot discover them. Deploy their dependencies in place so
+  # linuxdeploy sets the RUNPATH on the actual plugins Qt will load.
   QtPlugins=$(qtpaths6 --query QT_INSTALL_PLUGINS 2>/dev/null || /usr/lib/qt6/bin/qtpaths --query QT_INSTALL_PLUGINS)
   QtLibraries=()
   for Plugin in platforms/libqwayland.so platforms/libqxcb.so \
@@ -165,7 +168,7 @@ elif [[ "$(uname -s)" == "Linux" && "${SKIP_APPIMAGE:-0}" != "1" ]]; then
       platformthemes/KDEPlasmaPlatformTheme6.so; do
     mkdir -p "$AppDir/usr/plugins/$(dirname "$Plugin")"
     cp "$QtPlugins/$Plugin" "$AppDir/usr/plugins/$Plugin"
-    QtLibraries+=("--library=$AppDir/usr/plugins/$Plugin")
+    QtLibraries+=("--deploy-deps-only=$AppDir/usr/plugins/$Plugin")
   done
   # Plasma's platform theme reads the user's palette and selected widget
   # style. These plugins are dynamically loaded and invisible to ldd.
@@ -174,12 +177,39 @@ elif [[ "$(uname -s)" == "Linux" && "${SKIP_APPIMAGE:-0}" != "1" ]]; then
     [ -f "$Style" ] || continue
     mkdir -p "$AppDir/usr/plugins/styles"
     cp "$Style" "$AppDir/usr/plugins/styles/"
-    QtLibraries+=("--library=$AppDir/usr/plugins/styles/$(basename "$Style")")
+    QtLibraries+=("--deploy-deps-only=$AppDir/usr/plugins/styles/$(basename "$Style")")
+  done
+  for Category in xcbglintegrations; do
+    for PluginFile in "$QtPlugins/$Category"/*.so; do
+      [ -f "$PluginFile" ] || continue
+      mkdir -p "$AppDir/usr/plugins/$Category"
+      cp "$PluginFile" "$AppDir/usr/plugins/$Category/"
+      QtLibraries+=("--deploy-deps-only=$AppDir/usr/plugins/$Category/$(basename "$PluginFile")")
+    done
+  done
+  for Plugin in imageformats/libqsvg.so imageformats/libqico.so \
+      platforminputcontexts/libcomposeplatforminputcontextplugin.so \
+      platforminputcontexts/libibusplatforminputcontextplugin.so; do
+    [ -f "$QtPlugins/$Plugin" ] || continue
+    mkdir -p "$AppDir/usr/plugins/$(dirname "$Plugin")"
+    cp "$QtPlugins/$Plugin" "$AppDir/usr/plugins/$Plugin"
+    QtLibraries+=("--deploy-deps-only=$AppDir/usr/plugins/$Plugin")
   done
   printf '[Paths]\nPrefix=..\nPlugins=plugins\n' > "$AppDir/usr/bin/qt.conf"
   (cd "$BUILDDIR" && NO_STRIP=1 "$LinuxDeploy" --appdir "$AppDir" \
     --executable="$OUTPUTDIR/main" --desktop-file="$BUILDDIR/pokeplatinum.desktop" \
-    --icon-file="$AppDir/pokeplatinum.png" "${QtLibraries[@]}" --output appimage)
+    --icon-file="$AppDir/pokeplatinum.png" "${QtLibraries[@]}")
+  python3 "$PROJECTDIR/tools/scripts/bundle_linux_runtime.py" "$AppDir" "$BUILDDIR" "$PROJECTDIR"
+  # Replace linuxdeploy's executable symlink with the private-runtime entry point.
+  rm -f "$AppDir/AppRun"
+  cp "$PROJECTDIR/tools/linuxdeploy/AppRun" "$AppDir/AppRun"
+  chmod +x "$AppDir/AppRun"
+  # Package only after the runtime is complete. Running the deployment pass
+  # again could strip or rewrite the bundled libc/loader.
+  DeployTools="$BUILDDIR/.build-temp/linuxdeploy-tools"
+  mkdir -p "$DeployTools"
+  (cd "$DeployTools" && "$LinuxDeploy" --appimage-extract > /dev/null)
+  (cd "$BUILDDIR" && "$DeployTools/squashfs-root/usr/bin/linuxdeploy-plugin-appimage" --appdir "$AppDir")
   mv "$BUILDDIR/pokeplatinum-x86_64.AppImage" "$OUTPUTDIR/pokeplatinum.AppImage"
   # Keep the compiler's executable; remove only the loose release copy.
   rm -f "$OUTPUTDIR/main"

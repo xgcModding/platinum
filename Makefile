@@ -139,6 +139,7 @@ linux: export APPIMAGE_EXTRACT_AND_RUN := 1
 linux: $(CACHE_LINUX)/build.ninja
 	mkdir -p "$(TMPDIR)"
 	python3 tools/scripts/sync_libntr_patch.py
+	$(MESON) setup --reconfigure --clearcache $(CACHE_LINUX)
 	$(MESON) compile -C $(CACHE_LINUX)
 
 osx: $(CACHE_OSX)/build.ninja

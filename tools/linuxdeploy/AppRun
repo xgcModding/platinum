@@ -1,0 +1,36 @@
+#!/bin/sh
+set -eu
+
+APPDIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+export APPDIR
+
+# Do not inherit plugin or loader paths from another Qt application/launcher.
+unset QT_PLUGIN_PATH QT_QPA_PLATFORM_PLUGIN_PATH QML_IMPORT_PATH QML2_IMPORT_PATH
+unset LD_LIBRARY_PATH LD_PRELOAD
+QT_PLUGIN_PATH="$APPDIR/usr/plugins"
+export QT_PLUGIN_PATH
+
+# Install shipped defaults beside the AppImage, without replacing user data.
+# No ROM, imported assets, settings or save from the build machine is bundled.
+if [ -n "${APPIMAGE:-}" ]; then
+    DataDir=$(dirname -- "$APPIMAGE")
+else
+    DataDir=$APPDIR
+    APPIMAGE="$APPDIR/AppRun"
+    export APPIMAGE
+fi
+Defaults="$APPDIR/usr/share/pokeplatinum/defaults"
+if [ -d "$Defaults" ]; then
+    (cd "$Defaults" && find . -type f) | while IFS= read -r File; do
+        if [ ! -e "$DataDir/$File" ]; then
+            mkdir -p -- "$(dirname -- "$DataDir/$File")"
+            cp -n -- "$Defaults/$File" "$DataDir/$File"
+        fi
+    done
+fi
+
+# Use the matching bundled glibc and loader as well as Qt/SDL. This avoids
+# imposing the build distribution's GLIBC/GLIBCXX versions on the recipient.
+# --library-path applies only to the game, not to external desktop programs.
+exec "$APPDIR/usr/lib/ld-linux-x86-64.so.2" \
+    --library-path "$APPDIR/usr/lib" "$APPDIR/usr/bin/app" "$@"

@@ -127,11 +127,12 @@ static void Log(const char *modId, const char *message)
 static void *ResolveElfSymbol(const char *name)
 {
     char executable[MAX_MOD_PATH];
-    ssize_t executableLength = readlink("/proc/self/exe", executable, sizeof(executable) - 1);
-    if (executableLength <= 0) {
+    Dl_info image;
+    // With a private ELF loader, /proc/self/exe names ld-linux, not the game.
+    if (!dladdr((void *)ResolveElfSymbol, &image)
+        || realpath(image.dli_fname, executable) == NULL) {
         return NULL;
     }
-    executable[executableLength] = '\0';
 
     int fd = open(executable, O_RDONLY);
     if (fd < 0) {
@@ -178,22 +179,7 @@ static void *ResolveElfSymbol(const char *name)
                 if (strcmp(strings + symbols[symbolIndex].st_name, name) == 0) {
                     uintptr_t base = 0;
                     if (header->e_type == ET_DYN) {
-                        FILE *maps = fopen("/proc/self/maps", "r");
-                        if (maps != NULL) {
-                            char line[MAX_MOD_PATH + 128];
-                            while (fgets(line, sizeof(line), maps) != NULL) {
-                                unsigned long start;
-                                unsigned long offset;
-                                char mappedPath[MAX_MOD_PATH];
-                                if (sscanf(line, "%lx-%*lx %*s %lx %*s %*s %4095s", &start, &offset, mappedPath) == 3
-                                    && offset == 0
-                                    && strcmp(mappedPath, executable) == 0) {
-                                    base = start;
-                                    break;
-                                }
-                            }
-                            fclose(maps);
-                        }
+                        base = (uintptr_t)image.dli_fbase;
                     }
                     if (header->e_type != ET_DYN || base != 0) {
                         result = (void *)(base + symbols[symbolIndex].st_value);
@@ -1395,11 +1381,9 @@ static void LoadDefaultDirectories(void)
 #elif defined(_WIN32)
     int hasExecutablePath = ModWindows_ExecutablePath(executable, sizeof(executable));
 #else
-    ssize_t length = readlink("/proc/self/exe", executable, sizeof(executable) - 1);
-    int hasExecutablePath = length > 0;
-    if (hasExecutablePath) {
-        executable[length] = '\0';
-    }
+    Dl_info image;
+    int hasExecutablePath = dladdr((void *)LoadDefaultDirectories, &image)
+        && realpath(image.dli_fname, executable) != NULL;
 #endif
     if (hasExecutablePath) {
         char *separator = strrchr(executable, '/');

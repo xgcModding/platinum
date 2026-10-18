@@ -700,7 +700,8 @@ custom_target('desktop-release',
     command: [copy_files_script, meson.global_build_root(), filesys_csv,
         meson.get_external_property('release_dir', meson.project_source_root() / ('build_' + build_target)),
         meson.project_source_root()],
-    depend_files: files('tools/scripts/create_macos_app.py', 'icon.png'),
+    depend_files: files('tools/scripts/create_macos_app.py',
+        'tools/scripts/bundle_linux_runtime.py', 'tools/linuxdeploy/AppRun', 'icon.png'),
     build_by_default: true,
 )
 
