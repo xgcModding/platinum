@@ -1,6 +1,6 @@
 [wrap-git]
 url = https://github.com/cybervisi0n/libntr.git
-revision = main
+revision = 6bee622411de6d998474f8193bbdcbcc0d14d768
 depth = 1
 directory = libntr
 diff_files = libntr-pokeplatinum.patch

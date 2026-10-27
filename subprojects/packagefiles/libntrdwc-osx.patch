@@ -22,6 +22,5 @@ diff --git a/libraries/auth/src/dwc_prof.c b/libraries/auth/src/dwc_prof.c
  typedef ushort wctype_t;
 +#endif
  
- typedef struct DWCAuthParam DWCAuthParam, *PDWCAuthParam;
+ typedef struct OSThreadInfo OSThreadInfo, *POSThreadInfo;
  
- typedef struct DWCAuthResult DWCAuthResult, *PDWCAuthResult;

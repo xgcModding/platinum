@@ -1,6 +1,6 @@
 [wrap-git]
 url = https://github.com/cybervisi0n/libntrdwc.git
-revision = main
+revision = 16246ba7b4269e6686f3e4da068e3c996a103739
 depth = 1
 directory = libntrdwc
 diff_files = libntrdwc-osx.patch

@@ -2252,10 +2252,10 @@ index 27a5378..be4871550d7dfb63e4f2de6589706eed09f0ea5a 100644
 +    TrimTextureCache();
 +}
 diff --git a/libraries/sim/src/g3_handler.cpp b/libraries/sim/src/g3_handler.cpp
-index 7ad7abd..4009d59b031bcf83b7e6673dc8e00ea73566841a 100644
+index 7ad7abdc793dc067bcaa1836e6f2ce6d9a13007e..4009d59b031bcf83b7e6673dc8e00ea73566841a 100644
 --- a/libraries/sim/src/g3_handler.cpp
 +++ b/libraries/sim/src/g3_handler.cpp
-@@ -414,7 +414,9 @@ void G3SIM_Begin(GXBegin type)
+@@ -414,7 +414,9 @@
      }
      snprintf(debugMessage, 50, "GX_Begin %s", typeString);
  
@@ -2265,7 +2265,7 @@ index 7ad7abd..4009d59b031bcf83b7e6673dc8e00ea73566841a 100644
      s_primType = type;
      s_G3numInPoly = 0;
      s_G3drawPoly = 0;
-@@ -741,7 +743,7 @@ void G3SIM_DecodeTexA3I5(u8* vramTex, u16* colorAddr, u8* out, u32 s, u32 t)
+@@ -741,7 +743,7 @@
  			texOffset++;
  			out[texOffset] = b;
  			texOffset++;
@@ -2274,7 +2274,7 @@ index 7ad7abd..4009d59b031bcf83b7e6673dc8e00ea73566841a 100644
  			texOffset++;
              vramTex++;
          }
-@@ -779,7 +781,7 @@ void G3SIM_DecodeTexA5I3(u8* vramTex, u16* colorAddr, u8* out, u32 s, u32 t)
+@@ -779,7 +781,7 @@
  			texOffset++;
  			out[texOffset] = b;
  			texOffset++;
@@ -2283,7 +2283,10 @@ index 7ad7abd..4009d59b031bcf83b7e6673dc8e00ea73566841a 100644
  			texOffset++;
              vramTex++;
          }
-@@ -1317,4 +1319,4 @@ void G3SIM_MtxTranslate(fx32* trans)
+@@ -1314,10 +1316,10 @@
+         currentPositionMatrix.nums[3][2] += (FX_Mul(s[0],currentPositionMatrix.nums[0][2]) + FX_Mul(s[1],currentPositionMatrix.nums[1][2]) + FX_Mul(s[2],currentPositionMatrix.nums[2][2]));
+         currentPositionMatrix.nums[3][3] += (FX_Mul(s[0],currentPositionMatrix.nums[0][3]) + FX_Mul(s[1],currentPositionMatrix.nums[1][3]) + FX_Mul(s[2],currentPositionMatrix.nums[2][3]));
+     }
 -    matrix->nums[3][1] += (FX_Mul(s[0],matrix->nums[0][0]) + FX_Mul(s[1],matrix->nums[1][0]) + FX_Mul(s[2],matrix->nums[2][0]));
 +    matrix->nums[3][0] += (FX_Mul(s[0],matrix->nums[0][0]) + FX_Mul(s[1],matrix->nums[1][0]) + FX_Mul(s[2],matrix->nums[2][0]));
      matrix->nums[3][1] += (FX_Mul(s[0],matrix->nums[0][1]) + FX_Mul(s[1],matrix->nums[1][1]) + FX_Mul(s[2],matrix->nums[2][1]));
@@ -2291,7 +2294,10 @@ index 7ad7abd..4009d59b031bcf83b7e6673dc8e00ea73566841a 100644
 -    matrix->nums[3][1] += (FX_Mul(s[0],matrix->nums[0][3]) + FX_Mul(s[1],matrix->nums[1][3]) + FX_Mul(s[2],matrix->nums[2][3]));
 +    matrix->nums[3][2] += (FX_Mul(s[0],matrix->nums[0][2]) + FX_Mul(s[1],matrix->nums[1][2]) + FX_Mul(s[2],matrix->nums[2][2]));
 +    matrix->nums[3][3] += (FX_Mul(s[0],matrix->nums[0][3]) + FX_Mul(s[1],matrix->nums[1][3]) + FX_Mul(s[2],matrix->nums[2][3]));
-@@ -1442,29 +1444,22 @@ void G3SIM_PolygonAttr(u32 data)
+ 
+     if( s_curMtxMode != GX_MTXMODE_TEXTURE )
+     {
+@@ -1442,22 +1444,14 @@
      u8 alpha = (data & 0b111110000000000000000) >> 16;
      u8 polygonMode = (data & 0b110000) >> 4;
      u8 cullMode = (data & 0b11000000) >> 6;
@@ -2304,8 +2310,8 @@ index 7ad7abd..4009d59b031bcf83b7e6673dc8e00ea73566841a 100644
      {
          // Flush the vertex buffer
          G3SIM_FlushArray();
-     }
- 
+-    }
+-
 -    if(depthTest != s_curPolygonAttr.depthTest)
 -    {
 -        if(depthTest){
@@ -2313,10 +2319,10 @@ index 7ad7abd..4009d59b031bcf83b7e6673dc8e00ea73566841a 100644
 -        } else {
 -            glDepthFunc(GL_LESS);
 -        }
--    }
--
+     }
+ 
      s_curPolygonAttr.lightFlag = lightFlag;
-     s_curPolygonAttr.cullMode = cullMode;
+@@ -1465,6 +1459,7 @@
      s_curPolygonAttr.polygonMode = polygonMode;
      s_curPolygonAttr.alphaInt = alpha;
      s_curPolygonAttr.depthTest = depthTest;
@@ -2324,7 +2330,7 @@ index 7ad7abd..4009d59b031bcf83b7e6673dc8e00ea73566841a 100644
      s_curPolygonAttr.fogEnable = useFog;
  
      if(alpha == 31){
-@@ -1473,26 +1468,9 @@ void G3SIM_PolygonAttr(u32 data)
+@@ -1473,26 +1468,9 @@
          s_curPolygonAttr.alpha = (float)alpha / 31.0f;
      }
  
@@ -2346,14 +2352,15 @@ index 7ad7abd..4009d59b031bcf83b7e6673dc8e00ea73566841a 100644
 -            break;
 -    }
 -
+-
+-    return;
 +    // GL depth/culling state is applied with the batch in g3_draw.cpp.
 +    // Changing it here would also affect older deferred batches.
- 
--    return;
++
  }
  
  void G3SIM_SpecEmi(u32 data)
-@@ -1522,6 +1500,9 @@ void G3SIM_SpecEmi(u32 data)
+@@ -1522,6 +1500,9 @@
  //SwapBuffers
  void G3SIM_SwapBuffers(u8 depthBufferMode)
  {
@@ -2363,7 +2370,7 @@ index 7ad7abd..4009d59b031bcf83b7e6673dc8e00ea73566841a 100644
      s_SIM_useWBuffer = depthBufferMode;
      s_swapBuffersCalledThisFrame = TRUE;
  }
-@@ -1667,7 +1648,7 @@ void G3SIM_Vtx(s16 x, s16 y, s16 z)
+@@ -1667,7 +1648,7 @@
      return;
  }
  
@@ -2372,7 +2379,7 @@ index 7ad7abd..4009d59b031bcf83b7e6673dc8e00ea73566841a 100644
      G3SIM_Vertex_t glVerts[6];
      u8 addPolygon = TRUE;
      int numFinalVerts = numVerts;
-@@ -1678,10 +1659,10 @@ void G3SIM_SubmitPolygon(G3SIM_FxVtx_t * fxVerts, int numVerts) {
+@@ -1678,10 +1659,10 @@
      }
  
      for(int i=0; i < numVerts; i++) {
@@ -2387,7 +2394,7 @@ index 7ad7abd..4009d59b031bcf83b7e6673dc8e00ea73566841a 100644
      
          float floatX, floatY, floatW;
          float screenX, screenY;
-@@ -1708,20 +1689,20 @@ void G3SIM_SubmitPolygon(G3SIM_FxVtx_t * fxVerts, int numVerts) {
+@@ -1708,20 +1689,20 @@
  
      // Get the W size and remove the polygon if W is 0
      u32 wsize = 0;
@@ -2413,7 +2420,7 @@ index 7ad7abd..4009d59b031bcf83b7e6673dc8e00ea73566841a 100644
          
          s32 w, wshifted;
          
-@@ -1752,7 +1733,9 @@ void G3SIM_SubmitPolygon(G3SIM_FxVtx_t * fxVerts, int numVerts) {
+@@ -1752,7 +1733,9 @@
          }
          
          glVerts[i].z = (((float)z / 16777215.0f) * 2.0f) - 1.0f;
@@ -2424,7 +2431,7 @@ index 7ad7abd..4009d59b031bcf83b7e6673dc8e00ea73566841a 100644
      }
  
      // If we have a quad, convert it into 2 triangles
-@@ -1793,3 +1776,75 @@ void G3SIM_SubmitPolygon(G3SIM_FxVtx_t * fxVerts, int numVerts) {
+@@ -1793,3 +1776,75 @@
  
  
  }
@@ -6457,7 +6464,7 @@ index edb0737..289cc97 100644
  }
 -
 diff --git a/meson.build b/meson.build
-index 4e30d0d..c0c0eb8 100644
+index 26bdd35acaff706c5751a1a3a52a42e977402bd1..4d9c48dae027a74ebcf5945e89c27e61b7979e71 100644
 --- a/meson.build
 +++ b/meson.build
 @@ -1,4 +1,4 @@
@@ -6466,18 +6473,18 @@ index 4e30d0d..c0c0eb8 100644
      default_options: {
          'default_library': 'static',
          'prefer_static':    false
-@@ -13,6 +13,10 @@ buildtype = get_option('buildtype')
- cc = meson.get_compiler('c')
+@@ -14,6 +14,10 @@
  build_target = get_option('build_target')
- 
+ sdk_version_major = get_option('sdk_version_major')
+ hardware_type = get_option('hardware_type')
++
 +if build_target == 'arm'
 +    add_languages('nasm', native: false)
 +endif
-+
+ 
  ############################################################
  ###                    COMPILER FLAGS                    ###
- ############################################################
-@@ -103,6 +107,17 @@ if (build_target == 'linux')
+@@ -133,6 +137,17 @@
      ]
  endif
  
@@ -6496,19 +6503,18 @@ index 4e30d0d..c0c0eb8 100644
      nitrosdk_args += [
          '-DSDK_PORT',
 diff --git a/meson.options b/meson.options
-index 01157d3..c96fd16 100644
+index e3c3160bfab39fa8d7bb2170b796a26faf297a77..8fea9756ff1b1ec15974c5f009c45c9ea4d5e9fe 100644
 --- a/meson.options
 +++ b/meson.options
-@@ -2,7 +2,7 @@ option('standalone', type: 'boolean', value: false, description: 'Build a standa
+@@ -2,7 +2,7 @@
  option('mwrap_ver', type: 'string', value: 'default', description: 'Version of Metrowerks toolchain to use')
  option('mwrap_sdk', type: 'string', value: 'default', description: 'Version of Metrowerks libraries to use')
  option('sp1p3_conditionals', type: 'boolean', value: false)
 -option('build_target', type: 'combo', choices: ['arm', 'win64', 'linux', 'nx'], value: 'arm', description: 'Target build platform', yield: true)
 +option('build_target', type: 'combo', choices: ['arm', 'win64', 'linux', 'osx', 'nx'], value: 'arm', description: 'Target build platform', yield: true)
  option('tracy_enable' , type : 'boolean' , value : false, description : 'Enable profiling', yield: true)
- option('card_game_code', type: 'string', value: '', description: 'Game Code. Must be exactly four letters.')
- option('card_maker_code', type: 'string', value: '', description: 'Maker Code. Must be exactly two characters. Typically 01.')
-\ No newline at end of file
+ option('sdk_version_major', type: 'integer', value: 4, description: 'Major version of the SDK. Currently supported versions: 4 (NitroSDK 4.x), 5 (TwlSDK)', yield: true)
+ option('hardware_type', type: 'combo', choices: ['ntr', 'twl_hyb', 'twl_ltd'], description: 'Hardware device type. ntr=DS, twl_hyb=DSi/DS combined build, twl_ltd=DSi only. On SDK major versions below 5, ntr is the only supported device type.', yield: true)
 diff --git a/libraries/sim/cimgui/meson.build b/libraries/sim/cimgui/meson.build
 index 16461fb62..8b9603f7c 100644
 --- a/libraries/sim/cimgui/meson.build
@@ -6526,10 +6532,10 @@ index 16461fb62..8b9603f7c 100644
  libcimgui_cpp_args += ['-I/opt/devkitpro/portlibs/switch/include', '-I/opt/devkitpro/libnx/include', '-DSDK_BUILD_NX']
  endif
 diff --git a/libraries/fs/src/fs_file.c b/libraries/fs/src/fs_file.c
-index 0e31e768869e6d5a7482df5a0e4e23d72d512087..c40d12d4f60e2fad05a353d1e1b1f52f61cf2a5a 100644
+index 02fb865a1129bd51efe94d3dfdab3e3513e820b2..1f6e9f4c48624bb964263a7432260475eb40e5e9 100644
 --- a/libraries/fs/src/fs_file.c
 +++ b/libraries/fs/src/fs_file.c
-@@ -10,6 +10,8 @@
+@@ -19,6 +19,8 @@
  #ifdef SDK_PORT
  #include <string.h>
  #include <SDL2/SDL.h>
@@ -6537,8 +6543,8 @@ index 0e31e768869e6d5a7482df5a0e4e23d72d512087..c40d12d4f60e2fad05a353d1e1b1f52f
 +extern FILE *RomImport_OpenAsset(const char *path) __attribute__((weak));
  #endif
  
- #if !defined(SDK_FINALROM)
-@@ -273,7 +275,7 @@
+ #if SDK_VERSION_MAJOR == 5
+@@ -435,7 +437,7 @@
  	p_file->pcFilePtr = NULL;
  	if( strcmp( romName, p_file->arc->name.ptr) == 0 )
  	{
@@ -6547,7 +6553,7 @@ index 0e31e768869e6d5a7482df5a0e4e23d72d512087..c40d12d4f60e2fad05a353d1e1b1f52f
  		if( p_file->pcFilePtr == NULL )
  		{
  			return FALSE;
-@@ -324,7 +326,7 @@
+@@ -510,7 +512,7 @@
  		path = path + 1;
  	}
  	p_file->pcFilePtr = NULL;
@@ -6556,7 +6562,7 @@ index 0e31e768869e6d5a7482df5a0e4e23d72d512087..c40d12d4f60e2fad05a353d1e1b1f52f
  	if(p_file->pcFilePtr == NULL) {
  		// Try opening with lowercase path
  		char * lowercasePath = malloc(sizeof(char) * strlen(path) + 1);
-@@ -333,7 +335,7 @@
+@@ -519,7 +521,7 @@
  		for(int i=0; i < strlen(path); i++) {
  			lowercasePath[i] = tolower(path[i]);
  		}
@@ -6565,7 +6571,7 @@ index 0e31e768869e6d5a7482df5a0e4e23d72d512087..c40d12d4f60e2fad05a353d1e1b1f52f
  		free(lowercasePath);
  	}
  	if( p_file->pcFilePtr != NULL )
-@@ -350,9 +352,7 @@
+@@ -536,9 +538,7 @@
  	}
  	else
  	{

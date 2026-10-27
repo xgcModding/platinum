@@ -10,12 +10,23 @@ set -euxo pipefail
 case "$SKREW_SYS" in
 windows)
     SKREW_EXT=".7z"
-    EXTRACTOR="p7zip -d"
+    if command -v 7z >/dev/null 2>&1; then
+        EXTRACTOR=(7z x -y)
+    elif command -v 7zz >/dev/null 2>&1; then
+        EXTRACTOR=(7zz x -y)
+    elif command -v bsdtar >/dev/null 2>&1; then
+        EXTRACTOR=(bsdtar -xf)
+    elif command -v p7zip >/dev/null 2>&1; then
+        EXTRACTOR=(p7zip -d)
+    else
+        echo "Install 7-Zip or bsdtar to extract Metroskrew." >&2
+        exit 1
+    fi
     ;;
 
 linux | wine)
     SKREW_EXT=".tar.xz"
-    EXTRACTOR="tar xf"
+    EXTRACTOR=(tar xf)
     ;;
 
 *)
@@ -37,7 +48,7 @@ rm -rf "$SKREW_DIR"
 # We extract the archive to `/tmp` to ensure that Windows does not muddle with permissions.
 pushd "$TMP" >/dev/null
 wget --quiet --show-progress -O "$SKREW_ARC" "$SKREW_URL"
-$EXTRACTOR "$SKREW_ARC"
+"${EXTRACTOR[@]}" "$SKREW_ARC"
 popd >/dev/null
 
 mv "$SKREW_TMP" "$SKREW_DIR"
