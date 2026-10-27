@@ -4289,7 +4289,7 @@ index 86cd85e..7ce8f5a 100644
    TracyCZone(ctx, 1);
  #endif
 diff --git a/libraries/sim/src/sim_main.cpp b/libraries/sim/src/sim_main.cpp
-index 040a9d5876dfad051abc4665fbdacdc5e256e2a5..91d9d22b12073b572b8a5cc75a6f0a8b09067600 100644
+index 040a9d5876dfad051abc4665fbdacdc5e256e2a5..d914f57fba0311619c07a9c7859db07af03bba00 100644
 --- a/libraries/sim/src/sim_main.cpp
 +++ b/libraries/sim/src/sim_main.cpp
 @@ -1,12 +1,38 @@
@@ -4316,7 +4316,7 @@ index 040a9d5876dfad051abc4665fbdacdc5e256e2a5..91d9d22b12073b572b8a5cc75a6f0a8b
  #include <pthread.h>
  #include <SDL2/SDL.h>
  #include <SDL2/SDL_events.h>
-+#ifdef SDK_BUILD_LINUX
++#if defined(SDK_BUILD_LINUX) && !defined(SDK_BUILD_OSX) && !defined(SDK_BUILD_WIN64)
 +extern "C" void PlatformWindow_Init();
 +extern "C" SDL_Window *PlatformWindow_Create(const char *, int, int, int, int);
 +extern "C" int PlatformWindow_SetFullscreen(SDL_Window *, unsigned);
@@ -4326,7 +4326,7 @@ index 040a9d5876dfad051abc4665fbdacdc5e256e2a5..91d9d22b12073b572b8a5cc75a6f0a8b
 +#define SDL_SetWindowSize PlatformWindow_SetSize
 +#define SDL_SetWindowPosition PlatformWindow_SetPosition
 +#endif
-+#ifdef SDK_BUILD_LINUX
++#if defined(SDK_BUILD_LINUX) && !defined(SDK_BUILD_OSX) && !defined(SDK_BUILD_WIN64)
 +#include <png.h>
 +#endif
  
@@ -4541,7 +4541,7 @@ index 040a9d5876dfad051abc4665fbdacdc5e256e2a5..91d9d22b12073b572b8a5cc75a6f0a8b
 +static u64 s_SIM_nextPresentDeadline;
 +static u64 s_SIM_fpsWindowStart;
 +static u32 s_SIM_presentedFrameCount;
-+#ifdef SDK_BUILD_LINUX
++#if defined(SDK_BUILD_LINUX) && !defined(SDK_BUILD_OSX) && !defined(SDK_BUILD_WIN64)
 +static GLuint sPresentationTextureId;
 +static GLuint sPresentationFramebufferId;
 +static int sPresentationWidth;
@@ -5068,7 +5068,7 @@ index 040a9d5876dfad051abc4665fbdacdc5e256e2a5..91d9d22b12073b572b8a5cc75a6f0a8b
 +    const u32 newFrameRate = frameRateChanged
 +        ? requestedFrameRate - 1 : s_SIM_config.frameRateMode;
 +    if (
-+#ifdef SDK_BUILD_LINUX
++#if defined(SDK_BUILD_LINUX) && !defined(SDK_BUILD_OSX) && !defined(SDK_BUILD_WIN64)
 +        sPresentationRunning.load() ||
 +#endif
 +        SDL_GL_SetSwapInterval(DesiredSwapInterval(newVsync, newFrameRate)) == 0) {
@@ -5146,7 +5146,7 @@ index 040a9d5876dfad051abc4665fbdacdc5e256e2a5..91d9d22b12073b572b8a5cc75a6f0a8b
 +
  void *SIM_RenderInit(void *arg) {
  
-+#ifdef SDK_BUILD_LINUX
++#if defined(SDK_BUILD_LINUX) && !defined(SDK_BUILD_OSX) && !defined(SDK_BUILD_WIN64)
 +  // PulseAudio otherwise negotiates an excessively small buffer on this host,
 +  // which causes persistent crackling and dropouts.
 +  SDL_setenv("PULSE_LATENCY_MSEC", "60", 0);
@@ -5160,7 +5160,7 @@ index 040a9d5876dfad051abc4665fbdacdc5e256e2a5..91d9d22b12073b572b8a5cc75a6f0a8b
 +  SDL_SetHint("SDL_WINDOWS_DPI_AWARENESS", "permonitorv2");
 +#endif
 +
-+#ifdef SDK_BUILD_LINUX
++#if defined(SDK_BUILD_LINUX) && !defined(SDK_BUILD_OSX) && !defined(SDK_BUILD_WIN64)
 +  PlatformWindow_Init();
 +#endif
    SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER |
@@ -5225,7 +5225,7 @@ index 040a9d5876dfad051abc4665fbdacdc5e256e2a5..91d9d22b12073b572b8a5cc75a6f0a8b
                    std::string(makerCode) + "]";
    }
  
-+#ifdef SDK_BUILD_LINUX
++#if defined(SDK_BUILD_LINUX) && !defined(SDK_BUILD_OSX) && !defined(SDK_BUILD_WIN64)
 +  window = PlatformWindow_Create(windowTitle.c_str(), windowWidth, windowHeight,
 +      s_SIM_config.monitor - 1, s_SIM_config.windowSizeMode == 5);
 +#else
@@ -5244,7 +5244,7 @@ index 040a9d5876dfad051abc4665fbdacdc5e256e2a5..91d9d22b12073b572b8a5cc75a6f0a8b
 +    exit(EXIT_FAILURE);
 +  }
 +
-+#ifdef SDK_BUILD_LINUX
++#if defined(SDK_BUILD_LINUX) && !defined(SDK_BUILD_OSX) && !defined(SDK_BUILD_WIN64)
 +    png_image icon = {};
 +    icon.version = PNG_IMAGE_VERSION;
 +    if (png_image_begin_read_from_file(&icon, "icon.png")) {
@@ -5826,7 +5826,7 @@ index 040a9d5876dfad051abc4665fbdacdc5e256e2a5..91d9d22b12073b572b8a5cc75a6f0a8b
  
    do {
 +    BOOL perfWindowReady = FALSE;
-+#ifdef SDK_BUILD_LINUX
++#if defined(SDK_BUILD_LINUX) && !defined(SDK_BUILD_OSX) && !defined(SDK_BUILD_WIN64)
 +    const BOOL hasPresentationFrame = BeginPresentationFrame();
 +#endif
  #ifdef SDK_TRACY_ENABLE
@@ -5836,7 +5836,7 @@ index 040a9d5876dfad051abc4665fbdacdc5e256e2a5..91d9d22b12073b572b8a5cc75a6f0a8b
      }
  
      // Unbind 3D Framebuffer
-+#ifdef SDK_BUILD_LINUX
++#if defined(SDK_BUILD_LINUX) && !defined(SDK_BUILD_OSX) && !defined(SDK_BUILD_WIN64)
 +    glBindFramebuffer(GL_FRAMEBUFFER,
 +                      hasPresentationFrame ? sPresentationFramebufferId : 0);
 +#else
@@ -6323,7 +6323,7 @@ index 040a9d5876dfad051abc4665fbdacdc5e256e2a5..91d9d22b12073b572b8a5cc75a6f0a8b
 +    s_SIM_swapTime = presentTime - swapStart;
 +    s_SIM_presentedFrameCount++;
 +#endif
-+#ifdef SDK_BUILD_LINUX
++#if defined(SDK_BUILD_LINUX) && !defined(SDK_BUILD_OSX) && !defined(SDK_BUILD_WIN64)
 +    if (asynchronous) s_SIM_presentedFrameCount += sDisplayCount.exchange(0);
 +#endif
 +    s_SIM_presentTime = s_SIM_paceTime + s_SIM_swapTime;
