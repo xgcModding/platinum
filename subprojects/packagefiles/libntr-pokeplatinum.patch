@@ -641,7 +641,7 @@ index 835849c..4035db5 100644
  }
  #endif
 diff --git a/libraries/os/src/os_thread.c b/libraries/os/src/os_thread.c
-index 4d031ff..d442bb6 100644
+index e982a649f83f364db02aa87d436349dd6ad69dd3..62cdf01deacf3d48d0c35f3d1e1e379d20264b43 100644
 --- a/libraries/os/src/os_thread.c
 +++ b/libraries/os/src/os_thread.c
 @@ -19,12 +19,18 @@ typedef struct {

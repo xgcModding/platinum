@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Refresh known libntr patch versions without resetting the dependency checkout."""
 
+import configparser
 import hashlib
 from pathlib import Path
 import re
@@ -23,6 +24,24 @@ def git(directory, *args):
 
 def blob_hash(data):
     return hashlib.sha1(b"blob " + str(len(data)).encode() + b"\0" + data).hexdigest()
+
+
+def ensure_base_objects(originals):
+    # Existing shallow checkouts may predate the revision now pinned by the
+    # wrap. Fetch its objects without switching branches or resetting edits.
+    missing = any(subprocess.run(
+        ["git", "-C", str(DEPENDENCY), "cat-file", "-e", f"{original}^{{blob}}"],
+        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+    ).returncode for original in originals)
+    if not missing:
+        return
+    wrap = configparser.ConfigParser()
+    wrap.read(ROOT / "subprojects/libntr.wrap")
+    revision = wrap["wrap-git"]["revision"]
+    if not re.fullmatch(r"[0-9a-f]{40}", revision):
+        raise ValueError("libntr.wrap must pin a commit to recover missing patch bases")
+    print(f"[libntr] Fetching missing patch bases from {revision}", flush=True)
+    git(DEPENDENCY, "fetch", "--no-tags", "--depth=1", "origin", revision)
 
 
 def sections(patch):
@@ -110,6 +129,7 @@ def main():
     if not pending:
         return
 
+    ensure_base_objects(original for _, _, original, _, _ in pending)
     known = historical_hashes()
     changes = []
     for path, current, original, updated, section in pending:
