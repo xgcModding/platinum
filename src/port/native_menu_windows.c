@@ -4,6 +4,7 @@
 #include <windows.h>
 
 static HWND gameWindow;
+static SDL_Window *sdlWindow;
 static HMENU menuBar;
 static LONG pendingAction;
 static Uint32 gameWindowId;
@@ -11,6 +12,16 @@ static unsigned windowedMode = 2;
 
 extern unsigned SIM_GetWindowSizeMode(void) __attribute__((weak));
 extern void SIM_RequestWindowSizeMode(unsigned mode) __attribute__((weak));
+
+static void UpdateMenuVisibility(void)
+{
+    if (!sdlWindow || !menuBar) return;
+    HMENU visibleMenu = (SDL_GetWindowFlags(sdlWindow) & SDL_WINDOW_FULLSCREEN) ? NULL : menuBar;
+    if (GetMenu(gameWindow) != visibleMenu) {
+        SetMenu(gameWindow, visibleMenu);
+        DrawMenuBar(gameWindow);
+    }
+}
 
 static int WatchMenu(void *unused, SDL_Event *event)
 {
@@ -39,6 +50,7 @@ void PlatformWindow_ConfigureWindows(void *window)
     SDL_SysWMinfo info;
     SDL_VERSION(&info.version);
     if (!SDL_GetWindowWMInfo(window, &info)) return;
+    sdlWindow = window;
     gameWindow = info.info.win.window;
     gameWindowId = SDL_GetWindowID(window);
     SetWindowTextW(gameWindow, L"Pok\u00e9mon Platinum");
@@ -56,14 +68,14 @@ void PlatformWindow_ConfigureWindows(void *window)
     AppendMenuW(input, MF_STRING, 1002, L"Configure Controls...");
     AppendMenuW(menuBar, MF_POPUP, (UINT_PTR)file, L"&File");
     AppendMenuW(menuBar, MF_POPUP, (UINT_PTR)input, L"&Input");
-    SetMenu(gameWindow, menuBar);
-    DrawMenuBar(gameWindow);
+    UpdateMenuVisibility();
     SDL_EventState(SDL_SYSWMEVENT, SDL_ENABLE);
     SDL_AddEventWatch(WatchMenu, NULL);
 }
 
 int PlatformMenu_Update(int canImport)
 {
+    UpdateMenuVisibility();
     if (menuBar) EnableMenuItem(menuBar, 1001, MF_BYCOMMAND | (canImport ? MF_ENABLED : MF_GRAYED));
     return (int)InterlockedExchange(&pendingAction, 0);
 }
