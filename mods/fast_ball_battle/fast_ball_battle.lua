@@ -1,4 +1,5 @@
 local F = {}
+local BATTLE_TYPE_CATCH_TUTORIAL = 1 << 10
 local function bindFunctions()
     F.GetSpriteSystem = game.bind('BattleSystem_GetSpriteSystem','ptr',{'ptr'})
     F.GetSpriteManager = game.bind('BattleSystem_GetSpriteManager','ptr',{'ptr'})
@@ -257,6 +258,11 @@ local function newSprite(sys,manager,char,palette,y,priority)
 end
 local function create(current)
     battle,attempts,selected,pending,allowed,prepared=current,0,0,false,true,false
+    -- The NPC's demonstration must neither use player rules nor consume a zone's first encounter.
+    if (F.GetBattleType(current) & BATTLE_TYPE_CATCH_TUTORIAL) ~= 0 then
+        battle=nil
+        return
+    end
     prepare(current)
     local sys,manager=F.GetSpriteSystem(current),F.GetSpriteManager(current)
     if not sys or not manager then return end

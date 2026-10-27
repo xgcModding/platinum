@@ -2252,10 +2252,10 @@ index 27a5378..be4871550d7dfb63e4f2de6589706eed09f0ea5a 100644
 +    TrimTextureCache();
 +}
 diff --git a/libraries/sim/src/g3_handler.cpp b/libraries/sim/src/g3_handler.cpp
-index 7ad7abdc793dc067bcaa1836e6f2ce6d9a13007e..4009d59b031bcf83b7e6673dc8e00ea73566841a 100644
+index 7ad7abd..2efc4c3998612595ab11d3fcf159f5054d8fd2a0 100644
 --- a/libraries/sim/src/g3_handler.cpp
 +++ b/libraries/sim/src/g3_handler.cpp
-@@ -414,7 +414,9 @@
+@@ -414,7 +414,9 @@ void G3SIM_Begin(GXBegin type)
      }
      snprintf(debugMessage, 50, "GX_Begin %s", typeString);
  
@@ -2265,7 +2265,101 @@ index 7ad7abdc793dc067bcaa1836e6f2ce6d9a13007e..4009d59b031bcf83b7e6673dc8e00ea7
      s_primType = type;
      s_G3numInPoly = 0;
      s_G3drawPoly = 0;
-@@ -741,7 +743,7 @@
+@@ -432,63 +434,22 @@
+-    fx32 cube[8][4];
+-    fx32 face[10][4];
+-
+-    s16 x0 = x;
+-    s16 y0 = y;
+-    s16 z0 = z;
+-    s16 x1 = width;
+-    s16 y1 = height;
+-    s16 z1 = depth;
+-
+-    int res = 0;
+-
+-    x1 += x0;
+-    y1 += y0;
+-    z1 += z0;
+-
+-    cube[0][0] = x0; cube[0][1] = y0; cube[0][2] = z0;
+-    cube[1][0] = x1; cube[1][1] = y0; cube[1][2] = z0;
+-    cube[2][0] = x1; cube[2][1] = y1; cube[2][2] = z0;
+-    cube[3][0] = x0; cube[3][1] = y1; cube[3][2] = z0;
+-    cube[4][0] = x0; cube[4][1] = y1; cube[4][2] = z1;
+-    cube[5][0] = x0; cube[5][1] = y0; cube[5][2] = z1;
+-    cube[6][0] = x1; cube[6][1] = y0; cube[6][2] = z1;
+-    cube[7][0] = x1; cube[7][1] = y1; cube[7][2] = z1;
+-
+-    for(int i=0; i < 8; i++) {
+-        calculateVtxFx(&cube[i][0], &cube[i][1], &cube[i][2], &cube[i][3]);
+-    }
+-
+-    #define SetupFace(_face0,_face1,_face2,_face3) \
+-        face[0][0] = cube[_face0][0]; face[0][1] = cube[_face0][1]; face[0][2] = cube[_face0][2]; face[0][3] = cube[_face0][3]; \
+-        face[1][0] = cube[_face1][0]; face[1][1] = cube[_face1][1]; face[1][2] = cube[_face1][2]; face[1][3] = cube[_face1][3]; \
+-        face[2][0] = cube[_face2][0]; face[2][1] = cube[_face2][1]; face[2][2] = cube[_face2][2]; face[2][3] = cube[_face2][3]; \
+-        face[3][0] = cube[_face3][0]; face[3][1] = cube[_face3][1]; face[3][2] = cube[_face3][2]; face[3][3] = cube[_face3][3];
+-
+-    // front face (-Z)
+-    SetupFace(0, 1, 2, 3);
+-    res += G3SIM_ClipPolygon(face, 4, 0, FALSE);
+-
+-    // back face (+Z)
+-    SetupFace(4, 5, 6, 7);
+-    res += G3SIM_ClipPolygon(face, 4, 0, FALSE);
+-
+-    // left face (-X)
+-    SetupFace(0, 3, 4, 5);
+-    res += G3SIM_ClipPolygon(face, 4, 0, FALSE);
+-
+-    // right face (+X)
+-    SetupFace(1, 2, 7, 6);
+-    res += G3SIM_ClipPolygon(face, 4, 0, FALSE);
+-
+-    // bottom face (-Y)
+-    SetupFace(0, 1, 6, 5);
+-    res += G3SIM_ClipPolygon(face, 4, 0, FALSE);
+-
+-    // top face (+Y)
+-    SetupFace(2, 3, 4, 7);
+-    res += G3SIM_ClipPolygon(face, 4, 0, FALSE);
+-
+-    if(res > 0){
+-        s_reg_G3X_GXSTAT |= (1<<1);
+-        return;
+-    }
++    // Conservatively reject a box only when all eight corners are outside
++    // the same homogeneous clip plane. A large water surface can cover the
++    // view even when none of its corners are on screen. Clipping each face
++    // through the legacy polygon helper read uninitialized intersections.
++    unsigned outsideAll = 0x3f;
++    for (int corner = 0; corner < 8; corner++) {
++        // Add in fx32: the sum of two signed fx16 values need not fit in fx16.
++        fx32 point[4] = {
++            (fx32)x + ((corner & 1) ? (fx32)width : 0),
++            (fx32)y + ((corner & 2) ? (fx32)height : 0),
++            (fx32)z + ((corner & 4) ? (fx32)depth : 0),
++            0,
++        };
++        calculateVtxFx(&point[0], &point[1], &point[2], &point[3]);
++        unsigned outside = 0;
++        for (int axis = 0; axis < 3; axis++) {
++            if ((s64)point[axis] < -(s64)point[3]) outside |= 1u << (axis * 2);
++            if ((s64)point[axis] > (s64)point[3]) outside |= 2u << (axis * 2);
++        }
++        outsideAll &= outside;
++    }
++
+@@ -496,2 +457,5 @@
+-    s_reg_G3X_GXSTAT &= 0b11111111111111111111111111111101;
+-    return;
++    if (outsideAll == 0) {
++        s_reg_G3X_GXSTAT |= (1 << 1);
++    } else {
++        s_reg_G3X_GXSTAT &= ~(1u << 1);
++    }
+@@ -741,7 +705,7 @@ void G3SIM_DecodeTexA3I5(u8* vramTex, u16* colorAddr, u8* out, u32 s, u32 t)
  			texOffset++;
  			out[texOffset] = b;
  			texOffset++;
@@ -2274,7 +2368,7 @@ index 7ad7abdc793dc067bcaa1836e6f2ce6d9a13007e..4009d59b031bcf83b7e6673dc8e00ea7
  			texOffset++;
              vramTex++;
          }
-@@ -779,7 +781,7 @@
+@@ -779,7 +743,7 @@ void G3SIM_DecodeTexA5I3(u8* vramTex, u16* colorAddr, u8* out, u32 s, u32 t)
  			texOffset++;
  			out[texOffset] = b;
  			texOffset++;
@@ -2283,10 +2377,7 @@ index 7ad7abdc793dc067bcaa1836e6f2ce6d9a13007e..4009d59b031bcf83b7e6673dc8e00ea7
  			texOffset++;
              vramTex++;
          }
-@@ -1314,10 +1316,10 @@
-         currentPositionMatrix.nums[3][2] += (FX_Mul(s[0],currentPositionMatrix.nums[0][2]) + FX_Mul(s[1],currentPositionMatrix.nums[1][2]) + FX_Mul(s[2],currentPositionMatrix.nums[2][2]));
-         currentPositionMatrix.nums[3][3] += (FX_Mul(s[0],currentPositionMatrix.nums[0][3]) + FX_Mul(s[1],currentPositionMatrix.nums[1][3]) + FX_Mul(s[2],currentPositionMatrix.nums[2][3]));
-     }
+@@ -1317,4 +1281,4 @@ void G3SIM_MtxTranslate(fx32* trans)
 -    matrix->nums[3][1] += (FX_Mul(s[0],matrix->nums[0][0]) + FX_Mul(s[1],matrix->nums[1][0]) + FX_Mul(s[2],matrix->nums[2][0]));
 +    matrix->nums[3][0] += (FX_Mul(s[0],matrix->nums[0][0]) + FX_Mul(s[1],matrix->nums[1][0]) + FX_Mul(s[2],matrix->nums[2][0]));
      matrix->nums[3][1] += (FX_Mul(s[0],matrix->nums[0][1]) + FX_Mul(s[1],matrix->nums[1][1]) + FX_Mul(s[2],matrix->nums[2][1]));
@@ -2294,10 +2385,7 @@ index 7ad7abdc793dc067bcaa1836e6f2ce6d9a13007e..4009d59b031bcf83b7e6673dc8e00ea7
 -    matrix->nums[3][1] += (FX_Mul(s[0],matrix->nums[0][3]) + FX_Mul(s[1],matrix->nums[1][3]) + FX_Mul(s[2],matrix->nums[2][3]));
 +    matrix->nums[3][2] += (FX_Mul(s[0],matrix->nums[0][2]) + FX_Mul(s[1],matrix->nums[1][2]) + FX_Mul(s[2],matrix->nums[2][2]));
 +    matrix->nums[3][3] += (FX_Mul(s[0],matrix->nums[0][3]) + FX_Mul(s[1],matrix->nums[1][3]) + FX_Mul(s[2],matrix->nums[2][3]));
- 
-     if( s_curMtxMode != GX_MTXMODE_TEXTURE )
-     {
-@@ -1442,22 +1444,14 @@
+@@ -1442,29 +1406,22 @@ void G3SIM_PolygonAttr(u32 data)
      u8 alpha = (data & 0b111110000000000000000) >> 16;
      u8 polygonMode = (data & 0b110000) >> 4;
      u8 cullMode = (data & 0b11000000) >> 6;
@@ -2310,8 +2398,8 @@ index 7ad7abdc793dc067bcaa1836e6f2ce6d9a13007e..4009d59b031bcf83b7e6673dc8e00ea7
      {
          // Flush the vertex buffer
          G3SIM_FlushArray();
--    }
--
+     }
+ 
 -    if(depthTest != s_curPolygonAttr.depthTest)
 -    {
 -        if(depthTest){
@@ -2319,10 +2407,10 @@ index 7ad7abdc793dc067bcaa1836e6f2ce6d9a13007e..4009d59b031bcf83b7e6673dc8e00ea7
 -        } else {
 -            glDepthFunc(GL_LESS);
 -        }
-     }
- 
+-    }
+-
      s_curPolygonAttr.lightFlag = lightFlag;
-@@ -1465,6 +1459,7 @@
+     s_curPolygonAttr.cullMode = cullMode;
      s_curPolygonAttr.polygonMode = polygonMode;
      s_curPolygonAttr.alphaInt = alpha;
      s_curPolygonAttr.depthTest = depthTest;
@@ -2330,7 +2418,7 @@ index 7ad7abdc793dc067bcaa1836e6f2ce6d9a13007e..4009d59b031bcf83b7e6673dc8e00ea7
      s_curPolygonAttr.fogEnable = useFog;
  
      if(alpha == 31){
-@@ -1473,26 +1468,9 @@
+@@ -1473,26 +1430,9 @@ void G3SIM_PolygonAttr(u32 data)
          s_curPolygonAttr.alpha = (float)alpha / 31.0f;
      }
  
@@ -2352,15 +2440,14 @@ index 7ad7abdc793dc067bcaa1836e6f2ce6d9a13007e..4009d59b031bcf83b7e6673dc8e00ea7
 -            break;
 -    }
 -
--
--    return;
 +    // GL depth/culling state is applied with the batch in g3_draw.cpp.
 +    // Changing it here would also affect older deferred batches.
-+
+ 
+-    return;
  }
  
  void G3SIM_SpecEmi(u32 data)
-@@ -1522,6 +1500,9 @@
+@@ -1522,6 +1462,9 @@ void G3SIM_SpecEmi(u32 data)
  //SwapBuffers
  void G3SIM_SwapBuffers(u8 depthBufferMode)
  {
@@ -2370,7 +2457,7 @@ index 7ad7abdc793dc067bcaa1836e6f2ce6d9a13007e..4009d59b031bcf83b7e6673dc8e00ea7
      s_SIM_useWBuffer = depthBufferMode;
      s_swapBuffersCalledThisFrame = TRUE;
  }
-@@ -1667,7 +1648,7 @@
+@@ -1667,7 +1610,7 @@ void G3SIM_Vtx(s16 x, s16 y, s16 z)
      return;
  }
  
@@ -2379,7 +2466,7 @@ index 7ad7abdc793dc067bcaa1836e6f2ce6d9a13007e..4009d59b031bcf83b7e6673dc8e00ea7
      G3SIM_Vertex_t glVerts[6];
      u8 addPolygon = TRUE;
      int numFinalVerts = numVerts;
-@@ -1678,10 +1659,10 @@
+@@ -1678,10 +1621,10 @@ void G3SIM_SubmitPolygon(G3SIM_FxVtx_t * fxVerts, int numVerts) {
      }
  
      for(int i=0; i < numVerts; i++) {
@@ -2394,7 +2481,7 @@ index 7ad7abdc793dc067bcaa1836e6f2ce6d9a13007e..4009d59b031bcf83b7e6673dc8e00ea7
      
          float floatX, floatY, floatW;
          float screenX, screenY;
-@@ -1708,20 +1689,20 @@
+@@ -1708,20 +1651,20 @@ void G3SIM_SubmitPolygon(G3SIM_FxVtx_t * fxVerts, int numVerts) {
  
      // Get the W size and remove the polygon if W is 0
      u32 wsize = 0;
@@ -2420,7 +2507,7 @@ index 7ad7abdc793dc067bcaa1836e6f2ce6d9a13007e..4009d59b031bcf83b7e6673dc8e00ea7
          
          s32 w, wshifted;
          
-@@ -1752,7 +1733,9 @@
+@@ -1752,7 +1695,9 @@ void G3SIM_SubmitPolygon(G3SIM_FxVtx_t * fxVerts, int numVerts) {
          }
          
          glVerts[i].z = (((float)z / 16777215.0f) * 2.0f) - 1.0f;
@@ -2431,7 +2518,7 @@ index 7ad7abdc793dc067bcaa1836e6f2ce6d9a13007e..4009d59b031bcf83b7e6673dc8e00ea7
      }
  
      // If we have a quad, convert it into 2 triangles
-@@ -1793,3 +1776,75 @@
+@@ -1793,3 +1738,75 @@ void G3SIM_SubmitPolygon(G3SIM_FxVtx_t * fxVerts, int numVerts) {
  
  
  }
