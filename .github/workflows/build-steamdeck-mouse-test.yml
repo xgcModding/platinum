@@ -35,25 +35,47 @@ jobs:
       - name: Show toolchain and plugin availability
         shell: bash
         run: |
-          set -euo pipefail
-          printf 'Operating system:\n'
-          cat /etc/os-release
-          printf '\nBuild tools:\n'
-          gcc --version | head -n 1
-          python3 --version
-          ninja --version
-          pkg-config --modversion sdl2 Qt6Widgets libffi
-          printf '\nQt plugin locations:\n'
-          qtpaths6 --query QT_INSTALL_PLUGINS
-          qt_plugins="$(qtpaths6 --query QT_INSTALL_PLUGINS)"
-          for plugin in platforms/libqwayland.so platforms/libqxcb.so \
-                        platformthemes/KDEPlasmaPlatformTheme6.so; do
-            if test -f "${qt_plugins}/${plugin}"; then
-              echo "present: ${plugin}"
-            else
-              echo "not installed (optional for KDE theme): ${plugin}"
+          # Create an artifact-worthy log before testing any build tools.
+          # A diagnostic failure (e.g. missing command) must not leave us
+          # with the misleading "No files were found" upload warning.
+          set -uo pipefail
+          : > build-linux.log
+          (
+            set -euo pipefail
+            # Arch Linux installs qtpaths6 here, not necessarily on PATH.
+            export PATH="/usr/lib/qt6/bin:$PATH"
+            echo '/usr/lib/qt6/bin' >> "$GITHUB_PATH"
+            printf 'Operating system:\n'
+            cat /etc/os-release
+            printf '\nBuild tools and PATH:\n'
+            printf 'PATH=%s\n' "$PATH"
+            gcc --version
+            python3 --version
+            ninja --version
+            make --version
+            pkg-config --modversion sdl2 Qt6Widgets libffi
+            printf '\nQt tools and plugin locations:\n'
+            if ! command -v qtpaths6 >/dev/null 2>&1; then
+              echo 'ERROR: qtpaths6 is not installed in /usr/lib/qt6/bin or on PATH.' >&2
+              exit 127
             fi
-          done
+            command -v qtpaths6
+            qt_plugins="$(qtpaths6 --query QT_INSTALL_PLUGINS)"
+            printf 'Qt plugins directory: %s\n' "$qt_plugins"
+            for plugin in platforms/libqwayland.so platforms/libqxcb.so \
+                          platformthemes/KDEPlasmaPlatformTheme6.so; do
+              if test -f "${qt_plugins}/${plugin}"; then
+                echo "present: ${plugin}"
+              else
+                echo "not installed: ${plugin}"
+              fi
+            done
+          ) 2>&1 | tee -a build-linux.log
+          diagnostic_status=${PIPESTATUS[0]}
+          if [[ "$diagnostic_status" -ne 0 ]]; then
+            echo "::error title=Toolchain diagnostics failed::Exit code ${diagnostic_status}; download the build-log artifact for details."
+            exit "$diagnostic_status"
+          fi
 
       - name: Build using the project's own Linux target
         shell: bash
@@ -62,7 +84,7 @@ jobs:
         run: |
           set -uo pipefail
           # Capture the full compiler/packager output and retain make's exit code.
-          make linux 2>&1 | tee build-linux.log
+          make linux 2>&1 | tee -a build-linux.log
           build_status=${PIPESTATUS[0]}
           if [[ "${build_status}" -ne 0 ]]; then
             echo '::group::Last 160 lines of failing build'
@@ -82,7 +104,7 @@ jobs:
 
       - name: Upload build log and Meson diagnostics (even if build fails)
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: pokeplatinum-linux-build-log
           path: |
@@ -94,7 +116,7 @@ jobs:
 
       - name: Upload test AppImage
         if: success()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: pokeplatinum-steamdeck-mouse-test
           path: build_linux/pokeplatinum.AppImage
