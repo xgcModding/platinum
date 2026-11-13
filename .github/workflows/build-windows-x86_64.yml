@@ -1,0 +1,150 @@
+# Lake-Trio: additive Windows build for PR checks and manual runs. Does not modify Linux CI.
+name: Windows x86_64 (UCRT64) - PR and manual build
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: lake-trio-windows-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  windows-x86_64:
+    name: Build Windows x86_64 ZIP
+    runs-on: windows-2022
+    timeout-minutes: 120
+
+    steps:
+      # Prevent Git for Windows from converting checked-out shell scripts to CRLF.
+      - name: Keep Unix shell scripts as LF
+        shell: pwsh
+        run: git config --global core.autocrlf input
+
+      - name: Check out this exact commit
+        uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+
+      - name: Install MSYS2 UCRT64 toolchain and libraries
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: UCRT64
+          update: true
+          cache: true
+          install: >-
+            git make wget zip flex bison
+            mingw-w64-ucrt-x86_64-gcc
+            mingw-w64-ucrt-x86_64-7zip
+            mingw-w64-ucrt-x86_64-python
+            mingw-w64-ucrt-x86_64-ninja
+            mingw-w64-ucrt-x86_64-pkgconf
+            mingw-w64-ucrt-x86_64-SDL2
+            mingw-w64-ucrt-x86_64-enet
+            mingw-w64-ucrt-x86_64-libffi
+            mingw-w64-ucrt-x86_64-libpng
+            mingw-w64-ucrt-x86_64-nasm
+
+      - name: Verify UCRT64 environment and initialize log
+        shell: msys2 {0}
+        run: |
+          set -euo pipefail
+          {
+            echo '== Windows x86_64 build preflight =='
+            echo "Commit: ${GITHUB_SHA}"
+            echo "MSYSTEM=${MSYSTEM:-unset}"
+            uname -a
+            gcc --version | head -n 1
+            python3 --version
+            command -v 7z
+            command -v make
+            command -v pkg-config
+            pkg-config --modversion sdl2 libffi libpng
+            pkg-config --modversion libenet
+            for dll in SDL2 libwinpthread-1 libenet-7 libgcc_s_seh-1 libstdc++-6 libffi-8; do
+              if [[ ! -f "/ucrt64/bin/${dll}.dll" ]]; then
+                echo "Missing packaging dependency: /ucrt64/bin/${dll}.dll" >&2
+                exit 1
+              fi
+            done
+            test "${MSYSTEM:-}" = UCRT64
+            echo 'Windows toolchain and packaging DLL preflight passed.'
+          } 2>&1 | tee build-windows.log
+
+      - name: Build with the existing Makefile (make windows)
+        shell: msys2 {0}
+        run: |
+          set -uo pipefail
+          echo "== make windows (${GITHUB_SHA}) ==" | tee -a build-windows.log
+          make windows 2>&1 | tee -a build-windows.log
+          status=${PIPESTATUS[0]}
+          if [[ "${status}" -ne 0 ]]; then
+            echo '::group::Last 150 lines of failed Windows build'
+            tail -n 150 build-windows.log
+            echo '::endgroup::'
+            echo "::error title=make windows failed::Exit code ${status}. Download the Windows build logs artifact and inspect the first actual error."
+            echo "Windows x86_64 build failed at ${GITHUB_SHA}; exit code ${status}." >> "$GITHUB_STEP_SUMMARY"
+            exit "${status}"
+          fi
+
+      - name: Verify the packaged Windows distribution
+        shell: msys2 {0}
+        run: |
+          set -euo pipefail
+          echo '== Checking Windows release directory ==' | tee -a build-windows.log
+          test -s build_win64/main.exe
+          test -s build_win64/game.ini
+          test -s build_win64/sim_config.ini
+          for dll in SDL2 libwinpthread-1 libenet-7 libgcc_s_seh-1 libstdc++-6 libffi-8; do
+            test -s "build_win64/${dll}.dll" || {
+              echo "Missing packaged DLL: ${dll}.dll" | tee -a build-windows.log
+              exit 1
+            }
+          done
+          ls -lah build_win64 | tee -a build-windows.log
+          sha256sum build_win64/main.exe | tee -a build-windows.log
+          echo 'Packaged Windows executable, configuration, and required DLLs found.' | tee -a build-windows.log
+
+      - name: Create Windows ZIP and checksum
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $dist = Join-Path $env:GITHUB_WORKSPACE 'build_win64'
+          $archive = Join-Path $env:GITHUB_WORKSPACE 'Lake-Trio-Windows-x86_64.zip'
+          if (!(Test-Path (Join-Path $dist 'main.exe'))) {
+            throw 'main.exe not found in build_win64'
+          }
+          Compress-Archive -Path (Join-Path $dist '*') -DestinationPath $archive -CompressionLevel Optimal -Force
+          if ((Get-Item $archive).Length -eq 0) { throw 'Distribution ZIP is empty' }
+          $digest = (Get-FileHash -Algorithm SHA256 $archive).Hash.ToLowerInvariant()
+          "$digest  Lake-Trio-Windows-x86_64.zip" | Set-Content -Path 'Lake-Trio-Windows-x86_64.sha256' -Encoding ascii
+          "Windows x86_64 ZIP created from commit $env:GITHUB_SHA" | Add-Content -Path $env:GITHUB_STEP_SUMMARY
+          "SHA-256: ``$digest``" | Add-Content -Path $env:GITHUB_STEP_SUMMARY
+
+      - name: Upload Windows build logs (even on failure)
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: Lake-Trio-Windows-x86_64-build-logs
+          path: |
+            build-windows.log
+            .build/build_win64/meson-logs/meson-log.txt
+            .build/build_win64/meson-logs/testlog.txt
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Upload Windows distribution and checksum
+        if: success()
+        uses: actions/upload-artifact@v6
+        with:
+          name: Lake-Trio-Windows-x86_64
+          path: |
+            Lake-Trio-Windows-x86_64.zip
+            Lake-Trio-Windows-x86_64.sha256
+          if-no-files-found: error
+          retention-days: 14
