@@ -256,12 +256,15 @@ subdir('tools')
 ############################################################
 ###                      SPEC FILES                      ###
 ############################################################
+# The overlay specification is also used by the overlay.map helper below,
+# which is defined on desktop targets as well as ARM builds.
+main_lsf = files('meson/overlays.lsf')
+
 # The Nintendo DS linker control file is only needed by the ARM build.
 # All desktop link targets below accept an empty link_depends array.
 # Do not configure a makelcf custom target for Linux/Windows/macOS.
 main_lcf = []
 if build_target == 'arm'
-    main_lsf = files('meson/overlays.lsf')
     main_lcf_template = subproject('libntr').get_variable('main_lcf_template')
     main_lcf = custom_target('main.lcf',
         output: 'main.lcf',
