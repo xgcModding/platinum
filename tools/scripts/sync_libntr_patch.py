@@ -124,6 +124,12 @@ def main():
         if target.is_symlink() or not target.resolve().is_relative_to(DEPENDENCY.resolve()):
             raise ValueError(f"Unsafe dependency path: {path}")
         current = target.read_bytes()
+        # The Linux mouse fix is a second Meson diff_file layered on top of
+        # this patch. Preserve the intentional follow-up instead of treating it
+        # as an unknown historical patch (which would need .git in a ZIP).
+        if (path == 'libraries/sim/src/sim_main.cpp'
+                and b'PlatformWindow_GetMousePosition(&x, &y)' in current):
+            continue
         if not blob_hash(current).startswith(updated):
             pending.append((path, current, original, updated, section))
     if not pending:

@@ -139,6 +139,7 @@ linux: export APPIMAGE_EXTRACT_AND_RUN := 1
 linux: $(CACHE_LINUX)/build.ninja
 	mkdir -p "$(TMPDIR)"
 	python3 tools/scripts/sync_libntr_patch.py
+	python3 tools/scripts/apply_steamdeck_mouse_fix.py
 	$(MESON) setup --reconfigure --clearcache $(CACHE_LINUX)
 	$(MESON) compile -C $(CACHE_LINUX)
 

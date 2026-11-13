@@ -5,6 +5,8 @@
 #include <QCloseEvent>
 #include <QIcon>
 #include <QKeyEvent>
+#include <QMouseEvent>
+#include <QWidget>
 #include <QMainWindow>
 #include <QMenuBar>
 #include <QScreen>
@@ -14,6 +16,7 @@
 #include <dlfcn.h>
 #include <cstdio>
 #include <cstdlib>
+#include <vector>
 
 extern "C" unsigned SIM_GetWindowSizeMode(void) __attribute__((weak));
 extern "C" void SIM_RequestWindowSizeMode(unsigned) __attribute__((weak));
@@ -22,6 +25,7 @@ namespace {
 QApplication *application;
 QMainWindow *shell;
 QWindow *viewport;
+QWidget *viewportContainer;
 SDL_Window *gameWindow;
 QAction *importAction;
 int pendingAction;
@@ -90,6 +94,161 @@ class WindowKeys : public QObject {
     }
 };
 WindowKeys windowKeys;
+
+// The Qt-created child window belongs to Qt's X11/Wayland event dispatcher.
+// SDL2-compat may not receive pointer events for that *foreign* surface under
+// Gamescope. Translate Qt's viewport events to SDL's normal input queue so
+// ImGui and the emulated touch panel receive the same clicks.
+//
+// SDL_PushEvent deliberately does not change SDL_GetMouseState(). The simulator
+// therefore also queries PlatformWindow_GetMousePosition() (libntr patch).
+// Keeping both pieces is essential for correct touch coordinates.
+int qtMouseX = 0;
+int qtMouseY = 0;
+bool qtMouseValid = false;
+Uint32 qtMouseButtons = 0;
+
+bool MouseBridgeEnabled()
+{
+    return qEnvironmentVariable("POKEPLATINUM_QT_MOUSE_BRIDGE") != "0";
+}
+
+bool MouseBridgeDebug()
+{
+    return qEnvironmentVariable("POKEPLATINUM_MOUSE_DEBUG") == "1";
+}
+
+Uint8 SDLButton(Qt::MouseButton button)
+{
+    switch (button) {
+    case Qt::LeftButton:   return SDL_BUTTON_LEFT;
+    case Qt::MiddleButton: return SDL_BUTTON_MIDDLE;
+    case Qt::RightButton:  return SDL_BUTTON_RIGHT;
+    case Qt::BackButton:   return SDL_BUTTON_X1;
+    case Qt::ForwardButton:return SDL_BUTTON_X2;
+    default:               return 0;
+    }
+}
+
+class GameMouseBridge : public QObject {
+    std::vector<SDL_Event> pendingReleases;
+    // Qt may deliver a native click to both QWindow and its QWidget holder.
+    // Avoid forwarding the same native event twice.
+    ulong lastClickTimestamp = 0;
+    QEvent::Type lastClickType = QEvent::None;
+    Qt::MouseButton lastClickButton = Qt::NoButton;
+    QPointF lastClickPosition;
+
+    void sendMotion(const QPointF &point)
+    {
+        // Qt uses logical viewport coordinates; SDL's wrapped window uses the
+        // actual SDL window dimensions (which may differ on a scaled display).
+        int width = 0, height = 0;
+        SDL_GetWindowSize(gameWindow, &width, &height);
+        if (width <= 0 || height <= 0 || viewport->width() <= 0 || viewport->height() <= 0) return;
+        const int x = qRound(point.x() * width / viewport->width());
+        const int y = qRound(point.y() * height / viewport->height());
+        SDL_Event motion = {};
+        motion.type = SDL_MOUSEMOTION;
+        motion.motion.windowID = SDL_GetWindowID(gameWindow);
+        motion.motion.state = qtMouseButtons;
+        motion.motion.x = x;
+        motion.motion.y = y;
+        motion.motion.xrel = qtMouseValid ? x - qtMouseX : 0;
+        motion.motion.yrel = qtMouseValid ? y - qtMouseY : 0;
+        qtMouseX = x;
+        qtMouseY = y;
+        qtMouseValid = true;
+        SDL_PushEvent(&motion);
+    }
+
+    void sendButton(Uint8 button, bool down, Uint8 clicks)
+    {
+        if (!button) return;
+        if (down) qtMouseButtons |= SDL_BUTTON(button);
+        else qtMouseButtons &= ~SDL_BUTTON(button);
+        SDL_Event event = {};
+        event.type = down ? SDL_MOUSEBUTTONDOWN : SDL_MOUSEBUTTONUP;
+        event.button.windowID = SDL_GetWindowID(gameWindow);
+        event.button.button = button;
+        event.button.state = down ? SDL_PRESSED : SDL_RELEASED;
+        event.button.clicks = clicks;
+        event.button.x = qtMouseX;
+        event.button.y = qtMouseY;
+        // Qt pumps after the simulator's SDL_PollEvent loop. If press and
+        // release are both delivered in one Qt pump, the game would consume
+        // both before sampling its DS touch state, losing short taps. Put a
+        // release onto SDL's queue in the *following* Qt pump instead.
+        if (!down) {
+            pendingReleases.push_back(event);
+            return;
+        }
+        const int queued = SDL_PushEvent(&event);
+        if (MouseBridgeDebug()) {
+            fprintf(stderr, "[qt-sdl-mouse] down button=%u x=%d y=%d queued=%d\n",
+                    button, qtMouseX, qtMouseY, queued);
+        }
+    }
+
+    bool eventFilter(QObject *watched, QEvent *event) override
+    {
+        if ((watched != viewport && watched != viewportContainer)
+            || !gameWindow || !MouseBridgeEnabled()) return false;
+        switch (event->type()) {
+        case QEvent::MouseMove:
+        case QEvent::MouseButtonPress:
+        case QEvent::MouseButtonRelease:
+        case QEvent::MouseButtonDblClick: {
+            auto *mouse = static_cast<QMouseEvent *>(event);
+            if (event->type() != QEvent::MouseMove && mouse->timestamp() != 0) {
+                if (mouse->timestamp() == lastClickTimestamp
+                    && event->type() == lastClickType
+                    && mouse->button() == lastClickButton
+                    && mouse->position() == lastClickPosition) return false;
+                lastClickTimestamp = mouse->timestamp();
+                lastClickType = event->type();
+                lastClickButton = mouse->button();
+                lastClickPosition = mouse->position();
+            }
+            sendMotion(mouse->position());
+            if (event->type() != QEvent::MouseMove) {
+                sendButton(SDLButton(mouse->button()),
+                           event->type() != QEvent::MouseButtonRelease,
+                           event->type() == QEvent::MouseButtonDblClick ? 2 : 1);
+            }
+            // Do not consume the Qt event: Qt still owns focus and the shell.
+            return false;
+        }
+        case QEvent::FocusOut:
+        case QEvent::Hide:
+            // A gamepad/Steam overlay can steal focus mid-drag. Avoid a stuck
+            // stylus or stuck ImGui button when the release is sent elsewhere.
+            for (Uint8 button : {SDL_BUTTON_LEFT, SDL_BUTTON_MIDDLE,
+                                 SDL_BUTTON_RIGHT, SDL_BUTTON_X1, SDL_BUTTON_X2}) {
+                if (qtMouseButtons & SDL_BUTTON(button)) sendButton(button, false, 1);
+            }
+            qtMouseValid = false;
+            return false;
+        default:
+            return false;
+        }
+    }
+
+public:
+    void flushReleases()
+    {
+        for (const SDL_Event &event : pendingReleases) {
+            SDL_Event copy = event;
+            const int queued = SDL_PushEvent(&copy);
+            if (MouseBridgeDebug()) {
+                fprintf(stderr, "[qt-sdl-mouse] up button=%u x=%d y=%d queued=%d\n",
+                        copy.button.button, copy.button.x, copy.button.y, queued);
+            }
+        }
+        pendingReleases.clear();
+    }
+};
+GameMouseBridge gameMouseBridge;
 }
 
 extern "C" void PlatformWindow_Init()
@@ -158,7 +317,12 @@ extern "C" SDL_Window *PlatformWindow_Create(const char *title, int width, int h
     format.setAlphaBufferSize(0);
     format.setSwapBehavior(QSurfaceFormat::DoubleBuffer);
     viewport->setFormat(format);
+    // A QWindow event filter sees mouse clicks even when SDL receives no
+    // foreign-window events from the Gamescope compositor.
+    viewport->installEventFilter(&gameMouseBridge);
     auto *container = QWidget::createWindowContainer(viewport, shell);
+    viewportContainer = container;
+    container->installEventFilter(&gameMouseBridge);
     container->setFocusPolicy(Qt::StrongFocus);
     shell->setCentralWidget(container);
     shell->resize(width, height + shell->menuBar()->sizeHint().height());
@@ -182,7 +346,8 @@ extern "C" SDL_Window *PlatformWindow_Create(const char *title, int width, int h
         gameWindow = SDL_CreateWindowFrom(reinterpret_cast<void *>(viewport->winId()));
     }
     container->setFocus();
-    fprintf(stderr, "[native-menu] Qt %s: File > Import ROM; Input > Configure Controls\n", qPrintable(application->platformName()));
+    fprintf(stderr, "[native-menu] Qt %s: File > Import ROM; Input > Configure Controls; Qt->SDL mouse bridge %s\n",
+            qPrintable(application->platformName()), MouseBridgeEnabled() ? "enabled" : "disabled");
     return gameWindow;
 }
 
@@ -190,6 +355,9 @@ extern "C" int PlatformMenu_Update(int canImport)
 {
     if (!shell) return 0;
     importAction->setEnabled(canImport != 0);
+    // Enqueue the previous pump's button releases only after an SDL frame has
+    // had the opportunity to observe the matching button presses.
+    gameMouseBridge.flushReleases();
     application->processEvents();
     int width = qRound(viewport->width() * viewport->devicePixelRatio());
     int height = qRound(viewport->height() * viewport->devicePixelRatio());
@@ -231,4 +399,14 @@ extern "C" void PlatformWindow_SetPosition(SDL_Window *window, int x, int y)
     } else {
         shell->move(x, y);
     }
+}
+
+// Called by the Linux libntr touch-panel path after SDL_GetMouseState().
+// Qt input events are handled on the same rendering/event-loop thread.
+extern "C" bool PlatformWindow_GetMousePosition(int *x, int *y)
+{
+    if (!MouseBridgeEnabled() || !qtMouseValid) return false;
+    if (x) *x = qtMouseX;
+    if (y) *y = qtMouseY;
+    return true;
 }
