@@ -1,0 +1,47 @@
+name: Steam Deck mouse fix - manual AppImage build
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  appimage:
+    name: Build Linux x86_64 AppImage
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    container:
+      image: archlinux:latest
+    steps:
+      - name: Install build and packaging dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          pacman -Syu --noconfirm --needed \
+            base-devel git python python-pip ninja meson cmake pkgconf \
+            wget curl tar xz unzip ca-certificates nodejs \
+            qt6-base qt6-wayland qt6-svg sdl2-compat sdl3 \
+            dbus libffi libpng libglvnd libxkbcommon wayland \
+            libx11 libxext libxcursor libxi libxfixes libxrandr libxrender libxss \
+            libpulse alsa-lib patchelf squashfs-tools fuse2 openssl
+
+      - name: Checkout patched repository
+        uses: actions/checkout@v4
+
+      - name: Build using the project's own Linux target
+        shell: bash
+        env:
+          APPIMAGE_EXTRACT_AND_RUN: '1'
+        run: |
+          set -euo pipefail
+          make linux
+          test -s build_linux/pokeplatinum.AppImage
+
+      - name: Upload test AppImage
+        uses: actions/upload-artifact@v4
+        with:
+          name: pokeplatinum-steamdeck-mouse-test
+          path: build_linux/pokeplatinum.AppImage
+          if-no-files-found: error
+          retention-days: 7
