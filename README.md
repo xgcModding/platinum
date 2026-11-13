@@ -1,20 +1,21 @@
-# Pokémon Platinum
+# Lake Trio | Platinum Decompiled
 
-Pokémon Platinum for Windows, Linux and macOS, with mod support with LUA. I made this port for fun and to try things out. I also used AI for the development.
-
-I did not did the decompilation process, the original author I can't add a link because their repository contains the 
-full decompiled game with assets included so it's illegal, I removed every copyrighted data, and I added mod support,
-increased performance and also unlock the framerate.
-
-I was able to complete the game despite I did not fully tested the whole game so I can't garantee it's working 100%. 
+ Platinum for Linux (ex. Steam Deck), with mod support with LUA. 
+ 
+> [!IMPORTANT]
+> **No Game Assets Included:** This repository does not contain, distribute, or provide links to any copyrighted game files, ROMs, ISOs, or proprietary assets. It is strictly a build tool and source code project. You must legally obtain and supply your own original game files to use this software.
+> 
+> **No Affiliation:** This is an independent, fan-made project. It is not affiliated with, associated with, authorized, endorsed by, or in any way officially connected with Nintendo, Game Freak, The Pokémon Company, or any of their subsidiaries or affiliates. All product and company names, trademarks, and registered trademarks are the property of their respective owners.
+>
+> **Forked Repo:** This is a forked repository of ['platinum'](https://github.com/xgcModding/platinum) from xgcModding from release 0.3. I do not really intend to fix any bugs, issues, or reports made to the Lake Trio repository as of this moment. The reason this fork was created was to resolve a bug with how Game Mode in the Steam Deck/Steam OS was handling mouse click and input events. V1.0 of Lake Trio seems to fix this in my play tests. 
+ 
 
 ## Play
 
-Download your platform's build from [Releases](../../releases), extract it and launch:
-
-- **Windows:** `main.exe`
+Download your platform's build from [Releases](https://github.com/Royal2-4/Lake-Trio/releases), extract the .appImage and launch it for further instructions:
 - **Linux:** `pokeplatinum.AppImage` — mark it as executable first.
-- **macOS:** `Pokémon Platinum.app`
+
+Choose **File → Import ROM…** and select your own provided Platinum `.nds` file. Both US and European versions are supported. The game starts once the import finishes.
 
 The Linux x86-64 AppImage includes Qt, its plugins, SDL and the C/C++ runtime;
 you do not need to install a matching Qt version. It supports Wayland and X11
@@ -22,8 +23,6 @@ and requires a working graphics driver with OpenGL 4.2 support. Shipped mods are
 included and installed beside the AppImage on first launch, preserving existing
 settings. Keep the AppImage in a writable folder. If FUSE is unavailable, launch
 it with `--appimage-extract-and-run`.
-
-Choose **File → Import ROM…** and select your Pokémon Platinum `.nds` file. Both US and European versions are supported. The game starts once the import finishes. You'll need your own ROM; it isn't included.
 
 ## Controls
 
@@ -41,6 +40,8 @@ Choose **File → Import ROM…** and select your Pokémon Platinum `.nds` file.
 
 Use the mouse for the touch screen. Keyboard and controller bindings are under **Input → Configure Controls…**, including shortcuts for the bike, fishing, field moves and Pokétch apps.
 
+
+# Optional Settings From In-Game
 ## New options
 
 Available in the in-game **Options** menu, alongside the original settings.
@@ -168,9 +169,3 @@ Normally, you can battle species you've seen but can only catch species you've a
 ### Shiny Rate
 
 Increase shiny odds for newly generated wild Pokémon and Eggs. Choose from **1×** (the original odds) up to **8192×** (guaranteed shiny). Starts at **16×**. Changing the setting doesn't turn Pokémon you already own into shinies.
-
-## Compilation
-
-I forgot every dependency required
-
-`make linux|windows|osx`
