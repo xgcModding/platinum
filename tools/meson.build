@@ -21,9 +21,16 @@ subdir('debug')
 
 copy_exe = find_program('cp')
 
-# ARM binutils
-arm_none_eabi_gcc_exe = find_program('arm-none-eabi-gcc', native: true)
-arm_none_eabi_objcopy_exe = find_program('arm-none-eabi-objcopy', native: true)
+# Only handheld builds (and the macOS trainer-AI helper) use the
+# ARM cross-toolchain. Linux/Windows desktop builds use native tools.
+# Do not require ARM programs while configuring a Linux AppImage.
+if build_target in ['arm', 'osx']
+    arm_none_eabi_gcc_exe = find_program('arm-none-eabi-gcc', native: true)
+    arm_none_eabi_objcopy_exe = find_program('arm-none-eabi-objcopy', native: true)
+endif
 
-# Subproject tools
-makelcf_exe = find_program('makelcf', native: true)
+# makelcf generates a Nintendo DS linker control file, not used by the
+# desktop executable or its AppImage packaging.
+if build_target == 'arm'
+    makelcf_exe = find_program('makelcf', native: true)
+endif
