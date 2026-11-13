@@ -1,0 +1,19 @@
+diff --git a/libraries/sim/src/sim_main.cpp b/libraries/sim/src/sim_main.cpp
+--- a/libraries/sim/src/sim_main.cpp
++++ b/libraries/sim/src/sim_main.cpp
+@@ -1,4 +1,8 @@
+ #ifdef SDK_BUILD_WIN64
+ extern "C" void PlatformWindow_ConfigureWindows(void *);
+ #endif
++#if defined(SDK_BUILD_LINUX) && !defined(SDK_BUILD_OSX) && !defined(SDK_BUILD_WIN64)
++extern "C" bool PlatformWindow_GetMousePosition(int *, int *) __attribute__((weak));
++#endif
++
+ extern "C" void GameRestart_Update(void) __attribute__((weak));
+@@ -2994,3 +2998,6 @@
+     SDL_GetMouseState(&x, &y);
++#if defined(SDK_BUILD_LINUX) && !defined(SDK_BUILD_OSX) && !defined(SDK_BUILD_WIN64)
++    if (PlatformWindow_GetMousePosition) PlatformWindow_GetMousePosition(&x, &y);
++#endif
+ 
+     // Convert touch coordinate to DS screen coordinates
