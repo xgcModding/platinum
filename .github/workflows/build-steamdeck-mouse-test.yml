@@ -22,7 +22,7 @@ jobs:
           pacman -Syu --noconfirm --needed \
             base-devel git python python-pip ninja meson cmake pkgconf \
             wget curl tar xz unzip ca-certificates nodejs \
-            qt6-base qt6-wayland qt6-svg sdl2-compat sdl3 \
+            qt6-base qt6-wayland qt6-svg sdl2-compat sdl3 enet \
             dbus libffi libpng libglvnd libxkbcommon wayland \
             libx11 libxext libxcursor libxi libxfixes libxrandr libxrender libxss \
             libpulse alsa-lib patchelf squashfs-tools fuse2 openssl
@@ -53,7 +53,18 @@ jobs:
             python3 --version
             ninja --version
             make --version
-            pkg-config --modversion sdl2 Qt6Widgets libffi
+            pkg-config --modversion sdl2 Qt6Widgets libffi libenet
+            printf '\nENet linker preflight:\n'
+            pacman -Q enet
+            pkg-config --libs libenet
+            if ! test -f /usr/lib/libenet.so; then
+              echo 'ERROR: Arch enet library missing from /usr/lib/libenet.so' >&2
+              exit 1
+            fi
+            # libntr uses find_library('enet'); test that exact -lenet lookup.
+            printf 'int main(void) { return 0; }\n' | gcc -x c - -o /tmp/pokeplatinum-enet-link-check -lenet
+            rm -f /tmp/pokeplatinum-enet-link-check
+            echo 'ENet compiler/linker preflight passed.'
             printf '\nQt tools and plugin locations:\n'
             if ! command -v qtpaths6 >/dev/null 2>&1; then
               echo 'ERROR: qtpaths6 is not installed in /usr/lib/qt6/bin or on PATH.' >&2
