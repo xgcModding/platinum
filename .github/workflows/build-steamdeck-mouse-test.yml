@@ -9,7 +9,8 @@ permissions:
 jobs:
   appimage:
     name: Build Linux x86_64 AppImage
-    runs-on: ubuntu-latest
+    # Avoid ubuntu-latest moving to a different OS during this experiment.
+    runs-on: ubuntu-24.04
     timeout-minutes: 90
     container:
       image: archlinux:latest
@@ -26,19 +27,73 @@ jobs:
             libx11 libxext libxcursor libxi libxfixes libxrandr libxrender libxss \
             libpulse alsa-lib patchelf squashfs-tools fuse2 openssl
 
-      - name: Checkout patched repository
-        uses: actions/checkout@v4
+      - name: Checkout patched repository (Node.js 24)
+        uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+
+      - name: Show toolchain and plugin availability
+        shell: bash
+        run: |
+          set -euo pipefail
+          printf 'Operating system:\n'
+          cat /etc/os-release
+          printf '\nBuild tools:\n'
+          gcc --version | head -n 1
+          python3 --version
+          ninja --version
+          pkg-config --modversion sdl2 Qt6Widgets libffi
+          printf '\nQt plugin locations:\n'
+          qtpaths6 --query QT_INSTALL_PLUGINS
+          qt_plugins="$(qtpaths6 --query QT_INSTALL_PLUGINS)"
+          for plugin in platforms/libqwayland.so platforms/libqxcb.so \
+                        platformthemes/KDEPlasmaPlatformTheme6.so; do
+            if test -f "${qt_plugins}/${plugin}"; then
+              echo "present: ${plugin}"
+            else
+              echo "not installed (optional for KDE theme): ${plugin}"
+            fi
+          done
 
       - name: Build using the project's own Linux target
         shell: bash
         env:
           APPIMAGE_EXTRACT_AND_RUN: '1'
         run: |
-          set -euo pipefail
-          make linux
-          test -s build_linux/pokeplatinum.AppImage
+          set -uo pipefail
+          # Capture the full compiler/packager output and retain make's exit code.
+          make linux 2>&1 | tee build-linux.log
+          build_status=${PIPESTATUS[0]}
+          if [[ "${build_status}" -ne 0 ]]; then
+            echo '::group::Last 160 lines of failing build'
+            tail -n 160 build-linux.log
+            echo '::endgroup::'
+            echo '::group::Potential errors (line-numbered)'
+            grep -nEi '(^|[[:space:]])(error:|fatal error:|FAILED:|ninja:.*error|make: \*\*\*|Traceback|No such file|not found|permission denied|subproject.*failed)' build-linux.log | tail -n 90 || true
+            echo '::endgroup::'
+            echo "::error title=make linux failed::Exit code ${build_status}. Download pokeplatinum-linux-build-log from this run's Artifacts section for the original compiler error."
+            printf '## Linux AppImage build failed\n\nExit code: `%s`. Download the `pokeplatinum-linux-build-log` artifact and inspect `build-linux.log` for the first actual error.\n' "${build_status}" >> "$GITHUB_STEP_SUMMARY"
+            exit "${build_status}"
+          fi
+          if [[ ! -s build_linux/pokeplatinum.AppImage ]]; then
+            echo '::error title=AppImage missing::Build exited successfully but build_linux/pokeplatinum.AppImage was not created.'
+            exit 1
+          fi
+
+      - name: Upload build log and Meson diagnostics (even if build fails)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pokeplatinum-linux-build-log
+          path: |
+            build-linux.log
+            .build/build_linux/meson-logs/meson-log.txt
+            .build/build_linux/meson-logs/testlog.txt
+          if-no-files-found: warn
+          retention-days: 7
 
       - name: Upload test AppImage
+        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: pokeplatinum-steamdeck-mouse-test

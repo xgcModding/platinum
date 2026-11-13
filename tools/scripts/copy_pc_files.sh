@@ -166,6 +166,12 @@ elif [[ "$(uname -s)" == "Linux" && "${SKIP_APPIMAGE:-0}" != "1" ]]; then
       wayland-graphics-integration-client/libqt-plugin-wayland-egl.so \
       platformthemes/libqxdgdesktopportal.so \
       platformthemes/KDEPlasmaPlatformTheme6.so; do
+    # KDE's Plasma theme plugin is not installed by the minimal CI image.
+    # Keep shipping it on hosts that have it; it is not required to start Qt.
+    if [ "$Plugin" = "platformthemes/KDEPlasmaPlatformTheme6.so" ] && [ ! -f "$QtPlugins/$Plugin" ]; then
+      echo "Skipping optional Qt Plasma theme plugin: $Plugin"
+      continue
+    fi
     mkdir -p "$AppDir/usr/plugins/$(dirname "$Plugin")"
     cp "$QtPlugins/$Plugin" "$AppDir/usr/plugins/$Plugin"
     QtLibraries+=("--deploy-deps-only=$AppDir/usr/plugins/$Plugin")
