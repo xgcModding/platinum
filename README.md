@@ -8,6 +8,8 @@
 > **No Affiliation:** This is an independent, fan-made project. It is not affiliated with, associated with, authorized, endorsed by, or in any way officially connected with Nintendo, Game Freak, The Pokémon Company, or any of their subsidiaries or affiliates. All product and company names, trademarks, and registered trademarks are the property of their respective owners.
 >
 > **Forked Repo:** This is a forked repository of ['platinum'](https://github.com/xgcModding/platinum) from xgcModding from release 0.3. I do not really intend to fix any bugs, issues, or reports made to the Lake Trio repository as of this moment. The reason this fork was created was to resolve a bug with how Game Mode in the Steam Deck/Steam OS was handling mouse click and input events. V1.0 of Lake Trio seems to fix this in my play tests. 
+>
+> **Gen AI:** This forked repo does use generative AI to help my workflow. This is my first time working with a forked repo in a decompiled game, C++, and these type of dependencies/libraries. To ensure I am doing things correctly, I am using AI and official documentation along the way, while also getting personal experience in how to use these tools. xgcModding (original repo prior to fork) also has a disclaimer about AI usage. I'm still a recent grad and am learning how to work in these type of environments. 
  
 
 ## Play
