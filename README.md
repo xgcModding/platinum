@@ -1,6 +1,6 @@
 # Lake Trio | Platinum Decompiled
 
- Platinum for Linux (ex. Steam Deck), with mod support with LUA. 
+ Platinum decompiled natively for Linux (ex. Steam Deck) and Windows 11, with mod support with LUA. 
  
 > [!IMPORTANT]
 > **No Game Assets Included:** This repository does not contain, distribute, or provide links to any copyrighted game files, ROMs, ISOs, or proprietary assets. It is strictly a build tool and source code project. You must legally obtain and supply your own original game files to use this software.
@@ -13,9 +13,10 @@
 ## Play
 
 Download your platform's build from [Releases](https://github.com/Royal2-4/Lake-Trio/releases), extract the .appImage and launch it for further instructions:
-- **Linux:** `pokeplatinum.AppImage` — mark it as executable first.
+- **Linux:** `Lake-Trio.AppImage` - mark it as executable first!
+- **Windows 11:** `Lake-Trio-Windows-x86_64.zip ` - extract to a folder of your choice,  launch from main.exe.
 
-Choose **File → Import ROM…** and select your own provided Platinum `.nds` file. Both US and European versions are supported. The game starts once the import finishes.
+# Choose **File → Import ROM…** and select your own provided Platinum `.nds` file. Both US and European versions are supported. The game starts once the import finishes.
 
 The Linux x86-64 AppImage includes Qt, its plugins, SDL and the C/C++ runtime;
 you do not need to install a matching Qt version. It supports Wayland and X11
