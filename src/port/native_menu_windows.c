@@ -2,6 +2,7 @@
 #include <SDL.h>
 #include <SDL_syswm.h>
 #include <windows.h>
+#include "app_menu_actions.h"
 
 static HWND gameWindow;
 static SDL_Window *sdlWindow;
@@ -23,6 +24,12 @@ static void UpdateMenuVisibility(void)
     }
 }
 
+void PlatformMenu_RequestAction(int action)
+{
+    if (action == LAKE_TRIO_MENU_IMPORT_ROM || action == LAKE_TRIO_MENU_CONFIGURE_CONTROLS)
+        InterlockedExchange(&pendingAction, action);
+}
+
 static int WatchMenu(void *unused, SDL_Event *event)
 {
     (void)unused;
@@ -39,7 +46,7 @@ static int WatchMenu(void *unused, SDL_Event *event)
         if (message->msg.win.hwnd == gameWindow && message->msg.win.msg == WM_COMMAND) {
             unsigned command = LOWORD(message->msg.win.wParam);
             if (command == 1001 || command == 1002)
-                InterlockedExchange(&pendingAction, command - 1000);
+                PlatformMenu_RequestAction(command - 1000);
         }
     }
     return 1;
@@ -77,5 +84,6 @@ int PlatformMenu_Update(int canImport)
 {
     UpdateMenuVisibility();
     if (menuBar) EnableMenuItem(menuBar, 1001, MF_BYCOMMAND | (canImport ? MF_ENABLED : MF_GRAYED));
-    return (int)InterlockedExchange(&pendingAction, 0);
+    int action = (int)InterlockedExchange(&pendingAction, LAKE_TRIO_MENU_NONE);
+    return (action == LAKE_TRIO_MENU_IMPORT_ROM && !canImport) ? LAKE_TRIO_MENU_NONE : action;
 }

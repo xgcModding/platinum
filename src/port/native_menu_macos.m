@@ -1,15 +1,22 @@
 #import <AppKit/AppKit.h>
+#include "app_menu_actions.h"
 
 // Menu callbacks enqueue actions; the simulator handles them on its next frame.
 static int pendingAction;
 static NSMenuItem *importItem;
+
+void PlatformMenu_RequestAction(int action)
+{
+    if (action == LAKE_TRIO_MENU_IMPORT_ROM || action == LAKE_TRIO_MENU_CONFIGURE_CONTROLS)
+        pendingAction = action;
+}
 @interface PlatinumMenuActions : NSObject
 - (void)importROM:(id)sender;
 - (void)configureInput:(id)sender;
 @end
 @implementation PlatinumMenuActions
-- (void)importROM:(id)sender { (void)sender; pendingAction = 1; }
-- (void)configureInput:(id)sender { (void)sender; pendingAction = 2; }
+- (void)importROM:(id)sender { (void)sender; PlatformMenu_RequestAction(LAKE_TRIO_MENU_IMPORT_ROM); }
+- (void)configureInput:(id)sender { (void)sender; PlatformMenu_RequestAction(LAKE_TRIO_MENU_CONFIGURE_CONTROLS); }
 @end
 
 int PlatformMenu_Update(int canImport)
@@ -41,5 +48,5 @@ int PlatformMenu_Update(int canImport)
     importItem.enabled = canImport != 0;
     int action = pendingAction;
     pendingAction = 0;
-    return action;
+    return (action == LAKE_TRIO_MENU_IMPORT_ROM && !canImport) ? LAKE_TRIO_MENU_NONE : action;
 }

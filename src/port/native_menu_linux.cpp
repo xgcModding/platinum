@@ -1,6 +1,7 @@
 // Qt owns the native menubar and shell; SDL keeps the game surface and input.
 // Wayland interop follows SDL's documented external wl_display/wl_surface API.
 #include <SDL2/SDL.h>
+#include "app_menu_actions.h"
 #include <QApplication>
 #include <QCloseEvent>
 #include <QIcon>
@@ -251,6 +252,12 @@ public:
 GameMouseBridge gameMouseBridge;
 }
 
+extern "C" void PlatformMenu_RequestAction(int action)
+{
+    if (action == LAKE_TRIO_MENU_IMPORT_ROM || action == LAKE_TRIO_MENU_CONFIGURE_CONTROLS)
+        pendingAction = action;
+}
+
 extern "C" void PlatformWindow_Init()
 {
     static int argc = 1;
@@ -301,10 +308,10 @@ extern "C" SDL_Window *PlatformWindow_Create(const char *title, int width, int h
     auto *file = shell->menuBar()->addMenu("&File");
     importAction = file->addAction("Import ROM…");
     importAction->setShortcut(QKeySequence::Open);
-    QObject::connect(importAction, &QAction::triggered, [] { pendingAction = 1; });
+    QObject::connect(importAction, &QAction::triggered, [] { PlatformMenu_RequestAction(LAKE_TRIO_MENU_IMPORT_ROM); });
     auto *input = shell->menuBar()->addMenu("&Input");
     auto *controls = input->addAction("Configure Controls…");
-    QObject::connect(controls, &QAction::triggered, [] { pendingAction = 2; });
+    QObject::connect(controls, &QAction::triggered, [] { PlatformMenu_RequestAction(LAKE_TRIO_MENU_CONFIGURE_CONTROLS); });
     viewport = new QWindow;
     viewport->setSurfaceType(QSurface::OpenGLSurface);
     // The X11 visual is chosen when Qt creates this window. Match the game's
@@ -368,7 +375,7 @@ extern "C" int PlatformMenu_Update(int canImport)
     }
     int action = pendingAction;
     pendingAction = 0;
-    return action;
+    return (action == LAKE_TRIO_MENU_IMPORT_ROM && !canImport) ? LAKE_TRIO_MENU_NONE : action;
 }
 
 extern "C" int PlatformWindow_SetFullscreen(SDL_Window *window, unsigned flags)
